@@ -1,0 +1,181 @@
+.selectionPanel {
+    grid-column: 8/12;
+    height: 68.5%;
+    border-radius: 15px 15px 0 0;
+    /* margin-bottom: 1em; */
+    position: relative;
+
+}
+
+.selectionImage {
+    width: 100%;
+    height: 30%;
+    border-radius: 15px;
+}
+
+.selectionImage img {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+}
+
+.selectionHeaders {
+    width: 100%;
+    padding: 1em;
+    border-left: 2px #FF7DA3 solid;
+    border-right: 2px #FF7DA3 solid;
+}
+
+.selectionHeaders h1 {
+    color: #FF7DA3;
+}
+
+.selectionHeaders p {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.selectionOptions {
+    overflow-y: auto;
+    height: 50%;
+}
+
+.selectionForm {
+    margin-left: 1em;
+
+}
+
+.sizesInputs div,
+.flavorInputs div,
+.giftInputs div, .extras div {
+    margin: 0.5em 0;
+  
+}
+.toppings div{
+    margin: 0.5em 0;
+    align-items: center;
+        display: flex;
+        /* flex-direction: column; */
+}
+.toppings div img {
+    margin: 0 0.5em;
+}
+
+.sizesInputs div p,
+.giftInputs div p, .extras div p {
+    display: inline-block;
+    float: right;
+    margin-right: 1em;
+    color: #FF7DA3;
+    font-size: 20px;
+}
+
+.sizesInputs label,
+.flavorInputs label,
+.giftInputs label, .extras label {
+    font-size: 18px;
+    font-weight: normal;
+    margin-left: 0.5em;
+}
+
+.sizesInputs span {
+    margin-left: 0.5em;
+    color: rgba(0, 0, 0, 0.5);
+
+}
+
+.scheduleInputs label {
+    display: block;
+}
+
+.scheduleInputs input {
+    margin: 0.5em 0;
+    padding: 1em;
+    outline-color: #FF7DA3;
+    border-radius: 15px;
+    border: 1px #FF7DA3 solid;
+}
+
+.scheduleInputs h1,
+.flavorInputs h1,
+.giftInputs h1 {
+    margin-top: 0.5em;
+}
+
+.instructionInputs h1 {
+    margin: 0.5em 0;
+}
+
+.instructionInputs textarea {
+    resize: none;
+    width: 90%;
+    border: 1px #FF7DA3 solid;
+    border-radius: 15px;
+    padding: 1em;
+    outline-color: #FF7DA3;
+    margin-bottom: 1em;
+}
+
+.selectionBottomBanner {
+    background-color: #FF7DA3;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* border-radius: 15px; */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+    padding: 1em;
+    border-top: 1px #FF7DA3 solid;
+    border-radius: 0 0 15px 15px;
+}
+
+.menuFormSubmit {
+    background-color: #FF7DA3;
+    color: white;
+    border: none;
+    padding: 1em 2em;
+    margin-bottom: 0.5em;
+    border-radius: 10px;
+
+}
+
+.flavorInputs input::selection {
+    accent-color: black;
+
+}
+
+.flavorInputs hr,
+.giftInputs hr,
+.sizesInputs hr,
+.scheduleInputs hr, .toppings hr, .extras hr {
+    border: none;
+    height: 1px;
+    background-color: rgba(0, 0, 0, 0.2);
+    margin: 1em;
+}
+
+.selectionOptions::-webkit-scrollbar {
+    width: 27px;
+}
+
+
+.selectionOptions::-webkit-scrollbar-track {
+    background: white;
+    border-radius: 15px;
+
+}
+
+
+.selectionOptions::-webkit-scrollbar-thumb {
+    background: #FF7DA3;
+    border-radius: 15px;
+    border: 10px white solid;
+
+
+}
+
+.selectionOptions {
+    border-left: 2px #FF7DA3 solid;
+    border-right: 2px #FF7DA3 solid;
+}

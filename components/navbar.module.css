@@ -1,0 +1,40 @@
+.navbarContainer {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    align-items: center;
+    height: 7vh;
+}
+
+.halfCircle {
+    background-color: #FF7DA3;
+    height: 100px;
+    width: 100px;
+    position: absolute;
+    border-radius: 100%;
+    top: -5%;
+    left: -3%;
+    grid-column: 1;
+}
+.navbarContainer > h1 {
+    grid-column: 2;
+    justify-self: center;
+    align-self: center;
+    font-family: 'Pacifico', cursive;
+    color: #FF7DA3;
+    font-size: 30px;
+}
+.navbarContainer .navbar {
+    grid-column: 8/12;
+    justify-self: flex-end;
+    /* align-items: center; */
+}
+.navbar ul li {
+    list-style: none;
+}
+.navbar ul li a {
+    text-decoration: none;
+        color: #FF7DA3;
+        font-size: 18px;
+        margin-left: 2em;
+        font-family: 'Ubuntu', sans-serif;
+}

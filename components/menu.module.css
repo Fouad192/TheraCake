@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Ubuntu:wght@300;400;500;700&display=swap');
+.menuGrid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    font-family: 'Ubuntu', sans-serif;
+    margin-top: 5%;
+    margin-bottom: -10em;
+}
+.menuNavigation {
+    /* margin: 2em 0; */
+    margin-bottom: 2em;
+}
+.menuNavigation button:first-child {
+    margin-right: 3em;
+}
+.menuNavigation button {
+    border: none;
+    border-radius: 15px;
+    padding: 1em 2em;
+}
+.menuNavigation button:first-child {
+    color: #E31552;
+    background-color: #FFC9D9;
+}
+
+.menuNavigation button:last-child {
+    color: white;
+    background-color: #FF7DA3;
+    float: right;
+    width: 30%;
+}
+.menuItems {
+    grid-column: 2/7;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    grid-row: 1;
+}
+
+.cheesecakeMenuItemContainer, .browniesMenuItemContainer {
+    display: flex;
+    flex-direction: column;
+}
+.menuItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 2px #FF7DA3 solid;
+    padding: 1em;
+    border-radius: 15px;
+    margin-bottom: 1em;
+}
+.browniesMenuItemContainer {
+    display: none;
+}
+.menuItemDetails {
+    padding: 1em;
+}
+.menuItemDetails button + p {
+    display: inline-block;
+    margin-top: 1em;
+    font-weight: bold;
+    font-size: 20px;
+}
+.menuItemDetails p:first-of-type {
+    color: #FF7DA3;
+}
+.menuItemDetails h1 {
+    font-size: 20px;
+}
+.menuItemDetails button {
+    margin-right: 1em;
+    border: none;
+        background-color: #FF7DA3;
+        color: white;
+        border-radius: 15px;
+        padding: 0.6em 1em;
+        cursor: pointer;
+        transition: ease-in-out 0.2s;
+        font-size: 16px;
+}
+
+
+
+.adminModifyAndDelete {
+   
+    display: flex;
+    justify-content: space-between;
+    width: 15%;
+    margin-bottom: 0.5em;
+}
+.adminModifyAndDelete img:first-child {
+width: 16px;
+    height: 20px;
+}
+.adminModifyAndDelete img:last-child {
+    width: 20px;
+    height: 20px;
+}
+
