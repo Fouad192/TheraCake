@@ -1,0 +1,39 @@
+.footer {
+    height: 30%;
+    width: 100%;
+    background-color: #FF7DA3;
+    padding: 1em;
+    overflow: hidden;
+    font-family: 'Ubuntu', sans-serif;
+
+}
+.contactContainer {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.contactContainer h1 {
+    color: white;
+    margin-bottom: 0.5em;
+}
+
+.iconTextFlex {
+    display: flex;
+    margin-bottom: 0.5em;
+    align-items: center;
+}
+
+.iconTextFlex p {
+    margin-left: 0.5em;
+    color: white;
+    font-size: 20px;
+    font-weight: lighter;
+}
+
+.footer img {
+    width: 20px;
+    height: 20px;
+}

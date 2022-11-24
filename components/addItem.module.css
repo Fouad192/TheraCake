@@ -1,0 +1,160 @@
+.addItemPopupContainer {
+    grid-column: 2/12;
+    position: absolute;
+    background-color: white;
+    padding: 2em;
+    border: 2px #ff7da3 solid;
+    justify-self: center;
+    z-index: 2;
+    border-radius: 10px;
+    width: 50%;
+    height: 70%;
+    overflow: auto;
+}
+
+.itemName label,
+.itemDescription label {
+    display: block;
+    margin: 0.5em 0;
+}
+
+.itemName input {
+    border-radius: 10px;
+    border: 1px #ff7da3 solid;
+    padding: 1em;
+    outline-color: #ff7da3;
+}
+
+.itemDescription textarea {
+    resize: none;
+    width: 100%;
+    border: 1px #ff7da3 solid;
+    border-radius: 10px;
+    padding: 1em;
+    outline-color: #ff7da3;
+}
+
+.sizes h1,
+.extras h1 {
+    margin: 0.5em 0;
+}
+
+.sizes div,
+.extras div {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1em;
+}
+
+.sizes div input[type="checkbox"],
+.extras div input[type="checkbox"] {
+    margin: 0;
+}
+
+.sizes div input,
+.extras div input,
+.flavor input,
+.topping input {
+    border: 1px #ff7da3 solid;
+    margin: 0 1em;
+    padding: 0.5em;
+    border-radius: 10px;
+    outline-color: #ff7da3;
+}
+
+.flavor button,
+.topping button {
+    border: none;
+    color: white;
+    background-color: #ff7da3;
+    padding: 0.5em 2em;
+    border-radius: 15px;
+}
+
+.flavorList,
+.toppingList,
+.flavorList li,
+.toppingList li {
+    margin: 0.5em;
+}
+
+.sizes input::-webkit-outer-spin-button,
+.sizes input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.sizes input[type=number] {
+    -moz-appearance: textfield;
+}
+
+.extras input::-webkit-outer-spin-button,
+.extras input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.extras input[type=number] {
+    -moz-appearance: textfield;
+}
+
+.file {
+    margin-top: 1em;
+    display: inline-block;
+}
+
+/* .file input {
+    visibility: hidden;
+} */
+
+.file label {
+    cursor: pointer;
+    background-color: #ff7da3;
+    color: white;
+    padding: 0.5em;
+    border-radius: 15px;
+}
+
+.addItemSubmit {
+    cursor: pointer;
+    background-color: #ff7da3;
+    color: white;
+    padding: 1em 2em;
+    border-radius: 15px;
+    border: none;
+    float: right;
+}
+
+#closeIconStyle {
+    float: right;
+    cursor: pointer;
+}
+
+.itemCategory div {
+margin: 0.5em 0;
+}
+.itemCategory div input {
+    margin-right: 0.5em;
+}
+.sizes button, .extras button, .flavor button, .topping button {
+    border: none;
+        color: white;
+        background-color: #ff7da3;
+        padding: 0.5em 2em;
+        border-radius: 10px;
+        margin-bottom: 0.5em;
+        cursor: pointer;
+}
+.sizes div input, .extras div input, .flavor div input, .topping div input {
+    margin: 0;
+    margin-right: 1em;
+}
+.topping button, .flavor button {
+    margin: 0.5em 0;
+}
+.topping div input, .flavor div input {
+    margin-top: 1em;
+}
+.topping h1 {
+    margin-top: 0.5em;
+}

@@ -1,0 +1,236 @@
+.container {
+    min-height: 100vh;
+}
+.adminOrderGrid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    font-family: 'Ubuntu', sans-serif;
+    margin-top: 5%;
+    margin-bottom: 11%;
+}
+.adminOrderInputs input {
+    padding: 1em 1em;
+    border: 1px #FF7DA3 solid;
+    border-radius: 15px;
+    outline-color: #FF7DA3;
+}
+.filter {
+    grid-column: 2/6;
+    justify-content: space-between;
+    display: flex;
+    margin-bottom: 2em;
+}
+.filter button {
+    border: none;
+    background-color: transparent;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 1em;
+}
+.filter button:focus {
+    border-bottom: 4px #FF7DA3 solid;
+    font-weight: bold;
+    color: #FF7DA3;
+}
+.adminOrderInputs {
+    grid-column: 2/6;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2em;
+}
+.orderContainer {
+    grid-column: 2/12;
+}
+.orderBriefContainer {
+    width: 100%;
+    border: 2px #FF7DA3 solid;
+    border-radius: 15px 15px 0 0;
+    padding: 1em;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    transition: ease-in-out 0.2s;
+    position: relative;
+}
+.status {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    top: 23%;
+    left: 36%;
+    z-index: 3;
+    border-radius: 10px;
+    background-color: white;
+    border: 1px #FF7DA3 solid;
+    width: 15%;
+}
+.statusBtn {
+float: right;
+color: white;
+background-color: #FF7DA3;
+border-radius: 10px;
+padding: 1em;
+border: none;
+cursor: pointer;
+}
+.status button {
+    background-color: white;
+    color: #FF7DA3;
+    padding: 1em 1em;
+    border: none;
+    border-bottom: 1px rgba(0, 0, 0, 0.1) solid;
+    text-align: left;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: ease-in-out 0.2s;
+}
+.status button:hover {
+    color: white;
+    background-color: #FF7DA3;
+    border-radius: 0;
+}
+.status button:last-child:hover {
+    border-radius: 0 0 10px 10px;
+}
+.status button:first-child:hover {
+    border-radius: 10px 10px 0 0;
+}
+.orderBriefContainer:hover {
+    color: white;
+    background-color: #FF7DA3;
+    cursor: pointer;
+}
+.orderBriefContainer:hover .pending {
+    color: white;
+}
+.orderBriefContainer div {
+    text-align: center;
+}
+.orderBriefContainer div p {
+    font-weight: bold;
+}
+.orderBriefContainer div .lightText {
+    font-weight: normal;
+}
+.orderBriefContainer div .pending {
+    color: rgb(255, 174, 0);
+}
+
+.orderDetails {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    background-color: rgba(255, 201, 217, 0.4);
+    padding: 1em;
+    margin-bottom: 2em;
+}
+
+.itemDetails {
+    grid-column: 1/7;
+    grid-row: 1;
+    width: 100%;
+
+}
+.itemDetails hr {
+    width: 100%;
+    border: none;
+    height: 1px;
+    background-color: rgba(0, 0, 0, 0.2);
+    margin: 1em 0;
+}
+.orderTitleDetails {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    /* margin-top: 1em; */
+    /* margin-bottom: -0.5em; */
+}
+.orderTitleDetails img {
+    width: 50px;
+    height: 50px;
+}
+.orderTitleDetails h1 {
+    font-size: 16px;
+}
+.itemSubDetails {
+    float: right;
+    display: flex;
+    justify-content: space-between;
+    width: 78%;
+    color: rgba(0, 0, 0, 0.6);
+    margin-bottom: 0.5em;
+}
+.deliveryFees, .subtotal, .total {
+    display: flex;
+    justify-content: space-between;
+    width: 78%;
+    float: right;
+    margin-bottom: 0.5em;
+}
+.statusTimeline {
+        width: 78%;
+        float: right;
+}
+.statusTimeline div {
+display: flex;
+align-items: center;
+margin: 0.5em 0;
+}
+.statusTimeline div p {
+    margin-left: 0.5em;
+}
+
+.addressDetails {
+    grid-column: 8/12;
+    grid-row: 1;
+}
+.addressHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.addressDetails hr {
+    /* margin: 0.5em 0; */
+    margin: 1em 0;
+}
+.addressDetails div span {
+    font-weight: 500;
+    margin-right: 0.1em;
+}
+.addressDetails div p{
+    margin-bottom: 0.5em;
+}
+.addressBtns {
+    display: flex;
+    justify-content: space-between;
+}
+.addressBtns button {
+    padding: 1em 2em;
+    border-radius: 15px;
+    cursor: pointer;
+}
+.addressBtns button:first-child {
+    border: 1px #FF7DA3 solid;
+    color: #FF7DA3;
+    background-color: white;
+    padding: 1em 4em;
+}
+.addressBtns button:first-child:hover {
+    /* border: none; */
+        color: white;
+        background-color: #FF7DA3;
+}
+.addressBtns button:last-child {
+    border: none;
+    color: white;
+    background-color: #FF7DA3;
+}
+.addressHeader button {
+    border: none;
+    background-color: transparent;
+    color: #FF7DA3;
+    font-size: 16px;
+    cursor: pointer;
+}
+
