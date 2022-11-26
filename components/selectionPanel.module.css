@@ -1,6 +1,6 @@
 .selectionPanel {
     grid-column: 8/12;
-    height: 68.5%;
+    height: 51%;
     border-radius: 15px 15px 0 0;
     /* margin-bottom: 1em; */
     position: relative;
@@ -36,7 +36,7 @@
 
 .selectionOptions {
     overflow-y: auto;
-    height: 50%;
+    height: 41%;
 }
 
 .selectionForm {
@@ -83,9 +83,7 @@
 
 }
 
-.scheduleInputs label {
-    display: block;
-}
+
 
 .scheduleInputs input {
     margin: 0.5em 0;
@@ -178,4 +176,33 @@
 .selectionOptions {
     border-left: 2px #FF7DA3 solid;
     border-right: 2px #FF7DA3 solid;
+}
+.quantityInput {
+    width: 100%;
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+}
+.quantityInput label {
+    font-size: 18px;
+    margin: 0 0.5em;
+}
+#quantityPlus, #quantityMinus {
+    background-color: #FF7DA3;
+    border: none;
+    border-radius: 100%;
+    color: white;
+    cursor: pointer;
+}
+
+#quantityPlus {
+    font-size: 18px;
+    padding: 0.1em 0.4em;
+}
+#quantityMinus {
+    font-size: 18px;
+    padding: 0.1em 0.5em;
+}
+.quantityInput h1 {
+    margin-right: 0.5em;
 }

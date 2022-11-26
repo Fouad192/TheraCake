@@ -9,7 +9,9 @@
 .informationContainer {
     grid-column: 2/7;
 }
-
+.scheduleInputs div {
+    align-items: center;
+}
 .informationContainer>h1 {
     color: #FF7DA3;
     font-size: 32px;

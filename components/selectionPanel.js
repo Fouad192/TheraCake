@@ -5,6 +5,13 @@ import plusIcon from "../public/icon/plus.svg";
 import minusIcon from "../public/icon/minus.png";
 import { useState, useRef } from "react";
 function SelectionPanel(props) {
+  let [quantity, setQuantity] = useState(0);
+  let [selectedSize, setSelectedSize] = useState();
+  let [selectedFlavor, setSelectedFlavor] = useState();
+  let [selectedExtra, setSelectedExtra] = useState([]);
+  let [selectedGift, setSelectedGift] = useState([])
+  let [notes, setNotes] = useState()
+  let [selectedTopping, setSelectedTopping] = useState();
   let [topping0, setToppingCount] = useState(0);
   let [topping1, setToppingCount2] = useState(0);
   let [topping2, setToppingCount3] = useState(0);
@@ -13,18 +20,27 @@ function SelectionPanel(props) {
   let [topping5, setToppingCount6] = useState(0);
   let [sizePriceSt, setSizePriceSt] = useState();
   let sizePriceRef = useRef([]);
+  let quantityRef = useRef();
   async function submitHandler(e) {
     e.preventDefault();
     const orderData = {
-      name: itemName.current.value,
-      description: itemDescription.current.value,
-      sizePrice: sizePriceArr,
-      extraPrice: extraPriceArr,
-      flavors: flavorList,
-      toppings: toppingList,
-      img: imageUploadData.secure_url,
+      quantity: quantity,
+      name: props.selectionData.name,
+      sizePrice: selectedSize,
+      extraPrice: selectedExtra,
+      flavors: selectedFlavor,
+      notes,
+      giftPrice: selectedGift
     };
-    props.onAddItem(itemData);
+    const response = await fetch("/api/addToCart", {
+      method: "POST",
+      body: JSON.stringify(orderData),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+     const data = await response.json();
+     console.log(data);
   }
   function increment(e) {
     if (e.target.id === "topping0") {
@@ -66,13 +82,42 @@ function SelectionPanel(props) {
         <p>{props.selectionData.description}</p>
       </div>
       <div className={classes.selectionOptions}>
-        <form className={classes.selectionForm} method="POST">
-          <h1>Choose Size</h1>
+        <form
+          className={classes.selectionForm}
+          method="POST"
+          onSubmit={submitHandler}
+        >
+          <div className={classes.quantityInput}>
+            <h1>Quantity</h1>
+            <button
+              type="button"
+              id={classes.quantityPlus}
+              onClick={() => setQuantity(quantity + 1)}
+            >
+              +
+            </button>
+            <label ref={quantityRef}>{quantity}</label>
+            <button
+              type="button"
+              id={classes.quantityMinus}
+              onClick={() => setQuantity(quantity - 1)}
+            >
+              -
+            </button>
+          </div>
           <div className={classes.sizesInputs}>
+            <h1>Choose Size</h1>
+
             {props.selectionData.sizePrice.map((item, index) => {
               return (
                 <div>
-                  <input type="radio" name='size' />
+                  <input
+                    type="radio"
+                    name="size"
+                    onClick={() =>
+                      setSelectedSize({ size: item.size, price: item.price })
+                    }
+                  />
                   <label>{item.size}</label>
                   <span>Serves 1-2 persons (12cm)</span>
                   <p>{item.price}</p>
@@ -86,7 +131,11 @@ function SelectionPanel(props) {
               <h1>Flavors</h1>
               {props.selectionData.flavors.map((item) => (
                 <div>
-                  <input type="radio" name="flavor" />
+                  <input
+                    type="radio"
+                    name="flavor"
+                    onClick={() => setSelectedFlavor(item)}
+                  />
                   <label>{item}</label>
                 </div>
               ))}
@@ -125,7 +174,24 @@ function SelectionPanel(props) {
               <h1>Extras</h1>
               {props.selectionData.extraPrice.map((item) => (
                 <div>
-                  <input type="checkbox" value={item.extra} />
+                  <input
+                    type="checkbox"
+                    value={item.extra}
+                    onClick={(e) => {
+                      if (e.target.checked) {
+                        setSelectedExtra([
+                          ...selectedExtra,
+                          { extra: item.extra, price: item.price },
+                        ]);
+                      } else if (!e.target.checked) {
+                        setSelectedExtra(
+                          selectedExtra.filter(
+                            (extra) => extra.extra != item.extra
+                          )
+                        );
+                      }
+                    }}
+                  />
                   <label>{item.extra}</label>
                   <p id={classes.extraPrice}>{item.price}</p>
                 </div>
@@ -138,27 +204,70 @@ function SelectionPanel(props) {
           <div className={classes.giftInputs}>
             <h1>Gift Option (optional)</h1>
             <div>
-              <input type="radio" name="gift" />
+              <input
+                type="checkbox"
+                value="Gift Card"
+                onClick={(e) => {
+                  if (e.target.checked) {
+                    setSelectedGift([
+                      ...selectedGift,
+                      { gift: e.target.value, price: 25 },
+                    ]);
+                  } else if (!e.target.checked) {
+                    setSelectedGift(
+                      selectedGift.filter(
+                        (gift) => gift.gift != 'Gift Card'
+                      )
+                    );
+                  }
+                }}
+              />
               <label>Gift Card</label>
-              <p>150EGP</p>
+              <p>25EGP</p>
             </div>
             <div>
-              <input type="radio" name="gift" />
+              <input
+                type="checkbox"
+                value="Rose"
+                onClick={(e) => {
+                  if (e.target.checked) {
+                    setSelectedGift([
+                      ...selectedGift,
+                      { gift: e.target.value, price: 30 },
+                    ]);
+                  } else if (!e.target.checked) {
+                    setSelectedGift(
+                      selectedGift.filter(
+                        (gift) => gift.gift != 'Rose'
+                      )
+                    );
+                  }
+                }}
+              />
               <label>Rose</label>
-              <p>150EGP</p>
+              <p>30EGP</p>
             </div>
             <div>
-              <input type="radio" name="gift" />
+              <input
+                type="checkbox"
+                value='Bouqet'
+                onClick={(e) => {
+                  if (e.target.checked) {
+                    setSelectedGift([
+                      ...selectedGift,
+                      { gift: e.target.value, price: 150 },
+                    ]);
+                  } else if (!e.target.checked) {
+                    setSelectedGift(
+                      selectedGift.filter(
+                        (gift) => gift.gift != 'Bouqet'
+                      )
+                    );
+                  }
+                }}
+              />
               <label>Bouqet (6 flowers)</label>
               <p>150EGP</p>
-            </div>
-
-            <hr />
-          </div>
-          <div className={classes.scheduleInputs}>
-            <div>
-              <h1>Schedule Delivery</h1>
-              <input type="datetime-local" />
             </div>
 
             <hr />
@@ -169,12 +278,11 @@ function SelectionPanel(props) {
               <textarea
                 placeholder="Flower's color/Gift card note"
                 rows="5"
+                onChange={(e) => setNotes(e.target.value)}
               ></textarea>
             </div>
           </div>
-          <button className={classes.menuFormSubmit}>
-            Proceed To Checkout
-          </button>
+          <button className={classes.menuFormSubmit}>Add To Cart</button>
         </form>
       </div>
       <div className={classes.selectionBottomBanner}>
