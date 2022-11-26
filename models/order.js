@@ -7,61 +7,42 @@ let orderDetails = new Schema({
         type: String,
         required: true,
     },
- orderItems: {
-  type: []
- },
- dateSubmitted: {
-  type: Number
- },
- firstName: {
-  type: String
- },
- lastName: {
-  type: String
- },
- mobile: {
-  type: Number
- },
- backupMobile: {
-  type: Number
- },
- email: {
-  type: String
- },
- governorate: {
-  type: String
- },
- city: {
-  type: String
- },
- street: {
-  type: String
- },
- building: {
-  type: String
- },
- floor: {
-  type: String
- },
- apartmentNo: {
-  type: String
- },
- dateScheduled: {
-  type: String
- },
- villa: {
-  type: String
- },
- company: {
-  type: String
- },
- instructions: {
-  type: String
- },
- scheduled: {
-  type: String
- }
+  name: {
+    type: String,
+    required: true,
+  },
+ 
+  sizePrice: {
+    type: [],
+    required: true,
+  },
+  flavors: {
+    type: [],
+    // required: true,
+  },
+  toppings: {
+    type: [],
+  },
+  extraPrice: {
+    type: [],
+  },
+  quantity: {
+    type: Number,
+    required: true,
+  },
+  total: {
+    type: Number,
+    required: true
+  }, 
+  dateSubmitted: {
 
+  },
+  dateScheduled: {
+    
+  }
+  // giftPrice: {
+  //   type: []
+  // }
 });
 
 mongoose.models = {};
