@@ -137,6 +137,7 @@
     padding: 1em 2em;
     margin-bottom: 0.5em;
     border-radius: 10px;
+    cursor: pointer;
 
 }
 
@@ -178,4 +179,15 @@
 .selectionOptions {
     border-left: 2px #FF7DA3 solid;
     border-right: 2px #FF7DA3 solid;
+}
+
+.checkoutBtnDiv {
+    display: flex;
+    align-items: center;
+}
+.checkoutBtnDiv p {
+    margin-left: 1em;
+    color: #FF7DA3;
+    display: none;
+    transition: ease-in-out;
 }

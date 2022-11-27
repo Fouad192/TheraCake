@@ -1,11 +1,19 @@
- import AdminOrders from "../components/adminOrders";
+ import { useEffect, useState } from "react";
+import AdminOrders from "../components/adminOrders";
 import dbConnect from "../lib/dbConnect";
 import OrderCheckout from "../models/order";
-
+import Navbar from "../components/navbar";
+import Footer from "../components/footer";
+import classes from '../components/adminOrders.module.css'
 function AdminOrdersPage(props) {
+
+
     return (
       <>
+        <Navbar />
+       
         <AdminOrders orders={props.checkoutOrders}/>
+        <Footer />
       </>
     );
 }
@@ -16,8 +24,9 @@ export async function getServerSideProps() {
 
   return {
     props: {
-      checkoutOrders: JSON.parse(JSON.stringify((checkoutOrders)))
+      checkoutOrders: JSON.parse(JSON.stringify((checkoutOrders))),
+
     }
   }
 }
-export default AdminOrdersPage
+export default AdminOrdersPage 

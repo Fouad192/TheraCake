@@ -4,8 +4,10 @@ import Footer from "./footer";
 import Navbar from "./navbar";
 import deleteIcon from "../public/delete.png";
 import Image from "next/image";
+import { useRouter } from "next/router";
 const orderid = require('order-id')('key')
 function checkoutDetails(props) {
+  const router = useRouter()
   let [apartmentDetails, showApartmentDetails] = useState(false);
   let [villaDetails, showVillaDetails] = useState(false);
   let [workplaceDetails, showWorkplaceDetails] = useState(false);
@@ -463,7 +465,13 @@ function checkoutDetails(props) {
                 <h1>{`${addedItem.quantity}x ${addedItem.name}`}</h1>
                 <Image
                   src={deleteIcon}
-                  onClick={() => deleteItemHandler(addedItem)}
+                  onClick={() => {
+                    deleteItemHandler(addedItem)
+                    setTimeout(() => {
+                      router.reload(window.location.pathname);
+                    }, 500);
+                    
+                  }}
                 />
               </div>
 
@@ -512,7 +520,7 @@ function checkoutDetails(props) {
           </div>
           <div className={classes.deliveryFee}>
             <p>Delivery</p>
-            <p className={classes.price}>25EGP</p>
+            <p className={classes.price}>45 EGP</p>
           </div>
           <div className={classes.total}>
             <p>Total</p>

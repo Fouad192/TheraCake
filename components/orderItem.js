@@ -1,29 +1,63 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import classes from "./adminOrders.module.css";
 import Image from "next/image";
 import basicImg from "../public/basic.png";
 
 function OrderItem({ order }) {
   let [statusPopup, openStatusPopup] = useState(false);
-let toggleStatusPopup = () => {
-  if (!statusPopup) {
-    openStatusPopup(true);
-  } else {
-    openStatusPopup(false);
+  let [sum, setSum] = useState()
+  function convertTimestampToDate() {
+    let date = new Date(order.dateSubmitted).toLocaleDateString("en-US");
+    return date;
   }
-};
+  function convertTimestampToTime() {
+    let time = new Date(order.dateSubmitted).toLocaleTimeString("en-US");
+
+    return time;
+  }
+  let toggleStatusPopup = () => {
+    if (!statusPopup) {
+      openStatusPopup(true);
+    } else {
+      openStatusPopup(false);
+    }
+  };
   function calculateTotal() {
     let sumPrice = 0;
     order.orderItems.map(
-      (item) => item.sizePrice.map(size => sumPrice += parseInt(size.price))
+      (item) => item.sizePrice.map((size) => (sumPrice += parseInt(size.price)))
       //   priceArr.push(parseInt(item.sizePrice.price))
     );
-    order.orderItems.map((item) => item.giftPrice.map(gift => sumPrice+= parseInt(gift.price)))
-    order.orderItems.map((item) => item.extraPrice.map(extra => sumPrice += parseInt(extra.price)))
-    return sumPrice
+    order.orderItems.map((item) =>
+      item.giftPrice.map((gift) => (sumPrice += parseInt(gift.price)))
+    );
+    order.orderItems.map((item) =>
+      item.extraPrice.map((extra) => (sumPrice += parseInt(extra.price)))
+    );
+   setSum(sumPrice)
+  }
+  useEffect(() => {
+    calculateTotal()
+  })
+  async function setStatus(e) {
+    let status = [e.target.value, order._id]
+    const response = await fetch('/api/checkout', {
+      method: "PUT",
+      body: JSON.stringify(status)
+    })
+    const data = await response.json()
+    console.log(data)
+  }
+  async function deleteOrder() {
+    const response = await fetch('/api/checkout', {
+      method: 'DELETE',
+       body: order._id
+    })
+    const data = await response.json()
+    console.log(data)
   }
   return (
-    <div className={classes.orderContainer} onClick={calculateTotal}>
+    <div className={classes.orderContainer}>
       <div className={classes.orderBriefContainer}>
         <div>
           <h3>Yesterday</h3>
@@ -40,19 +74,16 @@ let toggleStatusPopup = () => {
         </div>
         <div>
           <h3>Cash</h3>
-          <p className={classes.lightText}>{calculateTotal()}</p>
+          <p className={classes.lightText}>{sum}</p>
         </div>
         <div>
-          <p>ASAP</p>
-          <p>5:14PM, 13 Nov 2022</p>
+          <p>{order.scheduled}</p>
+          <p>{`${convertTimestampToTime()} - ${convertTimestampToDate()}`}</p>
         </div>
 
         <div>
-          <p className={classes.pending}>Pending</p>
+          <p className={classes.pending}>{order.status}</p>
         </div>
-        <button className={classes.statusBtn} onClick={toggleStatusPopup}>
-          Set Status
-        </button>
       </div>
 
       <div className={classes.orderDetails}>
@@ -71,26 +102,42 @@ let toggleStatusPopup = () => {
               </div>
               {item.giftPrice.map((gift) => (
                 <div className={classes.itemSubDetails}>
-                  <p>{gift.gift}</p>
+                  <div>
+                    <p>{gift.gift}</p>
+                    <p>{gift.price}</p>
+                  </div>
                 </div>
               ))}
 
+              {item.extraPrice.map((extra) => (
+                <div className={classes.itemSubDetails}>
+                  <div>
+                    <p>{extra.extra}</p>
+                    <p>{extra.price}</p>
+                  </div>
+                </div>
+              ))}
               <hr />
             </div>
           ))}
 
           <div className={classes.subtotal}>
             <p>Subtotal</p>
-            <p>250EGP</p>
+            <p>{sum}</p>
+          </div>
+          <div className={classes.deliveryFees}>
+            <p>VAT</p>
+            <p>{(sum * 14) / 100}</p>
           </div>
           <div className={classes.deliveryFees}>
             <p>Delivery Fees</p>
-            <p>25EGP</p>
+            <p>45 EGP</p>
           </div>
+
           <hr />
           <div className={classes.total}>
             <p>Total</p>
-            <p>275EGP</p>
+            <p>{(sum * 14) / 100 + 45 + sum}</p>
           </div>
           <hr />
           <div className={classes.statusTimeline}>
@@ -138,6 +185,21 @@ let toggleStatusPopup = () => {
           <div className={classes.addressBtns}>
             <button>View Map</button>
             <button>Send Via Whatsapp</button>
+          </div>
+          <div class={classes.statusContainer}>
+            <button className={classes.statusBtn} onClick={toggleStatusPopup}>
+              Set Status
+            </button>
+            {statusPopup && (
+              <div className={classes.status}>
+                <button value='Accepted' onClick={(e) => setStatus(e)}>Accept Order</button>
+                <button value='Ready' onClick={(e) => setStatus(e)}>Order Is Ready</button>
+                <button value='On the way' onClick={(e) => setStatus(e)}>Dispatch Order</button>
+                <button value='Pending' onClick={(e) => setStatus(e)}>Set As Pending</button>
+                <button onClick={deleteOrder}>Delete Order</button>
+                <button value='Delivered' onClick={(e) => setStatus(e)}>Order Delievered</button>
+              </div>
+            )}
           </div>
         </div>
       </div>

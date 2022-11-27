@@ -6,7 +6,7 @@ import minusIcon from "../public/icon/minus.png";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useState, useRef } from "react";
 function SelectionPanel(props) {
-  let [quantity, setQuantity] = useState(0);
+  let [quantity, setQuantity] = useState(1);
   let [selectedSize, setSelectedSize] = useState();
   let [selectedFlavor, setSelectedFlavor] = useState();
   let [selectedExtra, setSelectedExtra] = useState([]);
@@ -22,6 +22,7 @@ function SelectionPanel(props) {
   let [sizePriceSt, setSizePriceSt] = useState();
   let sizePriceRef = useRef([]);
   let quantityRef = useRef();
+  let addToInvoiceFlash = useRef()
   const { data: session } = useSession();
   function isLoggedIn() {
     if (!session) {
@@ -31,8 +32,19 @@ function SelectionPanel(props) {
         </button>
       );
     } else if (session) {
-      return <button className={classes.menuFormSubmit}>Add To Cart</button>;
+      return (
+        <div className={classes.checkoutBtnDiv}>
+          <button className={classes.menuFormSubmit} onClick={timeOutFlash}>Add To Cart</button>
+          <p ref={addToInvoiceFlash}>Added to checkout invoice</p>
+        </div>
+      );
     }
+  }
+  function timeOutFlash() {
+addToInvoiceFlash.current.style.display = 'block'
+setTimeout(() => {
+ addToInvoiceFlash.current.style.display = 'none'
+}, 1000);
   }
   async function submitHandler(e) {
     e.preventDefault();

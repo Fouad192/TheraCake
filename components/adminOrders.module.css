@@ -41,6 +41,7 @@
 }
 .orderContainer {
     grid-column: 2/12;
+    margin: 1em 0;
 }
 .orderBriefContainer {
     width: 100%;
@@ -57,16 +58,15 @@
     position: absolute;
     display: flex;
     flex-direction: column;
-    top: 23%;
-    left: 36%;
-    z-index: 3;
+    
+    margin: 0.5em auto;
+    width: 30%;
     border-radius: 10px;
     background-color: white;
     border: 1px #FF7DA3 solid;
-    width: 15%;
+    /* width: 15%; */
 }
 .statusBtn {
-float: right;
 color: white;
 background-color: #FF7DA3;
 border-radius: 10px;
@@ -99,7 +99,15 @@ cursor: pointer;
 .orderBriefContainer:hover {
     color: white;
     background-color: #FF7DA3;
-    cursor: pointer;
+
+}
+.statusContainer {
+margin-top: 1em;
+}
+
+.orderBriefContainer:hover .statusContainer button {
+    background-color: white;
+    color: #FF7DA3;
 }
 .orderBriefContainer:hover .pending {
     color: white;
@@ -233,4 +241,8 @@ margin: 0.5em 0;
     font-size: 16px;
     cursor: pointer;
 }
-
+.itemSubDetails div {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}

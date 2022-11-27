@@ -12,6 +12,7 @@ quantity: {
   },
   sizePrice: {
     type: [],
+    required: true,
   },
   flavors: {
     type: [],

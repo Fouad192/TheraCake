@@ -1,8 +1,12 @@
+import { useEffect } from "react";
 import CheckoutDetails from "../components/CheckoutDetails";
 import dbConnect from "../lib/dbConnect";
 import Cart from '../models/cart'
+
 function checkout(props) {
+
     return <CheckoutDetails addedItems={props.addedItems}/>
+   
 }
 
 
