@@ -24,11 +24,7 @@ let toggleStatusPopup = () => {
   }
   return (
     <div className={classes.orderContainer} onClick={calculateTotal}>
-      <div
-        i
-        className={classes.orderBriefContainer}
-        onClick={(e) => console.log(e.target)}
-      >
+      <div className={classes.orderBriefContainer}>
         <div>
           <h3>Yesterday</h3>
           <p className={classes.lightText}>5:14AM</p>
@@ -57,25 +53,32 @@ let toggleStatusPopup = () => {
         <button className={classes.statusBtn} onClick={toggleStatusPopup}>
           Set Status
         </button>
-        
       </div>
 
       <div className={classes.orderDetails}>
         <div className={classes.itemDetails}>
           <h1>Items</h1>
           <hr />
-          <div className={classes.orderTitleDetails}>
-            <Image src={basicImg} alt="basic" />
-            <h1>Original Thera Cake Brownies - 20 Mini Pieces</h1>
-            <p>250EGP</p>
-          </div>
-          <div className={classes.itemSubDetails}>
-            <p>3x Nutella</p>
-          </div>
-          <div className={classes.itemSubDetails}>
-            <p>3x Nutella</p>
-          </div>
-          <hr />
+          {order.orderItems.map((item) => (
+            <div>
+              <div className={classes.orderTitleDetails}>
+                <Image src={basicImg} alt="basic" />
+                <h1>{`${item.quantity}x ${item.name}`}</h1>
+                <p>{item.sizePrice[0].price}</p>
+              </div>
+              <div className={classes.itemSubDetails}>
+                <p>{item.flavors[0]}</p>
+              </div>
+              {item.giftPrice.map((gift) => (
+                <div className={classes.itemSubDetails}>
+                  <p>{gift.gift}</p>
+                </div>
+              ))}
+
+              <hr />
+            </div>
+          ))}
+
           <div className={classes.subtotal}>
             <p>Subtotal</p>
             <p>250EGP</p>

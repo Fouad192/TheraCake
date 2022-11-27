@@ -3,14 +3,15 @@ import basicSelectionImg from "../public/basicSelectionImg.png";
 import Image from "next/image";
 import plusIcon from "../public/icon/plus.svg";
 import minusIcon from "../public/icon/minus.png";
+import { useSession, signIn, signOut } from "next-auth/react";
 import { useState, useRef } from "react";
 function SelectionPanel(props) {
   let [quantity, setQuantity] = useState(0);
   let [selectedSize, setSelectedSize] = useState();
   let [selectedFlavor, setSelectedFlavor] = useState();
   let [selectedExtra, setSelectedExtra] = useState([]);
-  let [selectedGift, setSelectedGift] = useState([])
-  let [notes, setNotes] = useState()
+  let [selectedGift, setSelectedGift] = useState([]);
+  let [notes, setNotes] = useState();
   let [selectedTopping, setSelectedTopping] = useState();
   let [topping0, setToppingCount] = useState(0);
   let [topping1, setToppingCount2] = useState(0);
@@ -21,6 +22,18 @@ function SelectionPanel(props) {
   let [sizePriceSt, setSizePriceSt] = useState();
   let sizePriceRef = useRef([]);
   let quantityRef = useRef();
+  const { data: session } = useSession();
+  function isLoggedIn() {
+    if (!session) {
+      return (
+        <button className={classes.menuFormSubmit} onClick={() => signIn()}>
+          Add To Cart
+        </button>
+      );
+    } else if (session) {
+      return <button className={classes.menuFormSubmit}>Add To Cart</button>;
+    }
+  }
   async function submitHandler(e) {
     e.preventDefault();
     const orderData = {
@@ -30,7 +43,7 @@ function SelectionPanel(props) {
       extraPrice: selectedExtra,
       flavors: selectedFlavor,
       notes,
-      giftPrice: selectedGift
+      giftPrice: selectedGift,
     };
     const response = await fetch("/api/addToCart", {
       method: "POST",
@@ -39,8 +52,8 @@ function SelectionPanel(props) {
         "Content-Type": "application/json",
       },
     });
-     const data = await response.json();
-     console.log(data);
+    const data = await response.json();
+    console.log(data);
   }
   function increment(e) {
     if (e.target.id === "topping0") {
@@ -215,9 +228,7 @@ function SelectionPanel(props) {
                     ]);
                   } else if (!e.target.checked) {
                     setSelectedGift(
-                      selectedGift.filter(
-                        (gift) => gift.gift != 'Gift Card'
-                      )
+                      selectedGift.filter((gift) => gift.gift != "Gift Card")
                     );
                   }
                 }}
@@ -237,9 +248,7 @@ function SelectionPanel(props) {
                     ]);
                   } else if (!e.target.checked) {
                     setSelectedGift(
-                      selectedGift.filter(
-                        (gift) => gift.gift != 'Rose'
-                      )
+                      selectedGift.filter((gift) => gift.gift != "Rose")
                     );
                   }
                 }}
@@ -250,7 +259,7 @@ function SelectionPanel(props) {
             <div>
               <input
                 type="checkbox"
-                value='Bouqet'
+                value="Bouqet"
                 onClick={(e) => {
                   if (e.target.checked) {
                     setSelectedGift([
@@ -259,9 +268,7 @@ function SelectionPanel(props) {
                     ]);
                   } else if (!e.target.checked) {
                     setSelectedGift(
-                      selectedGift.filter(
-                        (gift) => gift.gift != 'Bouqet'
-                      )
+                      selectedGift.filter((gift) => gift.gift != "Bouqet")
                     );
                   }
                 }}
@@ -282,7 +289,7 @@ function SelectionPanel(props) {
               ></textarea>
             </div>
           </div>
-          <button className={classes.menuFormSubmit}>Add To Cart</button>
+          {isLoggedIn()}
         </form>
       </div>
       <div className={classes.selectionBottomBanner}>
