@@ -1,7 +1,8 @@
 import classes from "./adminOrders.module.css";
 import basicImg from "../public/basic.png";
 import Image from "next/image";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
+import { useSession } from "next-auth/react";
 // import Navbar from "./navbar";
 // import Footer from "./footer";
 import OrderItem from "./orderItem";
@@ -11,22 +12,25 @@ function AdminOrders(props) {
   let [statusPopup, openStatusPopup] = useState(false);
   let [search, setSearch] = useState();
   let [result, setResult] = useState();
-  let [isLoading, setLoading] = useState(false)
-function searchByName(e) {
-  setSearch(e.target.value)
- 
-let bla = props.orders.filter(order => (
-  order.firstName === search
-))
-if(bla.constructor === Array) {
-  setResult(bla)
-}
- if (!result) {
-   setLoading(false);
- } else if (result === bla) {
-   setLoading(true);
- }
-}
+  let [isLoading, setLoading] = useState(false);
+  function searchByName(e) {
+    setSearch(e.target.value);
+  }
+  // useEffect(() => {
+  // let bla = props.orders.filter(
+  //   (order) => order.firstName === search || order.lastName === search
+  // );
+
+  // if (bla.constructor === Array) {
+  //   setResult((result = bla));
+  // }
+
+  // if (!result) {
+  //   setLoading(false);
+  // } else if (result === bla) {
+  //   setLoading(true);
+  // }
+  // }, [result])
 
   let toggleStatusPopup = () => {
     if (!statusPopup) {
@@ -45,9 +49,8 @@ if(bla.constructor === Array) {
             onChange={(e) => searchByName(e)}
           />
           <input type="sort" />
-        
         </div>
-       
+
         <div className={classes.filter}>
           <button>All</button>
           <button>Pending</button>
