@@ -11,4 +11,14 @@ export default NextAuth({
   ],
   secret: process.env.JWT_SECRET,
   adapter: MongoDBAdapter(clientPromise),
+  callbacks: {
+    async session({session, token, user}) {
+      session.user._id = user.id;
+      return session
+    }
+  },
+  // session: {
+  //   strategy: "database",
+  //   maxAge: 30 * 24 * 60 * 60
+  // }
 });

@@ -2,6 +2,10 @@ import mongoose from "mongoose";
 let Schema = mongoose.Schema;
 
 let cart = new Schema({
+  userId: {
+    type: String,
+    required: true,
+  },
 quantity: {
     type: Number,
     required: true

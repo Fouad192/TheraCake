@@ -5,9 +5,11 @@ import Navbar from "./navbar";
 import deleteIcon from "../public/delete.png";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 const orderid = require('order-id')('key')
 function checkoutDetails(props) {
   const router = useRouter()
+  const {data: session} = useSession()
   let [apartmentDetails, showApartmentDetails] = useState(false);
   let [villaDetails, showVillaDetails] = useState(false);
   let [workplaceDetails, showWorkplaceDetails] = useState(false);
@@ -20,6 +22,7 @@ function checkoutDetails(props) {
      let thisOrderId = orderid.generate()
      let currentTime = orderid.getTime(thisOrderId)
      const orderData = {
+      userId: session.user._id,
        orderItems: props.addedItems,
        orderNumber: thisOrderId,
        dateSubmitted: currentTime,
@@ -67,7 +70,6 @@ function checkoutDetails(props) {
       showApartmentDetails(true);
     }
   };
-
   function totalDue() {
     let sum = 0;
     for (let i = 0; i <= props.addedItems.length - 1; i++) {

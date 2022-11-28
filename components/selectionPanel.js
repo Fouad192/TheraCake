@@ -4,7 +4,7 @@ import Image from "next/image";
 import plusIcon from "../public/icon/plus.svg";
 import minusIcon from "../public/icon/minus.png";
 import { useSession, signIn, signOut } from "next-auth/react";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 function SelectionPanel(props) {
   let [quantity, setQuantity] = useState(1);
   let [selectedSize, setSelectedSize] = useState();
@@ -40,6 +40,7 @@ function SelectionPanel(props) {
       );
     }
   }
+
   function timeOutFlash() {
 addToInvoiceFlash.current.style.display = 'block'
 setTimeout(() => {
@@ -49,6 +50,7 @@ setTimeout(() => {
   async function submitHandler(e) {
     e.preventDefault();
     const orderData = {
+      userId: session.user._id,
       quantity: quantity,
       name: props.selectionData.name,
       sizePrice: selectedSize,

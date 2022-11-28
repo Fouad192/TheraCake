@@ -15,7 +15,8 @@ function Navbar() {
               <Link href="/">Home</Link>
               <Link href="/menu">Menu</Link>
               <Link href="/checkout">Checkout</Link>
-              <button onClick={() => signOut()}>Logout</button>
+              <Link href="/history">History</Link>
+              <button onClick={() => signOut({callbackUrl: `${window.location.origin}`})}>Logout</button>
             </li>
           </ul>
         </div>

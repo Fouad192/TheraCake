@@ -2,6 +2,10 @@ import mongoose from "mongoose";
 let Schema = mongoose.Schema;
 
 let orderDetails = new Schema({
+  userId: {
+    type: String,
+    required: true
+  },
   orderNumber: {
     type: String,
   },
