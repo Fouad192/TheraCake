@@ -1,10 +1,11 @@
 .footer {
-    height: 30%;
+    /* height: 30%; */
     width: 100%;
     background-color: #FF7DA3;
     padding: 1em;
     overflow: hidden;
     font-family: 'Ubuntu', sans-serif;
+  
 
 }
 .contactContainer {

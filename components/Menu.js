@@ -1,21 +1,19 @@
 import classes from "./menu.module.css";
 import { useState, useRef, useEffect } from "react";
-import Link from "next/link";
-import basicImg from "../public/basic.png";
 import Image from "next/image";
 import deleteIcon from "../public/delete.png";
 import editIcon from "../public/edit.png";
 import AddItem from "./addItem";
-import Navbar from "./navbar";
-import Footer from "./footer";
 import SelectionPanel from "./selectionPanel";
 import EditItem from "./editItem";
 function Menu(props) {
+  
   let [addItemPopup, toggleAddItemPopup] = useState(false);
   let [idx, setIdx] = useState();
   let [categoryDetect, setCategoryDetect] = useState(false);
   let [editItemPopup, openEditItem] = useState(false);
   let [toBeEdited, setToBeEdited] = useState()
+  let [isAuthorized, setAuthorized] = useState(false)
   let cheesecake = useRef();
   let brownies = useRef();
   let cheesecakeMenu = useRef();
@@ -24,6 +22,19 @@ function Menu(props) {
   //   idx = itemIndex
   //   console.log(idx)
   // }
+useEffect(() => {
+if (props.session.user.email === "anwarcitcm@gmail.com") {
+  setAuthorized(true);
+} else if (props.session.user.email === "fouadhamdy51@gmail.com") {
+  setAuthorized(true);
+} else if(props.session.user.email === "mohamedaymanmoudy1@gmail.com") {
+  setAuthorized(true)
+} else {
+  setAuthorized(false);
+}
+
+}, [isAuthorized])
+
 
   let toggleAddItemBtn = () => {
     toggleAddItemPopup(true);
@@ -78,7 +89,6 @@ function Menu(props) {
 
   return (
     <>
-      <Navbar />
       <section className={classes.menuGrid}>
         {addItemPopup && (
           <AddItem
@@ -86,7 +96,7 @@ function Menu(props) {
             onAddItem={addItemHandler}
           />
         )}
-        {editItemPopup && <EditItem data={toBeEdited}/>}
+        {editItemPopup && <EditItem data={toBeEdited} />}
         <div className={classes.menuItems}>
           <div className={classes.menuNavigation}>
             <button ref={cheesecake} onClick={cheesecakeMenuHandler}>
@@ -95,14 +105,18 @@ function Menu(props) {
             <button ref={brownies} onClick={browniesMenuHandler}>
               Brownies
             </button>
-            <button onClick={toggleAddItemBtn}>Add Item</button>
+            {isAuthorized ? <button onClick={toggleAddItemBtn}>Add Item</button> : null }
+           
           </div>
           <div
             className={classes.cheesecakeMenuItemContainer}
             ref={cheesecakeMenu}
           >
             {cheesecakes.map((item, index) => (
-              <div className={classes.menuItem} onClick={() => console.log(item)}>
+              <div
+                className={classes.menuItem}
+                onClick={() => console.log(item)}
+              >
                 <div className={classes.menuItemDetails}>
                   <div className={classes.adminModifyAndDelete}>
                     <Image
@@ -112,8 +126,8 @@ function Menu(props) {
                     <Image
                       src={editIcon}
                       onClick={() => {
-                        setToBeEdited(item)
-                        openEditItem(true)
+                        setToBeEdited(item);
+                        openEditItem(true);
                       }}
                     />
                   </div>
@@ -185,7 +199,6 @@ function Menu(props) {
 
         {returnSelectionPanel()}
       </section>
-      <Footer />
     </>
   );
 }

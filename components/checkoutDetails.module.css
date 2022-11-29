@@ -94,6 +94,18 @@
 .item {
     width: 100%;
 }
+.deleteDiv {
+    display: flex;
+    align-items: center;
+    /* justify-content: space-between; */
+    margin: 0.5em 0;
+}
+.deleteDiv img {
+    width: 18px;
+    height: 22px;
+    cursor: pointer;
+    margin-left: 0.5em;
+}
 .item > h1 {
     font-size: 24px;
     margin-top: 0.5em;

@@ -1,15 +1,40 @@
 import classes from "./checkoutDetails.module.css";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Footer from "./footer";
 import Navbar from "./navbar";
 import deleteIcon from "../public/delete.png";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
-const orderid = require('order-id')('key')
+const orderid = require("order-id")("key");
 function checkoutDetails(props) {
-  const router = useRouter()
-  const {data: session} = useSession()
+  const router = useRouter();
+  const { data: session } = useSession();
+  const lastIndex = props.userAddress.length - 1;
+
+  useEffect(() => {
+    if (props.userAddress[lastIndex]) {
+      let initialAddressDetails = {
+        firstName: props.userAddress[lastIndex].firstName,
+        lastName: props.userAddress[lastIndex].lastName,
+        mobile: props.userAddress[lastIndex].mobile,
+        backupMobile: props.userAddress[lastIndex].backupMobile,
+        email: props.userAddress[lastIndex].email,
+        governorate: props.userAddress[lastIndex].governorate,
+        city: props.userAddress[lastIndex].city,
+        area: props.userAddress[lastIndex].area,
+        street: props.userAddress[lastIndex].street,
+        building: props.userAddress[lastIndex].building,
+        floor: props.userAddress[lastIndex].floor,
+        apartment: props.userAddress[lastIndex].apartment,
+        instructions: "",
+        scheduled: "",
+      };
+      setApartmentInputs(initialAddressDetails);
+    } else if (!props.userAddress[lastIndex]) {
+      setApartmentInputs({});
+    }
+  }, [props.userAddress]);
   let [apartmentDetails, showApartmentDetails] = useState(false);
   let [villaDetails, showVillaDetails] = useState(false);
   let [workplaceDetails, showWorkplaceDetails] = useState(false);
@@ -17,40 +42,40 @@ function checkoutDetails(props) {
   let [apartmentInputs, setApartmentInputs] = useState({});
   let [villaInputs, setVillaInputs] = useState({});
   let [companyInputs, setCompanyInputs] = useState({});
-   async function apartmentSubmitHandler(e) {
-     e.preventDefault();
-     let thisOrderId = orderid.generate()
-     let currentTime = orderid.getTime(thisOrderId)
-     const orderData = {
+  async function apartmentSubmitHandler(e) {
+    e.preventDefault();
+    let thisOrderId = orderid.generate();
+    let currentTime = orderid.getTime(thisOrderId);
+    const orderData = {
       userId: session.user._id,
-       orderItems: props.addedItems,
-       orderNumber: thisOrderId,
-       dateSubmitted: currentTime,
-       firstName: apartmentInputs.firstName,
-       lastName: apartmentInputs.lastName,
-       mobile: apartmentInputs.mobile,
-       backupMobile: apartmentInputs.backupMobile,
-       email: apartmentInputs.email,
-       governorate: apartmentInputs.governorate,
-       city: apartmentInputs.city,
-       street: apartmentInputs.street,
-       building: apartmentInputs.building,
-       floor: apartmentInputs.floor,
-       apartment: apartmentInputs.apartment,
-       instructions: apartmentInputs.instructions,
-       scheduled: apartmentInputs.scheduled
-
-     };
-     const response = await fetch("/api/checkout", {
-       method: "POST",
-       body: JSON.stringify(orderData),
-       headers: {
-         "Content-Type": "application/json",
-       },
-     });
-     const data = await response.json();
-     console.log(data);
-   }
+      orderItems: props.addedItems,
+      orderNumber: thisOrderId,
+      dateSubmitted: currentTime,
+      firstName: apartmentInputs.firstName,
+      lastName: apartmentInputs.lastName,
+      mobile: apartmentInputs.mobile,
+      backupMobile: apartmentInputs.backupMobile,
+      email: apartmentInputs.email,
+      governorate: apartmentInputs.governorate,
+      city: apartmentInputs.city,
+      area: apartmentInputs.area,
+      street: apartmentInputs.street,
+      building: apartmentInputs.building,
+      floor: apartmentInputs.floor,
+      apartment: apartmentInputs.apartment,
+      instructions: apartmentInputs.instructions,
+      scheduled: apartmentInputs.scheduled,
+    };
+    const response = await fetch("/api/checkout", {
+      method: "POST",
+      body: JSON.stringify(orderData),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+    console.log(data);
+  }
   function handleApartmentInputChange(e) {
     const { name, value } = e.target;
     setApartmentInputs({ ...apartmentInputs, [name]: value });
@@ -113,7 +138,6 @@ function checkoutDetails(props) {
   }
   return (
     <>
-      <Navbar />
       <section className={classes.checkoutDetailsGrid}>
         <div className={classes.informationContainer}>
           <h1>Delivery Details</h1>
@@ -187,20 +211,27 @@ function checkoutDetails(props) {
                     <div>
                       <input
                         type="text"
-                        name="street"
-                        placeholder="Street"
+                        name="area"
+                        placeholder="Area"
                         onChange={handleApartmentInputChange}
-                        value={apartmentInputs.street}
+                        value={apartmentInputs.area}
                       />
                       <input
                         type="text"
-                        name="building"
-                        placeholder="Building No."
+                        name="street"
+                        placeholder="Street Name"
                         onChange={handleApartmentInputChange}
-                        value={apartmentInputs.building}
+                        value={apartmentInputs.street}
                       />
                     </div>
                     <div>
+                      <input
+                        type="text"
+                        name="building"
+                        placeholder="Building Number"
+                        onChange={handleApartmentInputChange}
+                        value={apartmentInputs.building}
+                      />
                       <input
                         type="text"
                         name="floor"
@@ -208,12 +239,14 @@ function checkoutDetails(props) {
                         onChange={handleApartmentInputChange}
                         value={apartmentInputs.floor}
                       />
+                    </div>
+                    <div>
                       <input
                         type="text"
-                        name="apartmentNo"
-                        placeholder="Apartment No."
+                        name="apartment"
+                        placeholder="Apartment Number"
                         onChange={handleApartmentInputChange}
-                        value={apartmentInputs.apartmentNo}
+                        value={apartmentInputs.apartment}
                       />
                     </div>
                     <div>
@@ -463,16 +496,15 @@ function checkoutDetails(props) {
           <hr />
           {props.addedItems.map((addedItem) => (
             <div className={classes.item}>
-              <div>
+              <div className={classes.deleteDiv}>
                 <h1>{`${addedItem.quantity}x ${addedItem.name}`}</h1>
                 <Image
                   src={deleteIcon}
                   onClick={() => {
-                    deleteItemHandler(addedItem)
+                    deleteItemHandler(addedItem);
                     setTimeout(() => {
                       router.reload(window.location.pathname);
                     }, 500);
-                    
                   }}
                 />
               </div>
@@ -514,24 +546,27 @@ function checkoutDetails(props) {
               <hr />
             </div>
           ))}
-          <div className={classes.vat}>
-            <p>
-              VAT<sub>14%</sub>
-            </p>
-            <p className={classes.price}>{vatAmount()}</p>
-          </div>
-          <div className={classes.deliveryFee}>
-            <p>Delivery</p>
-            <p className={classes.price}>45 EGP</p>
-          </div>
-          <div className={classes.total}>
-            <p>Total</p>
-            <p className={classes.price}>{totalDue()}</p>
-          </div>
-          <button className={classes.addMoreItems}>Add More Items</button>
+          {props.addedItems.length != 0 && (
+            <>
+              <div className={classes.vat}>
+                <p>
+                  VAT<sub>14%</sub>
+                </p>
+                <p className={classes.price}>{vatAmount()}</p>
+              </div>
+              <div className={classes.deliveryFee}>
+                <p>Delivery</p>
+                <p className={classes.price}>45 EGP</p>
+              </div>
+              <div className={classes.total}>
+                <p>Total</p>
+                <p className={classes.price}>{totalDue()}</p>
+              </div>
+              <button className={classes.addMoreItems}>Add More Items</button>
+            </>
+          )}
         </div>
       </section>
-      <Footer />
     </>
   );
 }

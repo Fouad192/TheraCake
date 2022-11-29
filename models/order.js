@@ -36,6 +36,9 @@ let orderDetails = new Schema({
   city: {
     type: String,
   },
+  area: {
+    type: String,
+  },
   street: {
     type: String,
   },

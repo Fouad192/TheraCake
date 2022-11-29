@@ -9,12 +9,12 @@ function History(props) {
   
     return (
       <>
-        <Navbar />
+
         {props.orderHistory.map((order) => (
           <UserHistory order={order} />
         ))}
 
-        <Footer />
+     
       </>
     );
 }

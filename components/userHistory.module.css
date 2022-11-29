@@ -1,0 +1,153 @@
+.historySection {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    font-family: 'Ubuntu', sans-serif;
+}
+
+
+.orderHistoryContainer {
+    grid-column: 2/12;
+    margin: 1em 0;
+}
+
+.orderHistoryBriefContainer {
+    width: 100%;
+    border: 2px #FF7DA3 solid;
+    border-radius: 15px 15px 0 0;
+    padding: 1em;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    transition: ease-in-out 0.2s;
+    position: relative;
+}
+
+.orderHistoryBriefContainer:hover {
+    color: white;
+    background-color: #FF7DA3;
+
+}
+
+.orderHistoryBriefContainer:hover .pending {
+    color: white;
+}
+
+.orderHistoryBriefContainer div {
+    text-align: center;
+}
+
+.orderHistoryBriefContainer div p {
+    font-weight: bold;
+}
+
+.orderHistoryBriefContainer div .lightText {
+    font-weight: normal;
+}
+
+.orderHistoryBriefContainer div .pending {
+    color: rgb(255, 174, 0);
+}
+
+.orderHistoryDetails {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    background-color: rgba(255, 201, 217, 0.4);
+    padding: 1em;
+    margin-bottom: 2em;
+}
+
+.itemHistoryDetails {
+    grid-column: 1/7;
+    grid-row: 1;
+    width: 100%;
+
+}
+
+.itemHistoryDetails hr {
+    width: 100%;
+    border: none;
+    height: 1px;
+    background-color: rgba(0, 0, 0, 0.2);
+    margin: 1em 0;
+}
+
+.orderHistoryTitleDetails {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    /* margin-top: 1em; */
+    /* margin-bottom: -0.5em; */
+}
+
+.orderHistoryTitleDetails img {
+    width: 50px;
+    height: 50px;
+}
+
+.orderHistoryTitleDetails h1 {
+    font-size: 16px;
+}
+
+.itemHistorySubDetails {
+    float: right;
+    display: flex;
+    justify-content: space-between;
+    width: 78%;
+    color: rgba(0, 0, 0, 0.6);
+    margin-bottom: 0.5em;
+}
+
+.historyDeliveryFees,
+.historySubtotal,
+.historyTotal {
+    display: flex;
+    justify-content: space-between;
+    width: 78%;
+    float: right;
+    margin-bottom: 0.5em;
+}
+
+.addressHistoryDetails {
+    grid-column: 8/12;
+    grid-row: 1;
+}
+
+.addressHistoryHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.addressHistoryDetails hr {
+    /* margin: 0.5em 0; */
+    margin: 1em 0;
+}
+
+.addressHistoryDetails div span {
+    font-weight: 500;
+    margin-right: 0.1em;
+}
+
+.addressHistoryDetails div p {
+    margin-bottom: 0.5em;
+}
+
+.addressHistoryBtns {
+    display: flex;
+    justify-content: space-between;
+}
+
+.addressHistoryBtns button {
+    padding: 1em 2em;
+    border-radius: 15px;
+    cursor: pointer;
+        border: none;
+            color: white;
+            background-color: #FF7DA3;
+}
+.itemHistorySubDetails div {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}

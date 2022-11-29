@@ -8,15 +8,22 @@ function Navbar() {
     return (
       <div className={classes.navbarContainer}>
         <div className={classes.halfCircle}></div>
-        <h1>TheraCake</h1>
+        <Link href="/">TheraCake</Link>
         <div className={classes.navbar}>
           <ul>
             <li>
-              <Link href="/">Home</Link>
               <Link href="/menu">Menu</Link>
               <Link href="/checkout">Checkout</Link>
               <Link href="/history">History</Link>
-              <button onClick={() => signOut({callbackUrl: `${window.location.origin}`})}>Logout</button>
+              <Link href="/adminorders">Admin Orders</Link>
+              <button
+                className={classes.signBtns}
+                onClick={() =>
+                  signOut({ callbackUrl: `${window.location.origin}` })
+                }
+              >
+                Logout
+              </button>
             </li>
           </ul>
         </div>
@@ -26,13 +33,16 @@ function Navbar() {
     return (
       <div className={classes.navbarContainer}>
         <div className={classes.halfCircle}></div>
-        <h1>TheraCake</h1>
+        <Link href="/">TheraCake</Link>
+
         <div className={classes.navbar}>
           <ul>
             <li>
               <Link href="/">Home</Link>
               <Link href="/menu">Menu</Link>
-              <button onClick={() => signIn()}>Sign In</button>
+              <button className={classes.signBtns} onClick={() => signIn()}>
+                Sign In
+              </button>
             </li>
           </ul>
         </div>

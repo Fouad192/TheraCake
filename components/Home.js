@@ -7,7 +7,6 @@ import Footer from "./footer";
 function Home() {
   return (
     <>
-    <Navbar/>
       <section className={classes.homeSection}>
         <div className={classes.homeDetails}>
           <h1>TheraCake</h1>
@@ -25,7 +24,6 @@ function Home() {
           <Image src={homeImg} />
         </div>
       </section>
-      <Footer/>
     </>
   );
 }

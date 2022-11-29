@@ -4,6 +4,7 @@
     grid-template-columns: repeat(12, 1fr);
     font-family: 'Ubuntu', sans-serif;
     margin-top: 5%;
+    min-height: 70vh;
 }
 .menuNavigation {
     /* margin: 2em 0; */

@@ -10,10 +10,10 @@ function AdminOrdersPage(props) {
 
     return (
       <>
-        <Navbar />
+   
        
         <AdminOrders orders={props.checkoutOrders}/>
-        <Footer />
+
       </>
     );
 }
