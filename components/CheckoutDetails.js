@@ -6,35 +6,104 @@ import deleteIcon from "../public/delete.png";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 const orderid = require("order-id")("key");
+
 function checkoutDetails(props) {
   const router = useRouter();
   const { data: session } = useSession();
-  const lastIndex = props.userAddress.length - 1;
-
+  const apartmentLastIndex = props.apartmentAddressData.length - 1;
+  const villaLastIndex = props.villaAddressData.length - 1;
+  const companyLastIndex = props.companyAddressData.length - 1;
+  
+  let [maxDate, setMaxDate] = useState();
+  let [minDate, setMinDate] = useState();
   useEffect(() => {
-    if (props.userAddress[lastIndex]) {
-      let initialAddressDetails = {
-        firstName: props.userAddress[lastIndex].firstName,
-        lastName: props.userAddress[lastIndex].lastName,
-        mobile: props.userAddress[lastIndex].mobile,
-        backupMobile: props.userAddress[lastIndex].backupMobile,
-        email: props.userAddress[lastIndex].email,
-        governorate: props.userAddress[lastIndex].governorate,
-        city: props.userAddress[lastIndex].city,
-        area: props.userAddress[lastIndex].area,
-        street: props.userAddress[lastIndex].street,
-        building: props.userAddress[lastIndex].building,
-        floor: props.userAddress[lastIndex].floor,
-        apartment: props.userAddress[lastIndex].apartment,
+    if (props.apartmentAddressData[apartmentLastIndex]) {
+      let initialApartmentAddressDetails = {
+        firstName: props.apartmentAddressData[apartmentLastIndex].firstName,
+        lastName: props.apartmentAddressData[apartmentLastIndex].lastName,
+        mobile: props.apartmentAddressData[apartmentLastIndex].mobile,
+        backupMobile: props.apartmentAddressData[apartmentLastIndex].backupMobile,
+        email: props.apartmentAddressData[apartmentLastIndex].email,
+        governorate: props.apartmentAddressData[apartmentLastIndex].governorate,
+        city: props.apartmentAddressData[apartmentLastIndex].city,
+        area: props.apartmentAddressData[apartmentLastIndex].area,
+        street: props.apartmentAddressData[apartmentLastIndex].street,
+        building: props.apartmentAddressData[apartmentLastIndex].building,
+        floor: props.apartmentAddressData[apartmentLastIndex].floor,
+        apartment: props.apartmentAddressData[apartmentLastIndex].apartment,
         instructions: "",
         scheduled: "",
       };
-      setApartmentInputs(initialAddressDetails);
-    } else if (!props.userAddress[lastIndex]) {
+      setApartmentInputs(initialApartmentAddressDetails);
+    } else if (!props.apartmentAddressData[apartmentLastIndex]) {
       setApartmentInputs({});
     }
-  }, [props.userAddress]);
+    if(props.villaAddressData[villaLastIndex]) {
+      let initialVillaAddressDetails = {
+        firstName: props.villaAddressData[villaLastIndex].firstName,
+        lastName: props.villaAddressData[villaLastIndex].lastName,
+        mobile: props.villaAddressData[villaLastIndex].mobile,
+        backupMobile: props.villaAddressData[villaLastIndex].backupMobile,
+        email: props.villaAddressData[villaLastIndex].email,
+        governorate: props.villaAddressData[villaLastIndex].governorate,
+        city: props.villaAddressData[villaLastIndex].city,
+        area: props.villaAddressData[villaLastIndex].area,
+        street: props.villaAddressData[villaLastIndex].street,
+        villa: props.villaAddressData[villaLastIndex].villa,
+        instructions: "",
+        scheduled: "",
+      };
+      setVillaInputs(initialVillaAddressDetails)
+    }
+    if(props.companyAddressData[companyLastIndex]) {
+       let initialCompanyAddressDetails = {
+         firstName: props.companyAddressData[companyLastIndex].firstName,
+         lastName: props.companyAddressData[companyLastIndex].lastName,
+         mobile: props.companyAddressData[companyLastIndex].mobile,
+         backupMobile: props.companyAddressData[companyLastIndex].backupMobile,
+         email: props.companyAddressData[companyLastIndex].email,
+         governorate: props.companyAddressData[companyLastIndex].governorate,
+         city: props.companyAddressData[companyLastIndex].city,
+         area: props.companyAddressData[companyLastIndex].area,
+         street: props.companyAddressData[companyLastIndex].street,
+         company: props.companyAddressData[companyLastIndex].company,
+         instructions: "",
+         scheduled: "",
+       };
+       setCompanyInputs(initialCompanyAddressDetails)
+    }
+  }, []);
+
+  useEffect(() => {
+    let date = new Date(new Date().setDate(new Date().getDate() + 7));
+    console.log(date);
+    let formattedDate = new Date(
+      date.getTime() - date.getTimezoneOffset() * 60000
+    )
+      .toISOString()
+      .split("T")[0];
+    setMaxDate(formattedDate);
+    let todayDate = new Date();
+    let formattedTodayDate = new Date(
+      todayDate.getTime() - todayDate.getTimezoneOffset() * 60000
+    )
+      .toISOString()
+      .split("T")[0];
+    setMinDate(formattedTodayDate);
+  });
+  useEffect(() => {
+    // if("geolocation" in navigator) {
+    //   console.log('Available')
+    // } else {
+    //   console.log('Not available')
+    // }
+    navigator.geolocation.getCurrentPosition(function (position) {
+      console.log(`Latitude is ${position.coords.latitude}`)
+      console.log(`Longitude is ${position.coords.longitude}`)
+    })
+  }, [])
   let [apartmentDetails, showApartmentDetails] = useState(false);
   let [villaDetails, showVillaDetails] = useState(false);
   let [workplaceDetails, showWorkplaceDetails] = useState(false);
@@ -47,6 +116,7 @@ function checkoutDetails(props) {
     let thisOrderId = orderid.generate();
     let currentTime = orderid.getTime(thisOrderId);
     const orderData = {
+      addressType: 'apartment',
       userId: session.user._id,
       orderItems: props.addedItems,
       orderNumber: thisOrderId,
@@ -65,6 +135,74 @@ function checkoutDetails(props) {
       apartment: apartmentInputs.apartment,
       instructions: apartmentInputs.instructions,
       scheduled: apartmentInputs.scheduled,
+    };
+    const response = await fetch("/api/checkout", {
+      method: "POST",
+      body: JSON.stringify(orderData),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+    console.log(data);
+  }
+  async function villaSubmitHandler(e) {
+    e.preventDefault();
+    let thisOrderId = orderid.generate();
+    let currentTime = orderid.getTime(thisOrderId);
+    const orderData = {
+      addressType: 'villa',
+      userId: session.user._id,
+      orderItems: props.addedItems,
+      orderNumber: thisOrderId,
+      dateSubmitted: currentTime,
+      firstName: villaInputs.firstName,
+      lastName: villaInputs.lastName,
+      mobile: villaInputs.mobile,
+      backupMobile: villaInputs.backupMobile,
+      email: villaInputs.email,
+      governorate: villaInputs.governorate,
+      city: villaInputs.city,
+      area: villaInputs.area,
+      street: villaInputs.street,
+     
+      villa: villaInputs.villa,
+      instructions: villaInputs.instructions,
+      scheduled: villaInputs.scheduled,
+    };
+     const response = await fetch("/api/checkout", {
+       method: "POST",
+       body: JSON.stringify(orderData),
+       headers: {
+         "Content-Type": "application/json",
+       },
+     });
+     const data = await response.json();
+     console.log(data);
+  }
+  async function companySubmitHandler(e) {
+    e.preventDefault();
+    let thisOrderId = orderid.generate();
+    let currentTime = orderid.getTime(thisOrderId);
+    const orderData = {
+      addressType: 'company',
+      userId: session.user._id,
+      orderItems: props.addedItems,
+      orderNumber: thisOrderId,
+      dateSubmitted: currentTime,
+      firstName: companyInputs.firstName,
+      lastName: companyInputs.lastName,
+      mobile: companyInputs.mobile,
+      backupMobile: companyInputs.backupMobile,
+      email: companyInputs.email,
+      governorate: companyInputs.governorate,
+      city: companyInputs.city,
+      area: companyInputs.area,
+      street: companyInputs.street,
+     
+      company: companyInputs.company,
+      instructions: companyInputs.instructions,
+      scheduled: companyInputs.scheduled,
     };
     const response = await fetch("/api/checkout", {
       method: "POST",
@@ -95,22 +233,38 @@ function checkoutDetails(props) {
       showApartmentDetails(true);
     }
   };
+
   function totalDue() {
     let sum = 0;
-    for (let i = 0; i <= props.addedItems.length - 1; i++) {
-      sum +=
-        parseInt(props.addedItems[i].sizePrice[0].price) *
-        parseInt(props.addedItems[i].quantity);
-    }
-    return sum + vatAmount();
+
+    props.addedItems.map(item => {
+    
+      item.sizePrice.map(size => {
+        sum += parseInt(size.price) * item.quantity
+      })
+      item.extraPrice.map(extra => {
+        sum+= parseInt(extra.price)
+      })
+      item.giftPrice.map(gift => {
+        sum+= parseInt(gift.price)
+      })
+    })
+
+    return sum + vatAmount() + 45;
   }
   function vatAmount() {
     let sum = 0;
-    for (let i = 0; i <= props.addedItems.length - 1; i++) {
-      sum +=
-        parseInt(props.addedItems[i].sizePrice[0].price) *
-        parseInt(props.addedItems[i].quantity);
-    }
+   props.addedItems.map((item) => {
+     item.sizePrice.map((size) => {
+       sum += parseInt(size.price) * item.quantity;
+     });
+     item.extraPrice.map((extra) => {
+       sum += parseInt(extra.price);
+     });
+     item.giftPrice.map((gift) => {
+       sum += parseInt(gift.price);
+     });
+   });
     let vat = sum * (14 / 100);
     return parseInt(vat);
   }
@@ -193,13 +347,21 @@ function checkoutDetails(props) {
                     </div>
                     <h1>Address Information</h1>
                     <div>
-                      <input
+                      <select
+                        id={classes.selectGov}
+                        name="governorate"
+                        onChange={handleApartmentInputChange}
+                      >
+                        <option value="Cairo">Cairo</option>
+                        <option value="Giza">Giza</option>
+                      </select>
+                      {/* <input
                         type="text"
                         name="governorate"
                         placeholder="Governorate"
                         onChange={handleApartmentInputChange}
                         value={apartmentInputs.governorate}
-                      />
+                      /> */}
                       <input
                         type="text"
                         name="city"
@@ -264,6 +426,8 @@ function checkoutDetails(props) {
                         <input
                           type="date"
                           name="scheduled"
+                          max={maxDate}
+                          min={minDate}
                           value={apartmentInputs.scheduled}
                           onChange={handleApartmentInputChange}
                         />
@@ -281,12 +445,12 @@ function checkoutDetails(props) {
               <div className={classes.villaDetails}>
                 <div className={classes.personalDetailsForm}>
                   <h1>Personal Details</h1>
-                  <form>
+                  <form onSubmit={villaSubmitHandler}>
                     <div>
                       <input
                         type="text"
-                        placeholder="First Name"
                         name="firstName"
+                        placeholder="First Name"
                         value={villaInputs.firstName}
                         onChange={handleVillaInputChange}
                       />
@@ -301,59 +465,71 @@ function checkoutDetails(props) {
                     <div>
                       <input
                         type="number"
-                        placeholder="Mobile Number"
                         name="mobile"
+                        placeholder="Mobile Number"
                         value={villaInputs.mobile}
                         onChange={handleVillaInputChange}
                       />
                       <input
                         type="number"
-                        placeholder="Backup Mobile Number"
                         name="backupMobile"
-                        value={villaInputs.backupMobile}
+                        placeholder="Backup Mobile Number"
                         onChange={handleVillaInputChange}
+                        value={villaInputs.backupMobile}
                       />
                     </div>
                     <div>
                       <input
                         type="email"
-                        placeholder="Email"
                         name="email"
-                        value={villaInputs.email}
+                        placeholder="Email"
                         onChange={handleVillaInputChange}
+                        value={villaInputs.email}
                       />
                     </div>
                     <h1>Address Information</h1>
                     <div>
-                      <input
-                        type="text"
-                        placeholder="Governorate"
+                      <select
+                        id={classes.selectGov}
                         name="governorate"
-                        value={villaInputs.governorate}
                         onChange={handleVillaInputChange}
-                      />
+                      >
+                        <option value='Cairo'>Cairo</option>
+                        <option value="Giza">Giza</option>
+                      </select>
+                  
                       <input
                         type="text"
-                        placeholder="City"
                         name="city"
-                        value={villaInputs.city}
+                        placeholder="City"
                         onChange={handleVillaInputChange}
+                        value={villaInputs.city}
                       />
                     </div>
                     <div>
                       <input
                         type="text"
-                        placeholder="Street"
-                        name="street"
-                        value={villaInputs.street}
+                        name="area"
+                        placeholder="Area"
                         onChange={handleVillaInputChange}
+                        value={villaInputs.area}
                       />
                       <input
                         type="text"
-                        placeholder="Villa No."
-                        name="villa"
-                        value={villaInputs.villa}
+                        name="street"
+                        placeholder="Street Name"
                         onChange={handleVillaInputChange}
+                        value={villaInputs.street}
+                      />
+                    </div>
+
+                    <div>
+                      <input
+                        type="text"
+                        name="villa"
+                        placeholder="Villa Number"
+                        onChange={handleVillaInputChange}
+                        value={villaInputs.villa}
                       />
                     </div>
                     <div>
@@ -388,12 +564,12 @@ function checkoutDetails(props) {
               <div className={classes.workplaceDetails}>
                 <div className={classes.personalDetailsForm}>
                   <h1>Personal Details</h1>
-                  <form>
+                  <form onSubmit={companySubmitHandler}>
                     <div>
                       <input
                         type="text"
-                        placeholder="First Name"
                         name="firstName"
+                        placeholder="First Name"
                         value={companyInputs.firstName}
                         onChange={handleCompanyInputChange}
                       />
@@ -408,59 +584,77 @@ function checkoutDetails(props) {
                     <div>
                       <input
                         type="number"
-                        placeholder="Mobile Number"
                         name="mobile"
+                        placeholder="Mobile Number"
                         value={companyInputs.mobile}
                         onChange={handleCompanyInputChange}
                       />
                       <input
                         type="number"
-                        placeholder="Backup Mobile Number"
                         name="backupMobile"
-                        value={companyInputs.backupMobile}
+                        placeholder="Backup Mobile Number"
                         onChange={handleCompanyInputChange}
+                        value={companyInputs.backupMobile}
                       />
                     </div>
                     <div>
                       <input
                         type="email"
-                        placeholder="Email"
                         name="email"
-                        value={companyInputs.email}
+                        placeholder="Email"
                         onChange={handleCompanyInputChange}
+                        value={companyInputs.email}
                       />
                     </div>
                     <h1>Address Information</h1>
                     <div>
-                      <input
-                        type="text"
-                        placeholder="Governorate"
+                      <select
+                        id={classes.selectGov}
                         name="governorate"
-                        value={companyInputs.governorate}
                         onChange={handleCompanyInputChange}
-                      />
+                      >
+                        <option value="Cairo">Cairo</option>
+                        <option value="Giza">Giza</option>
+                      </select>
+                      {/* <input
+                        type="text"
+                        name="governorate"
+                        placeholder="Governorate"
+                        onChange={handleCompanyInputChange}
+                        value={companyInputs.governorate}
+                      /> */}
                       <input
                         type="text"
-                        placeholder="City"
                         name="city"
-                        value={companyInputs.city}
+                        placeholder="City"
                         onChange={handleCompanyInputChange}
+                        value={companyInputs.city}
                       />
                     </div>
                     <div>
                       <input
                         type="text"
-                        placeholder="Street"
-                        name="street"
-                        value={companyInputs.street}
+                        name="area"
+                        placeholder="Area"
                         onChange={handleCompanyInputChange}
+                        value={companyInputs.area}
                       />
                       <input
                         type="text"
-                        placeholder="Building No."
-                        name="companyName"
-                        value={companyInputs.companyName}
+                        name="street"
+                        placeholder="Street Name"
                         onChange={handleCompanyInputChange}
+                        value={companyInputs.street}
+                      />
+                    </div>
+
+                    <div>
+                      <input
+                        type="text"
+                        name="company"
+                        placeholder="Company Name"
+                        onChange={handleCompanyInputChange}
+                        value={companyInputs.company}
                       />
                     </div>
 
@@ -562,7 +756,9 @@ function checkoutDetails(props) {
                 <p>Total</p>
                 <p className={classes.price}>{totalDue()}</p>
               </div>
-              <button className={classes.addMoreItems}>Add More Items</button>
+              <Link href="/menu">
+                <button className={classes.addMoreItems}>Add More Items</button>
+              </Link>
             </>
           )}
         </div>

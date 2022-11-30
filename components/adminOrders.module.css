@@ -246,4 +246,86 @@ margin: 0.5em 0;
     justify-content: space-between;
     width: 100%;
 }
+@media(max-width: 1200px) {
+    .adminOrderInputs {
+        grid-column: 2/7;
+    }
+}
+@media(max-width: 1000px) {
+    .adminOrderInputs {
+            grid-column: 2/8;
+        }
+    .orderBriefContainer {
+        padding: 1em 0;
+    }
+    .addressBtns button:first-child {
+        padding: 1em;
+    }
+    .addressDetails {
+        grid-column: 8/13;
+    }
+    .addressHeader h1 {
+        font-size: 18px;
+    }
+    .itemDetails h1 {
+        font-size: 18px;
+    }
+    .statusTimeline {
+        width: 100%;
+    }
+    .orderBriefContainer div p {
+        font-size: 14px;
+    }
+    .orderBriefContainer div h3 {
+        font-size: 16px;
+    }
+    
+}
 
+@media(max-width: 800px) {
+    .adminOrderInputs {
+            grid-column: 2/10;
+        }
+    .itemDetails {
+        grid-row: 1;
+        grid-column: 2/12;
+    }
+    .addressDetails {
+        grid-row: 2;
+        grid-column: 2/12;
+    }
+        .orderBriefContainer div:first-child {
+            display: none;
+        }
+        .orderContainer {
+            grid-column: 1/13;
+            padding: 0 1em;
+        }
+        .filter {
+            grid-column: 2/12;
+        }
+        .filter button {
+            padding: 1em 0;
+        }
+}
+
+@media(max-width: 600px) {
+    .adminOrderInputs {
+            grid-column: 2/12;
+        }
+    .orderBriefContainer {
+        flex-direction: column;
+    }
+    .orderBriefContainer div {
+        margin-bottom: 0.5em;
+    }
+}
+
+@media (max-width: 500px) {
+    .filter button {
+        font-size: 12px;
+    }
+    .adminOrderInputs input {
+        padding: 0.5em 0.1em;
+    }
+}

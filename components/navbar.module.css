@@ -50,3 +50,54 @@
     margin-left: 2em;
     cursor: pointer;
 }
+
+#burgerIcon {
+    cursor: pointer;
+}
+
+.dropdownNav {
+    position: absolute;
+}
+.dropdownNav li {
+        display: flex;
+            flex-direction: column;
+}
+
+.burgerNavbar {
+    display: none;
+}
+
+@media (max-width: 800px) {
+    .navbar ul:first-child {
+        display: none;
+    }
+    .burgerNavbar {
+        display: block;
+        /* grid-column: 8/12; */
+    }
+    .burgerNavbar img {
+        margin-right: 1em;
+    }
+    .burgerNavbar ul {
+        list-style: none;
+        position: absolute;
+        right: 3%;
+        background-color: white;
+        border: 1px #FF7DA3 solid;
+        border-radius: 10px;
+    }
+    .burgerNavbar ul li a {
+        text-decoration: none;
+        color: #FF7DA3;
+        font-family: 'Ubuntu', sans-serif;
+    }
+    .burgerNavbar ul li {
+        margin: 0.5em 1em;
+    }
+    .burgerNavbar ul hr {
+        border: none;
+            height: 1px;
+            background-color: rgba(0, 0, 0, 0.2);
+          
+    }
+}

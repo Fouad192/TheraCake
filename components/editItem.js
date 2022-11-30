@@ -52,7 +52,7 @@ function EditItem(props) {
         </div>
         <div className={classes.sizes}>
           <h1>Sizes</h1>
-          {itemSizes.map((size, index) => (
+          {itemSizes.map((size, index, arr) => (
             <div>
               <input
                 type="text"

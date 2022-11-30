@@ -1,9 +1,12 @@
 import classes from "./navbar.module.css";
 import Link from "next/link";
 import { useSession, signIn, signOut } from "next-auth/react";
-
+import Image from "next/image";
+import burgerIcon from '../public/burger.svg'
+import { useState } from "react";
 function Navbar() {
   const { data: session } = useSession();
+  let [isNavOpen, showNav] = useState(false)
   if (session) {
     return (
       <div className={classes.navbarContainer}>
@@ -26,6 +29,31 @@ function Navbar() {
               </button>
             </li>
           </ul>
+        </div>
+        <div className={classes.burgerNavbar}>
+          <Image src={burgerIcon} width={24} height={24} onClick={() => showNav(!isNavOpen)}/>
+          {isNavOpen && (
+            <ul>
+              <li>
+                <Link href="/menu">Menu</Link>
+              </li>
+              <hr/>
+              <li>
+                <Link href="/checkout">Checkout</Link>
+              </li>
+
+              <hr/>
+
+              <li>
+                <Link href="/history">History</Link>
+              </li>
+              <hr/>
+
+              <li>
+                <Link href="/adminorders">Admin</Link>
+              </li>
+            </ul>
+          )}
         </div>
       </div>
     );

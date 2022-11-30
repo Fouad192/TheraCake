@@ -13,7 +13,9 @@ function checkout(props) {
         
         <CheckoutDetails
           addedItems={props.addedItems}
-          userAddress={props.addressData}
+          apartmentAddressData={props.apartmentAddressData}
+          villaAddressData={props.villaAddressData}
+          companyAddressData={props.companyAddressData}
 
         />
      
@@ -30,11 +32,15 @@ export async function getServerSideProps(ctx) {
     await dbConnect();
 
     const cartData = await Cart.find({userId: sessionData.user._id})
-    const addressData = await OrderCheckout.find({userId: sessionData.user._id})
+    const apartmentAddressData = await OrderCheckout.find({userId: sessionData.user._id, addressType: 'apartment'})
+    const villaAddressData = await OrderCheckout.find({userId: sessionData.user._id, addressType: 'villa'})
+    const companyAddressData = await OrderCheckout.find({userId: sessionData.user._id, addressType: 'company'})
     return {
         props: {
             addedItems: JSON.parse(JSON.stringify((cartData))),
-            addressData: JSON.parse(JSON.stringify(addressData))
+            apartmentAddressData: JSON.parse(JSON.stringify(apartmentAddressData)),
+            villaAddressData: JSON.parse(JSON.stringify(villaAddressData)),
+            companyAddressData: JSON.parse(JSON.stringify(companyAddressData))
         }
     }
 }

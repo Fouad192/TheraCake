@@ -23,12 +23,3 @@
 
 
 }
-#__next {
-
-    min-height: 100vh;
-    position: relative;
-}
-body {
-  min-height: 100vh;
-
-}

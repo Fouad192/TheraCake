@@ -24,9 +24,7 @@ export async function getServerSideProps(ctx) {
   const cheesecakeMenuData = await MenuItem.find({category: 'cheesecake'});
   const browniesMenuData = await MenuItem.find({category: 'brownies'});
   let session = await getSession(ctx)
-  if(session.user.email === 'anwarcitcm@gmail.com') {
-    let authorizedAdmin = true
-  }
+ 
 return {
     props: {
         cheesecakeMenuData: JSON.parse(JSON.stringify(cheesecakeMenuData)),

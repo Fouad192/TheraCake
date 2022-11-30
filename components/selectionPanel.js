@@ -22,7 +22,7 @@ function SelectionPanel(props) {
   let [sizePriceSt, setSizePriceSt] = useState();
   let sizePriceRef = useRef([]);
   let quantityRef = useRef();
-  let addToInvoiceFlash = useRef()
+  let addToInvoiceFlash = useRef();
   const { data: session } = useSession();
   function isLoggedIn() {
     if (!session) {
@@ -34,7 +34,9 @@ function SelectionPanel(props) {
     } else if (session) {
       return (
         <div className={classes.checkoutBtnDiv}>
-          <button className={classes.menuFormSubmit} onClick={timeOutFlash}>Add To Cart</button>
+          <button className={classes.menuFormSubmit} onClick={timeOutFlash}>
+            Add To Cart
+          </button>
           <p ref={addToInvoiceFlash}>Added to checkout invoice</p>
         </div>
       );
@@ -42,10 +44,10 @@ function SelectionPanel(props) {
   }
 
   function timeOutFlash() {
-addToInvoiceFlash.current.style.display = 'block'
-setTimeout(() => {
- addToInvoiceFlash.current.style.display = 'none'
-}, 1000);
+    addToInvoiceFlash.current.style.display = "block";
+    setTimeout(() => {
+      addToInvoiceFlash.current.style.display = "none";
+    }, 1000);
   }
   async function submitHandler(e) {
     e.preventDefault();
@@ -127,7 +129,12 @@ setTimeout(() => {
             <button
               type="button"
               id={classes.quantityMinus}
-              onClick={() => setQuantity(quantity - 1)}
+              value={quantity}
+              onClick={(e) => {
+                if(e.target.value > 0) {
+                  setQuantity(quantity - 1);
+                }
+              }}
             >
               -
             </button>
@@ -306,10 +313,10 @@ setTimeout(() => {
           {isLoggedIn()}
         </form>
       </div>
-      <div className={classes.selectionBottomBanner}>
+      {/* <div className={classes.selectionBottomBanner}>
         <h3>Total</h3>
         <p>720EGP</p>
-      </div>
+      </div> */}
     </div>
   );
 }

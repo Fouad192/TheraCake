@@ -2,8 +2,10 @@ import { useState, useRef, useEffect } from "react";
 import classes from "./adminOrders.module.css";
 import Image from "next/image";
 import basicImg from "../public/basic.png";
+import { Router, useRouter } from "next/router";
 
 function OrderItem({ order }) {
+  const router = useRouter()
   let [statusPopup, openStatusPopup] = useState(false);
   let [sum, setSum] = useState()
   function convertTimestampToDate() {
@@ -55,6 +57,9 @@ function OrderItem({ order }) {
     })
     const data = await response.json()
     console.log(data)
+    setTimeout(() => {
+       router.reload(window.location.pathname);
+    }, 500);
   }
   return (
     <div className={classes.orderContainer}>
@@ -167,20 +172,34 @@ function OrderItem({ order }) {
               <span>Governorate:</span> {order.governorate}
             </p>
             <p>
-              <span>Area:</span> {order.city} - {order.street}
+              <span>Area:</span> {order.city} - {order.area}
             </p>
             <p>
-              <span>Street:</span> 162, block 38
+              <span>Street:</span> {order.street}
             </p>
-            <p>
-              <span>Building:</span> {order.building}
-            </p>
-            <p>
-              <span>Floor:</span> {order.floor}
-            </p>
-            <p>
-              <span>Apartment:</span> {order.apartmentNo}
-            </p>
+            {order.addressType === "apartment" && (
+              <>
+                <p>
+                  <span>Building:</span> {order.building}
+                </p>
+                <p>
+                  <span>Floor:</span> {order.floor}
+                </p>
+                <p>
+                  <span>Apartment:</span> {order.apartment}
+                </p>
+              </>
+            )}
+            {order.addressType === "villa" && (
+              <p>
+                <span>Villa:</span> {order.villa}
+              </p>
+            )}
+            {order.addressType === "company" && (
+              <p>
+                <span>Company:</span> {order.company}
+              </p>
+            )}
           </div>
           <div className={classes.addressBtns}>
             <button>View Map</button>
@@ -192,12 +211,22 @@ function OrderItem({ order }) {
             </button>
             {statusPopup && (
               <div className={classes.status}>
-                <button value='Accepted' onClick={(e) => setStatus(e)}>Accept Order</button>
-                <button value='Ready' onClick={(e) => setStatus(e)}>Order Is Ready</button>
-                <button value='On the way' onClick={(e) => setStatus(e)}>Dispatch Order</button>
-                <button value='Pending' onClick={(e) => setStatus(e)}>Set As Pending</button>
+                <button value="Accepted" onClick={(e) => setStatus(e)}>
+                  Accept Order
+                </button>
+                <button value="Ready" onClick={(e) => setStatus(e)}>
+                  Order Is Ready
+                </button>
+                <button value="On the way" onClick={(e) => setStatus(e)}>
+                  Dispatch Order
+                </button>
+                <button value="Pending" onClick={(e) => setStatus(e)}>
+                  Set As Pending
+                </button>
                 <button onClick={deleteOrder}>Delete Order</button>
-                <button value='Delivered' onClick={(e) => setStatus(e)}>Order Delievered</button>
+                <button value="Delivered" onClick={(e) => setStatus(e)}>
+                  Order Delievered
+                </button>
               </div>
             )}
           </div>

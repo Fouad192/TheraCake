@@ -2,11 +2,12 @@ import classes from './addItem.module.css'
 import closeIcon from '../public/close.png'
 import Image from 'next/image';
 import { useRef, useState } from 'react';
-
+import { useRouter } from 'next/router';
 
 
 
 function AddItem(props) {
+  const router = useRouter()
   let [sizeDiv, setSizeDiv] = useState(0)
   let [extraDiv, setExtraDiv] = useState(0)
   let [flavorDiv, setFlavorDiv] = useState(0)
@@ -25,6 +26,7 @@ function AddItem(props) {
   let itemToppings = useRef([]);
   let fileInputRef = useRef()
   async function submitHandler(e) {
+   
     e.preventDefault()
    const fileInput = fileInputRef.current
    let imageData = new FormData()
@@ -73,6 +75,9 @@ const imageUploadData = await fetch('https://api.cloudinary.com/v1_1/dswtzq3ze/i
 
     }
     props.onAddItem(itemData)
+     setTimeout(() => {
+       router.reload(window.location.pathname);
+     }, 500);
   }
 
   function addSize() {
@@ -225,6 +230,7 @@ const imageUploadData = await fetch('https://api.cloudinary.com/v1_1/dswtzq3ze/i
             type="submit"
             value="Add Item"
             className={classes.addItemSubmit}
+          
           />
         </form>
       </div>

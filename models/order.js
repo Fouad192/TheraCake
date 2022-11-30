@@ -6,9 +6,13 @@ let orderDetails = new Schema({
     type: String,
     required: true
   },
+  addressType: {
+    type: String
+  },
   orderNumber: {
     type: String,
   },
+
   orderItems: {
     type: [],
   },
@@ -32,6 +36,7 @@ let orderDetails = new Schema({
   },
   governorate: {
     type: String,
+    default: 'Cairo'
   },
   city: {
     type: String,

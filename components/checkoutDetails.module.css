@@ -136,6 +136,13 @@ margin: 1em 0;
  font-weight: bold;
  font-size: 20px;
 }
+#selectGov {
+    border: 1px #FF7DA3 solid;
+    border-radius: 10px;
+    width: 45%;
+    outline: #FF7DA3;
+    padding: 0 2em;
+}
 .addMoreItems {
     color: #FF7DA3;
     background-color: white;
@@ -149,4 +156,62 @@ margin: 1em 0;
 .addMoreItems:hover {
     background-color: #FF7DA3;
     color: white;
+}
+
+@media (max-width: 1129px) {
+    .addMoreItems {
+        width: 50%;
+    }
+}
+
+@media(max-width: 900px) {
+    .addMoreItems {
+        width: 70%;
+    }
+    .informationContainer h1, .invoiceContainer h1 {
+        font-size: 24px;
+    }
+    .deleteDiv h1 {
+        font-size: 18px;
+    }
+    .deleteDiv img {
+        width: 14px;
+        height: 18px;
+    }
+    .total p {
+        font-size: 18px;
+    }
+    .apartmentContainer button, .villaContainer button, .workplaceContainer button {
+        font-size: 18px;
+    }
+    .personalDetailsForm h1 {
+        font-size: 18px;
+    }
+    .personalDetailsForm form #apartmentSubmitBtn {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 700px) {
+    .informationContainer {
+        grid-row: 2;
+        grid-column: 2/12;
+        margin-top: 1em;
+    }
+    .invoiceContainer {
+        grid-row: 1;
+        grid-column: 2/12;
+    }
+    .addMoreItems {
+        width: 40%;
+    }
+}
+
+@media (max-width: 450px) {
+    .addMoreItems {
+        width: 50%;
+    }
+    #apartmentSubmitBtn {
+        width: 60%;
+    }
 }

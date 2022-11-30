@@ -4,6 +4,8 @@
     border-radius: 15px 15px 0 0;
     /* margin-bottom: 1em; */
     position: relative;
+    border: 2px #FF7DA3 solid;
+    border-radius: 15px;
 
 }
 
@@ -22,8 +24,7 @@
 .selectionHeaders {
     width: 100%;
     padding: 1em;
-    border-left: 2px #FF7DA3 solid;
-    border-right: 2px #FF7DA3 solid;
+
 }
 
 .selectionHeaders h1 {
@@ -36,7 +37,7 @@
 
 .selectionOptions {
     overflow-y: auto;
-    height: 41%;
+    height: 49%;
 }
 
 .selectionForm {
@@ -177,8 +178,8 @@
 }
 
 .selectionOptions {
-    border-left: 2px #FF7DA3 solid;
-    border-right: 2px #FF7DA3 solid;
+
+    padding-bottom: 1em;
 }
 
 .checkoutBtnDiv {
@@ -190,4 +191,51 @@
     color: #FF7DA3;
     display: none;
     transition: ease-in-out;
+}
+
+
+.quantityInput {
+    width: 100%;
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    margin-bottom: 1em;
+}
+
+.quantityInput label {
+    font-size: 18px;
+    margin: 0 0.5em;
+}
+
+#quantityPlus,
+#quantityMinus {
+    background-color: #FF7DA3;
+    border: none;
+    border-radius: 100%;
+    color: white;
+    cursor: pointer;
+}
+
+#quantityPlus {
+    font-size: 18px;
+    padding: 0.1em 0.4em;
+    margin-left: 0.5em;
+}
+
+#quantityMinus {
+    font-size: 18px;
+    padding: 0.1em 0.5em;
+}
+
+
+@media (max-width: 1200px) {
+    .selectionPanel {
+            grid-row: 2;
+            grid-column: 4/10;
+        }
+}
+@media (max-width: 900px) {
+    .selectionPanel {
+        grid-column: 2/12;
+    }
 }

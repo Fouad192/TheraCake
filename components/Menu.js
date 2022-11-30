@@ -6,35 +6,33 @@ import editIcon from "../public/edit.png";
 import AddItem from "./addItem";
 import SelectionPanel from "./selectionPanel";
 import EditItem from "./editItem";
+import { useRouter } from "next/router";
 function Menu(props) {
-  
+  const router = useRouter()
   let [addItemPopup, toggleAddItemPopup] = useState(false);
   let [idx, setIdx] = useState();
   let [categoryDetect, setCategoryDetect] = useState(false);
   let [editItemPopup, openEditItem] = useState(false);
-  let [toBeEdited, setToBeEdited] = useState()
-  let [isAuthorized, setAuthorized] = useState(false)
+  let [toBeEdited, setToBeEdited] = useState();
+  let [isAuthorized, setAuthorized] = useState(false);
   let cheesecake = useRef();
   let brownies = useRef();
   let cheesecakeMenu = useRef();
   let browniesMenu = useRef();
-  // function detectData(itemIndex) {
-  //   idx = itemIndex
-  //   console.log(idx)
-  // }
-useEffect(() => {
-if (props.session.user.email === "anwarcitcm@gmail.com") {
-  setAuthorized(true);
-} else if (props.session.user.email === "fouadhamdy51@gmail.com") {
-  setAuthorized(true);
-} else if(props.session.user.email === "mohamedaymanmoudy1@gmail.com") {
-  setAuthorized(true)
-} else {
-  setAuthorized(false);
-}
 
-}, [isAuthorized])
-
+  useEffect(() => {
+    if (props.session) {
+      if (props.session.user.email === "anwarcitcm@gmail.com") {
+        setAuthorized(true);
+      } else if (props.session.user.email === "fouadhamdy51@gmail.com") {
+        setAuthorized(true);
+      } else if (props.session.user.email === "mohamedaymanmoudy1@gmail.com") {
+        setAuthorized(true);
+      } else {
+        setAuthorized(false);
+      }
+    }
+  }, [isAuthorized]);
 
   let toggleAddItemBtn = () => {
     toggleAddItemPopup(true);
@@ -105,8 +103,11 @@ if (props.session.user.email === "anwarcitcm@gmail.com") {
             <button ref={brownies} onClick={browniesMenuHandler}>
               Brownies
             </button>
-            {isAuthorized ? <button onClick={toggleAddItemBtn}>Add Item</button> : null }
-           
+            {isAuthorized ? (
+              <button className={classes.addItemBtn} onClick={toggleAddItemBtn}>
+                Add Item
+              </button>
+            ) : null}
           </div>
           <div
             className={classes.cheesecakeMenuItemContainer}
@@ -121,7 +122,12 @@ if (props.session.user.email === "anwarcitcm@gmail.com") {
                   <div className={classes.adminModifyAndDelete}>
                     <Image
                       src={deleteIcon}
-                      onClick={() => deleteItemHandler(item)}
+                      onClick={() => {
+                        deleteItemHandler(item);
+                        setTimeout(() => {
+                          router.reload(window.location.pathname);
+                        }, 500);
+                      }}
                     />
                     <Image
                       src={editIcon}
@@ -132,19 +138,29 @@ if (props.session.user.email === "anwarcitcm@gmail.com") {
                     />
                   </div>
                   <h1>{item.name}</h1>
-                  <p>{item.description}</p>
-                  <button
-                    onClick={() => {
-                      setIdx(index);
-                      setCategoryDetect("cheesecake");
-                    }}
-                  >
-                    Select Your Options
-                  </button>
+
                   <p>
-                    {item.sizePrice[0].price} -{" "}
-                    {item.sizePrice[item.sizePrice.length - 1].price} EGP
+                    {item.flavors.map((flavor, index, flavorArray) => {
+                      if (flavorArray.length - 1 === index) {
+                        return <span>{flavor}</span>;
+                      }
+                      return <span>{flavor}/</span>;
+                    })}
                   </p>
+                  <div className={classes.priceBtnDiv}>
+                    <button
+                      onClick={() => {
+                        setIdx(index);
+                        setCategoryDetect("cheesecake");
+                      }}
+                    >
+                      Select Your Options
+                    </button>
+                    <p>
+                      {item.sizePrice[0].price} -{" "}
+                      {item.sizePrice[item.sizePrice.length - 1].price} EGP
+                    </p>
+                  </div>
                 </div>
                 <div className={classes.menuItemImage}>
                   <Image
