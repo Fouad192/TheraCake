@@ -1,12 +1,12 @@
 import classes from "./checkoutDetails.module.css";
 import { useEffect, useRef, useState } from "react";
-import Footer from "./footer";
-import Navbar from "./navbar";
 import deleteIcon from "../public/delete.png";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
+import uuid from "react-uuid";
+
 const orderid = require("order-id")("key");
 
 function checkoutDetails(props) {
@@ -499,10 +499,10 @@ function checkoutDetails(props) {
                         name="governorate"
                         onChange={handleVillaInputChange}
                       >
-                        <option value='Cairo'>Cairo</option>
+                        <option value="Cairo">Cairo</option>
                         <option value="Giza">Giza</option>
                       </select>
-                  
+
                       <input
                         type="text"
                         name="city"
@@ -698,11 +698,12 @@ function checkoutDetails(props) {
           <h1 onClick={totalDue}>Invoice</h1>
           <hr />
           {props.addedItems?.map((addedItem) => (
-            <div className={classes.item}>
+            <div className={classes.item} key={uuid()}>
               <div className={classes.deleteDiv}>
                 <h1>{`${addedItem.quantity}x ${addedItem.name}`}</h1>
                 <Image
                   src={deleteIcon}
+                  alt="deleteIcon"
                   onClick={() => {
                     deleteItemHandler(addedItem);
                     setTimeout(() => {
@@ -724,7 +725,7 @@ function checkoutDetails(props) {
               {addedItem.extraPrice.length === 0 ? null : (
                 <div>
                   {addedItem.extraPrice?.map((extra, index) => (
-                    <div className={classes.gift}>
+                    <div className={classes.gift} key={uuid()}>
                       <p>{extra.extra}</p>
                       <p className={classes.price}>{extra.price}</p>
                     </div>
@@ -734,7 +735,7 @@ function checkoutDetails(props) {
               {addedItem.giftPrice.length === 0 ? null : (
                 <div>
                   {addedItem.giftPrice?.map((gift, index) => (
-                    <div className={classes.gift}>
+                    <div className={classes.gift} key={uuid()}>
                       <p>{gift.gift}</p>
                       <p className={classes.price}>{gift.price}</p>
                     </div>

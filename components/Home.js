@@ -2,8 +2,7 @@ import Image from "next/image";
 import homeImg from "../public/Homeimg.png";
 import classes from "./home.module.css";
 import Link from "next/link";
-import Navbar from "./navbar";
-import Footer from "./footer";
+
 function Home() {
   return (
     <>
@@ -21,7 +20,7 @@ function Home() {
           </Link>
         </div>
         <div className={classes.homeImage}>
-          <Image src={homeImg} />
+          <Image src={homeImg} alt='homeImage'/>
         </div>
       </section>
     </>

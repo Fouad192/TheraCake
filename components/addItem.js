@@ -3,7 +3,7 @@ import closeIcon from '../public/close.png'
 import Image from 'next/image';
 import { useRef, useState } from 'react';
 import { useRouter } from 'next/router';
-
+import uuid from 'react-uuid';
 
 
 function AddItem(props) {
@@ -101,6 +101,7 @@ const imageUploadData = await fetch('https://api.cloudinary.com/v1_1/dswtzq3ze/i
           id={classes.closeIconStyle}
           src={closeIcon}
           onClick={closePopup}
+          alt='CloseIcon'
         />
         <form action="/api/newMenuItem" onSubmit={submitHandler} method="post">
           <div className={classes.itemCategory}>
@@ -143,7 +144,7 @@ const imageUploadData = await fetch('https://api.cloudinary.com/v1_1/dswtzq3ze/i
               Add More
             </button>
             {[...Array(sizeDiv)].map((item, index) => (
-              <div>
+              <div key={uuid()}>
                 <input
                   type="text"
                   placeholder="Size Name"
@@ -167,7 +168,7 @@ const imageUploadData = await fetch('https://api.cloudinary.com/v1_1/dswtzq3ze/i
               Add Extra
             </button>
             {[...Array(extraDiv)].map((item, index) => (
-              <div>
+              <div key={uuid()}>
                 <input
                   type="text"
                   placeholder="Extra Name"
@@ -192,7 +193,7 @@ const imageUploadData = await fetch('https://api.cloudinary.com/v1_1/dswtzq3ze/i
               Add Flavor
             </button>
             {[...Array(flavorDiv)].map((item, index) => (
-              <div>
+              <div key={uuid()}>
                 <input
                   type="text"
                   placeholder="Flavor Name"
@@ -211,7 +212,7 @@ const imageUploadData = await fetch('https://api.cloudinary.com/v1_1/dswtzq3ze/i
               Add topping
             </button>
             {[...Array(toppingDiv)].map((item, index) => (
-              <div>
+              <div key={uuid()}>
                 <input
                   type="text"
                   placeholder="Flavor Name"

@@ -3,6 +3,7 @@ import closeIcon from "../public/close.png";
 import Image from "next/image";
 import { useRef, useState } from "react";
 import { useRouter } from "next/router";
+import uuid from "react-uuid";
 
 function EditItem({data, openEditItem}) {
   let router = useRouter()
@@ -44,7 +45,7 @@ function EditItem({data, openEditItem}) {
   }
   return (
     <div className={classes.addItemPopupContainer}>
-      <Image id={classes.closeIconStyle} src={closeIcon} onClick={closePopup} />
+      <Image id={classes.closeIconStyle} src={closeIcon} onClick={closePopup} alt='closeIcon'/>
       <form action="/api/newMenuItem" method="put" onSubmit={handleEditSubmit}>
         <div className={classes.itemCategory}>
           <h1>Category</h1>
@@ -84,7 +85,7 @@ function EditItem({data, openEditItem}) {
           {itemSizes.map((sizeObject) => {
             // let {size, price} = sizeObject
             return (
-              <div>
+              <div key={uuid()}>
                 <input
                   type="text"
                   name="size"
@@ -125,7 +126,7 @@ function EditItem({data, openEditItem}) {
           <h1>Extras</h1>
           <button type="button">Add Extra</button>
           {itemExtras.map((item, index) => (
-            <div>
+            <div key={uuid()}>
               <input
                 type="text"
                 value={item.extra}
@@ -163,7 +164,7 @@ function EditItem({data, openEditItem}) {
           <h1>Flavors</h1>
 
           {itemFlavor.map((flavor, index, arr) => (
-            <div>
+            <div key={uuid()}>
               <input type="text" placeholder="Flavor Name" value={flavor} />
             </div>
           ))}
@@ -173,7 +174,7 @@ function EditItem({data, openEditItem}) {
           <h1>Toppings</h1>
 
           {itemToppings.map((item, index) => (
-            <div>
+            <div key={uuid()}>
               <input type="text" placeholder="Flavor Name" />
             </div>
           ))}

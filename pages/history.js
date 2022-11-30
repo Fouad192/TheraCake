@@ -4,6 +4,7 @@ import UserHistory from "../components/userHistory";
 import OrderCheckout from "../models/order";
 import { getSession } from "next-auth/react";
 import dbConnect from "../lib/dbConnect";
+import uuid from "react-uuid";
 
 function History(props) {
   
@@ -11,7 +12,7 @@ function History(props) {
       <>
 
         {props.orderHistory.map((order) => (
-          <UserHistory order={order} />
+          <UserHistory order={order} key={uuid()}/>
         ))}
 
      

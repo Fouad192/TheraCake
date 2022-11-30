@@ -4,6 +4,8 @@ import { useSession, signIn, signOut } from "next-auth/react";
 import Image from "next/image";
 import burgerIcon from '../public/burger.svg'
 import { useState } from "react";
+import uuid from "react-uuid";
+
 function Navbar() {
   const { data: session } = useSession();
   let [isNavOpen, showNav] = useState(false)
@@ -31,7 +33,7 @@ function Navbar() {
           </ul>
         </div>
         <div className={classes.burgerNavbar}>
-          <Image src={burgerIcon} width={24} height={24} onClick={() => showNav(!isNavOpen)}/>
+          <Image src={burgerIcon} alt='burgerIcon' width={24} height={24} onClick={() => showNav(!isNavOpen)}/>
           {isNavOpen && (
             <ul>
               <li>

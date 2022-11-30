@@ -1,12 +1,8 @@
 import classes from "./adminOrders.module.css";
-import basicImg from "../public/basic.png";
-import Image from "next/image";
 import { useState, useRef, useEffect } from "react";
-import { useSession } from "next-auth/react";
-// import Navbar from "./navbar";
-// import Footer from "./footer";
 import OrderItem from "./orderItem";
-import OrderCheckout from "../models/order";
+import uuid from "react-uuid";
+
 function AdminOrders(props) {
   const [orderDetails, toggleOrderDetails] = useState(false);
   const [statusPopup, openStatusPopup] = useState(false);
@@ -67,8 +63,8 @@ function AdminOrders(props) {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
-          <select onChange={(e) => setSort(e.target.value)}>
-            <option value="" selected>
+          <select onChange={(e) => setSort(e.target.value)} defaultValue="">
+            <option value="">
               All
             </option>
             <option value="high">Price High to Low</option>
@@ -86,10 +82,13 @@ function AdminOrders(props) {
           <button>Dispatched</button>
           <button>Completed</button>
         </div>
-        {result?.length && result.map((r, index) => <OrderItem order={r} />)}
+        {result?.length &&
+          result.map((r, index) => <OrderItem order={r} key={uuid()} />)}
         {!result.length &&
           !search &&
-          props.orders.map((order, index) => <OrderItem order={order} />)}
+          props.orders.map((order, index) => (
+            <OrderItem order={order} key={uuid()} />
+          ))}
       </section>
     </>
   );

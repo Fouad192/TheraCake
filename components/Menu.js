@@ -7,6 +7,8 @@ import AddItem from "./addItem";
 import SelectionPanel from "./selectionPanel";
 import EditItem from "./editItem";
 import { useRouter } from "next/router";
+import uuid from "react-uuid";
+
 function Menu(props) {
   const router = useRouter()
   let [addItemPopup, toggleAddItemPopup] = useState(false);
@@ -119,11 +121,13 @@ function Menu(props) {
               <div
                 className={classes.menuItem}
                 onClick={() => console.log(item)}
+                key={uuid()}
               >
                 <div className={classes.menuItemDetails}>
                   <div className={classes.adminModifyAndDelete}>
                     <Image
                       src={deleteIcon}
+                      alt="DeleteIcon"
                       onClick={() => {
                         deleteItemHandler(item);
                         setTimeout(() => {
@@ -133,6 +137,7 @@ function Menu(props) {
                     />
                     <Image
                       src={editIcon}
+                      alt="EditIcon"
                       onClick={() => {
                         setToBeEdited(item);
                         openEditItem(true);
@@ -144,9 +149,9 @@ function Menu(props) {
                   <p>
                     {item.flavors.map((flavor, index, flavorArray) => {
                       if (flavorArray.length - 1 === index) {
-                        return <span>{flavor}</span>;
+                        return <span key={uuid()}>{flavor}</span>;
                       }
-                      return <span>{flavor}/</span>;
+                      return <span key={uuid()}>{flavor}/</span>;
                     })}
                   </p>
                   <div className={classes.priceBtnDiv}>
@@ -177,11 +182,12 @@ function Menu(props) {
           </div>
           <div className={classes.browniesMenuItemContainer} ref={browniesMenu}>
             {browniesData.map((item, index) => (
-              <div className={classes.menuItem}>
+              <div className={classes.menuItem} key={uuid()}>
                 <div className={classes.menuItemDetails}>
                   <div className={classes.adminModifyAndDelete}>
                     <Image
                       src={deleteIcon}
+                      alt="DeleteIcon"
                       onClick={() => {
                         deleteItemHandler(item);
                         setTimeout(() => {
@@ -191,6 +197,7 @@ function Menu(props) {
                     />
                     <Image
                       src={editIcon}
+                      alt="EditIcon"
                       onClick={() => {
                         setToBeEdited(item);
                         openEditItem(true);

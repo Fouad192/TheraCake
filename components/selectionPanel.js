@@ -5,6 +5,8 @@ import plusIcon from "../public/icon/plus.svg";
 import minusIcon from "../public/icon/minus.png";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useState, useRef, useEffect } from "react";
+import uuid from "react-uuid";
+
 function SelectionPanel(props) {
   let [quantity, setQuantity] = useState(1);
   let [selectedSize, setSelectedSize] = useState();
@@ -123,16 +125,15 @@ function SelectionPanel(props) {
 
             {props.selectionData.sizePrice.map((item, index) => {
               return (
-                <div>
+                <div key={uuid()}>
                   <input
                     type="radio"
                     name="size"
                     value={item.size}
                     onClick={(e) => {
-                      if(e.target.checked) {
-                        setMaxToppingsFunction()
-                        setCheckedSize(e.target.value)
-                     
+                      if (e.target.checked) {
+                        setMaxToppingsFunction();
+                        setCheckedSize(e.target.value);
                       }
                       setSelectedSize({ size: item.size, price: item.price });
                     }}
@@ -148,7 +149,7 @@ function SelectionPanel(props) {
             <div className={classes.flavorInputs}>
               <h1>Flavors</h1>
               {props.selectionData.flavors.map((item) => (
-                <div>
+                <div key={uuid()}>
                   <input
                     type="radio"
                     name="flavor"
@@ -165,7 +166,7 @@ function SelectionPanel(props) {
             <div className={classes.toppings}>
               <h1>Toppings</h1>
               {props.selectionData.toppings.map((item, index) => (
-                <div>
+                <div key={uuid()}>
                   <button onClick={() => increment(index)}>+</button>
                   <input
                     value="0"
@@ -186,7 +187,7 @@ function SelectionPanel(props) {
             <div className={classes.extras}>
               <h1>Extras</h1>
               {props.selectionData.extraPrice.map((item) => (
-                <div>
+                <div key={uuid()}>
                   <input
                     type="checkbox"
                     value={item.extra}

@@ -4,6 +4,8 @@ import Image from "next/image";
 import basicImg from "../public/basic.png";
 import { Router, useRouter } from "next/router";
 import Link from "next/link";
+import uuid from "react-uuid";
+
 function OrderItem({ order }) {
   const router = useRouter()
   let [statusPopup, openStatusPopup] = useState(false);
@@ -136,7 +138,7 @@ encodeData()
           <h1>Items</h1>
           <hr />
           {order.orderItems.map((item) => (
-            <div>
+            <div key={uuid()}>
               <div className={classes.orderTitleDetails}>
                 <Image src={basicImg} alt="basic" />
                 <h1>{`${item.quantity}x ${item.name}`}</h1>
@@ -146,7 +148,7 @@ encodeData()
                 <p>{item.flavors[0]}</p>
               </div>
               {item.giftPrice.map((gift) => (
-                <div className={classes.itemSubDetails}>
+                <div className={classes.itemSubDetails} key={uuid()}>
                   <div>
                     <p>{gift.gift}</p>
                     <p>{gift.price}</p>
@@ -155,7 +157,7 @@ encodeData()
               ))}
 
               {item.extraPrice.map((extra) => (
-                <div className={classes.itemSubDetails}>
+                <div className={classes.itemSubDetails} key={uuid()}>
                   <div>
                     <p>{extra.extra}</p>
                     <p>{extra.price}</p>
@@ -247,7 +249,7 @@ encodeData()
               <button onClick={encodeData}>Send Via Whatsapp</button>
             </Link>
           </div>
-          <div class={classes.statusContainer}>
+          <div className={classes.statusContainer}>
             <button className={classes.statusBtn} onClick={toggleStatusPopup}>
               Set Status
             </button>

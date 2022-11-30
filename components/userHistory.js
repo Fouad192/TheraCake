@@ -3,6 +3,7 @@ import classes from "./userHistory.module.css";
 import Image from "next/image";
 import basicImg from "../public/basic.png";
 import { useSession } from "next-auth/react";
+import uuid from "react-uuid";
 
 function UserHistory({order}) {
   let [sum, setSum] = useState();
@@ -73,7 +74,7 @@ function UserHistory({order}) {
             <h1>Items</h1>
             <hr />
             {order.orderItems.map((item) => (
-              <div>
+              <div key={uuid()}>
                 <div className={classes.orderHistoryTitleDetails}>
                   <Image src={basicImg} alt="basic" />
                   <h1>{`${item.quantity}x ${item.name}`}</h1>
@@ -83,7 +84,7 @@ function UserHistory({order}) {
                   <p>{item.flavors[0]}</p>
                 </div>
                 {item.giftPrice.map((gift) => (
-                  <div className={classes.itemHistorySubDetails}>
+                  <div className={classes.itemHistorySubDetails} key={uuid()}>
                     <div>
                       <p>{gift.gift}</p>
                       <p>{gift.price}</p>
@@ -92,7 +93,7 @@ function UserHistory({order}) {
                 ))}
 
                 {item.extraPrice.map((extra) => (
-                  <div className={classes.itemHistorySubDetails}>
+                  <div className={classes.itemHistorySubDetails} key={uuid()}>
                     <div>
                       <p>{extra.extra}</p>
                       <p>{extra.price}</p>
@@ -126,7 +127,6 @@ function UserHistory({order}) {
           <div className={classes.addressHistoryDetails}>
             <div className={classes.addressHistoryHeader}>
               <h1>Delivery Address</h1>
-            
             </div>
             <hr />
             <div>

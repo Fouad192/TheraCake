@@ -10,7 +10,7 @@ function Footer() {
       <div className={classes.contactContainer}>
         <h1>Contact Details</h1>
         <div className={classes.iconTextFlex}>
-          <Image src={instagramIcon} />
+          <Image src={instagramIcon} alt='instagram'/>
           <p>@theracakecairo</p>
         </div>
         <div className={classes.iconTextFlex}>
@@ -18,11 +18,11 @@ function Footer() {
           <p>@theracakecairo</p>
         </div>
         <div className={classes.iconTextFlex}>
-          <Image src={emailIcon} />
+          <Image src={emailIcon} alt='emailIcon' />
           <p>@theracakecairo</p>
         </div>
         <div className={classes.iconTextFlex}>
-          <Image src={callIcon} />
+          <Image src={callIcon} alt='callIcon'/>
           <p>@theracakecairo</p>
         </div>
       </div>
