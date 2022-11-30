@@ -12,15 +12,16 @@ function SelectionPanel(props) {
   let [selectedExtra, setSelectedExtra] = useState([]);
   let [selectedGift, setSelectedGift] = useState([]);
   let [notes, setNotes] = useState();
-  let [selectedTopping, setSelectedTopping] = useState();
-  let [topping0, setToppingCount] = useState(0);
-  let [topping1, setToppingCount2] = useState(0);
-  let [topping2, setToppingCount3] = useState(0);
-  let [topping3, setToppingCount4] = useState(0);
-  let [topping4, setToppingCount5] = useState(0);
-  let [topping5, setToppingCount6] = useState(0);
+  // let [selectedTopping, setSelectedTopping] = useState();
+  // let [topping0, setToppingCount] = useState(0);
+  // let [topping1, setToppingCount2] = useState(0);
+  // let [topping2, setToppingCount3] = useState(0);
+  // let [topping3, setToppingCount4] = useState(0);
+  // let [topping4, setToppingCount5] = useState(0);
+  // let [topping5, setToppingCount6] = useState(0);
   let [sizePriceSt, setSizePriceSt] = useState();
   let sizePriceRef = useRef([]);
+  let toppingCountRef = useRef([])
   let quantityRef = useRef();
   let addToInvoiceFlash = useRef();
   const { data: session } = useSession();
@@ -71,35 +72,38 @@ function SelectionPanel(props) {
     const data = await response.json();
     console.log(data);
   }
-  function increment(e) {
-    if (e.target.id === "topping0") {
-      setToppingCount(topping0 + 1);
-    } else if (e.target.id === "topping1") {
-      setToppingCount2(topping1 + 1);
-    } else if (e.target.id === "topping2") {
-      setToppingCount3(topping2 + 1);
-    } else if (e.target.id === "topping3") {
-      setToppingCount4(topping3 + 1);
-    } else if (e.target.id === "topping4") {
-      setToppingCount5(topping4 + 1);
-    } else if (e.target.id === "topping5") {
-      setToppingCount6(topping5 + 1);
-    }
+  function increment(index) {
+    // if (e.target.id === "topping0") {
+    //   setToppingCount(topping0 + 1);
+    // } else if (e.target.id === "topping1") {
+    //   setToppingCount2(topping1 + 1);
+    // } else if (e.target.id === "topping2") {
+    //   setToppingCount3(topping2 + 1);
+    // } else if (e.target.id === "topping3") {
+    //   setToppingCount4(topping3 + 1);
+    // } else if (e.target.id === "topping4") {
+    //   setToppingCount5(topping4 + 1);
+    // } else if (e.target.id === "topping5") {
+    //   setToppingCount6(topping5 + 1);
+    // }
+    toppingCountRef.current[index].value ++
+
   }
-  function decrement(e) {
-    if (e.target.id === "topping0") {
-      setToppingCount(topping0 - 1);
-    } else if (e.target.id === "topping1") {
-      setToppingCount2(topping1 - 1);
-    } else if (e.target.id === "topping2") {
-      setToppingCount3(topping2 - 1);
-    } else if (e.target.id === "topping3") {
-      setToppingCount4(topping3 - 1);
-    } else if (e.target.id === "topping4") {
-      setToppingCount5(topping4 - 1);
-    } else if (e.target.id === "topping5") {
-      setToppingCount6(topping5 - 1);
-    }
+  function decrement(index) {
+    // if (e.target.id === "topping0") {
+    //   setToppingCount(topping0 - 1);
+    // } else if (e.target.id === "topping1") {
+    //   setToppingCount2(topping1 - 1);
+    // } else if (e.target.id === "topping2") {
+    //   setToppingCount3(topping2 - 1);
+    // } else if (e.target.id === "topping3") {
+    //   setToppingCount4(topping3 - 1);
+    // } else if (e.target.id === "topping4") {
+    //   setToppingCount5(topping4 - 1);
+    // } else if (e.target.id === "topping5") {
+    //   setToppingCount6(topping5 - 1);
+    // }
+    toppingCountRef.current[index].value --
   }
   return (
     <div className={classes.selectionPanel}>
@@ -131,7 +135,7 @@ function SelectionPanel(props) {
               id={classes.quantityMinus}
               value={quantity}
               onClick={(e) => {
-                if(e.target.value > 0) {
+                if (e.target.value > 0) {
                   setQuantity(quantity - 1);
                 }
               }}
@@ -182,20 +186,16 @@ function SelectionPanel(props) {
               <h1>Toppings</h1>
               {props.selectionData.toppings.map((item, index) => (
                 <div>
-                  <Image
-                    src={plusIcon}
-                    width={24}
-                    onClick={increment}
-                    id={`topping${index}`}
+                  <button onClick={() => increment(index)}>+</button>
+                  <input
+                    value="0"
+                    // type='hidden'
+                    ref={(el) => {
+                      toppingCountRef.current[index] = el;
+                    }}
+        
                   />
-                  <label>{topping0}</label>
-                  <input type="hidden" value={`topping${index}`} />
-                  <Image
-                    src={minusIcon}
-                    width={24}
-                    id={`topping${index}`}
-                    onClick={decrement}
-                  />
+                  <button onClick={() => decrement(index)}>-</button>
                   <label>{item}</label>
                 </div>
               ))}

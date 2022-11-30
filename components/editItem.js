@@ -2,9 +2,10 @@ import classes from "./addItem.module.css";
 import closeIcon from "../public/close.png";
 import Image from "next/image";
 import { useRef, useState } from "react";
+import { useRouter } from "next/router";
 
-function EditItem(props) {
-  let data = props.data;
+function EditItem({data, openEditItem}) {
+  let router = useRouter()
   let [itemName, setItemName] = useState(data.name);
   let [itemDescription, setItemDescription] = useState(data.description);
   let [itemFlavor, setItemFlavor] = useState(data.flavors);
@@ -14,12 +15,37 @@ function EditItem(props) {
   let [itemSizes, setItemSizes] = useState(data.sizePrice);
   let [itemImage, setItemImage] = useState(data.img);
   function closePopup() {
-    props.openEditItem(false)
+    openEditItem(false)
+  }
+    const itemId = data._id;
+
+  async function handleEditSubmit(e) {
+    console.log(itemId)
+    e.preventDefault()
+    let editedData = {
+      itemId,
+      extraPrice: itemExtras,
+      sizePrice: itemSizes,
+      description: itemDescription,
+      name: itemName,
+    }
+     const response = await fetch("/api/newMenuItem", {
+      method: "PUT",
+      body: JSON.stringify(editedData),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+    console.log(data);
+    setTimeout(() => {
+      router.reload(window.location.pathname);
+    }, 500);
   }
   return (
     <div className={classes.addItemPopupContainer}>
       <Image id={classes.closeIconStyle} src={closeIcon} onClick={closePopup} />
-      <form action="/api/newMenuItem" method="put">
+      <form action="/api/newMenuItem" method="put" onSubmit={handleEditSubmit}>
         <div className={classes.itemCategory}>
           <h1>Category</h1>
           <div>

@@ -2,7 +2,7 @@ import dbConnect from "../../lib/dbConnect";
 import mongoose from "mongoose";
 import MenuItem from "../../models/menuItems";
 export default async function handler(req, res) {
-    console.log(req.body)
+  console.log(req.body);
   if (req.method === "POST") {
     await dbConnect();
     try {
@@ -13,15 +13,25 @@ export default async function handler(req, res) {
     } catch (err) {
       console.log(err.message);
     }
-  } if(req.method === 'DELETE') {
+  }
+  if (req.method === "DELETE") {
     await dbConnect();
     try {
-      const id = req.body
-      console.log(id)
-      await MenuItem.findByIdAndDelete(id)
-      res.status(200).json({message: `${id} item deleted`})
+      const id = req.body;
+      console.log(id);
+      await MenuItem.findByIdAndDelete(id);
+      res.status(200).json({ message: `${id} item deleted` });
+    } catch (err) {
+      console.log(err);
+    }
+  } else if(req.method === 'PUT') {
+    await dbConnect()
+    try {
+      const updatedData = req.body
+      await MenuItem.findByIdAndUpdate(updatedData.itemId, updatedData)
+      res.status(200).json({message: 'Updated!'})
     } catch (err) {
       console.log(err)
     }
-  }
+  } 
 }
