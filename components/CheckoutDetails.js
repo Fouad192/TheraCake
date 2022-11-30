@@ -9,7 +9,7 @@ import uuid from "react-uuid";
 
 const orderid = require("order-id")("key");
 
-function checkoutDetails(props) {
+function CheckoutDetails(props) {
   const router = useRouter();
   const { data: session } = useSession();
   const apartmentLastIndex = props.apartmentAddressData.length - 1;
@@ -777,4 +777,4 @@ function checkoutDetails(props) {
   );
 }
 
-export default checkoutDetails;
+export default CheckoutDetails;
