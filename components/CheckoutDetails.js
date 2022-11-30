@@ -111,6 +111,22 @@ function CheckoutDetails(props) {
   let [apartmentInputs, setApartmentInputs] = useState({});
   let [villaInputs, setVillaInputs] = useState({});
   let [companyInputs, setCompanyInputs] = useState({});
+  function calculateTotalPriceDb() {
+    let sum = 0
+    props.addedItems.map(item => {
+      item.sizePrice.map(size => {
+        sum+= parseInt(size.price)
+      })
+      item.extraPrice.map(extra => {
+        sum+= parseInt(extra.price)
+      })
+      item.giftPrice.map(gift => {
+        sum+= parseInt(gift.price)
+      })
+    })
+    sum = sum * 14/100 + sum + 45
+    return sum
+  }
   async function apartmentSubmitHandler(e) {
     e.preventDefault();
     let thisOrderId = orderid.generate();
@@ -135,6 +151,7 @@ function CheckoutDetails(props) {
       apartment: apartmentInputs.apartment,
       instructions: apartmentInputs.instructions,
       scheduled: apartmentInputs.scheduled,
+      totalPrice: calculateTotalPriceDb()
     };
     const response = await fetch("/api/checkout", {
       method: "POST",

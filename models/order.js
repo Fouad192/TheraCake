@@ -74,6 +74,9 @@ let orderDetails = new Schema({
   status: {
     type: String,
     default: 'Pending'
+  },
+  totalPrice: {
+   type: Number, 
   }
 });
 
