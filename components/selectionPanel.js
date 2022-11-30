@@ -128,12 +128,12 @@ function SelectionPanel(props) {
 
             {props.selectionData.sizePrice.map((item, index) => {
               return (
-                <div >
+                <div key={props.selectionData._id}>
                   <input
                     type="radio"
                     name="size"
                     value={item.size}
-                    onClick={() => 
+                    onClick={() =>
                       // if (e.target.checked) {
                       //   setMaxToppingsFunction();
                       //   setCheckedSize(e.target.value);
@@ -152,7 +152,7 @@ function SelectionPanel(props) {
             <div className={classes.flavorInputs}>
               <h1>Flavors</h1>
               {props.selectionData.flavors.map((item) => (
-                <div>
+                <div key={props.selectionData._id}>
                   <input
                     type="radio"
                     name="flavor"
@@ -190,7 +190,7 @@ function SelectionPanel(props) {
             <div className={classes.extras}>
               <h1>Extras</h1>
               {props.selectionData.extraPrice.map((item) => (
-                <div>
+                <div key={props.selectionData._id}>
                   <input
                     type="checkbox"
                     value={item.extra}
