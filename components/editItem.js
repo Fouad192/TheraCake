@@ -4,18 +4,21 @@ import Image from "next/image";
 import { useRef, useState } from "react";
 
 function EditItem(props) {
-    let data = props.data
-    let [itemName, setItemName] = useState(data.name)
-    let [itemDescription, setItemDescription] = useState(data.description)
-    let [itemFlavor, setItemFlavor] = useState(data.flavors)
-    let [itemExtras, setItemExtras] = useState(data.extraPrice)
-    let [itemToppings, setItemToppings] = useState(data.toppings)
-    let [itemCategory, setItemCategory] = useState(data.category)
-    let [itemSizes, setItemSizes] = useState(data.sizePrice)
-    let [itemImage, setItemImage] = useState(data.img)
+  let data = props.data;
+  let [itemName, setItemName] = useState(data.name);
+  let [itemDescription, setItemDescription] = useState(data.description);
+  let [itemFlavor, setItemFlavor] = useState(data.flavors);
+  let [itemExtras, setItemExtras] = useState(data.extraPrice);
+  let [itemToppings, setItemToppings] = useState(data.toppings);
+  let [itemCategory, setItemCategory] = useState(data.category);
+  let [itemSizes, setItemSizes] = useState(data.sizePrice);
+  let [itemImage, setItemImage] = useState(data.img);
+  function closePopup() {
+    props.openEditItem(false)
+  }
   return (
     <div className={classes.addItemPopupContainer}>
-      <Image id={classes.closeIconStyle} src={closeIcon} />
+      <Image id={classes.closeIconStyle} src={closeIcon} onClick={closePopup} />
       <form action="/api/newMenuItem" method="put">
         <div className={classes.itemCategory}>
           <h1>Category</h1>
@@ -52,44 +55,90 @@ function EditItem(props) {
         </div>
         <div className={classes.sizes}>
           <h1>Sizes</h1>
-          {itemSizes.map((size, index, arr) => (
-            <div>
-              <input
-                type="text"
-                placeholder="Size Name"
-                value={size.size}
-             
-              />
-              <input
-                type="number"
-                placeholder="Size Price"
-                value={size.price}
-               
-              />
-            </div>
-          ))}
+          {itemSizes.map((sizeObject) => {
+            // let {size, price} = sizeObject
+            return (
+              <div>
+                <input
+                  type="text"
+                  name="size"
+                  placeholder="Size Name"
+                  value={sizeObject.size}
+                  onChange={(e) => {
+                    setItemSizes((prevState) =>
+                      prevState.map((obj) => {
+                        if (obj === sizeObject) {
+                          return { ...obj, size: e.target.value };
+                        }
+                        return obj;
+                      })
+                    );
+                  }}
+                />
+                <input
+                  type="number"
+                  placeholder="Size Price"
+                  name="price"
+                  value={sizeObject.price}
+                  onChange={(e) => {
+                    setItemSizes((prevState) =>
+                      prevState.map((obj) => {
+                        if (obj === sizeObject) {
+                          return { ...obj, price: e.target.value };
+                        }
+                        return obj;
+                      })
+                    );
+                  }}
+                />
+              </div>
+            );
+          })}
         </div>
         <div className={classes.extras}>
           <h1>Extras</h1>
           <button type="button">Add Extra</button>
           {itemExtras.map((item, index) => (
             <div>
-              <input type="text" placeholder="Extra Name" />
-              <input type="number" placeholder="Extra Price" />
+              <input
+                type="text"
+                value={item.extra}
+                placeholder="Extra Name"
+                onChange={(e) => {
+                  setItemExtras((prevState) =>
+                    prevState.map((obj) => {
+                      if (obj === item) {
+                        return { ...obj, extra: e.target.value };
+                      }
+                      return obj;
+                    })
+                  );
+                }}
+              />
+              <input
+                type="number"
+                placeholder="Extra Price"
+                value={item.price}
+                onChange={(e) => {
+                  setItemExtras((prevState) =>
+                    prevState.map((obj) => {
+                      if (obj === item) {
+                        return { ...obj, price: e.target.value };
+                      }
+                      return obj;
+                    })
+                  );
+                }}
+              />
             </div>
           ))}
         </div>
         <div className={classes.flavor}>
           <h1>Flavors</h1>
 
-          {itemFlavor.map((flavor, index) => (
+          {itemFlavor.map((flavor, index, arr) => (
             <div>
-              <input
-                type="text"
-                placeholder="Flavor Name"
-                value={flavor}
-               
-              />
+              <input type="text" placeholder="Flavor Name" value={flavor} />
             </div>
           ))}
         </div>
@@ -97,7 +146,6 @@ function EditItem(props) {
         <div className={classes.topping}>
           <h1>Toppings</h1>
 
-         
           {itemToppings.map((item, index) => (
             <div>
               <input type="text" placeholder="Flavor Name" />
@@ -106,7 +154,7 @@ function EditItem(props) {
         </div>
         <div className={classes.file}>
           <label for="fileInput">Choose Image</label>
-          <input type="file"  />
+          <input type="file" />
         </div>
         <input
           type="submit"

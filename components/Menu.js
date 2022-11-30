@@ -94,7 +94,9 @@ function Menu(props) {
             onAddItem={addItemHandler}
           />
         )}
-        {editItemPopup && <EditItem data={toBeEdited} />}
+        {editItemPopup && (
+          <EditItem data={toBeEdited} openEditItem={openEditItem} />
+        )}
         <div className={classes.menuItems}>
           <div className={classes.menuNavigation}>
             <button ref={cheesecake} onClick={cheesecakeMenuHandler}>
@@ -178,8 +180,22 @@ function Menu(props) {
               <div className={classes.menuItem}>
                 <div className={classes.menuItemDetails}>
                   <div className={classes.adminModifyAndDelete}>
-                    <Image src={deleteIcon} />
-                    <Image src={editIcon} />
+                    <Image
+                      src={deleteIcon}
+                      onClick={() => {
+                        deleteItemHandler(item);
+                        setTimeout(() => {
+                          router.reload(window.location.pathname);
+                        }, 500);
+                      }}
+                    />
+                    <Image
+                      src={editIcon}
+                      onClick={() => {
+                        setToBeEdited(item);
+                        openEditItem(true);
+                      }}
+                    />
                   </div>
                   <h1>{item.name}</h1>
                   <p>{item.description}</p>

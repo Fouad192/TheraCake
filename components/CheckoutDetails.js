@@ -453,6 +453,7 @@ function checkoutDetails(props) {
                         placeholder="First Name"
                         value={villaInputs.firstName}
                         onChange={handleVillaInputChange}
+                        required
                       />
                       <input
                         type="text"
@@ -460,6 +461,7 @@ function checkoutDetails(props) {
                         name="lastName"
                         value={villaInputs.lastName}
                         onChange={handleVillaInputChange}
+                        required
                       />
                     </div>
                     <div>
@@ -469,6 +471,7 @@ function checkoutDetails(props) {
                         placeholder="Mobile Number"
                         value={villaInputs.mobile}
                         onChange={handleVillaInputChange}
+                        required
                       />
                       <input
                         type="number"
@@ -476,6 +479,7 @@ function checkoutDetails(props) {
                         placeholder="Backup Mobile Number"
                         onChange={handleVillaInputChange}
                         value={villaInputs.backupMobile}
+                        required
                       />
                     </div>
                     <div>
@@ -485,6 +489,7 @@ function checkoutDetails(props) {
                         placeholder="Email"
                         onChange={handleVillaInputChange}
                         value={villaInputs.email}
+                        required
                       />
                     </div>
                     <h1>Address Information</h1>
@@ -504,6 +509,7 @@ function checkoutDetails(props) {
                         placeholder="City"
                         onChange={handleVillaInputChange}
                         value={villaInputs.city}
+                        required
                       />
                     </div>
                     <div>
@@ -513,6 +519,7 @@ function checkoutDetails(props) {
                         placeholder="Area"
                         onChange={handleVillaInputChange}
                         value={villaInputs.area}
+                        required
                       />
                       <input
                         type="text"
@@ -520,6 +527,7 @@ function checkoutDetails(props) {
                         placeholder="Street Name"
                         onChange={handleVillaInputChange}
                         value={villaInputs.street}
+                        required
                       />
                     </div>
 
@@ -530,6 +538,7 @@ function checkoutDetails(props) {
                         placeholder="Villa Number"
                         onChange={handleVillaInputChange}
                         value={villaInputs.villa}
+                        required
                       />
                     </div>
                     <div>

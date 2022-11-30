@@ -3,11 +3,51 @@ import classes from "./adminOrders.module.css";
 import Image from "next/image";
 import basicImg from "../public/basic.png";
 import { Router, useRouter } from "next/router";
-
+import Link from "next/link";
 function OrderItem({ order }) {
   const router = useRouter()
   let [statusPopup, openStatusPopup] = useState(false);
   let [sum, setSum] = useState()
+  let [encodedText, setEncodedText] = useState('')
+  function encodeData() {
+    if(order.addressType === 'apartment') {
+    let apartmentText = `Order Number: ${order.orderNumber} \n Client Name: ${
+      order.firstName
+    } ${order.lastName} \n Mobile Number: ${order.mobile} \n Total: ${
+      (sum * 14) / 100 + 45 + sum
+    } \n Address: ${order.governorate} - ${order.city} \n ${order.area} - ${order.street} \n ${order.building} - ${order.floor} - ${order.apartment} \n Payment Method: Cash`;
+   let encoded = encodeURI(apartmentText)
+  //  let redirectLink = `https://wa.me/?text=${encoded}`;
+   setEncodedText(encoded)
+  } else if(order.addressType === 'villa') {
+     let apartmentText = `Order Number: ${order.orderNumber} \n Client Name: ${
+       order.firstName
+     } ${order.lastName} \n Mobile Number: ${order.mobile} \n Total: ${
+       (sum * 14) / 100 + 45 + sum
+     } \n Address: ${order.governorate} - ${order.city} \n ${order.area} - ${
+       order.street
+     } \n ${order.villa}
+      \n Payment Method: Cash`;
+     let encoded = encodeURI(apartmentText);
+     //  let redirectLink = `https://wa.me/?text=${encoded}`;
+     setEncodedText(encoded);
+  } else if(order.addressType === 'company') {
+     let apartmentText = `Order Number: ${order.orderNumber} \n Client Name: ${
+       order.firstName
+     } ${order.lastName} \n Mobile Number: ${order.mobile} \n Total: ${
+       (sum * 14) / 100 + 45 + sum
+     } \n Address: ${order.governorate} - ${order.city} \n ${order.area} - ${
+       order.street
+     } \n ${order.company}
+      \n Payment Method: Cash`;
+     let encoded = encodeURI(apartmentText);
+     //  let redirectLink = `https://wa.me/?text=${encoded}`;
+     setEncodedText(encoded);
+  }
+  }
+  useEffect(() => {
+encodeData()
+  }, [])
   function convertTimestampToDate() {
     let date = new Date(order.dateSubmitted).toLocaleDateString("en-US");
     return date;
@@ -63,7 +103,7 @@ function OrderItem({ order }) {
   }
   return (
     <div className={classes.orderContainer}>
-      <div className={classes.orderBriefContainer}>
+      <div className={classes.orderBriefContainer} onClick={encodeData}>
         <div>
           <h3>Yesterday</h3>
           <p className={classes.lightText}>5:14AM</p>
@@ -79,7 +119,7 @@ function OrderItem({ order }) {
         </div>
         <div>
           <h3>Cash</h3>
-          <p className={classes.lightText}>{sum}</p>
+          <p className={classes.lightText}>{(sum * 14) / 100 + 45 + sum}</p>
         </div>
         <div>
           <p>{order.scheduled}</p>
@@ -203,7 +243,9 @@ function OrderItem({ order }) {
           </div>
           <div className={classes.addressBtns}>
             <button>View Map</button>
-            <button>Send Via Whatsapp</button>
+            <Link target="_blank" href={`https://wa.me/?text=${encodedText}`}>
+              <button onClick={encodeData}>Send Via Whatsapp</button>
+            </Link>
           </div>
           <div class={classes.statusContainer}>
             <button className={classes.statusBtn} onClick={toggleStatusPopup}>
