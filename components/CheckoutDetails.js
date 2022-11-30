@@ -114,8 +114,10 @@ function CheckoutDetails(props) {
   function calculateTotalPriceDb() {
     let sum = 0
     props.addedItems.map(item => {
+    
       item.sizePrice.map(size => {
         sum+= parseInt(size.price)
+
       })
       item.extraPrice.map(extra => {
         sum+= parseInt(extra.price)
@@ -123,6 +125,7 @@ function CheckoutDetails(props) {
       item.giftPrice.map(gift => {
         sum+= parseInt(gift.price)
       })
+      
     })
     sum = sum * 14/100 + sum + 45
     return sum
@@ -168,7 +171,7 @@ function CheckoutDetails(props) {
     let thisOrderId = orderid.generate();
     let currentTime = orderid.getTime(thisOrderId);
     const orderData = {
-      addressType: 'villa',
+      addressType: "villa",
       userId: session.user._id,
       orderItems: props.addedItems,
       orderNumber: thisOrderId,
@@ -182,10 +185,11 @@ function CheckoutDetails(props) {
       city: villaInputs.city,
       area: villaInputs.area,
       street: villaInputs.street,
-     
+
       villa: villaInputs.villa,
       instructions: villaInputs.instructions,
       scheduled: villaInputs.scheduled,
+      totalPrice: calculateTotalPriceDb(),
     };
      const response = await fetch("/api/checkout", {
        method: "POST",
@@ -202,7 +206,7 @@ function CheckoutDetails(props) {
     let thisOrderId = orderid.generate();
     let currentTime = orderid.getTime(thisOrderId);
     const orderData = {
-      addressType: 'company',
+      addressType: "company",
       userId: session.user._id,
       orderItems: props.addedItems,
       orderNumber: thisOrderId,
@@ -216,10 +220,11 @@ function CheckoutDetails(props) {
       city: companyInputs.city,
       area: companyInputs.area,
       street: companyInputs.street,
-     
+
       company: companyInputs.company,
       instructions: companyInputs.instructions,
       scheduled: companyInputs.scheduled,
+      totalPrice: calculateTotalPriceDb(),
     };
     const response = await fetch("/api/checkout", {
       method: "POST",

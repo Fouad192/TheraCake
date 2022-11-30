@@ -14,8 +14,8 @@ function SelectionPanel(props) {
   let [selectedExtra, setSelectedExtra] = useState([]);
   let [selectedGift, setSelectedGift] = useState([]);
   let [notes, setNotes] = useState();
-  let [maxToppings, setMaxToppings] = useState()
-  let [currCheckedSize, setCheckedSize] = useState()
+  // let [maxToppings, setMaxToppings] = useState();
+  // let [currCheckedSize, setCheckedSize] = useState();
   let toppingCountRef = useRef([]);
   let quantityRef = useRef();
   let addToInvoiceFlash = useRef();
@@ -38,15 +38,19 @@ function SelectionPanel(props) {
       );
     }
   }
-  function setMaxToppingsFunction() {
-    if(currCheckedSize.includes('9')) {
-      setMaxToppings('9')
-    } else if(currCheckedSize.includes('12')) {
-      setMaxToppings('12')
-    } else if(currCheckedSize.includes('20')) {
-      setMaxToppings('20')
-    }
-  }
+  // function setMaxToppingsFunction() {
+  //   if (currCheckedSize) {
+  //     if (currCheckedSize.includes("9")) {
+  //       setMaxToppings("9");
+  //     } else if (currCheckedSize.includes("12")) {
+  //       setMaxToppings("12");
+  //     } else if (currCheckedSize.includes("20")) {
+  //       setMaxToppings("20");
+  //     }
+  //   } else {
+  //     null
+  //   }
+  // }
   function timeOutFlash() {
     addToInvoiceFlash.current.style.display = "block";
     setTimeout(() => {
@@ -79,7 +83,6 @@ function SelectionPanel(props) {
     toppingCountRef.current[index].value++;
   }
   function decrement(index) {
-
     toppingCountRef.current[index].value--;
   }
   return (
@@ -125,18 +128,18 @@ function SelectionPanel(props) {
 
             {props.selectionData.sizePrice.map((item, index) => {
               return (
-                <div key={uuid()}>
+                <div >
                   <input
                     type="radio"
                     name="size"
                     value={item.size}
-                    onClick={(e) => {
-                      if (e.target.checked) {
-                        setMaxToppingsFunction();
-                        setCheckedSize(e.target.value);
-                      }
-                      setSelectedSize({ size: item.size, price: item.price });
-                    }}
+                    onClick={() => 
+                      // if (e.target.checked) {
+                      //   setMaxToppingsFunction();
+                      //   setCheckedSize(e.target.value);
+                      // }
+                      setSelectedSize({ size: item.size, price: item.price })
+                    }
                   />
                   <label>{item.size}</label>
                   <p>{item.price}</p>
@@ -149,7 +152,7 @@ function SelectionPanel(props) {
             <div className={classes.flavorInputs}>
               <h1>Flavors</h1>
               {props.selectionData.flavors.map((item) => (
-                <div key={uuid()}>
+                <div>
                   <input
                     type="radio"
                     name="flavor"
@@ -187,7 +190,7 @@ function SelectionPanel(props) {
             <div className={classes.extras}>
               <h1>Extras</h1>
               {props.selectionData.extraPrice.map((item) => (
-                <div key={uuid()}>
+                <div>
                   <input
                     type="checkbox"
                     value={item.extra}
