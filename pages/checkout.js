@@ -10,7 +10,6 @@ function checkout(props) {
    
     return (
       <>
-        
         <CheckoutDetails
           addedItems={props.addedItems}
           apartmentAddressData={props.apartmentAddressData}

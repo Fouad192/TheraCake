@@ -12,16 +12,9 @@ function SelectionPanel(props) {
   let [selectedExtra, setSelectedExtra] = useState([]);
   let [selectedGift, setSelectedGift] = useState([]);
   let [notes, setNotes] = useState();
-  // let [selectedTopping, setSelectedTopping] = useState();
-  // let [topping0, setToppingCount] = useState(0);
-  // let [topping1, setToppingCount2] = useState(0);
-  // let [topping2, setToppingCount3] = useState(0);
-  // let [topping3, setToppingCount4] = useState(0);
-  // let [topping4, setToppingCount5] = useState(0);
-  // let [topping5, setToppingCount6] = useState(0);
-  let [sizePriceSt, setSizePriceSt] = useState();
-  let sizePriceRef = useRef([]);
-  let toppingCountRef = useRef([])
+  let [maxToppings, setMaxToppings] = useState()
+  let [currCheckedSize, setCheckedSize] = useState()
+  let toppingCountRef = useRef([]);
   let quantityRef = useRef();
   let addToInvoiceFlash = useRef();
   const { data: session } = useSession();
@@ -43,7 +36,15 @@ function SelectionPanel(props) {
       );
     }
   }
-
+  function setMaxToppingsFunction() {
+    if(currCheckedSize.includes('9')) {
+      setMaxToppings('9')
+    } else if(currCheckedSize.includes('12')) {
+      setMaxToppings('12')
+    } else if(currCheckedSize.includes('20')) {
+      setMaxToppings('20')
+    }
+  }
   function timeOutFlash() {
     addToInvoiceFlash.current.style.display = "block";
     setTimeout(() => {
@@ -73,37 +74,11 @@ function SelectionPanel(props) {
     console.log(data);
   }
   function increment(index) {
-    // if (e.target.id === "topping0") {
-    //   setToppingCount(topping0 + 1);
-    // } else if (e.target.id === "topping1") {
-    //   setToppingCount2(topping1 + 1);
-    // } else if (e.target.id === "topping2") {
-    //   setToppingCount3(topping2 + 1);
-    // } else if (e.target.id === "topping3") {
-    //   setToppingCount4(topping3 + 1);
-    // } else if (e.target.id === "topping4") {
-    //   setToppingCount5(topping4 + 1);
-    // } else if (e.target.id === "topping5") {
-    //   setToppingCount6(topping5 + 1);
-    // }
-    toppingCountRef.current[index].value ++
-
+    toppingCountRef.current[index].value++;
   }
   function decrement(index) {
-    // if (e.target.id === "topping0") {
-    //   setToppingCount(topping0 - 1);
-    // } else if (e.target.id === "topping1") {
-    //   setToppingCount2(topping1 - 1);
-    // } else if (e.target.id === "topping2") {
-    //   setToppingCount3(topping2 - 1);
-    // } else if (e.target.id === "topping3") {
-    //   setToppingCount4(topping3 - 1);
-    // } else if (e.target.id === "topping4") {
-    //   setToppingCount5(topping4 - 1);
-    // } else if (e.target.id === "topping5") {
-    //   setToppingCount6(topping5 - 1);
-    // }
-    toppingCountRef.current[index].value --
+
+    toppingCountRef.current[index].value--;
   }
   return (
     <div className={classes.selectionPanel}>
@@ -152,12 +127,17 @@ function SelectionPanel(props) {
                   <input
                     type="radio"
                     name="size"
-                    onClick={() =>
-                      setSelectedSize({ size: item.size, price: item.price })
-                    }
+                    value={item.size}
+                    onClick={(e) => {
+                      if(e.target.checked) {
+                        setMaxToppingsFunction()
+                        setCheckedSize(e.target.value)
+                     
+                      }
+                      setSelectedSize({ size: item.size, price: item.price });
+                    }}
                   />
                   <label>{item.size}</label>
-                  <span>Serves 1-2 persons (12cm)</span>
                   <p>{item.price}</p>
                 </div>
               );
@@ -193,7 +173,6 @@ function SelectionPanel(props) {
                     ref={(el) => {
                       toppingCountRef.current[index] = el;
                     }}
-        
                   />
                   <button onClick={() => decrement(index)}>-</button>
                   <label>{item}</label>

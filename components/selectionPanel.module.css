@@ -227,7 +227,30 @@
     padding: 0.1em 0.5em;
 }
 
-
+.toppings div input {
+    width: 1.5%;
+    border: none;
+    margin: 0 0.5em;
+}
+.toppings div button {
+    background-color: #FF7DA3;
+        border: none;
+        border-radius: 100%;
+        color: white;
+        cursor: pointer;
+}
+.toppings div button:first-child {
+    font-size: 18px;
+        padding: 0.1em 0.4em;
+        margin-left: 0.5em;
+}
+.toppings div input + button {
+    font-size: 18px;
+        padding: 0.1em 0.5em;
+}
+.toppings div label {
+margin-left: 0.5em;
+}
 @media (max-width: 1200px) {
     .selectionPanel {
             grid-row: 2;

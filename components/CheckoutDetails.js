@@ -237,7 +237,7 @@ function checkoutDetails(props) {
   function totalDue() {
     let sum = 0;
 
-    props.addedItems.map(item => {
+    props.addedItems?.map(item => {
     
       item.sizePrice.map(size => {
         sum += parseInt(size.price) * item.quantity
@@ -697,7 +697,7 @@ function checkoutDetails(props) {
         <div className={classes.invoiceContainer}>
           <h1 onClick={totalDue}>Invoice</h1>
           <hr />
-          {props.addedItems.map((addedItem) => (
+          {props.addedItems?.map((addedItem) => (
             <div className={classes.item}>
               <div className={classes.deleteDiv}>
                 <h1>{`${addedItem.quantity}x ${addedItem.name}`}</h1>
@@ -713,9 +713,9 @@ function checkoutDetails(props) {
               </div>
 
               <div className={classes.size}>
-                <p>{addedItem.sizePrice[0].size}</p>
+                <p>{addedItem?.sizePrice[0]?.size}</p>
                 <p className={classes.price}>
-                  {addedItem.sizePrice[0].price * addedItem.quantity}
+                  {addedItem?.sizePrice[0]?.price * addedItem?.quantity}
                 </p>
               </div>
               <div className={classes.flavor}>
@@ -723,7 +723,7 @@ function checkoutDetails(props) {
               </div>
               {addedItem.extraPrice.length === 0 ? null : (
                 <div>
-                  {addedItem.extraPrice.map((extra, index) => (
+                  {addedItem.extraPrice?.map((extra, index) => (
                     <div className={classes.gift}>
                       <p>{extra.extra}</p>
                       <p className={classes.price}>{extra.price}</p>
@@ -733,7 +733,7 @@ function checkoutDetails(props) {
               )}
               {addedItem.giftPrice.length === 0 ? null : (
                 <div>
-                  {addedItem.giftPrice.map((gift, index) => (
+                  {addedItem.giftPrice?.map((gift, index) => (
                     <div className={classes.gift}>
                       <p>{gift.gift}</p>
                       <p className={classes.price}>{gift.price}</p>
