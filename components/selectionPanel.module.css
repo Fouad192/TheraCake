@@ -259,6 +259,31 @@ margin-left: 0.5em;
 }
 @media (max-width: 900px) {
     .selectionPanel {
-        grid-column: 2/12;
+        grid-column: 3/11;
     }
+}
+@media (max-width: 658px) {
+    .selectionPanel {
+        grid-column: 2/12   ;
+    }
+}
+@media (max-width: 540px) {
+    .selectionPanel {
+        height: 60%;
+    }
+}
+@media (max-width: 448px) {
+    .selectionPanel {
+            grid-column: 1/13;
+            margin: 0 1em;
+        }
+.selectionPanel {
+        height: 70%;
+    }
+        .sizesInputs div p,
+        .giftInputs div p,
+        .extras div p {
+            
+            font-size: 16px;
+        }
 }

@@ -1,12 +1,18 @@
-.container {
-    min-height: 100vh;
-}
+
 .adminOrderGrid {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
     font-family: 'Ubuntu', sans-serif;
     margin-top: 5%;
-    margin-bottom: 11%;
+    margin-bottom: 18%;
+    
+}
+#sortInput {
+    border: 1px #FF7DA3 solid;
+    outline-color: #FF7DA3;
+    border-radius: 10px;
+    padding: 1em;
+    margin-left: 1em;
 }
 .adminOrderInputs input {
     padding: 1em 1em;
@@ -35,8 +41,8 @@
 }
 .adminOrderInputs {
     grid-column: 2/6;
-    display: flex;
-    justify-content: space-between;
+    /* display: flex; */
+    /* justify-content: space-between; */
     margin-bottom: 2em;
 }
 .orderContainer {
@@ -325,7 +331,22 @@ margin: 0.5em 0;
     .filter button {
         font-size: 12px;
     }
-    .adminOrderInputs input {
-        padding: 0.5em 0.1em;
+    .adminOrderInputs input, #sortInput {
+        padding: 0.5em 1em;
+        font-size: 14px;
+    }
+    .adminOrderInputs {
+        grid-column: 1/13;
+        text-align: center;
+    }
+}
+
+@media (max-width: 400px) {
+    .adminOrderInputs input, #sortInput {
+        font-size: 10px;
+    }
+    .filter {
+        grid-column: 1/13;
+        padding: 0 0.5em;
     }
 }

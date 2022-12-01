@@ -66,8 +66,28 @@
 .burgerNavbar {
     display: none;
 }
-
+@media (max-width: 1200px) {
+   .navbarContainer .navbar {
+        grid-column: 4/12;
+        margin-top: 0.9em;
+    }
+}
+@media(max-width: 1000px) {
+   
+     .navbar ul li a, .navbar ul li button {
+           margin-left: 0.8em;
+        }
+    .halfCircle {
+        left: -5%;
+    }
+}
 @media (max-width: 800px) {
+    .navbarContainer>a {
+            grid-column: 3;
+        }
+                .halfCircle {
+                    left: -7%;
+                }
     .navbar ul:first-child {
         display: none;
     }
@@ -99,5 +119,43 @@
             height: 1px;
             background-color: rgba(0, 0, 0, 0.2);
           
+    }
+    .burgerNavbar ul li button {
+        margin: 0;
+        padding: 0.5em ;
+        background-color: white;
+        color: #FF7DA3;
+        font-size: 14px;
+        font-weight: 600;
+        padding: 0;
+    }
+}
+
+
+@media (max-width: 550px) {
+    .navbarContainer > a {
+        grid-column: 4;
+    }
+    .halfCircle {
+        left: -10%;
+    }
+    .burgerNavbar {
+        grid-row: 1;
+        grid-column: 13;
+    }
+}
+
+@media (max-width: 400px) {
+    .halfCircle {
+            left: -15%;
+        }
+        .navbarContainer > a{
+            font-size: 26px;
+        }
+}
+
+@media(max-width: 340px) {
+    .halfCircle {
+        left: -20%;
     }
 }

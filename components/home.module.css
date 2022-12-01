@@ -98,3 +98,15 @@
         height: 600px;
     }
 }
+
+@media(max-width: 500px) {
+    .homeDetails h1 {
+        font-size: 60px;
+    }
+    .homeDetails p {
+        font-size: 16px;
+    }
+    .menuButton {
+        padding: 0.7em 3em;
+    }
+}

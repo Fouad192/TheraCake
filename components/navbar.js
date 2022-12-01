@@ -33,26 +33,43 @@ function Navbar() {
           </ul>
         </div>
         <div className={classes.burgerNavbar}>
-          <Image src={burgerIcon} alt='burgerIcon' width={24} height={24} onClick={() => showNav(!isNavOpen)}/>
+          <Image
+            src={burgerIcon}
+            alt="burgerIcon"
+            width={24}
+            height={24}
+            onClick={() => showNav(!isNavOpen)}
+          />
           {isNavOpen && (
             <ul>
               <li>
                 <Link href="/menu">Menu</Link>
               </li>
-              <hr/>
+              <hr />
               <li>
                 <Link href="/checkout">Checkout</Link>
               </li>
 
-              <hr/>
+              <hr />
 
               <li>
                 <Link href="/history">History</Link>
               </li>
-              <hr/>
+              <hr />
 
               <li>
                 <Link href="/adminorders">Admin</Link>
+              </li>
+              <hr />
+              <li>
+                <button
+                  className={classes.signBtns}
+                  onClick={() =>
+                    signOut({ callbackUrl: `${window.location.origin}` })
+                  }
+                >
+                  Logout
+                </button>
               </li>
             </ul>
           )}
@@ -75,6 +92,30 @@ function Navbar() {
               </button>
             </li>
           </ul>
+        </div>
+        <div className={classes.burgerNavbar}>
+          <Image
+            src={burgerIcon}
+            alt="burgerIcon"
+            width={24}
+            height={24}
+            onClick={() => showNav(!isNavOpen)}
+          />
+          {isNavOpen && (
+            <ul>
+              <li>
+                <Link href="/menu">Menu</Link>
+              </li>
+              <hr />
+
+              <li>
+                <button
+                  className={classes.signBtns}
+                  onClick={() => signIn()}
+                >Sign In</button>
+              </li>
+            </ul>
+          )}
         </div>
       </div>
     );

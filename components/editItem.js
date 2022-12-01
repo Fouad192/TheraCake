@@ -45,7 +45,12 @@ function EditItem({data, openEditItem}) {
   }
   return (
     <div className={classes.addItemPopupContainer}>
-      <Image id={classes.closeIconStyle} src={closeIcon} onClick={closePopup} alt='closeIcon'/>
+      <Image
+        id={classes.closeIconStyle}
+        src={closeIcon}
+        onClick={closePopup}
+        alt="closeIcon"
+      />
       <form action="/api/newMenuItem" method="put" onSubmit={handleEditSubmit}>
         <div className={classes.itemCategory}>
           <h1>Category</h1>
@@ -82,60 +87,21 @@ function EditItem({data, openEditItem}) {
         </div>
         <div className={classes.sizes}>
           <h1>Sizes</h1>
-          {itemSizes.map((sizeObject) => {
-            // let {size, price} = sizeObject
-            return (
-              <div key={uuid()}>
-                <input
-                  type="text"
-                  name="size"
-                  placeholder="Size Name"
-                  value={sizeObject.size}
-                  onChange={(e) => {
-                    setItemSizes((prevState) =>
-                      prevState.map((obj) => {
-                        if (obj === sizeObject) {
-                          return { ...obj, size: e.target.value };
-                        }
-                        return obj;
-                      })
-                    );
-                  }}
-                />
-                <input
-                  type="number"
-                  placeholder="Size Price"
-                  name="price"
-                  value={sizeObject.price}
-                  onChange={(e) => {
-                    setItemSizes((prevState) =>
-                      prevState.map((obj) => {
-                        if (obj === sizeObject) {
-                          return { ...obj, price: e.target.value };
-                        }
-                        return obj;
-                      })
-                    );
-                  }}
-                />
-              </div>
-            );
-          })}
         </div>
-        <div className={classes.extras}>
-          <h1>Extras</h1>
-          <button type="button">Add Extra</button>
-          {itemExtras.map((item, index) => (
-            <div key={uuid()}>
+        {itemSizes.map((sizeObject) => {
+          // let {size, price} = sizeObject
+          return (
+            <div key={uuid()} className={classes.sizeInput}>
               <input
                 type="text"
-                value={item.extra}
-                placeholder="Extra Name"
+                name="size"
+                placeholder="Size Name"
+                value={sizeObject.size}
                 onChange={(e) => {
-                  setItemExtras((prevState) =>
+                  setItemSizes((prevState) =>
                     prevState.map((obj) => {
-                      if (obj === item) {
-                        return { ...obj, extra: e.target.value };
+                      if (obj === sizeObject) {
+                        return { ...obj, size: e.target.value };
                       }
                       return obj;
                     })
@@ -144,12 +110,13 @@ function EditItem({data, openEditItem}) {
               />
               <input
                 type="number"
-                placeholder="Extra Price"
-                value={item.price}
+                placeholder="Size Price"
+                name="price"
+                value={sizeObject.price}
                 onChange={(e) => {
-                  setItemExtras((prevState) =>
+                  setItemSizes((prevState) =>
                     prevState.map((obj) => {
-                      if (obj === item) {
+                      if (obj === sizeObject) {
                         return { ...obj, price: e.target.value };
                       }
                       return obj;
@@ -158,34 +125,69 @@ function EditItem({data, openEditItem}) {
                 }}
               />
             </div>
-          ))}
+          );
+        })}
+        <div className={classes.extras}>
+          <h1>Extras</h1>
+          <button type="button">Add Extra</button>
         </div>
+        {itemExtras.map((item, index) => (
+          <div key={uuid()} className={classes.extraInput}>
+            <input
+              type="text"
+              value={item.extra}
+              placeholder="Extra Name"
+              onChange={(e) => {
+                setItemExtras((prevState) =>
+                  prevState.map((obj) => {
+                    if (obj === item) {
+                      return { ...obj, extra: e.target.value };
+                    }
+                    return obj;
+                  })
+                );
+              }}
+            />
+            <input
+              type="number"
+              placeholder="Extra Price"
+              value={item.price}
+              onChange={(e) => {
+                setItemExtras((prevState) =>
+                  prevState.map((obj) => {
+                    if (obj === item) {
+                      return { ...obj, price: e.target.value };
+                    }
+                    return obj;
+                  })
+                );
+              }}
+            />
+          </div>
+        ))}
         <div className={classes.flavor}>
           <h1>Flavors</h1>
-
-          {itemFlavor.map((flavor, index, arr) => (
-            <div key={uuid()}>
-              <input type="text" placeholder="Flavor Name" value={flavor} />
-            </div>
-          ))}
         </div>
-
+        {itemFlavor.map((flavor, index, arr) => (
+          <div key={uuid()} className={classes.flavorInput}>
+            <input type="text" placeholder="Flavor Name" value={flavor} />
+          </div>
+        ))}
         <div className={classes.topping}>
           <h1>Toppings</h1>
-
-          {itemToppings.map((item, index) => (
-            <div key={uuid()}>
-              <input type="text" placeholder="Flavor Name" />
-            </div>
-          ))}
         </div>
+        {itemToppings.map((item, index) => (
+          <div key={uuid()} className={classes.toppingInput}>
+            <input type="text" placeholder="Flavor Name" />
+          </div>
+        ))}
         <div className={classes.file}>
           <label for="fileInput">Choose Image</label>
           <input type="file" />
         </div>
         <input
           type="submit"
-          value="Add Item"
+          value="Edit Item"
           className={classes.addItemSubmit}
         />
       </form>

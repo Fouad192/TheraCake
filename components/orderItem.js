@@ -142,7 +142,7 @@ encodeData()
               <div className={classes.orderTitleDetails}>
                 <Image src={basicImg} alt="basic" />
                 <h1>{`${item.quantity}x ${item.name}`}</h1>
-                <p>{item.sizePrice[0].price}</p>
+                <p>{item.sizePrice[0].price * item.quantity}</p>
               </div>
               <div className={classes.itemSubDetails}>
                 <p>{item.flavors[0]}</p>
@@ -160,7 +160,7 @@ encodeData()
                 <div className={classes.itemSubDetails} key={uuid()}>
                   <div>
                     <p>{extra.extra}</p>
-                    <p>{extra.price}</p>
+                    <p>{extra.price * item.quantity}</p>
                   </div>
                 </div>
               ))}
@@ -184,7 +184,7 @@ encodeData()
           <hr />
           <div className={classes.total}>
             <p>Total</p>
-            <p>{(sum * 14) / 100 + 45 + sum}</p>
+            <p>{order.totalPrice}</p>
           </div>
           <hr />
           <div className={classes.statusTimeline}>

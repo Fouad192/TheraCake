@@ -49,12 +49,21 @@ const imageUploadData = await fetch('https://api.cloudinary.com/v1_1/dswtzq3ze/i
     itemPrices.current.forEach((element, index) => (
       sizePriceArr[index].price = element.value
     ))
-    itemExtras.current.forEach((element, index) => (
-      extraPriceArr.push({extra: element.value})
-    ))
-    extrasPrices.current.forEach((element, index) => (
+    itemExtras.current.forEach((element, index) => {
+      if(element) {
+      extraPriceArr.push({ extra: element.value });
+      } else {
+        null
+      }
+  })
+    extrasPrices.current.forEach((element, index) => {
+      if(element) {
       extraPriceArr[index].price = element.value
-    ))
+
+      } else {
+        null
+      }
+  })
     itemFlavors.current.forEach((element, index) => (
       flavorList.push(element.value)
     )) 
@@ -92,6 +101,18 @@ const imageUploadData = await fetch('https://api.cloudinary.com/v1_1/dswtzq3ze/i
   function addTopping() {
     setToppingDiv(toppingDiv + 1)
   }
+  function removeSize() {
+    setSizeDiv(sizeDiv - 1)
+  }
+  function removeExtra() {
+    setExtraDiv(extraDiv - 1)
+  }
+  function removeFlavor() {
+    setFlavorDiv(flavorDiv - 1)
+  }
+  function removeTopping() {
+    setToppingDiv(toppingDiv - 1)
+  }
     let closePopup = () => {
         props.toggleAddItemPopup(false)
     }
@@ -101,11 +122,13 @@ const imageUploadData = await fetch('https://api.cloudinary.com/v1_1/dswtzq3ze/i
           id={classes.closeIconStyle}
           src={closeIcon}
           onClick={closePopup}
-          alt='CloseIcon'
+          alt="CloseIcon"
         />
         <form action="/api/newMenuItem" onSubmit={submitHandler} method="post">
           <div className={classes.itemCategory}>
-            <h1 onClick={() => console.log(itemCategory.current.value)}>Category</h1>
+            <h1 onClick={() => console.log(itemCategory.current.value)}>
+              Category
+            </h1>
             <div>
               <input
                 type="radio"
@@ -143,86 +166,105 @@ const imageUploadData = await fetch('https://api.cloudinary.com/v1_1/dswtzq3ze/i
             <button onClick={addSize} type="button">
               Add More
             </button>
-            {[...Array(sizeDiv)].map((item, index) => (
-              <div key={uuid()}>
-                <input
-                  type="text"
-                  placeholder="Size Name"
-                  ref={(element) => {
-                    itemSizes.current[index] = element;
-                  }}
-                />
-                <input
-                  type="number"
-                  placeholder="Size Price"
-                  ref={(el) => {
-                    itemPrices.current[index] = el;
-                  }}
-                />
-              </div>
-            ))}
+            {sizeDiv > 0 ? (
+              <button onClick={removeSize} type="button">
+                Remove Size
+              </button>
+            ) : null}
           </div>
+          {[...Array(sizeDiv)].map((item, index) => (
+            <div key={uuid()} className={classes.sizeInput}>
+              <input
+                type="text"
+                placeholder="Size Name"
+                ref={(element) => {
+                  itemSizes.current[index] = element;
+                }}
+              />
+              <input
+                type="number"
+                placeholder="Size Price"
+                ref={(el) => {
+                  itemPrices.current[index] = el;
+                }}
+              />
+            </div>
+          ))}
           <div className={classes.extras}>
             <h1>Extras</h1>
             <button onClick={addExtra} type="button">
               Add Extra
             </button>
-            {[...Array(extraDiv)].map((item, index) => (
-              <div key={uuid()}>
-                <input
-                  type="text"
-                  placeholder="Extra Name"
-                  ref={(element) => {
-                    itemExtras.current[index] = element;
-                  }}
-                />
-                <input
-                  type="number"
-                  placeholder="Extra Price"
-                  ref={(el) => {
-                    extrasPrices.current[index] = el;
-                  }}
-                />
-              </div>
-            ))}
+            {extraDiv > 0 ? (
+              <button onClick={removeExtra} type="button">
+                Remove Extra
+              </button>
+            ) : null}
           </div>
+          {[...Array(extraDiv)].map((item, index) => (
+            <div key={uuid()} className={classes.extraInput}>
+              <input
+                type="text"
+                placeholder="Extra Name"
+                ref={(element) => {
+                  itemExtras.current[index] = element;
+                }}
+              />
+              <input
+                type="number"
+                placeholder="Extra Price"
+                ref={(el) => {
+                  extrasPrices.current[index] = el;
+                }}
+              />
+            </div>
+          ))}
           <div className={classes.flavor}>
             <h1>Flavors</h1>
 
             <button type="button" onClick={addFlavor}>
               Add Flavor
             </button>
-            {[...Array(flavorDiv)].map((item, index) => (
-              <div key={uuid()}>
-                <input
-                  type="text"
-                  placeholder="Flavor Name"
-                  ref={(element) => {
-                    itemFlavors.current[index] = element;
-                  }}
-                />
-              </div>
-            ))}
+            {flavorDiv > 0 ? (
+              <button onClick={removeFlavor} type="button">
+                Remove Flavor
+              </button>
+            ) : null}
           </div>
-
+          {[...Array(flavorDiv)].map((item, index) => (
+            <div key={uuid()} className={classes.flavorInput}>
+              <input
+                type="text"
+                placeholder="Flavor Name"
+                ref={(element) => {
+                  itemFlavors.current[index] = element;
+                }}
+              />
+            </div>
+          ))}
           <div className={classes.topping}>
             <h1>Toppings</h1>
 
             <button type="button" onClick={addTopping}>
               Add topping
             </button>
-            {[...Array(toppingDiv)].map((item, index) => (
-              <div key={uuid()}>
-                <input
-                  type="text"
-                  placeholder="Flavor Name"
-                  ref={(element) => {
-                    itemToppings.current[index] = element;
-                  }}
-                />
-              </div>
-            ))}
+            {toppingDiv > 0 ? (
+              <button onClick={removeTopping} type="button">
+                Remove Topping
+              </button>
+            ) : null}
           </div>
+          {[...Array(toppingDiv)].map((item, index) => (
+            <div key={uuid()} className={classes.toppingInput}>
+              <input
+                type="text"
+                placeholder="Flavor Name"
+                ref={(element) => {
+                  itemToppings.current[index] = element;
+                }}
+              />
+            </div>
+          ))}
           <div className={classes.file}>
             <label for="fileInput">Choose Image</label>
             <input type="file" ref={fileInputRef} />
@@ -231,7 +273,6 @@ const imageUploadData = await fetch('https://api.cloudinary.com/v1_1/dswtzq3ze/i
             type="submit"
             value="Add Item"
             className={classes.addItemSubmit}
-          
           />
         </form>
       </div>

@@ -44,6 +44,7 @@ function Menu(props) {
   let selectedData = cheesecakes.concat(browniesData);
   function returnSelectionPanel() {
     if (categoryDetect === "cheesecake") {
+      
       return <SelectionPanel selectionData={cheesecakes[idx]} />;
     } else if (categoryDetect === "brownies") {
       return <SelectionPanel selectionData={browniesData[idx]} />;
@@ -150,8 +151,10 @@ function Menu(props) {
                     {item.flavors.map((flavor, index, flavorArray) => {
                       if (flavorArray.length - 1 === index) {
                         return <span key={uuid()}>{flavor}</span>;
-                      }
+                      } else if(index < 4) {
                       return <span key={uuid()}>{flavor}/</span>;
+
+                      }
                     })}
                   </p>
                   <div className={classes.priceBtnDiv}>
@@ -205,23 +208,32 @@ function Menu(props) {
                     />
                   </div>
                   <h1>{item.name}</h1>
-                  <p>{item.description}</p>
-                  <button
-                    onClick={() => {
-                      setIdx(index);
-                      setCategoryDetect("brownies");
-                    }}
-                  >
-                    Select Your Options
-                  </button>
-
                   <p>
-                    {item.sizePrice[0].price}{" "}
-                    {item.sizePrice.length > 1
-                      ? `- ${item.sizePrice[item.sizePrice.length - 1].price}`
-                      : null}{" "}
-                    EGP
+                    {item.toppings.map((topping, index, toppingArray) => {
+                      if (toppingArray.length - 1 === index) {
+                        return <span key={uuid()}>{topping}</span>;
+                      } else if(index < 4)
+                      return <span key={uuid()}>{topping}/</span>;
+                    })}
                   </p>
+                  <div className={classes.priceBtnDiv}>
+                    <button
+                      onClick={() => {
+                        setIdx(index);
+                        setCategoryDetect("brownies");
+                      }}
+                    >
+                      Select Your Options
+                    </button>
+
+                    <p>
+                      {item.sizePrice[0].price}{" "}
+                      {item.sizePrice.length > 1
+                        ? `- ${item.sizePrice[item.sizePrice.length - 1].price}`
+                        : null}{" "}
+                      EGP
+                    </p>
+                  </div>
                 </div>
                 <div className={classes.menuItemImage}>
                   <Image

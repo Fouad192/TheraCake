@@ -108,6 +108,7 @@ margin-top: 1em;
 display: flex;
 align-items: center;
 }
+
 .menuItemImage {
     width: 30%;
 }
@@ -151,6 +152,7 @@ align-items: center;
     .priceBtnDiv {
         flex-direction: column-reverse;
         align-items: flex-start;
+        margin-top: 0.5em;
     }
     .priceBtnDiv button {
         margin-top: 0.5em;
@@ -161,5 +163,40 @@ align-items: center;
         }
         .adminModifyAndDelete img:first-child {
             margin-right: 1em;
+        }
+        .menuItem {
+            flex-direction: column-reverse;
+            align-items: center;
+        }
+        .menuItemDetails {
+            /* width: 100%; */
+            justify-self: center;
+        }
+        .menuItemDetails h1 {
+            text-align: center;
+        }
+        .adminModifyAndDelete {
+            justify-content: center;
+            width: 100%;
+            margin-top: 0.5em;
+        }
+        .priceBtnDiv {
+            align-items: center;
+        }
+        .menuItemDetails button {
+            margin-right: 0;
+        }
+}
+
+
+@media (max-width: 435px) {
+    .menuNavigation button {
+        padding: 1em;
+    }
+}
+
+@media (max-width: 350px) {
+    .menuNavigation button {
+            padding: 0.7em;
         }
 }

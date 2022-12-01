@@ -73,11 +73,13 @@ function AdminOrders(props) {
                     <input
                         type="search"
                         value={search}
+                        placeholder="Search by name"
                         onChange={(e) => setSearch(e.target.value)}
                     />
                     <select
                         onChange={(e) => setSort(e.target.value)}
                         defaultValue=""
+                        id={classes.sortInput}
                     >
                         <option value="default">Default Sorting</option>
                         <option value="high">Price High to Low</option>

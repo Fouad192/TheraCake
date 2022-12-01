@@ -11,7 +11,9 @@
     height: 70%;
     overflow: auto;
 }
-
+.addItemPopupContainer form {
+    padding: 2em 0;
+}
 .itemName label,
 .itemDescription label {
     display: block;
@@ -34,10 +36,7 @@
     outline-color: #ff7da3;
 }
 
-.sizes h1,
-.extras h1 {
-    margin: 0.5em 0;
-}
+
 
 .sizes div,
 .extras div {
@@ -51,16 +50,18 @@
     margin: 0;
 }
 
-.sizes div input,
-.extras div input,
-.flavor input,
-.topping input {
+.sizeInput input,
+.extraInput input,
+.flavorInput input,
+.toppingInput input {
     border: 1px #ff7da3 solid;
-    margin: 0 1em;
+    margin-right: 1em;
+    margin-bottom: 1em;
     padding: 0.5em;
     border-radius: 10px;
     outline-color: #ff7da3;
 }
+
 
 .flavor button,
 .topping button {
@@ -70,6 +71,11 @@
     padding: 0.5em 2em;
     border-radius: 15px;
 }
+.sizes, .extras, .topping, .flavor {
+    display: flex;
+    align-items: center;
+    margin: 1em 0;
+}
 
 .flavorList,
 .toppingList,
@@ -78,23 +84,23 @@
     margin: 0.5em;
 }
 
-.sizes input::-webkit-outer-spin-button,
-.sizes input::-webkit-inner-spin-button {
+.sizeInput input::-webkit-outer-spin-button,
+.sizeInput input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
 
-.sizes input[type=number] {
+.sizeInput input[type=number] {
     -moz-appearance: textfield;
 }
 
-.extras input::-webkit-outer-spin-button,
-.extras input::-webkit-inner-spin-button {
+.extraInput input::-webkit-outer-spin-button,
+.extraInput input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
 
-.extras input[type=number] {
+.extraInput input[type=number] {
     -moz-appearance: textfield;
 }
 
@@ -114,7 +120,9 @@
     padding: 0.5em;
     border-radius: 15px;
 }
-
+.sizeInput {
+  
+}
 .addItemSubmit {
     cursor: pointer;
     background-color: #ff7da3;
@@ -128,8 +136,13 @@
 #closeIconStyle {
     float: right;
     cursor: pointer;
+    width: 30px;
+    height: 30px;
+    
 }
-
+.file input {
+    margin-left: 1em;
+}
 .itemCategory div {
 margin: 0.5em 0;
 }
@@ -142,19 +155,29 @@ margin: 0.5em 0;
         background-color: #ff7da3;
         padding: 0.5em 2em;
         border-radius: 10px;
-        margin-bottom: 0.5em;
+        /* margin-bottom: 0.5em; */
+        margin-left: 1em;
         cursor: pointer;
 }
 .sizes div input, .extras div input, .flavor div input, .topping div input {
     margin: 0;
     margin-right: 1em;
 }
-.topping button, .flavor button {
-    margin: 0.5em 0;
-}
+
 .topping div input, .flavor div input {
     margin-top: 1em;
 }
-.topping h1 {
-    margin-top: 0.5em;
+
+
+@media (max-width: 1000px) {
+    .addItemPopupContainer {
+        width: 70%;
+    }
+}
+
+@media (max-width: 732px) {
+    .addItemPopupContainer {
+            width: 90%;
+            padding: 1em;
+        }
 }
