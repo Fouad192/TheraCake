@@ -121,7 +121,7 @@ encodeData()
         </div>
         <div>
           <h3>Cash</h3>
-          <p className={classes.lightText}>{(sum * 14) / 100 + 45 + sum}</p>
+          <p className={classes.lightText}>{order.totalPrice}</p>
         </div>
         <div>
           <p>{order.scheduled}</p>
