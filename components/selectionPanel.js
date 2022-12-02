@@ -55,8 +55,7 @@ function SelectionPanel(props) {
       toppingCountRef.current[index].value++;
     }
     // if (toppingSum === maxToppings) {
-      
-        
+
     // }
 
     // while(toppingSum !== maxToppings) {
@@ -67,14 +66,12 @@ function SelectionPanel(props) {
     toppingCountRef.current[index].value--;
   }
   function setToppingState(item, index) {
-    if(toppingCountRef.current[index]) {
- setSelectedToppings((prevSt) => [
-   ...prevSt,
-   { topping: item, quantity: toppingCountRef.current[index].value },
- ]);
-
+    if (toppingCountRef.current[index]) {
+      setSelectedToppings((prevSt) => [
+        ...prevSt,
+        { topping: item, quantity: toppingCountRef.current[index].value },
+      ]);
     }
-   
   }
   function setMaxToppingsFunction() {
     if (currCheckedSize) {
@@ -188,31 +185,34 @@ function SelectionPanel(props) {
           {props.selectionData.flavors.length === 0 ? null : (
             <div className={classes.flavorInputs}>
               <h1>Flavors</h1>
-              {props.selectionData.name === 'Joy Cheesecake' ? props.selectionData.flavors.map((item, index)=> (
-                <div key={index}>
-                  <input type='checkbox' onClick={(e) => {
-                    if(e.target.checked) {
-                      setSelectedFlavor([...selectedFlavor, item])
-                    } else if(!e.target.checked) {
-                      setSelectedFlavor(selectedFlavor.filter(flavor => flavor != item))
-                    }
-                  }}/>
-                  <label>{item}</label>
-
-                </div>
-              )) :props.selectionData.flavors.map((item, index) => (
-                <div key={index}>
-                  <input
-                    type="radio"
-                    name="flavor"
-                    onClick={() => setSelectedFlavor(item)}
-                  />
-                  <label>{item}</label>
-                </div>
-              ))
-              
-              }
-              
+              {props.selectionData.name === "Joy Cheesecake"
+                ? props.selectionData.flavors.map((item, index) => (
+                    <div key={index}>
+                      <input
+                        type="checkbox"
+                        onClick={(e) => {
+                          if (e.target.checked) {
+                            setSelectedFlavor([...selectedFlavor, item]);
+                          } else if (!e.target.checked) {
+                            setSelectedFlavor(
+                              selectedFlavor.filter((flavor) => flavor != item)
+                            );
+                          }
+                        }}
+                      />
+                      <label>{item}</label>
+                    </div>
+                  ))
+                : props.selectionData.flavors.map((item, index) => (
+                    <div key={index}>
+                      <input
+                        type="radio"
+                        name="flavor"
+                        onClick={() => setSelectedFlavor(item)}
+                      />
+                      <label>{item}</label>
+                    </div>
+                  ))}
 
               <hr />
             </div>
@@ -232,9 +232,8 @@ function SelectionPanel(props) {
                       +
                     </button>
                     <input
-                      value='0'
+                      value="0"
                       onClick={(e) => console.log(e.target.value)}
-                 
                       ref={(el) => {
                         toppingCountRef.current[index] = el;
                       }}
@@ -332,7 +331,7 @@ function SelectionPanel(props) {
                   if (e.target.checked) {
                     setSelectedGift([
                       ...selectedGift,
-                      { gift: e.target.value, price: 150 },
+                      { gift: e.target.value, price: 130 },
                     ]);
                   } else if (!e.target.checked) {
                     setSelectedGift(
@@ -342,7 +341,7 @@ function SelectionPanel(props) {
                 }}
               />
               <label>Bouqet (6 flowers)</label>
-              <p>150EGP</p>
+              <p>130EGP</p>
             </div>
 
             <hr />
