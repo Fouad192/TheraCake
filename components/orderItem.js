@@ -149,8 +149,8 @@ encodeData()
                 </div>
                 <div className={classes.itemSubDetails}>
                   {item.flavors.length > 1 ? (
-                    item.flavors.map((flavor) => (
-                      <p>
+                    item.flavors.map((flavor, index) => (
+                      <p key={index}>
                         <span>{flavor}</span>
                       </p>
                     ))

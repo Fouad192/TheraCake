@@ -165,7 +165,7 @@ function SelectionPanel(props) {
 
             {props.selectionData.sizePrice.map((item, index) => {
               return (
-                <div>
+                <div key={index}>
                   <input
                     type="radio"
                     name="size"
@@ -189,7 +189,7 @@ function SelectionPanel(props) {
             <div className={classes.flavorInputs}>
               <h1>Flavors</h1>
               {props.selectionData.name === 'Joy Cheesecake' ? props.selectionData.flavors.map((item, index)=> (
-                <div>
+                <div key={index}>
                   <input type='checkbox' onClick={(e) => {
                     if(e.target.checked) {
                       setSelectedFlavor([...selectedFlavor, item])
@@ -200,8 +200,8 @@ function SelectionPanel(props) {
                   <label>{item}</label>
 
                 </div>
-              )) :props.selectionData.flavors.map((item) => (
-                <div>
+              )) :props.selectionData.flavors.map((item, index) => (
+                <div key={index}>
                   <input
                     type="radio"
                     name="flavor"
@@ -222,7 +222,7 @@ function SelectionPanel(props) {
               <h1>Toppings</h1>
               {props.selectionData.toppings.map((item, index) => {
                 return (
-                  <div>
+                  <div key={index}>
                     <button
                       onClick={() => {
                         increment(index, item);
@@ -253,8 +253,8 @@ function SelectionPanel(props) {
           {props.selectionData.extraPrice.length === 0 ? null : (
             <div className={classes.extras}>
               <h1>Extras</h1>
-              {props.selectionData.extraPrice.map((item) => (
-                <div>
+              {props.selectionData.extraPrice.map((item, index) => (
+                <div key={index}>
                   <input
                     type="checkbox"
                     value={item.extra}
