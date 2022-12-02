@@ -760,8 +760,8 @@ function CheckoutDetails(props) {
               </div>
               <div className={classes.flavor}>
                 {addedItem.flavors.length > 1 ? (
-                  addedItem.flavors.map((flavor) => (
-                    <p>
+                  addedItem.flavors.map((flavor, index) => (
+                    <p key={index}>
                       <span>{flavor}</span>
                     </p>
                   ))
