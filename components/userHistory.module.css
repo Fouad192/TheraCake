@@ -3,12 +3,14 @@
     grid-template-columns: repeat(12, 1fr);
     font-family: 'Ubuntu', sans-serif;
 }
-
+#ordersHeader {
+    font-size: 30px;
+    margin-top: 5%;
+}
 
 .orderHistoryContainer {
     grid-column: 2/12;
     margin: 1em 0;
-    min-height: 70vh;
 }
 .ifNoHistorySection {
     min-height: 70vh;

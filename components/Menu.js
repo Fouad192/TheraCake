@@ -21,15 +21,17 @@ function Menu(props) {
   let brownies = useRef();
   let cheesecakeMenu = useRef();
   let browniesMenu = useRef();
-
+  let [itemProps, setItemProps] = useState()
   useEffect(() => {
     if (props.session) {
       if (props.session.user.email === "anwarcitcm@gmail.com") {
         setAuthorized(true);
-      } else if (props.session.user.email === "fouadhamdy51@gmail.com") {
+      } else if (props.session.user.email === "as6993507@gmail.com") {
         setAuthorized(true);
       } else if (props.session.user.email === "mohamedaymanmoudy1@gmail.com") {
         setAuthorized(true);
+      } else if(props.session.user.email === "Theracakecairo@gmail.com") {
+        setAuthorized(true)
       } else {
         setAuthorized(false);
       }
@@ -125,43 +127,46 @@ function Menu(props) {
                 key={uuid()}
               >
                 <div className={classes.menuItemDetails}>
-                  <div className={classes.adminModifyAndDelete}>
-                    <Image
-                      src={deleteIcon}
-                      alt="DeleteIcon"
-                      onClick={() => {
-                        deleteItemHandler(item);
-                        setTimeout(() => {
-                          router.reload(window.location.pathname);
-                        }, 500);
-                      }}
-                    />
-                    <Image
-                      src={editIcon}
-                      alt="EditIcon"
-                      onClick={() => {
-                        setToBeEdited(item);
-                        openEditItem(true);
-                      }}
-                    />
-                  </div>
+                  {isAuthorized && (
+                    <div className={classes.adminModifyAndDelete}>
+                      <Image
+                        src={deleteIcon}
+                        alt="DeleteIcon"
+                        onClick={() => {
+                          deleteItemHandler(item);
+                          setTimeout(() => {
+                            router.reload(window.location.pathname);
+                          }, 500);
+                        }}
+                      />
+                      <Image
+                        src={editIcon}
+                        alt="EditIcon"
+                        onClick={() => {
+                          setToBeEdited(item);
+                          openEditItem(true);
+                        }}
+                      />
+                    </div>
+                  )}
+
                   <h1>{item.name}</h1>
 
                   <p>
                     {item.flavors.map((flavor, index, flavorArray) => {
                       if (flavorArray.length - 1 === index) {
                         return <span key={uuid()}>{flavor}</span>;
-                      } else if(index < 4) {
-                      return <span key={uuid()}>{flavor}/</span>;
-
+                      } else if (index < 4) {
+                        return <span key={uuid()}>{flavor}/</span>;
                       }
                     })}
                   </p>
                   <div className={classes.priceBtnDiv}>
                     <button
                       onClick={() => {
-                        setIdx(index);
-                        setCategoryDetect("cheesecake");
+                        // setIdx(index);
+                        // setCategoryDetect("cheesecake");
+                        setItemProps(item);
                       }}
                     >
                       Select Your Options
@@ -212,15 +217,14 @@ function Menu(props) {
                     {item.toppings.map((topping, index, toppingArray) => {
                       if (toppingArray.length - 1 === index) {
                         return <span key={uuid()}>{topping}</span>;
-                      } else if(index < 4)
-                      return <span key={uuid()}>{topping}/</span>;
+                      } else if (index < 4)
+                        return <span key={uuid()}>{topping}/</span>;
                     })}
                   </p>
                   <div className={classes.priceBtnDiv}>
                     <button
                       onClick={() => {
-                        setIdx(index);
-                        setCategoryDetect("brownies");
+                        setItemProps(item);
                       }}
                     >
                       Select Your Options
@@ -247,8 +251,9 @@ function Menu(props) {
             ))}
           </div>
         </div>
+        {itemProps ? <SelectionPanel selectionData={itemProps} /> : null}
 
-        {returnSelectionPanel()}
+        {/* {returnSelectionPanel()} */}
       </section>
     </>
   );

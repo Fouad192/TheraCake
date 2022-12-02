@@ -7,6 +7,7 @@ import uuid from "react-uuid";
 
 function UserHistory({order}) {
   let [sum, setSum] = useState();
+  let [details, showDetails] = useState(false);
 
 
   function convertTimestampToDate() {
@@ -18,18 +19,33 @@ function UserHistory({order}) {
 
     return time;
   }
-
+function vatAmount() {
+  let sum = 0;
+  order.orderItems.map((item) => {
+    item.sizePrice.map((size) => {
+      sum += parseInt(size.price) * item.quantity;
+    });
+    item.extraPrice.map((extra) => {
+      sum += parseInt(extra.price) * item.quantity;
+    });
+    item.giftPrice.map((gift) => {
+      sum += parseInt(gift.price) * item.quantity;
+    });
+  });
+  let vat = sum * (14 / 100);
+  return parseInt(vat);
+}
   function calculateTotal() {
     let sumPrice = 0;
     order.orderItems.map(
-      (item) => item.sizePrice.map((size) => (sumPrice += parseInt(size.price)))
+      (item) => item.sizePrice.map((size) => (sumPrice += parseInt(size.price) * item.quantity))
       //   priceArr.push(parseInt(item.sizePrice.price))
     );
     order.orderItems.map((item) =>
-      item.giftPrice.map((gift) => (sumPrice += parseInt(gift.price)))
+      item.giftPrice.map((gift) => (sumPrice += parseInt(gift.price) * item.quantity))
     );
     order.orderItems.map((item) =>
-      item.extraPrice.map((extra) => (sumPrice += parseInt(extra.price)))
+      item.extraPrice.map((extra) => (sumPrice += parseInt(extra.price) * item.quantity))
     );
     setSum(sumPrice);
   }
@@ -40,7 +56,7 @@ function UserHistory({order}) {
   
   return (
     <section className={classes.historySection}>
-      <div className={classes.orderHistoryContainer}>
+      <div className={classes.orderHistoryContainer} onClick={() => showDetails(!details)}>
         <div className={classes.orderHistoryBriefContainer}>
           <div>
             <h3>Yesterday</h3>
@@ -57,7 +73,7 @@ function UserHistory({order}) {
           </div>
           <div>
             <h3>Cash</h3>
-            <p className={classes.lightText}>{sum}</p>
+            <p className={classes.lightText}>{order.totalPrice}</p>
           </div>
           <div>
             <p>{order.scheduled}</p>
@@ -68,92 +84,93 @@ function UserHistory({order}) {
             <p className={classes.pending}>{order.status}</p>
           </div>
         </div>
-
-        <div className={classes.orderHistoryDetails}>
-          <div className={classes.itemHistoryDetails}>
-            <h1>Items</h1>
-            <hr />
-            {order.orderItems.map((item) => (
-              <div key={uuid()}>
-                <div className={classes.orderHistoryTitleDetails}>
-                  <Image src={basicImg} alt="basic" />
-                  <h1>{`${item.quantity}x ${item.name}`}</h1>
-                  <p>{item.sizePrice[0].price}</p>
-                </div>
-                <div className={classes.itemHistorySubDetails}>
-                  <p>{item.flavors[0]}</p>
-                </div>
-                {item.giftPrice.map((gift) => (
-                  <div className={classes.itemHistorySubDetails} key={uuid()}>
-                    <div>
-                      <p>{gift.gift}</p>
-                      <p>{gift.price}</p>
-                    </div>
+        {details && (
+          <div className={classes.orderHistoryDetails}>
+            <div className={classes.itemHistoryDetails}>
+              <h1>Items</h1>
+              <hr />
+              {order.orderItems.map((item) => (
+                <div key={uuid()}>
+                  <div className={classes.orderHistoryTitleDetails}>
+                    <Image src={basicImg} alt="basic" />
+                    <h1>{`${item.quantity}x ${item.name}`}</h1>
+                    <p>{item.sizePrice[0].price * item.quantity}</p>
                   </div>
-                ))}
-
-                {item.extraPrice.map((extra) => (
-                  <div className={classes.itemHistorySubDetails} key={uuid()}>
-                    <div>
-                      <p>{extra.extra}</p>
-                      <p>{extra.price}</p>
-                    </div>
+                  <div className={classes.itemHistorySubDetails}>
+                    <p>{item.flavors[0]}</p>
                   </div>
-                ))}
-                <hr />
+                  {item.giftPrice.map((gift) => (
+                    <div className={classes.itemHistorySubDetails} key={uuid()}>
+                      <div>
+                        <p>{gift.gift}</p>
+                        <p>{gift.price * item.quantity}</p>
+                      </div>
+                    </div>
+                  ))}
+
+                  {item.extraPrice.map((extra) => (
+                    <div className={classes.itemHistorySubDetails} key={uuid()}>
+                      <div>
+                        <p>{extra.extra}</p>
+                        <p>{extra.price * item.quantity}</p>
+                      </div>
+                    </div>
+                  ))}
+                  <hr />
+                </div>
+              ))}
+
+              <div className={classes.historySubtotal}>
+                <p>Subtotal</p>
+                <p>{sum}</p>
               </div>
-            ))}
+              <div className={classes.historyDeliveryFees}>
+                <p>VAT</p>
+                <p>{vatAmount()}</p>
+              </div>
+              <div className={classes.historyDeliveryFees}>
+                <p>Delivery Fees</p>
+                <p>45 EGP</p>
+              </div>
 
-            <div className={classes.historySubtotal}>
-              <p>Subtotal</p>
-              <p>{sum}</p>
+              <hr />
+              <div className={classes.historyTotal}>
+                <p>Total</p>
+                <p>{order.totalPrice}</p>
+              </div>
+              <hr />
             </div>
-            <div className={classes.historyDeliveryFees}>
-              <p>VAT</p>
-              <p>{(sum * 14) / 100}</p>
-            </div>
-            <div className={classes.historyDeliveryFees}>
-              <p>Delivery Fees</p>
-              <p>45 EGP</p>
-            </div>
-
-            <hr />
-            <div className={classes.historyTotal}>
-              <p>Total</p>
-              <p>{(sum * 14) / 100 + 45 + sum}</p>
-            </div>
-            <hr />
-          </div>
-          <div className={classes.addressHistoryDetails}>
-            <div className={classes.addressHistoryHeader}>
-              <h1>Delivery Address</h1>
-            </div>
-            <hr />
-            <div>
-              <p>
-                <span>Governorate:</span> {order.governorate}
-              </p>
-              <p>
-                <span>Area:</span> {order.city} - {order.street}
-              </p>
-              <p>
-                <span>Street:</span> 162, block 38
-              </p>
-              <p>
-                <span>Building:</span> {order.building}
-              </p>
-              <p>
-                <span>Floor:</span> {order.floor}
-              </p>
-              <p>
-                <span>Apartment:</span> {order.apartment}
-              </p>
-            </div>
-            <div className={classes.addressHistoryBtns}>
-              <button>View Map</button>
+            <div className={classes.addressHistoryDetails}>
+              <div className={classes.addressHistoryHeader}>
+                <h1>Delivery Address</h1>
+              </div>
+              <hr />
+              <div>
+                <p>
+                  <span>Governorate:</span> {order.governorate}
+                </p>
+                <p>
+                  <span>Area:</span> {order.city} - {order.street}
+                </p>
+                <p>
+                  <span>Street:</span> 162, block 38
+                </p>
+                <p>
+                  <span>Building:</span> {order.building}
+                </p>
+                <p>
+                  <span>Floor:</span> {order.floor}
+                </p>
+                <p>
+                  <span>Apartment:</span> {order.apartment}
+                </p>
+              </div>
+              <div className={classes.addressHistoryBtns}>
+                <button>View Map</button>
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
     </section>
   );

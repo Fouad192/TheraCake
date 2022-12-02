@@ -10,15 +10,21 @@ import uuid from "react-uuid";
 function SelectionPanel(props) {
   let [quantity, setQuantity] = useState(1);
   let [selectedSize, setSelectedSize] = useState();
-  let [selectedFlavor, setSelectedFlavor] = useState();
+  let [selectedFlavor, setSelectedFlavor] = useState([]);
   let [selectedExtra, setSelectedExtra] = useState([]);
   let [selectedGift, setSelectedGift] = useState([]);
+  let [selectedToppings, setSelectedToppings] = useState([]);
   let [notes, setNotes] = useState();
-  // let [maxToppings, setMaxToppings] = useState();
-  // let [currCheckedSize, setCheckedSize] = useState();
+  // let [props.selectionData, setCurrMenuItem] = useState(props.selectionData)
+  let [maxToppings, setMaxToppings] = useState();
+  let [currCheckedSize, setCheckedSize] = useState();
+
   let toppingCountRef = useRef([]);
   let quantityRef = useRef();
   let addToInvoiceFlash = useRef();
+  useEffect(() => {
+    console.log("re-rendered");
+  });
   const { data: session } = useSession();
   function isLoggedIn() {
     if (!session) {
@@ -38,26 +44,54 @@ function SelectionPanel(props) {
       );
     }
   }
-  function increment(index) {
-    toppingCountRef.current[index].value++;
+  function increment(index, item) {
+    let toppingSum = 0;
+    toppingCountRef.current.map((topping) => {
+      if (topping) {
+        toppingSum += parseInt(topping.value);
+      }
+    });
+    if (toppingSum !== maxToppings) {
+      toppingCountRef.current[index].value++;
+    }
+    // if (toppingSum === maxToppings) {
+      
+        
+    // }
+
+    // while(toppingSum !== maxToppings) {
+    //   toppingCountRef.current[index].value++
+    // }
   }
   function decrement(index) {
     toppingCountRef.current[index].value--;
   }
-  // function setMaxToppingsFunction() {
-  //   if (currCheckedSize) {
-  //     if (currCheckedSize.includes("9")) {
-  //       setMaxToppings("9");
-  //     } else if (currCheckedSize.includes("12")) {
-  //       setMaxToppings("12");
-  //     } else if (currCheckedSize.includes("20")) {
-  //       setMaxToppings("20");
-  //     }
-  //   } else {
-  //     null
-  //   }
-  // }
+  function setToppingState(item, index) {
+    if(toppingCountRef.current[index]) {
+ setSelectedToppings((prevSt) => [
+   ...prevSt,
+   { topping: item, quantity: toppingCountRef.current[index].value },
+ ]);
 
+    }
+   
+  }
+  function setMaxToppingsFunction() {
+    if (currCheckedSize) {
+      if (currCheckedSize.includes("9")) {
+        setMaxToppings(9);
+      } else if (currCheckedSize.includes("12")) {
+        setMaxToppings(12);
+      } else if (currCheckedSize.includes("20")) {
+        setMaxToppings(20);
+      }
+    } else {
+      null;
+    }
+  }
+  useEffect(() => {
+    setMaxToppingsFunction();
+  }, [currCheckedSize]);
   function timeOutFlash() {
     addToInvoiceFlash.current.style.display = "block";
     setTimeout(() => {
@@ -73,6 +107,7 @@ function SelectionPanel(props) {
       sizePrice: selectedSize,
       extraPrice: selectedExtra,
       flavors: selectedFlavor,
+      toppings: selectedToppings,
       notes,
       giftPrice: selectedGift,
     };
@@ -130,18 +165,18 @@ function SelectionPanel(props) {
 
             {props.selectionData.sizePrice.map((item, index) => {
               return (
-                <div key={props.selectionData._id}>
+                <div>
                   <input
                     type="radio"
                     name="size"
                     value={item.size}
-                    onClick={() =>
-                      // if (e.target.checked) {
-                      //   setMaxToppingsFunction();
-                      //   setCheckedSize(e.target.value);
-                      // }
-                      setSelectedSize({ size: item.size, price: item.price })
-                    }
+                    onClick={(e) => {
+                      if (e.target.checked) {
+                        setCheckedSize(e.target.value);
+                      }
+
+                      setSelectedSize({ size: item.size, price: item.price });
+                    }}
                   />
                   <label>{item.size}</label>
                   <p>{item.price}</p>
@@ -153,8 +188,20 @@ function SelectionPanel(props) {
           {props.selectionData.flavors.length === 0 ? null : (
             <div className={classes.flavorInputs}>
               <h1>Flavors</h1>
-              {props.selectionData.flavors.map((item) => (
-                <div key={props.selectionData._id}>
+              {props.selectionData.name === 'Joy Cheesecake' ? props.selectionData.flavors.map((item, index)=> (
+                <div>
+                  <input type='checkbox' onClick={(e) => {
+                    if(e.target.checked) {
+                      setSelectedFlavor([...selectedFlavor, item])
+                    } else if(!e.target.checked) {
+                      setSelectedFlavor(selectedFlavor.filter(flavor => flavor != item))
+                    }
+                  }}/>
+                  <label>{item}</label>
+
+                </div>
+              )) :props.selectionData.flavors.map((item) => (
+                <div>
                   <input
                     type="radio"
                     name="flavor"
@@ -162,7 +209,10 @@ function SelectionPanel(props) {
                   />
                   <label>{item}</label>
                 </div>
-              ))}
+              ))
+              
+              }
+              
 
               <hr />
             </div>
@@ -170,20 +220,32 @@ function SelectionPanel(props) {
           {props.selectionData.toppings.length === 0 ? null : (
             <div className={classes.toppings}>
               <h1>Toppings</h1>
-              {props.selectionData.toppings.map((item, index) => (
-                <div key={uuid()}>
-                  <button onClick={() => increment(index)}>+</button>
-                  <input
-                    value="0"
-                    // type='hidden'
-                    ref={(el) => {
-                      toppingCountRef.current[index] = el;
-                    }}
-                  />
-                  <button onClick={() => decrement(index)}>-</button>
-                  <label>{item}</label>
-                </div>
-              ))}
+              {props.selectionData.toppings.map((item, index) => {
+                return (
+                  <div>
+                    <button
+                      onClick={() => {
+                        increment(index, item);
+                      }}
+                      type="button"
+                    >
+                      +
+                    </button>
+                    <input
+                      value='0'
+                      onClick={(e) => console.log(e.target.value)}
+                 
+                      ref={(el) => {
+                        toppingCountRef.current[index] = el;
+                      }}
+                    />
+                    <button onClick={() => decrement(index)} type="button">
+                      -
+                    </button>
+                    <label>{item}</label>
+                  </div>
+                );
+              })}
 
               <hr />
             </div>
@@ -192,7 +254,7 @@ function SelectionPanel(props) {
             <div className={classes.extras}>
               <h1>Extras</h1>
               {props.selectionData.extraPrice.map((item) => (
-                <div key={props.selectionData._id}>
+                <div>
                   <input
                     type="checkbox"
                     value={item.extra}

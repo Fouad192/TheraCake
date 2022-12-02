@@ -5,8 +5,8 @@ import { useRef, useState } from "react";
 import { useRouter } from "next/router";
 import uuid from "react-uuid";
 
-function EditItem({data, openEditItem}) {
-  let router = useRouter()
+function EditItem({ data, openEditItem }) {
+  let router = useRouter();
   let [itemName, setItemName] = useState(data.name);
   let [itemDescription, setItemDescription] = useState(data.description);
   let [itemFlavor, setItemFlavor] = useState(data.flavors);
@@ -14,23 +14,45 @@ function EditItem({data, openEditItem}) {
   let [itemToppings, setItemToppings] = useState(data.toppings);
   let [itemCategory, setItemCategory] = useState(data.category);
   let [itemSizes, setItemSizes] = useState(data.sizePrice);
-  let [itemImage, setItemImage] = useState(data.img);
+ 
+  let fileInputRef = useRef();
+
   function closePopup() {
-    openEditItem(false)
+    openEditItem(false);
   }
-    const itemId = data._id;
+  const itemId = data._id;
 
   async function handleEditSubmit(e) {
-    console.log(itemId)
-    e.preventDefault()
+    console.log(itemId);
+    e.preventDefault();
+    const fileInput = fileInputRef.current;
+    let imageData = new FormData();
+
+ for (const file of fileInput.files) {
+   imageData.append("file", file);
+ }
+   
+   
+    imageData.append("upload_preset", "menuImages");
+    const imageUploadData = await fetch(
+      "https://api.cloudinary.com/v1_1/dswtzq3ze/image/upload",
+      {
+        method: "POST",
+        body: imageData,
+      }
+    ).then((r) => r.json());
     let editedData = {
+      toppings: itemToppings,
       itemId,
+      flavors: itemFlavor,
       extraPrice: itemExtras,
       sizePrice: itemSizes,
       description: itemDescription,
       name: itemName,
-    }
-     const response = await fetch("/api/newMenuItem", {
+      category: itemCategory,
+      img: imageUploadData.secure_url
+    };
+    const response = await fetch("/api/newMenuItem", {
       method: "PUT",
       body: JSON.stringify(editedData),
       headers: {
@@ -55,11 +77,29 @@ function EditItem({data, openEditItem}) {
         <div className={classes.itemCategory}>
           <h1>Category</h1>
           <div>
-            <input type="radio" name="category" value="cheesecake" />
+            <input
+              type="radio"
+              name="category"
+              value="cheesecake"
+              onClick={(e) => {
+                if (e.target.checked) {
+                  setItemCategory("cheesecake");
+                }
+              }}
+            />
             <label>Cheesecake</label>
           </div>
           <div>
-            <input type="radio" name="category" value="brownies" />
+            <input
+              type="radio"
+              name="category"
+              value="brownies"
+              onClick={(e) => {
+                if (e.target.checked) {
+                  setItemCategory("brownies");
+                }
+              }}
+            />
             <label>Brownies</label>
           </div>
         </div>
@@ -91,7 +131,7 @@ function EditItem({data, openEditItem}) {
         {itemSizes.map((sizeObject) => {
           // let {size, price} = sizeObject
           return (
-            <div key={uuid()} className={classes.sizeInput}>
+            <div key={data._id} className={classes.sizeInput}>
               <input
                 type="text"
                 name="size"
@@ -169,8 +209,22 @@ function EditItem({data, openEditItem}) {
           <h1>Flavors</h1>
         </div>
         {itemFlavor.map((flavor, index, arr) => (
-          <div key={uuid()} className={classes.flavorInput}>
-            <input type="text" placeholder="Flavor Name" value={flavor} />
+          <div key={index} className={classes.flavorInput}>
+            <input
+              type="text"
+              placeholder="Flavor Name"
+              value={flavor}
+              onChange={(e) =>
+                setItemFlavor((prevState) => {
+                  prevState.forEach((element, elementIndex) => {
+                    if (elementIndex === index) {
+                      prevState[elementIndex] = e.target.value;
+                    }
+                  });
+                  return [...prevState];
+                })
+              }
+            />
           </div>
         ))}
         <div className={classes.topping}>
@@ -178,12 +232,26 @@ function EditItem({data, openEditItem}) {
         </div>
         {itemToppings.map((item, index) => (
           <div key={uuid()} className={classes.toppingInput}>
-            <input type="text" placeholder="Flavor Name" />
+            <input
+              type="text"
+              placeholder="Topping Name"
+              value={item}
+              onChange={(e) =>
+                setItemToppings((prevState) => {
+                  prevState.forEach((element, elementIndex) => {
+                    if (elementIndex === index) {
+                      prevState[elementIndex] = e.target.value;
+                    }
+                  });
+                  return [...prevState];
+                })
+              }
+            />
           </div>
         ))}
         <div className={classes.file}>
           <label for="fileInput">Choose Image</label>
-          <input type="file" />
+          <input type="file" ref={fileInputRef} />
         </div>
         <input
           type="submit"

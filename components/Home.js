@@ -11,8 +11,7 @@ function Home() {
           <h1>TheraCake</h1>
 
           <p>
-            We care for our cheesecake to serve it with best ingredients,
-            delight ways and beautiful backing
+           This dessert is made with great love, extreme dedication and the best quality
           </p>
 
           <Link href="/menu" className={classes.menuButton}>
@@ -20,7 +19,7 @@ function Home() {
           </Link>
         </div>
         <div className={classes.homeImage}>
-          <Image src={homeImg} alt='homeImage'/>
+          <Image src={homeImg} alt="homeImage" />
         </div>
       </section>
     </>
