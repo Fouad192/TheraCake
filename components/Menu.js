@@ -110,12 +110,12 @@ function Menu(props) {
             <button ref={brownies} onClick={browniesMenuHandler}>
               Brownies
             </button>
-            {isAuthorized ? (
-              <button className={classes.addItemBtn} onClick={toggleAddItemBtn}>
-                Add Item
-              </button>
-            ) : null}
           </div>
+          {isAuthorized ? (
+            <button className={classes.addItemBtn} onClick={toggleAddItemBtn}>
+              Add Item
+            </button>
+          ) : null}
           <div
             className={classes.cheesecakeMenuItemContainer}
             ref={cheesecakeMenu}
