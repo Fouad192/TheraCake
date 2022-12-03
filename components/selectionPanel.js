@@ -122,7 +122,7 @@ function SelectionPanel(props) {
     console.log(data);
     setTimeout(() => {
       router.reload(window.location.pathname);
-    }, 500);
+    }, 100);
     
   }
 
