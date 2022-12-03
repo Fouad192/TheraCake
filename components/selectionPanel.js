@@ -6,7 +6,8 @@ import minusIcon from "../public/icon/minus.png";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useState, useRef, useEffect } from "react";
 import uuid from "react-uuid";
-
+import Navbar from "../components/navbar";
+import Footer from "../components/footer";
 function SelectionPanel(props) {
   let [quantity, setQuantity] = useState(1);
   let [selectedSize, setSelectedSize] = useState();
@@ -120,6 +121,8 @@ function SelectionPanel(props) {
   }
 
   return (
+    
+
     <div className={classes.selectionPanel}>
       <div className={classes.selectionImage}>
         <img src={props.selectionData.img} alt="basicCake" />
@@ -368,6 +371,7 @@ function SelectionPanel(props) {
         <p>720EGP</p>
       </div> */}
     </div>
+
   );
 }
 

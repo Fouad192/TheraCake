@@ -10,6 +10,7 @@ function checkout(props) {
    
     return (
       <>
+  <Navbar/>
         <CheckoutDetails
           addedItems={props.addedItems}
           apartmentAddressData={props.apartmentAddressData}
@@ -17,7 +18,7 @@ function checkout(props) {
           companyAddressData={props.companyAddressData}
 
         />
-     
+   <Footer/>
       </>
     ); 
    
@@ -31,6 +32,7 @@ export async function getServerSideProps(ctx) {
     await dbConnect();
 
     const cartData = await Cart.find({userId: sessionData.user._id})
+    // let cartItemCount = cartDada.length
     const apartmentAddressData = await OrderCheckout.find({userId: sessionData.user._id, addressType: 'apartment'})
     const villaAddressData = await OrderCheckout.find({userId: sessionData.user._id, addressType: 'villa'})
     const companyAddressData = await OrderCheckout.find({userId: sessionData.user._id, addressType: 'company'})
@@ -39,7 +41,8 @@ export async function getServerSideProps(ctx) {
             addedItems: JSON.parse(JSON.stringify((cartData))),
             apartmentAddressData: JSON.parse(JSON.stringify(apartmentAddressData)),
             villaAddressData: JSON.parse(JSON.stringify(villaAddressData)),
-            companyAddressData: JSON.parse(JSON.stringify(companyAddressData))
+            companyAddressData: JSON.parse(JSON.stringify(companyAddressData)),
+            // cartItemCount
         }
     }
 }

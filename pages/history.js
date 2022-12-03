@@ -9,13 +9,17 @@ import classes from '../components/userHistory.module.css'
 function History(props) {
   
     return (
-      <section className={classes.ifNoHistorySection}>
-        {props.orderHistory.length === 0 && <h1>No previous orders</h1>}
-        <h1 id={classes.ordersHeader}>Your Submitted Orders</h1>
-        {props.orderHistory.map((order) => (
-          <UserHistory order={order} key={uuid()} />
-        ))}
-      </section>
+      <>
+        <Navbar />
+        <section className={classes.ifNoHistorySection}>
+          {props.orderHistory.length === 0 && <h1>No previous orders</h1>}
+          <h1 id={classes.ordersHeader}>Your Submitted Orders</h1>
+          {props.orderHistory.map((order) => (
+            <UserHistory order={order} key={uuid()} />
+          ))}
+        </section>
+        <Footer/>
+      </>
     );
 }
 

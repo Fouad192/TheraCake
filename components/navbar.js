@@ -6,7 +6,7 @@ import burgerIcon from '../public/burger.svg'
 import { useEffect, useState } from "react";
 import uuid from "react-uuid";
 import Badge from '@mui/material/Badge'
-function Navbar() {
+function Navbar(props) {
   const { data: session } = useSession();
   let [authorized, setAuthorized] = useState()
   let [isNavOpen, showNav] = useState(false)
@@ -34,9 +34,14 @@ function Navbar() {
           <ul>
             <li>
               <Link href="/menu">Menu</Link>
-              <Badge badgeContent={4} color='primary'>
+              {props.cartItemCount ? (
+                <Badge badgeContent={props.cartItemCount} color="primary">
+                  <Link href="/checkout">Checkout</Link>
+                </Badge>
+              ) : (
                 <Link href="/checkout">Checkout</Link>
-              </Badge>
+              )}
+
               <Link href="/history">History</Link>
               {authorized && <Link href="/adminorders">Admin Orders</Link>}
               <button

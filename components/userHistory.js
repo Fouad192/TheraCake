@@ -77,7 +77,7 @@ function UserHistory({order}) {
               {order.orderItems.map((item) => (
                 <div key={uuid()}>
                   <div className={classes.orderHistoryTitleDetails}>
-                    <Image src={basicImg} alt="basic" />
+            
                     <h1>{`${item.quantity}x ${item.name}`}</h1>
                     <p>{item.sizePrice[0].price * item.quantity}</p>
                   </div>

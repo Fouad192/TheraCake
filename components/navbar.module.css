@@ -57,6 +57,7 @@
 
 .dropdownNav {
     position: absolute;
+  
 }
 .dropdownNav li {
         display: flex;
@@ -101,6 +102,7 @@
     .burgerNavbar ul {
         list-style: none;
         position: absolute;
+        z-index: 10;
         right: 3%;
         background-color: white;
         border: 1px #FF7DA3 solid;

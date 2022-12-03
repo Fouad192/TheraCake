@@ -4,9 +4,9 @@ import Navbar from "../components/navbar";
 function HomePage() {
   return (
     <>
-    
+    <Navbar/>
       <Home />
-
+<Footer/>
     </>
   );
 }

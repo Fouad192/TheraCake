@@ -8,10 +8,10 @@ import { getSession } from "next-auth/react";
 function MyApp({ Component, pageProps, session }) {
   return (
     <SessionProvider session={session}>
-      <Navbar />
+     
       <Component {...pageProps} />
       <Analytics />
-      <Footer />
+    
     </SessionProvider>
   );
 }
