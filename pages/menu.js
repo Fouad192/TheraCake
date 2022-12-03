@@ -8,11 +8,12 @@ import { getSession } from "next-auth/react";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 function MenuPage(props) {
+  let { data: session } = useSession();
   
     return (
       <>
         {session ? (
-          <Navbar cartItemCount={props.cartItemCount} />
+          <Navbar count={props.count} />
         ) : (
           <Navbar />
         )}
@@ -34,18 +35,25 @@ export async function getServerSideProps(ctx) {
 
 
   let session = await getSession(ctx)
-  if(session) {
-  const cartItems = await Cart.find({ userId: session.user._id });
-  return cartItemCount = cartItems.length;
-  }
-   
-return {
-    props: {
+  if (session) {
+    const cartItems = await Cart.find({ userId: session.user._id });
+    let cartItemCount = cartItems.length;
+    return {
+      props: {
         cheesecakeMenuData: JSON.parse(JSON.stringify(cheesecakeMenuData)),
         browniesMenuData: JSON.parse(JSON.stringify(browniesMenuData)),
         session: session,
-        cartItemCount
-    }
-}
+        count: typeof cartItems !== "undefined" ? cartItemCount : 0,
+      },
+    };
+  } else if (!session) {
+    return {
+      props: {
+        cheesecakeMenuData: JSON.parse(JSON.stringify(cheesecakeMenuData)),
+        browniesMenuData: JSON.parse(JSON.stringify(browniesMenuData)),
+        session: session,
+      },
+    };
+  }
 }
 export default MenuPage

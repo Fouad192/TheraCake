@@ -10,7 +10,7 @@ function Navbar(props) {
   const { data: session } = useSession();
   let [authorized, setAuthorized] = useState();
   
-  let [count, setCount] = useState(props.cartItemCount);
+
 
   let [isNavOpen, showNav] = useState(false);
   useEffect(() => {
@@ -41,7 +41,7 @@ function Navbar(props) {
           <ul>
             <li>
               <Link href="/menu">Menu</Link>
-              {props.cartItemCount ? (
+              {props.count ? (
                 <Badge badgeContent={count} color='primary'>
                   <Link href="/checkout">Checkout</Link>
                 </Badge>
