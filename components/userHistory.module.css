@@ -164,14 +164,161 @@
     width: 100%;
 }
 
+@media(max-width: 1200px) {
+    /* .adminOrderInputs {
+        grid-column: 2/7;
+    } */
+}
 
+@media(max-width: 1000px) {
+    /* .adminOrderInputs {
+        grid-column: 2/8;
+    } */
+
+    .orderHistoryBriefContainer {
+        padding: 1em 0;
+    }
+
+    .addressHistoryBtns button:first-child {
+        padding: 1em;
+    }
+
+    .addressHistoryDetails {
+        grid-column: 8/13;
+    }
+
+    .addressHistoryHeader h1 {
+        font-size: 18px;
+    }
+
+    .itemHistoryDetails h1 {
+        font-size: 18px;
+    }
+
+
+
+    .orderHistoryBriefContainer div p {
+        font-size: 14px;
+    }
+
+    .orderHistoryBriefContainer div h3 {
+        font-size: 16px;
+    }
+
+}
+
+@media(max-width: 800px) {
+   
+
+    .itemHistoryDetails {
+        grid-row: 1;
+        grid-column: 2/12;
+    }
+
+    .addressHistoryDetails {
+        grid-row: 2;
+        grid-column: 2/12;
+    }
+
+    .orderHistoryBriefContainer div:first-child {
+        display: none;
+    }
+
+    .orderHistoryContainer {
+        grid-column: 1/13;
+        padding: 0 1em;
+    }
+
+  
+
+   
+    .itemHistorySubDetails {
+        float: left;
+
+    }
+
+    .orderHistoryTitleDetails {
+        float: left;
+    }
+
+    .historySubtotal,
+    .historyDeliveryFees,
+    .historyTotal {
+        float: left;
+    }
+}
 @media (max-width: 700px) {
     .ifNoHistorySection h1 {
-      
-            font-size: 30px;
-           
-        }
+
+        font-size: 30px;
+
+    }
 }
+@media(max-width: 600px) {
+  
+
+    .orderHistoryBriefContainer {
+        flex-direction: column;
+    }
+
+    .orderHistoryBriefContainer div {
+        margin-bottom: 0.5em;
+    }
+
+    .itemHistoryDetails h1 {
+        font-size: 14px;
+    }
+
+    .addressHistoryHeader h1 {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 500px) {
+    .filter button {
+        font-size: 12px;
+    }
+
+    .adminOrderInputs input,
+    #sortInput {
+        padding: 0.5em 1em;
+        font-size: 14px;
+    }
+
+    .adminOrderInputs {
+        grid-column: 1/13;
+        text-align: center;
+    }
+
+    .orderHistoryTitleDetails,
+    .itemHistorySubDetails,
+    .historySubtotal,
+    .historyDeliveryFees,
+    .historyTotal {
+        width: 100%;
+    }
+
+
+}
+
+@media (max-width: 400px) {
+
+    .adminOrderInputs input,
+    #sortInput {
+        font-size: 10px;
+    }
+
+    .filter {
+        grid-column: 1/13;
+        padding: 0 0.5em;
+    }
+
+    .orderHistoryDetails {
+        padding: 1em 0;
+    }
+}
+
+
 @media (max-width: 350px) {
     .ifNoHistorySection h1 {
       

@@ -19,22 +19,7 @@ function UserHistory({order}) {
 
     return time;
   }
-function vatAmount() {
-  let sum = 0;
-  order.orderItems.map((item) => {
-    item.sizePrice.map((size) => {
-      sum += parseInt(size.price) * item.quantity;
-    });
-    item.extraPrice.map((extra) => {
-      sum += parseInt(extra.price) * item.quantity;
-    });
-    item.giftPrice.map((gift) => {
-      sum += parseInt(gift.price) * item.quantity;
-    });
-  });
-  let vat = sum * (14 / 100);
-  return parseInt(vat);
-}
+
   function calculateTotal() {
     let sumPrice = 0;
     order.orderItems.map(
@@ -124,10 +109,7 @@ function vatAmount() {
                 <p>Subtotal</p>
                 <p>{sum}</p>
               </div>
-              <div className={classes.historyDeliveryFees}>
-                <p>VAT</p>
-                <p>{vatAmount()}</p>
-              </div>
+             
               <div className={classes.historyDeliveryFees}>
                 <p>Delivery Fees</p>
                 <p>45 EGP</p>

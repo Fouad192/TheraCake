@@ -94,6 +94,9 @@
     .homeImage {
         width: 30%;
         height: 30%;
+        display: flex;
+            justify-content: center;
+            align-items: center;
     }
 
     .homeImage img {
@@ -108,7 +111,9 @@
     .homeDetails p {
         font-size: 16px;
     }
+    
+   
     .menuButton {
-        padding: 0.7em 3em;
+        padding: 1.5em 4.5em;
     }
 }

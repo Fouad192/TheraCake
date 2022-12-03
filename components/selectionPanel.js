@@ -122,7 +122,7 @@ function SelectionPanel(props) {
   return (
     <div className={classes.selectionPanel}>
       <div className={classes.selectionImage}>
-        <Image src={basicSelectionImg} alt="basicCake" />
+        <img src={props.selectionData.img} alt="basicCake" />
       </div>
       <div className={classes.selectionHeaders}>
         <h1>{props.selectionData.name}</h1>
@@ -165,6 +165,7 @@ function SelectionPanel(props) {
                 <div key={index}>
                   <input
                     type="radio"
+                    required
                     name="size"
                     value={item.size}
                     onClick={(e) => {
@@ -190,6 +191,7 @@ function SelectionPanel(props) {
                     <div key={index}>
                       <input
                         type="checkbox"
+                        required
                         onClick={(e) => {
                           if (e.target.checked) {
                             setSelectedFlavor([...selectedFlavor, item]);
@@ -206,6 +208,7 @@ function SelectionPanel(props) {
                 : props.selectionData.flavors.map((item, index) => (
                     <div key={index}>
                       <input
+                        required
                         type="radio"
                         name="flavor"
                         onClick={() => setSelectedFlavor(item)}
@@ -232,6 +235,7 @@ function SelectionPanel(props) {
                       +
                     </button>
                     <input
+                      required
                       value="0"
                       onClick={(e) => console.log(e.target.value)}
                       ref={(el) => {

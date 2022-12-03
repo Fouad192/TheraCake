@@ -15,7 +15,7 @@ function Home() {
           </p>
 
           <Link href="/menu" className={classes.menuButton}>
-            Our Menu
+            ORDER NOW
           </Link>
         </div>
         <div className={classes.homeImage}>

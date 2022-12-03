@@ -5,7 +5,7 @@ import Image from "next/image";
 import burgerIcon from '../public/burger.svg'
 import { useEffect, useState } from "react";
 import uuid from "react-uuid";
-
+import Badge from '@mui/material/Badge'
 function Navbar() {
   const { data: session } = useSession();
   let [authorized, setAuthorized] = useState()
@@ -34,11 +34,11 @@ function Navbar() {
           <ul>
             <li>
               <Link href="/menu">Menu</Link>
-              <Link href="/checkout">Checkout</Link>
+              <Badge badgeContent={4} color='primary'>
+                <Link href="/checkout">Checkout</Link>
+              </Badge>
               <Link href="/history">History</Link>
-              {authorized && (
-                <Link href="/adminorders">Admin Orders</Link>
-              )}
+              {authorized && <Link href="/adminorders">Admin Orders</Link>}
               <button
                 className={classes.signBtns}
                 onClick={() =>

@@ -209,7 +209,7 @@ margin: 1em 0;
 
 @media (max-width: 450px) {
     .addMoreItems {
-        width: 50%;
+        width: 60%;
     }
     #apartmentSubmitBtn {
         width: 60%;

@@ -183,10 +183,7 @@ encodeData()
               <p>Subtotal</p>
               <p>{sum}</p>
             </div>
-            <div className={classes.deliveryFees}>
-              <p>VAT</p>
-              <p>{parseInt(sum * (14 / 100))}</p>
-            </div>
+           
             <div className={classes.deliveryFees}>
               <p>Delivery Fees</p>
               <p>45 EGP</p>

@@ -285,24 +285,9 @@ function CheckoutDetails(props) {
       });
     });
 
-    return sum + vatAmount() + 45;
+    return sum + 45;
   }
-  function vatAmount() {
-    let sum = 0;
-    props.addedItems.map((item) => {
-      item.sizePrice.map((size) => {
-        sum += parseInt(size.price) * item.quantity;
-      });
-      item.extraPrice.map((extra) => {
-        sum += parseInt(extra.price) * item.quantity;
-      });
-      item.giftPrice.map((gift) => {
-        sum += parseInt(gift.price) * item.quantity;
-      });
-    });
-    let vat = sum * (14 / 100);
-    return parseInt(vat);
-  }
+
   let workplaceDetailsHandler = () => {
     if (workplaceDetails) {
       showWorkplaceDetails(false);
@@ -342,6 +327,7 @@ function CheckoutDetails(props) {
                     <div>
                       <input
                         type="text"
+                        required
                         name="firstName"
                         placeholder="First Name"
                         value={apartmentInputs.firstName}
@@ -349,6 +335,7 @@ function CheckoutDetails(props) {
                       />
                       <input
                         type="text"
+                        required
                         placeholder="Last Name"
                         name="lastName"
                         value={apartmentInputs.lastName}
@@ -358,6 +345,7 @@ function CheckoutDetails(props) {
                     <div>
                       <input
                         type="number"
+                        required
                         name="mobile"
                         placeholder="Mobile Number"
                         value={apartmentInputs.mobile}
@@ -374,6 +362,7 @@ function CheckoutDetails(props) {
                     <div>
                       <input
                         type="email"
+                        required
                         name="email"
                         placeholder="Email"
                         onChange={handleApartmentInputChange}
@@ -400,6 +389,7 @@ function CheckoutDetails(props) {
                       <input
                         type="text"
                         name="city"
+                        required
                         placeholder="City"
                         onChange={handleApartmentInputChange}
                         value={apartmentInputs.city}
@@ -409,6 +399,7 @@ function CheckoutDetails(props) {
                       <input
                         type="text"
                         name="area"
+                        required
                         placeholder="Area"
                         onChange={handleApartmentInputChange}
                         value={apartmentInputs.area}
@@ -416,6 +407,7 @@ function CheckoutDetails(props) {
                       <input
                         type="text"
                         name="street"
+                        required
                         placeholder="Street Name"
                         onChange={handleApartmentInputChange}
                         value={apartmentInputs.street}
@@ -425,6 +417,7 @@ function CheckoutDetails(props) {
                       <input
                         type="text"
                         name="building"
+                        required
                         placeholder="Building Number"
                         onChange={handleApartmentInputChange}
                         value={apartmentInputs.building}
@@ -432,6 +425,7 @@ function CheckoutDetails(props) {
                       <input
                         type="text"
                         name="floor"
+                        required
                         placeholder="Floor"
                         onChange={handleApartmentInputChange}
                         value={apartmentInputs.floor}
@@ -441,6 +435,7 @@ function CheckoutDetails(props) {
                       <input
                         type="text"
                         name="apartment"
+                        required
                         placeholder="Apartment Number"
                         onChange={handleApartmentInputChange}
                         value={apartmentInputs.apartment}
@@ -514,7 +509,7 @@ function CheckoutDetails(props) {
                         placeholder="Backup Mobile Number"
                         onChange={handleVillaInputChange}
                         value={villaInputs.backupMobile}
-                        required
+                 
                       />
                     </div>
                     <div>
@@ -615,6 +610,7 @@ function CheckoutDetails(props) {
                       <input
                         type="text"
                         name="firstName"
+                        required
                         placeholder="First Name"
                         value={companyInputs.firstName}
                         onChange={handleCompanyInputChange}
@@ -622,6 +618,7 @@ function CheckoutDetails(props) {
                       <input
                         type="text"
                         placeholder="Last Name"
+                        required
                         name="lastName"
                         value={companyInputs.lastName}
                         onChange={handleCompanyInputChange}
@@ -632,6 +629,7 @@ function CheckoutDetails(props) {
                         type="number"
                         name="mobile"
                         placeholder="Mobile Number"
+                        required
                         value={companyInputs.mobile}
                         onChange={handleCompanyInputChange}
                       />
@@ -647,6 +645,7 @@ function CheckoutDetails(props) {
                       <input
                         type="email"
                         name="email"
+                        required
                         placeholder="Email"
                         onChange={handleCompanyInputChange}
                         value={companyInputs.email}
@@ -672,6 +671,7 @@ function CheckoutDetails(props) {
                       <input
                         type="text"
                         name="city"
+                        required
                         placeholder="City"
                         onChange={handleCompanyInputChange}
                         value={companyInputs.city}
@@ -681,6 +681,7 @@ function CheckoutDetails(props) {
                       <input
                         type="text"
                         name="area"
+                        required
                         placeholder="Area"
                         onChange={handleCompanyInputChange}
                         value={companyInputs.area}
@@ -688,6 +689,7 @@ function CheckoutDetails(props) {
                       <input
                         type="text"
                         name="street"
+                        required
                         placeholder="Street Name"
                         onChange={handleCompanyInputChange}
                         value={companyInputs.street}
@@ -698,6 +700,7 @@ function CheckoutDetails(props) {
                       <input
                         type="text"
                         name="company"
+                        required
                         placeholder="Company Name"
                         onChange={handleCompanyInputChange}
                         value={companyInputs.company}
@@ -803,12 +806,7 @@ function CheckoutDetails(props) {
           ))}
           {props.addedItems.length != 0 && (
             <>
-              <div className={classes.vat}>
-                <p>
-                  VAT<sub>14%</sub>
-                </p>
-                <p className={classes.price}>{vatAmount()}</p>
-              </div>
+              
               <div className={classes.deliveryFee}>
                 <p>Delivery</p>
                 <p className={classes.price}>45 EGP</p>
