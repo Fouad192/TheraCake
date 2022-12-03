@@ -3,6 +3,7 @@ import Menu from "../components/Menu";
 import Navbar from "../components/navbar";
 import dbConnect from "../lib/dbConnect";
 import MenuItem from "../models/menuItems";
+import Cart from "../models/cart";
 import { getSession } from "next-auth/react";
 function menuPage(props) {
    
