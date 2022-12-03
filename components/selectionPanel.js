@@ -5,10 +5,12 @@ import plusIcon from "../public/icon/plus.svg";
 import minusIcon from "../public/icon/minus.png";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useState, useRef, useEffect } from "react";
+import { useRouter } from "next/router";
 import uuid from "react-uuid";
 import Navbar from "../components/navbar";
 import Footer from "../components/footer";
 function SelectionPanel(props) {
+  const router = useRouter()
   let [quantity, setQuantity] = useState(1);
   let [selectedSize, setSelectedSize] = useState();
   let [selectedFlavor, setSelectedFlavor] = useState([]);
