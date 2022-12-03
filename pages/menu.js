@@ -24,11 +24,11 @@ export async function getServerSideProps(ctx) {
   await dbConnect();
   const cheesecakeMenuData = await MenuItem.find({category: 'cheesecake'});
   const browniesMenuData = await MenuItem.find({category: 'brownies'});
-    const cartItems = await Cart.find({ userId: sessionData.user._id });
-    let cartItemCount = cartItems.length;
+
 
   let session = await getSession(ctx)
- 
+     const cartItems = await Cart.find({ userId: session.user._id });
+     let cartItemCount = cartItems.length;
 return {
     props: {
         cheesecakeMenuData: JSON.parse(JSON.stringify(cheesecakeMenuData)),
