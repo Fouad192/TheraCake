@@ -2,35 +2,37 @@ import classes from "./navbar.module.css";
 import Link from "next/link";
 import { useSession, signIn, signOut } from "next-auth/react";
 import Image from "next/image";
-import burgerIcon from '../public/burger.svg'
+import burgerIcon from "../public/burger.svg";
 import { useEffect, useState } from "react";
 import uuid from "react-uuid";
-import Badge from '@mui/material/Badge'
+import Badge from "@mui/material/Badge";
+import {pink} from '@mui/material/colors'
 function Navbar(props) {
   const { data: session } = useSession();
-  let [authorized, setAuthorized] = useState()
+  let [authorized, setAuthorized] = useState();
+  
+  let [count, setCount] = useState(props.cartItemCount);
 
-   let [count, setCount] = useState(props.cartItemCount);
-
-  let [isNavOpen, showNav] = useState(false)
+  let [isNavOpen, showNav] = useState(false);
+  const color = pink[400]
   useEffect(() => {
-     if (session) {
-       if (session.user.email === "anwarcitcm@gmail.com") {
-         setAuthorized(true);
-       } else if (session.user.email === "theracakecairo@gmail.com") {
-         setAuthorized(true);
-       } else if (session.user.email === "mohamedaymanmoudy1@gmail.com") {
-         setAuthorized(true);
-       } else if(session.user.email === "as6993507@gmail.com") {
-        setAuthorized(true)
-       } else {
-         setAuthorized(false);
-       }
-     }
-  })
-   useEffect(() => {
-     setCount(props.cartItemCount);
-   }, [props.cartItemCount]);
+    if (session) {
+      if (session.user.email === "anwarcitcm@gmail.com") {
+        setAuthorized(true);
+      } else if (session.user.email === "theracakecairo@gmail.com") {
+        setAuthorized(true);
+      } else if (session.user.email === "mohamedaymanmoudy1@gmail.com") {
+        setAuthorized(true);
+      } else if (session.user.email === "as6993507@gmail.com") {
+        setAuthorized(true);
+      } else {
+        setAuthorized(false);
+      }
+    }
+  });
+  useEffect(() => {
+    setCount(props.cartItemCount);
+  }, [props.cartItemCount]);
   if (session) {
     return (
       <div className={classes.navbarContainer}>
@@ -41,7 +43,7 @@ function Navbar(props) {
             <li>
               <Link href="/menu">Menu</Link>
               {props.cartItemCount ? (
-                <Badge badgeContent={count} color="#ff7da3">
+                <Badge badgeContent={count} color={color}>
                   <Link href="/checkout">Checkout</Link>
                 </Badge>
               ) : (
@@ -140,10 +142,9 @@ function Navbar(props) {
               <hr />
 
               <li>
-                <button
-                  className={classes.signBtns}
-                  onClick={() => signIn()}
-                >Sign In</button>
+                <button className={classes.signBtns} onClick={() => signIn()}>
+                  Sign In
+                </button>
               </li>
             </ul>
           )}
