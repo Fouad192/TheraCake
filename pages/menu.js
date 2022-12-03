@@ -5,11 +5,15 @@ import dbConnect from "../lib/dbConnect";
 import MenuItem from "../models/menuItems";
 import Cart from "../models/cart";
 import { getSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 function menuPage(props) {
-   
+   let [count, setCount] = useState(props.cartItemCount)
+   useEffect(() => {
+    setCount(props.cartItemCount)
+   }, [props.cartItemCount])
     return (
       <>
-        <Navbar cartItemCount={props.cartItemCount} />
+        <Navbar cartItemCount={count} />
         <Menu
           cheesecakeMenuData={props.cheesecakeMenuData}
           browniesMenuData={props.browniesMenuData}
