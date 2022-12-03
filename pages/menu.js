@@ -6,7 +6,7 @@ import MenuItem from "../models/menuItems";
 import Cart from "../models/cart";
 import { getSession } from "next-auth/react";
 import { useEffect, useState } from "react";
-function menuPage(props) {
+function MenuPage(props) {
    let [count, setCount] = useState(props.cartItemCount)
    useEffect(() => {
     setCount(props.cartItemCount)
@@ -42,4 +42,4 @@ return {
     }
 }
 }
-export default menuPage
+export default MenuPage
