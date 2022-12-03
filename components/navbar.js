@@ -39,7 +39,7 @@ function Navbar(props) {
             <li>
               <Link href="/menu">Menu</Link>
               {props.count ? (
-                <Badge badgeContent={count} color='primary'>
+                <Badge badgeContent={props.count} color='primary'>
                   <Link href="/checkout">Checkout</Link>
                 </Badge>
               ) : (
