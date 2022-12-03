@@ -7,6 +7,8 @@ export default NextAuth({
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      authorization:
+        "https://accounts.google.com/o/oauth2/auth?response_type=code&prompt=consent",
       // authorization: {
       //   params: {
       //     prompt: "consent",
