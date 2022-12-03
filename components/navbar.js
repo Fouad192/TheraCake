@@ -6,7 +6,6 @@ import burgerIcon from "../public/burger.svg";
 import { useEffect, useState } from "react";
 import uuid from "react-uuid";
 import Badge from "@mui/material/Badge";
-import {pink} from '@mui/material/colors'
 function Navbar(props) {
   const { data: session } = useSession();
   let [authorized, setAuthorized] = useState();
@@ -14,7 +13,6 @@ function Navbar(props) {
   let [count, setCount] = useState(props.cartItemCount);
 
   let [isNavOpen, showNav] = useState(false);
-  const color = pink[400]
   useEffect(() => {
     if (session) {
       if (session.user.email === "anwarcitcm@gmail.com") {
@@ -43,7 +41,7 @@ function Navbar(props) {
             <li>
               <Link href="/menu">Menu</Link>
               {props.cartItemCount ? (
-                <Badge badgeContent={count} color={color}>
+                <Badge badgeContent={count} color='primary'>
                   <Link href="/checkout">Checkout</Link>
                 </Badge>
               ) : (
