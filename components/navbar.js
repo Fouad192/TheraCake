@@ -28,10 +28,7 @@ function Navbar(props) {
       }
     }
   });
-  useEffect(() => {
-    setCount(props.cartItemCount);
- 
-  }, [props.cartItemCount]);
+
   if (session) {
     return (
       <div className={classes.navbarContainer}>
