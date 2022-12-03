@@ -5,12 +5,18 @@ import dbConnect from "../lib/dbConnect";
 import MenuItem from "../models/menuItems";
 import Cart from "../models/cart";
 import { getSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 function MenuPage(props) {
   
     return (
       <>
-        <Navbar cartItemCount={props.cartItemCount} />
+        {session ? (
+          <Navbar cartItemCount={props.cartItemCount} />
+        ) : (
+          <Navbar />
+        )}
+
         <Menu
           cheesecakeMenuData={props.cheesecakeMenuData}
           browniesMenuData={props.browniesMenuData}
@@ -28,8 +34,11 @@ export async function getServerSideProps(ctx) {
 
 
   let session = await getSession(ctx)
-     const cartItems = await Cart.find({ userId: session.user._id });
-     let cartItemCount = cartItems.length;
+  if(session) {
+  const cartItems = await Cart.find({ userId: session.user._id });
+  return cartItemCount = cartItems.length;
+  }
+   
 return {
     props: {
         cheesecakeMenuData: JSON.parse(JSON.stringify(cheesecakeMenuData)),
