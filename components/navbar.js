@@ -9,6 +9,9 @@ import Badge from '@mui/material/Badge'
 function Navbar(props) {
   const { data: session } = useSession();
   let [authorized, setAuthorized] = useState()
+
+   let [count, setCount] = useState(props.cartItemCount);
+
   let [isNavOpen, showNav] = useState(false)
   useEffect(() => {
      if (session) {
@@ -25,6 +28,9 @@ function Navbar(props) {
        }
      }
   })
+   useEffect(() => {
+     setCount(props.cartItemCount);
+   }, [props.cartItemCount]);
   if (session) {
     return (
       <div className={classes.navbarContainer}>
@@ -35,7 +41,7 @@ function Navbar(props) {
             <li>
               <Link href="/menu">Menu</Link>
               {props.cartItemCount ? (
-                <Badge badgeContent={props.cartItemCount} color="primary">
+                <Badge badgeContent={count} color="#ff7da3">
                   <Link href="/checkout">Checkout</Link>
                 </Badge>
               ) : (
