@@ -14,7 +14,7 @@ function Navbar() {
      if (session) {
        if (session.user.email === "anwarcitcm@gmail.com") {
          setAuthorized(true);
-       } else if (session.user.email === "Theracakecairo@gmail.com") {
+       } else if (session.user.email === "theracakecairo@gmail.com") {
          setAuthorized(true);
        } else if (session.user.email === "mohamedaymanmoudy1@gmail.com") {
          setAuthorized(true);
