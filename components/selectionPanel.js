@@ -21,6 +21,7 @@ function SelectionPanel(props) {
   // let [props.selectionData, setCurrMenuItem] = useState(props.selectionData)
   let [maxToppings, setMaxToppings] = useState();
   let [currCheckedSize, setCheckedSize] = useState();
+  let selectionPanelRef = useRef();
 
   let toppingCountRef = useRef([]);
   let quantityRef = useRef();
@@ -125,11 +126,13 @@ function SelectionPanel(props) {
     }, 100);
     
   }
-
+useEffect(() => {
+  selectionPanelRef.current.scrollIntoView({ behavior: "smooth" });
+});
   return (
     
 
-    <div className={classes.selectionPanel}>
+    <div className={classes.selectionPanel} ref={selectionPanelRef}>
       <div className={classes.selectionImage}>
         <img src={props.selectionData.img} alt="basicCake" />
       </div>
