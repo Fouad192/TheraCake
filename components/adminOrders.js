@@ -17,8 +17,10 @@ function AdminOrders(props) {
   let readyFilterRef = useRef();
   let completedFilterRef = useRef();
   useEffect(() => {
+
     const searchResult = props.orders.filter((order) =>
-      `${order.firstName.toLowerCase()} ${order.lastName.toLowerCase()}`.includes(
+   
+      `${order.firstName?.toLowerCase()} ${order.lastName?.toLowerCase()}`.includes(
         search.toLowerCase()
       )
     );
