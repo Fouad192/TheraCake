@@ -94,7 +94,7 @@ function SelectionPanel(props) {
     addToInvoiceFlash.current.style.display = "block";
     setTimeout(() => {
       addToInvoiceFlash.current.style.display = "none";
-    }, 2000);
+    }, 1500);
   }
   async function submitHandler(e) {
     e.preventDefault();
@@ -118,6 +118,10 @@ function SelectionPanel(props) {
     });
     const data = await response.json();
     console.log(data);
+    setTimeout(() => {
+      router.reload(window.location.pathname);
+    }, 1500);
+    
   }
 
   return (
