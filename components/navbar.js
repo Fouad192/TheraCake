@@ -30,6 +30,7 @@ function Navbar(props) {
   });
   useEffect(() => {
     setCount(props.cartItemCount);
+    console.log('RERENDEREDDDDD')
   }, [props.cartItemCount]);
   if (session) {
     return (

@@ -94,7 +94,7 @@ function SelectionPanel(props) {
     addToInvoiceFlash.current.style.display = "block";
     setTimeout(() => {
       addToInvoiceFlash.current.style.display = "none";
-    }, 1000);
+    }, 2000);
   }
   async function submitHandler(e) {
     e.preventDefault();
