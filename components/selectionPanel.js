@@ -221,7 +221,7 @@ function SelectionPanel(props) {
                               accumlator + currentValue,
                             0
                           );
-                          if (parseInt(sumToppings) !== parseInt(maxToppings)) {
+                          // if (parseInt(sumToppings) !== parseInt(maxToppings)) {
                             if (Object.keys(prevState).length === 0) {
                               return {
                                 [e.target.name]: parseInt([e.target.value++]),
@@ -236,12 +236,12 @@ function SelectionPanel(props) {
                                   : prevState[e.target.name]++,
                               };
                             }
-                          } else {
-                            return {
-                              ...prevState,
-                              [e.target.name]: prevState[e.target.name],
-                            };
-                          }
+                          // } else {
+                          //   return {
+                          //     ...prevState,
+                          //     [e.target.name]: prevState[e.target.name],
+                          //   };
+                          // }
                         });
                       }}
                       type="button"
