@@ -103,8 +103,6 @@ useEffect(() => {
   selectionPanelRef.current.scrollIntoView({ behavior: "smooth" });
 });
   return (
-    
-
     <div className={classes.selectionPanel} ref={selectionPanelRef}>
       <div className={classes.selectionImage}>
         <img src={props.selectionData.img} alt="basicCake" />
@@ -214,6 +212,7 @@ useEffect(() => {
                     <button
                       name={item}
                       value={0}
+                      // onChange={(e) => setSelectedToppings(e.target.value) }
                       onClick={(e) => {
                         setSelectedToppings((prevState) => {
                           let sumToppings = Object.values(
@@ -393,7 +392,6 @@ useEffect(() => {
         <p>720EGP</p>
       </div> */}
     </div>
-
   );
 }
 
