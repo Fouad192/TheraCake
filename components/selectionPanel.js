@@ -264,6 +264,8 @@ function SelectionPanel(props) {
                       name={item}
                       onClick={(e) =>
                         setSelectedToppings((prevState) => {
+                          console.log(prevState[e.target.name])
+                          console.log(prevState[e.target.name]--)
                           return {
                             ...prevState,
                             [e.target.name]: prevState[e.target.name]--,
