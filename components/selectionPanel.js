@@ -224,7 +224,7 @@ function SelectionPanel(props) {
                           if (parseInt(sumToppings) !== parseInt(maxToppings)) {
                             if (Object.keys(prevState).length === 0) {
                               return {
-                                [e.target.name]: 1,
+                                [e.target.name]: parseInt([e.target.value++]),
                               };
                             } else {
                               console.log(isNaN(prevState[e.target.name]));
@@ -232,7 +232,7 @@ function SelectionPanel(props) {
                               return {
                                 ...prevState,
                                 [e.target.name]: isNaN(prevState[e.target.name])
-                                  ? 1
+                                  ? parseInt(e.target.value++)
                                   : prevState[e.target.name]++,
                               };
                             }
