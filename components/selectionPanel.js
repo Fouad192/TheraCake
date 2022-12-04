@@ -48,35 +48,8 @@ function SelectionPanel(props) {
       );
     }
   }
-  function increment(index, item) {
-    let toppingSum = 0;
-    toppingCountRef.current.map((topping) => {
-      if (topping) {
-        toppingSum += parseInt(topping.value);
-      }
-    });
-    if (toppingSum !== maxToppings) {
-      toppingCountRef.current[index].value++;
-    }
-    // if (toppingSum === maxToppings) {
 
-    // }
 
-    // while(toppingSum !== maxToppings) {
-    //   toppingCountRef.current[index].value++
-    // }
-  }
-  function decrement(index) {
-    toppingCountRef.current[index].value--;
-  }
-  function setToppingState(item, index) {
-    if (toppingCountRef.current[index]) {
-      setSelectedToppings((prevSt) => [
-        ...prevSt,
-        { topping: item, quantity: toppingCountRef.current[index].value },
-      ]);
-    }
-  }
   function setMaxToppingsFunction() {
     if (currCheckedSize) {
       if (currCheckedSize.includes("9")) {
@@ -239,22 +212,62 @@ useEffect(() => {
                 return (
                   <div key={index}>
                     <button
-                      onClick={() => {
-                        increment(index, item);
+                      name={item}
+                      value={0}
+                      onClick={(e) => {
+                        setSelectedToppings((prevState) => {
+                          let sumToppings = Object.values(
+                            selectedToppings
+                          ).reduce(
+                            (accumlator, currentValue) =>
+                              accumlator + currentValue,
+                            0
+                          );
+                          if (parseInt(sumToppings) !== parseInt(maxToppings)) {
+                            if (Object.keys(prevState).length === 0) {
+                              return {
+                                [e.target.name]: parseInt(e.target.value++),
+                              };
+                            } else {
+                              console.log(isNaN(prevState[e.target.name]));
+
+                              return {
+                                ...prevState,
+                                [e.target.name]: isNaN(prevState[e.target.name])
+                                  ? parseInt(e.target.value++)
+                                  : prevState[e.target.name]++,
+                              };
+                            }
+                          } else {
+                            return {
+                              ...prevState,
+                              [e.target.name]: prevState[e.target.name],
+                            };
+                          }
+                        });
+                        console.log(Object.values(selectedToppings));
                       }}
                       type="button"
                     >
                       +
                     </button>
                     <input
+                      defaultValue={0}
+                      value={selectedToppings[item]}
                       required
-                      value="0"
-                      onClick={(e) => console.log(e.target.value)}
-                      ref={(el) => {
-                        toppingCountRef.current[index] = el;
-                      }}
                     />
-                    <button onClick={() => decrement(index)} type="button">
+                    <button
+                      type="button"
+                      name={item}
+                      onClick={(e) =>
+                        setSelectedToppings((prevState) => {
+                          return {
+                            ...prevState,
+                            [e.target.name]: prevState[e.target.name]--,
+                          };
+                        })
+                      }
+                    >
                       -
                     </button>
                     <label>{item}</label>
