@@ -10,7 +10,8 @@ import uuid from "react-uuid";
 import Navbar from "../components/navbar";
 import Footer from "../components/footer";
 function SelectionPanel(props) {
-  const router = useRouter()
+  const router = useRouter();
+
   let [quantity, setQuantity] = useState(1);
   let [selectedSize, setSelectedSize] = useState();
   let [selectedFlavor, setSelectedFlavor] = useState([]);
@@ -22,7 +23,6 @@ function SelectionPanel(props) {
   let [maxToppings, setMaxToppings] = useState();
   let [currCheckedSize, setCheckedSize] = useState();
   let selectionPanelRef = useRef();
-
   let toppingCountRef = useRef([]);
   let quantityRef = useRef();
   let addToInvoiceFlash = useRef();
@@ -48,7 +48,6 @@ function SelectionPanel(props) {
       );
     }
   }
-
 
   function setMaxToppingsFunction() {
     if (currCheckedSize) {
@@ -96,12 +95,12 @@ function SelectionPanel(props) {
     console.log(data);
     setTimeout(() => {
       router.reload(window.location.pathname);
-    }, 100);
-    
+    }, 1000);
   }
-useEffect(() => {
-  selectionPanelRef.current.scrollIntoView({ behavior: "smooth" });
-});
+
+  useEffect(() => {
+    selectionPanelRef.current.scrollIntoView({ behavior: "smooth" });
+  });
   return (
     <div className={classes.selectionPanel} ref={selectionPanelRef}>
       <div className={classes.selectionImage}>
@@ -222,16 +221,13 @@ useEffect(() => {
                               accumlator + currentValue,
                             0
                           );
-                          console.log(`sum toppings ${sumToppings}`)
-                          console.log(`max toppings ${maxToppings}`)
                           if (parseInt(sumToppings) !== parseInt(maxToppings)) {
                             if (Object.keys(prevState).length === 0) {
-                              console.log('y7ot el value b 1')
                               return {
                                 [e.target.name]: parseInt(e.target.value++),
                               };
                             } else {
-                              console.log('yzawed 3an 1')
+                              console.log(isNaN(prevState[e.target.name]));
 
                               return {
                                 ...prevState,
@@ -241,7 +237,6 @@ useEffect(() => {
                               };
                             }
                           } else {
-                            console.log('el toppings ad el max')
                             return {
                               ...prevState,
                               [e.target.name]: prevState[e.target.name],
