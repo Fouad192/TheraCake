@@ -222,7 +222,7 @@ useEffect(() => {
                               accumlator + currentValue,
                             0
                           );
-                          if (parseInt(sumToppings) !== parseInt(maxToppings)) {
+                          if (parseInt(sumToppings) === parseInt(maxToppings)) {
                             if (Object.keys(prevState).length === 0) {
                               return {
                                 [e.target.name]: parseInt(e.target.value++),
