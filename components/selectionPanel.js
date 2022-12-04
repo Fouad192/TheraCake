@@ -222,13 +222,16 @@ useEffect(() => {
                               accumlator + currentValue,
                             0
                           );
-                          if (parseInt(sumToppings) === parseInt(maxToppings)) {
+                          console.log(`sum toppings ${sumToppings}`)
+                          console.log(`max toppings ${maxToppings}`)
+                          if (parseInt(sumToppings) !== parseInt(maxToppings)) {
                             if (Object.keys(prevState).length === 0) {
+                              console.log('y7ot el value b 1')
                               return {
                                 [e.target.name]: parseInt(e.target.value++),
                               };
                             } else {
-                              console.log(isNaN(prevState[e.target.name]));
+                              console.log('yzawed 3an 1')
 
                               return {
                                 ...prevState,
@@ -238,6 +241,7 @@ useEffect(() => {
                               };
                             }
                           } else {
+                            console.log('el toppings ad el max')
                             return {
                               ...prevState,
                               [e.target.name]: prevState[e.target.name],
