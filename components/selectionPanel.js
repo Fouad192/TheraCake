@@ -224,15 +224,17 @@ function SelectionPanel(props) {
                           if (parseInt(sumToppings) !== parseInt(maxToppings)) {
                             if (Object.keys(prevState).length === 0) {
                               return {
-                                [e.target.name]: parseInt(e.target.value++),
+                                [e.target.name]: 1,
                               };
                             } else {
-                              console.log(isNaN(prevState[e.target.name]));
+                              console.log(prevState[e.target.name]);
+                              console.log(prevState[e.target.name]++);
+                              
 
                               return {
                                 ...prevState,
                                 [e.target.name]: isNaN(prevState[e.target.name])
-                                  ? parseInt(e.target.value++)
+                                  ? 1
                                   : prevState[e.target.name]++,
                               };
                             }
