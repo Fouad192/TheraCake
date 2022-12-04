@@ -16,7 +16,7 @@ function SelectionPanel(props) {
   let [selectedFlavor, setSelectedFlavor] = useState([]);
   let [selectedExtra, setSelectedExtra] = useState([]);
   let [selectedGift, setSelectedGift] = useState([]);
-  let [selectedToppings, setSelectedToppings] = useState([]);
+  let [selectedToppings, setSelectedToppings] = useState({});
   let [notes, setNotes] = useState();
   // let [props.selectionData, setCurrMenuItem] = useState(props.selectionData)
   let [maxToppings, setMaxToppings] = useState();
