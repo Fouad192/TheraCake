@@ -249,8 +249,11 @@ function SelectionPanel(props) {
                       +
                     </button>
                     <input
-                      defaultValue={0}
-                      value={selectedToppings[item]}
+                      value={
+                        typeof selectedToppings[item] === "undefined"
+                          ? 0
+                          : selectedToppings[item]
+                      }
                       required
                     />
                     <button
