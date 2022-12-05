@@ -2,7 +2,13 @@ import Home from "../components/Home";
 import Footer from "../components/footer";
 import Navbar from "../components/navbar";
 function HomePage() {
-  return <Home />;
+  return (
+    <>
+    <Navbar/>
+      <Home />
+<Footer/>
+    </>
+  );
 }
 
-export default HomePage;
+export default HomePage
