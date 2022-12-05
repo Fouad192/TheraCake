@@ -98,6 +98,8 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
+        width: 78%;
+            float: right;
     /* margin-top: 1em; */
     /* margin-bottom: -0.5em; */
 }
