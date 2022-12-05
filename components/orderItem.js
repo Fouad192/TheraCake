@@ -185,14 +185,14 @@ encodeData()
                   <div>
                     {item.toppings.map((toppingObj) => {
                       return Object.keys(toppingObj).map((topping) => (
-                        <p>{`${topping}`}</p>
+                        <p key={topping}>{`${topping}`}</p>
                       ));
                     })}
                   </div>
                   <div>
                     {item.toppings.map((toppingObj) => {
                       return Object.values(toppingObj).map((qt) => (
-                        <p>{`${qt}x`}</p>
+                        <p key={qt}>{`${qt}x`}</p>
                       ));
                     })}
                   </div>

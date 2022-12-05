@@ -763,21 +763,21 @@ function CheckoutDetails(props) {
               )}
               {addedItem.toppings.map((toppingObj) => {
                 if (Object.keys(toppingObj).length >= 1) {
-                  return <p id={classes.toppingsP}>Toppings</p>;
+                  return <p key={uuid()} id={classes.toppingsP}>Toppings</p>;
                 }
               })}
               <div className={classes.toppingDiv}>
                 <div>
                   {addedItem.toppings.map((toppingObj) => {
                     return Object.keys(toppingObj).map((topping) => (
-                      <p>{`${topping}`}</p>
+                      <p key={topping}>{`${topping}`}</p>
                     ));
                   })}
                 </div>
                 <div>
                   {addedItem.toppings.map((toppingObj) => {
                     return Object.values(toppingObj).map((qt) => (
-                      <p>{`${qt}x`}</p>
+                      <p key={qt}>{`${qt}x`}</p>
                     ));
                   })}
                 </div>
