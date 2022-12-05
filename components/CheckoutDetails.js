@@ -80,22 +80,37 @@ function CheckoutDetails(props) {
   }, []);
 
   useEffect(() => {
+    let currentTime = new Date().getHours();
+    let tomorrowDate = new Date(new Date().setDate(new Date().getDate() + 1));
+    let afterTomorrowDate = new Date(
+      new Date().setDate(new Date().getDate() + 2)
+    );
     let date = new Date(new Date().setDate(new Date().getDate() + 7));
-    console.log(date);
+
+    let formattedTomorrowDate = new Date(
+      tomorrowDate.getTime() - tomorrowDate.getTimezoneOffset() * 60000
+    )
+      .toISOString()
+      .split("T")[0];
+    let formattedAfterTomorrowDate = new Date(
+      afterTomorrowDate.getTime() -
+        afterTomorrowDate.getTimezoneOffset() * 60000
+    )
+      .toISOString()
+      .split("T")[0];
     let formattedDate = new Date(
       date.getTime() - date.getTimezoneOffset() * 60000
     )
       .toISOString()
       .split("T")[0];
     setMaxDate(formattedDate);
-    let todayDate = new Date();
-    let formattedTodayDate = new Date(
-      todayDate.getTime() - todayDate.getTimezoneOffset() * 60000
-    )
-      .toISOString()
-      .split("T")[0];
-    setMinDate(formattedTodayDate);
-  });
+
+    if (currentTime >= 21) {
+      setMinDate(formattedAfterTomorrowDate);
+    } else {
+      setMinDate(formattedTomorrowDate);
+    }
+  }, []);
   // useEffect(() => {
   //   // if("geolocation" in navigator) {
   //   //   console.log('Available')
@@ -450,6 +465,7 @@ function CheckoutDetails(props) {
                       <div>
                         <h1>Schedule Delivery</h1>
                         <input
+                          required
                           type="date"
                           name="scheduled"
                           max={maxDate}
@@ -459,6 +475,9 @@ function CheckoutDetails(props) {
                         />
                       </div>
                     </div>
+                    <p className={classes.dateNote}>
+                      Orders placed after 9PM will be delievered after tomorrow
+                    </p>
                     <button id={classes.apartmentSubmitBtn}>Place Order</button>
                   </form>
                 </div>
@@ -579,6 +598,7 @@ function CheckoutDetails(props) {
                       <div>
                         <h1>Schedule Delivery</h1>
                         <input
+                          required
                           type="date"
                           name="scheduled"
                           max={maxDate}
@@ -588,6 +608,9 @@ function CheckoutDetails(props) {
                         />
                       </div>
                     </div>
+                    <p className={classes.dateNote}>
+                      Orders placed after 9PM will be delievered after tomorrow
+                    </p>
                     <button id={classes.villaSubmitBtn}>Place Order</button>
                   </form>
                 </div>
@@ -715,6 +738,7 @@ function CheckoutDetails(props) {
                       <div>
                         <h1>Schedule Delivery</h1>
                         <input
+                          required
                           type="date"
                           name="scheduled"
                           max={maxDate}
@@ -724,6 +748,10 @@ function CheckoutDetails(props) {
                         />
                       </div>
                     </div>
+                    <p className={classes.dateNote}>
+                      Orders placed after 9PM will be delievered after tomorrow
+                    </p>
+
                     <button id={classes.workplaceSubmitBtn}>Place Order</button>
                   </form>
                 </div>
@@ -763,7 +791,11 @@ function CheckoutDetails(props) {
               )}
               {addedItem.toppings.map((toppingObj) => {
                 if (Object.keys(toppingObj).length >= 1) {
-                  return <p key={uuid()} id={classes.toppingsP}>Toppings</p>;
+                  return (
+                    <p key={uuid()} id={classes.toppingsP}>
+                      Toppings
+                    </p>
+                  );
                 }
               })}
               <div className={classes.toppingDiv}>

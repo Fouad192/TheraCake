@@ -70,7 +70,6 @@ let orderDetails = new Schema({
   },
   scheduled: {
     type: String,
-    default: new Date().toLocaleDateString('en-US')
   },
   status: {
     type: String,
