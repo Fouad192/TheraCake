@@ -248,6 +248,9 @@
         float: left;
 
     }
+    .toppingsDiv {
+        float: left;
+    }
 
     .orderHistoryTitleDetails {
         float: left;
@@ -306,9 +309,10 @@
     .itemHistorySubDetails,
     .historySubtotal,
     .historyDeliveryFees,
-    .historyTotal {
+    .historyTotal, .toppingsDiv {
         width: 100%;
     }
+    
 
 
 }
