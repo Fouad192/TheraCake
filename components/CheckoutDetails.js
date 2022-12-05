@@ -505,7 +505,6 @@ function CheckoutDetails(props) {
                         placeholder="Backup Mobile Number"
                         onChange={handleVillaInputChange}
                         value={villaInputs.backupMobile}
-                 
                       />
                     </div>
                     <div>
@@ -757,6 +756,32 @@ function CheckoutDetails(props) {
                   {addedItem?.sizePrice[0]?.price * addedItem?.quantity}
                 </p>
               </div>
+              {addedItem.freePistachio === "Free Pistachio" && (
+                <div className={classes.freeExtraDiv}>
+                  <p>Free Extra Pistachio</p>
+                </div>
+              )}
+              {addedItem.toppings.map((toppingObj) => {
+                if (Object.keys(toppingObj).length >= 1) {
+                  return <p id={classes.toppingsP}>Toppings</p>;
+                }
+              })}
+              <div className={classes.toppingDiv}>
+                <div>
+                  {addedItem.toppings.map((toppingObj) => {
+                    return Object.keys(toppingObj).map((topping) => (
+                      <p>{`${topping}`}</p>
+                    ));
+                  })}
+                </div>
+                <div>
+                  {addedItem.toppings.map((toppingObj) => {
+                    return Object.values(toppingObj).map((qt) => (
+                      <p>{`${qt}x`}</p>
+                    ));
+                  })}
+                </div>
+              </div>
               <div className={classes.flavor}>
                 {addedItem.flavors.length > 1 ? (
                   addedItem.flavors.map((flavor, index) => (
@@ -802,7 +827,6 @@ function CheckoutDetails(props) {
           ))}
           {props.addedItems.length != 0 && (
             <>
-              
               <div className={classes.deliveryFee}>
                 <p>Delivery</p>
                 <p className={classes.price}>45 EGP</p>

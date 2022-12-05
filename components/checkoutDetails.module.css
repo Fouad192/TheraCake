@@ -16,7 +16,33 @@
     color: #FF7DA3;
     font-size: 32px;
 }
+.freeExtraDiv {
+    margin: 0.5em 0;
+    color: rgba(0, 0, 0, 0.5);
+}
 
+.toppingDiv {
+    display: flex;
+    justify-content: space-between;
+}
+
+.toppingDiv div:first-child p {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.toppingDiv div:last-child p {
+    color: #FF7DA3;
+}
+
+.toppingDiv div p {
+    margin: 0.5em 0;
+}
+
+#toppingsP,
+#extrasP {
+
+    font-weight: 600;
+}
 .apartmentContainer>button, .workplaceContainer > button, .villaContainer > button {
     border: 2px #FF7DA3 solid;
     border-radius: 15px;

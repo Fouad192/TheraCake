@@ -41,7 +41,10 @@ function UserHistory({order}) {
   
   return (
     <section className={classes.historySection}>
-      <div className={classes.orderHistoryContainer} onClick={() => showDetails(!details)}>
+      <div
+        className={classes.orderHistoryContainer}
+        onClick={() => showDetails(!details)}
+      >
         <div className={classes.orderHistoryBriefContainer}>
           <div>
             <h3>Yesterday</h3>
@@ -77,7 +80,6 @@ function UserHistory({order}) {
               {order.orderItems.map((item) => (
                 <div key={uuid()}>
                   <div className={classes.orderHistoryTitleDetails}>
-            
                     <h1>{`${item.quantity}x ${item.name}`}</h1>
                     <p>{item.sizePrice[0].price * item.quantity}</p>
                   </div>
@@ -92,7 +94,13 @@ function UserHistory({order}) {
                       </div>
                     </div>
                   ))}
-
+                  {item.freePistachio === "Free Pistachio" && (
+                    <div className={classes.itemHistorySubDetails}>
+                      <div>
+                        <p>Free Extra Pistachio</p>
+                      </div>
+                    </div>
+                  )}
                   {item.extraPrice.map((extra) => (
                     <div className={classes.itemHistorySubDetails} key={uuid()}>
                       <div>
@@ -101,6 +109,22 @@ function UserHistory({order}) {
                       </div>
                     </div>
                   ))}
+                  <div className={classes.toppingsDiv}>
+                    <div>
+                      {item.toppings.map((toppingObj) => {
+                        return Object.keys(toppingObj).map((topping) => (
+                          <p>{`${topping}`}</p>
+                        ));
+                      })}
+                    </div>
+                    <div>
+                      {item.toppings.map((toppingObj) => {
+                        return Object.values(toppingObj).map((qt) => (
+                          <p>{`${qt}x`}</p>
+                        ));
+                      })}
+                    </div>
+                  </div>
                   <hr />
                 </div>
               ))}
@@ -109,7 +133,7 @@ function UserHistory({order}) {
                 <p>Subtotal</p>
                 <p>{sum}</p>
               </div>
-             
+
               <div className={classes.historyDeliveryFees}>
                 <p>Delivery Fees</p>
                 <p>45 EGP</p>

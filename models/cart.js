@@ -6,10 +6,10 @@ let cart = new Schema({
     type: String,
     required: true,
   },
-quantity: {
+  quantity: {
     type: Number,
-    required: true
-},
+    required: true,
+  },
   name: {
     type: String,
     required: true,
@@ -28,12 +28,14 @@ quantity: {
     type: [],
   },
   notes: {
-    type: String
+    type: String,
   },
-
+  freePistachio: {
+    type: String,
+  },
   giftPrice: {
-    type: []
-  }
+    type: [],
+  },
 });
 
 mongoose.models = {};

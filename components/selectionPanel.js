@@ -18,6 +18,10 @@ function SelectionPanel(props) {
   let [selectedExtra, setSelectedExtra] = useState([]);
   let [selectedGift, setSelectedGift] = useState([]);
   let [selectedToppings, setSelectedToppings] = useState({});
+  let [selectedFreeExtra, setSelectedFreeExtra] = useState(
+    "No Free Extra Pistachio"
+  );
+
   let [notes, setNotes] = useState();
   // let [props.selectionData, setCurrMenuItem] = useState(props.selectionData)
   let [maxToppings, setMaxToppings] = useState();
@@ -83,6 +87,7 @@ function SelectionPanel(props) {
       toppings: selectedToppings,
       notes,
       giftPrice: selectedGift,
+      freePistachio: selectedFreeExtra,
     };
     const response = await fetch("/api/addToCart", {
       method: "POST",
@@ -202,6 +207,25 @@ function SelectionPanel(props) {
               <hr />
             </div>
           )}
+          {props.selectionData.name === "Original Thera Cake Brownies" &&
+          currCheckedSize === "20 Mini Pieces" ? (
+            <div className={classes.freeExtra}>
+              <h1>Free Extra</h1>
+              <input
+                type="checkbox"
+                name="extraPistachio"
+                onClick={(e) => {
+                  if (e.target.checked) {
+                    setSelectedFreeExtra("Free Pistachio");
+                  } else if (!e.target.checked) {
+                    setSelectedFreeExtra("No Free Extra Pistachio");
+                  }
+                }}
+              />
+              <label>Free Extra Pistachio</label>
+              <hr />
+            </div>
+          ) : null}
           {props.selectionData.toppings.length === 0 ? null : (
             <div className={classes.toppings}>
               <h1>Toppings</h1>
@@ -229,7 +253,6 @@ function SelectionPanel(props) {
                             } else {
                               console.log(prevState[e.target.name]);
                               console.log(prevState[e.target.name]++);
-                              
 
                               return {
                                 ...prevState,
@@ -264,8 +287,8 @@ function SelectionPanel(props) {
                       name={item}
                       onClick={(e) =>
                         setSelectedToppings((prevState) => {
-                          console.log(prevState[e.target.name])
-                          console.log(prevState[e.target.name]--)
+                          console.log(prevState[e.target.name]);
+                          console.log(prevState[e.target.name]--);
                           return {
                             ...prevState,
                             [e.target.name]: prevState[e.target.name]--,

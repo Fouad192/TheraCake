@@ -166,7 +166,13 @@ encodeData()
                     </div>
                   </div>
                 ))}
-
+                {item.freePistachio === "Free Pistachio" && (
+                  <div className={classes.itemSubDetails}>
+                    <div>
+                      <p>Free Extra Pistachio</p>
+                    </div>
+                  </div>
+                )}
                 {item.extraPrice.map((extra) => (
                   <div className={classes.itemSubDetails} key={uuid()}>
                     <div>
@@ -175,6 +181,22 @@ encodeData()
                     </div>
                   </div>
                 ))}
+                <div className={classes.toppingsDiv}>
+                  <div>
+                    {item.toppings.map((toppingObj) => {
+                      return Object.keys(toppingObj).map((topping) => (
+                        <p>{`${topping}`}</p>
+                      ));
+                    })}
+                  </div>
+                  <div>
+                    {item.toppings.map((toppingObj) => {
+                      return Object.values(toppingObj).map((qt) => (
+                        <p>{`${qt}x`}</p>
+                      ));
+                    })}
+                  </div>
+                </div>
                 <hr />
               </div>
             ))}
@@ -183,7 +205,7 @@ encodeData()
               <p>Subtotal</p>
               <p>{sum}</p>
             </div>
-           
+
             <div className={classes.deliveryFees}>
               <p>Delivery Fees</p>
               <p>45 EGP</p>

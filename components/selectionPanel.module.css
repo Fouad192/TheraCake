@@ -29,7 +29,21 @@
     padding: 1em;
 
 }
+.freeExtra {
+    margin: 1em 0;
+}
 
+.freeExtra h1 {
+    margin-bottom: 0.5em;
+}
+
+.freeExtra input {
+    margin-right: 0.5em;
+}
+
+.freeExtra label {
+    font-size: 18px;
+}
 .selectionHeaders h1 {
     color: #FF7DA3;
 }
