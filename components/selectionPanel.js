@@ -223,7 +223,6 @@ function SelectionPanel(props) {
                 }}
               />
               <label>Free Extra Pistachio</label>
-              <hr />
             </div>
           ) : null}
           {props.selectionData.toppings.length === 0 ? null : (
