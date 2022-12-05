@@ -167,9 +167,7 @@ function CheckoutDetails(props) {
     const data = await response.json();
     console.log(data);
   
-      setTimeout(() => {
-        router.push("/history");
-      }, 500);
+      router.push('/thankyou')
   }
   async function villaSubmitHandler(e) {
     e.preventDefault();
@@ -207,9 +205,8 @@ function CheckoutDetails(props) {
     });
     const data = await response.json();
     console.log(data);
-    setTimeout(() => {
-      router.push("/history");
-    }, 500);
+         router.push("/thankyou");
+
   }
   async function companySubmitHandler(e) {
     e.preventDefault();
@@ -246,9 +243,8 @@ function CheckoutDetails(props) {
     });
     const data = await response.json();
     console.log(data);
-        setTimeout(() => {
-          router.push("/history");
-        }, 500);
+             router.push("/thankyou");
+
   }
   function handleApartmentInputChange(e) {
     const { name, value } = e.target;

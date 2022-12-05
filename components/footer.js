@@ -40,7 +40,10 @@ function Footer() {
         <div className={classes.iconTextFlex}>
           <Image src={tiktokIcon} alt="tiktokIcon" />
           <p>
-            <Link target="_blank" href="https://vm.tiktok.com/ZM8LGBrYH/">
+            <Link
+              target="_blank"
+              href="https://www.tiktok.com/@theracakecairo?_t=8WdMJhUGmxx&_r=1"
+            >
               @Theracakecairo
             </Link>
           </p>

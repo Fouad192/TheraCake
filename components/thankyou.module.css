@@ -1,0 +1,20 @@
+.container {
+    width: 100vw;
+    height: 70vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+.container h1 {
+    font-size: 60px;
+    color: #ff7da3;
+}
+
+.container p {
+    font-size: 20px;
+    margin-top: 1em;
+    font-weight: bold;
+}
