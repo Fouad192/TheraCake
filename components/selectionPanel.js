@@ -104,7 +104,7 @@ function SelectionPanel(props) {
   }
 
   useEffect(() => {
-    selectionPanelRef.current.scrollIntoView({ behavior: "smooth" });
+    selectionPanelRef.current.scrollIntoView({ behavior: "smooth", block: 'nearest' });
   });
   return (
     <div className={classes.selectionPanel} ref={selectionPanelRef}>
