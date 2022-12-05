@@ -116,6 +116,11 @@ function Menu(props) {
               Add Item
             </button>
           ) : null}
+          <div className={classes.checkoutDiv}>
+            <Badge badgeContent={props.count} color="primary">
+              <Link href="/checkout">Checkout</Link>
+            </Badge>
+          </div>
           <div
             className={classes.cheesecakeMenuItemContainer}
             ref={cheesecakeMenu}

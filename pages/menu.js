@@ -22,6 +22,7 @@ function MenuPage(props) {
           cheesecakeMenuData={props.cheesecakeMenuData}
           browniesMenuData={props.browniesMenuData}
           session={props.session}
+          count={props.count}
         />
         <Footer />
       </>
