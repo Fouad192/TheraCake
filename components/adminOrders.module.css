@@ -337,6 +337,9 @@ margin: 0.5em 0;
                 .subtotal, .deliveryFees, .total {
                     float: left;
                 }
+                .toppingsDiv {
+                    float: left;
+                }
 }
 
 @media(max-width: 600px) {
@@ -369,7 +372,7 @@ margin: 0.5em 0;
         grid-column: 1/13;
         text-align: center;
     }
-     .orderTitleDetails, .itemSubDetails, .subtotal, .deliveryFees, .total {
+     .orderTitleDetails, .itemSubDetails, .subtotal, .deliveryFees, .total, .toppingsDiv {
         width: 100%;
      }
     
