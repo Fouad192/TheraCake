@@ -152,7 +152,7 @@ function Home() {
             </>
           )}
         </div>
-        {/* <Image src={joyImg} alt="homeImage" id={classes.homeImage} /> */}
+        <Image src={joyImg} alt="homeImage" id={classes.homeImage} />
         <div className={classes.homeDetails}>
           <h1>TheraCake</h1>
           <p>
