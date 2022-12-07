@@ -318,7 +318,7 @@
     .homeDetails {
         margin: 0;
         width: 100%;
-        margin-top: -30%;
+        /* margin-top: -30%; */
     }
 
     #homeImage {
@@ -334,5 +334,8 @@
 @media (max-width: 420px) {
     .burgerNavbar ul {
         width: 50%;
+    }
+    .homeDetails button {
+        font-size: 18px;
     }
 }
