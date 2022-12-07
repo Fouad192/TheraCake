@@ -2,7 +2,7 @@ import Image from "next/image";
 import homeImg from "../public/Homeimg.png";
 import classes from "./home.module.css";
 import Link from "next/link";
-import joyImg from "../public/final.jpg";
+import joyImg from "../public/Joy 2.png";
 import Footer from "./footer";
 import burgerIcon from "../public/burger.svg";
 
