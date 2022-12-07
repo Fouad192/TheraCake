@@ -7,29 +7,109 @@
     align-items: center;
     min-height: 70vh;
 }
-.homeDetails {
+
+#homeImage {
+    width: 100%;
+}
+
+.navbarContainer {
+    position: absolute;
+    top: 0;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    align-items: center;
+}
+
+.navbarContainer h1 {
+    grid-column: 2;
+    color: #FF7DA3;
+    font-family: 'Choppers';
+    font-size: 35px;
+}
+
+.navbarContainer ul {
+    grid-column: 7/13;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
+    list-style: none;
 }
+
+.navbarContainer ul li a {
+    color: #FF7DA3;
+    text-decoration: none;
+    margin-right: 1em;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 20px;
+}
+
+.homeDetails {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    text-align: center;
+    margin-bottom: 10%;
+}
+
 .homeDetails h1 {
-    font-family: 'Choppers', sans-serif;
+    font-family: 'Choppers', cursive;
     font-size: 128px;
     color: #FF7DA3;
     margin-bottom: 0.2em;
 }
+
 .homeDetails p {
     font-family: 'Ubuntu', sans-serif;
     font-size: 28px;
     font-weight: lighter;
     margin-top: -1.5em;
-    color: rgba(0, 0, 0, 0.8);
-    width: 60%;
+    margin-bottom: 1em;
+    /* width: 60%; */
     text-align: center;
+    color: white;
 
-   
+
 }
+
+.navbarContainer ul li button {
+    border: none;
+    background-color: #FF7DA3;
+    color: white;
+    border-radius: 10px;
+    padding: 1em 2em;
+    /* margin-left: 2em; */
+    cursor: pointer;
+    margin-right: 1em;
+}
+
+#burgerIcon {
+    cursor: pointer;
+}
+
+
+.burgerNavbar {
+    display: none;
+}
+
+.homeDetails button {
+    border: none;
+    background-color: #FF7DA3;
+    color: white;
+    border-radius: 15px;
+    padding: 1em 5em;
+    /* margin-top: 1em; */
+    cursor: pointer;
+    text-decoration: none;
+    transition: ease-in-out 0.2s;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+#joy {
+    width: 100%;
+    height: 100%;
+}
+
 .menuButton {
     border: none;
     background-color: #FF7DA3;
@@ -47,6 +127,7 @@
     width: 50%;
     height: fit-content;
 }
+
 .homeImage img {
     width: 80%;
     height: 100%;
@@ -54,54 +135,126 @@
 
 
 @media (max-width: 1200px) {
-    .homeDetails > h1 {
+    .homeDetails>h1 {
         font-size: 100px;
     }
-    .homeDetails > p {
+
+    .homeDetails>p {
         font-size: 20px;
     }
 }
 
 @media (max-width: 1000px) {
     .homeDetails>h1 {
-            font-size: 80px;
-        }
-        .homeDetails{
-            width: 50%;
-        }
-        .homeDetails p {
-            width: 80%;
-        }
-        /* .homeImage {
+        font-size: 80px;
+    }
+
+    .homeDetails {
+        width: 50%;
+    }
+
+    .navbarContainer ul {
+        grid-column: 6/13;
+    }
+
+    .navbarContainer ul li a {
+        font-size: 16px;
+    }
+
+    .navbarContainer ul li button {
+        padding: 0.5em 1em;
+    }
+
+    #homeImage {
+        object-fit: cover;
+    }
+
+    /* .homeImage {
             width: 40%;
         } */
 }
-@media(max-width: 800px) {
-    .homeSection {
-        flex-direction: column-reverse;
-        align-items: center;
-        justify-content: flex-end;
-        margin-top: 10%;
-    }
-    .homeDetails {
-        width: 80%;
-    }
-    .homeDetails p {
-        width: 90%;
-    }
-    .homeDetails h1 {
-        margin-bottom: 0.1em;
-    }
-    .homeImage {
-        width: 30%;
-        height: 30%;
-        display: flex;
-            justify-content: center;
-            align-items: center;
+
+@media (max-width: 850px) {
+    .navbarContainer>ul {
+        display: none;
     }
 
-    .homeImage img {
-        /* height: 600px; */
+    .homeDetails h1 {
+        font-size: 70px;
+    }
+
+    .burgerNavbar {
+        display: block;
+        grid-column: 12;
+        /* grid-column: 8/12; */
+    }
+
+    .burgerNavbar img {
+        margin-right: 1em;
+    }
+
+    .burgerNavbar ul {
+        list-style: none;
+        position: absolute;
+        z-index: 10;
+        right: 3%;
+        background-color: white;
+        border: 1px #FF7DA3 solid;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+
+    }
+
+    .burgerNavbar ul li a {
+        margin: 0;
+    }
+
+    .burgerNavbar ul li a {
+        text-decoration: none;
+        color: #FF7DA3;
+        font-family: 'Ubuntu', sans-serif;
+    }
+
+    .burgerNavbar ul li {
+        margin: 0.5em 1em;
+    }
+
+    .burgerNavbar ul hr {
+        border: none;
+        height: 1px;
+        background-color: rgba(0, 0, 0, 0.2);
+
+    }
+
+    .burgerNavbar ul li button {
+        margin: 0;
+        padding: 0.5em;
+        background-color: white;
+        color: #FF7DA3;
+        font-size: 14px;
+        font-weight: 600;
+        padding: 0;
+    }
+}
+
+@media(max-width: 750px) {
+    .navbarContainer ul {
+        grid-column: 5/13;
+    }
+
+    .homeDetails h1 {
+        font-size: 60px;
+    }
+
+    .homeDetails p {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 630px) {
+    .homeDetails h1 {
+        font-size: 50px;
     }
 .homeDetails h1 {
     margin-bottom: 0.3em;
@@ -112,13 +265,31 @@
 @media(max-width: 500px) {
     .homeDetails h1 {
         font-size: 60px;
+        margin-bottom: 0.5em;
     }
+
     .homeDetails p {
         font-size: 16px;
+
     }
-    
-   
+
+
     .menuButton {
         padding: 1.5em 4.5em;
+    }
+
+    .homeDetails h1 {
+        font-size: 40px;
+    }
+
+    .homeDetails {
+        margin: 0;
+        width: 100%;
+        margin-top: -30%;
+    }
+
+    #homeImage {
+        /* width: 389px; */
+        height: 500px;
     }
 }
