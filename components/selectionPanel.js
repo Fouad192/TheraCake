@@ -178,7 +178,7 @@ function SelectionPanel(props) {
                     <div key={index}>
                       <input
                         type="checkbox"
-                        required
+                required={true}
                         onClick={(e) => {
                           if (e.target.checked) {
                             setSelectedFlavor([...selectedFlavor, item]);
@@ -383,6 +383,7 @@ function SelectionPanel(props) {
               <input
                 type="checkbox"
                 value="Bouqet"
+                
                 onClick={(e) => {
                   if (e.target.checked) {
                     setSelectedGift([

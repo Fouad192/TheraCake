@@ -55,7 +55,7 @@
 .homeDetails h1 {
     font-family: 'Choppers', cursive;
     font-size: 128px;
-    color: #FF7DA3;
+    color: #ff5689;
     margin-bottom: 0.2em;
 }
 
@@ -94,7 +94,7 @@
 
 .homeDetails button {
     border: none;
-    background-color: #FF7DA3;
+    background-color: #ff5689;
     color: white;
     border-radius: 15px;
     padding: 1em 5em;

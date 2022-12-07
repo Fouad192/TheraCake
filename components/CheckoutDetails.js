@@ -142,7 +142,7 @@ function CheckoutDetails(props) {
         sum += parseInt(gift.price) * item.quantity;
       });
     });
-    sum = sum * 0.14 + sum + 45;
+    sum = sum + 45;
     return sum;
   }
   async function apartmentSubmitHandler(e) {

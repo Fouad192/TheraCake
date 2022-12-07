@@ -5,14 +5,14 @@ import Link from "next/link";
 import joyImg from "../public/final.jpg";
 import Footer from "./footer";
 import burgerIcon from "../public/burger.svg";
-
+import { useRouter } from "next/router";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useState, useEffect } from "react";
 function Home() {
   const { data: session } = useSession();
   let [isAuthorized, setAuthorized] = useState();
   let [isNavOpen, showNav] = useState(false);
-
+  let router = useRouter()
   useEffect(() => {
     if (session) {
       if (session.user.email === "anwarcitcm@gmail.com") {
@@ -120,7 +120,9 @@ function Home() {
                     </li>
                     <hr />
                     <li>
-                      <Link href="/checkout">Checkout</Link>
+                      <button onClick={() => router.push("/checkout")}>
+                        Checkout
+                      </button>
                     </li>
 
                     <hr />
@@ -159,7 +161,8 @@ function Home() {
             This dessert is made with great love, <br /> extreme dedication and
             the best quality
           </p>
-          <button>Order Now</button>
+
+          <button onClick={() => router.push("/menu")}>Order Now</button>
         </div>
       </section>
       <Footer />
