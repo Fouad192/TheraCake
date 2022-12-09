@@ -158,7 +158,7 @@ function Home() {
         <div className={classes.homeDetails}>
           <h1>TheraCake</h1>
           <p>
-            This dessert is made with great love, <br /> extreme dedication and
+            This dessert made with great love, <br /> extreme dedication and
             the best quality
           </p>
 

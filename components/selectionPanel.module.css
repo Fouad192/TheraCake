@@ -54,12 +54,17 @@
 
 .selectionOptions {
     overflow-y: auto;
-    height: 45%;
+    height: 35%;
 }
 
-.selectionForm {
+#selectionForm {
     margin-left: 1em;
 
+}
+.checkoutBtnDiv {
+    margin-left: 1em;
+    background-color: transparent;
+    width: fit-content;
 }
 
 .sizesInputs div,
@@ -157,6 +162,7 @@
     border-radius: 10px;
     cursor: pointer;
 
+
 }
 
 .flavorInputs input::selection {
@@ -200,8 +206,8 @@
 }
 
 .checkoutBtnDiv {
-    display: flex;
-    align-items: center;
+    /* display: flex;
+    align-items: center; */
 }
 .checkoutBtnDiv p {
     margin-left: 1em;

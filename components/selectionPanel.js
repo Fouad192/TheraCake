@@ -37,17 +37,37 @@ function SelectionPanel(props) {
   function isLoggedIn() {
     if (!session) {
       return (
-        <button className={classes.menuFormSubmit} onClick={() => signIn()}>
-          Add To Cart
-        </button>
+        <div
+          className={classes.checkoutBtnDiv}
+          style={{ position: "absolute", bottom: "0", backgroundColor: "white" }}
+        >
+          <div style={{position: 'sticky'}}>
+            <button className={classes.menuFormSubmit} onClick={() => signIn()}>
+              Add To Cart
+            </button>
+          </div>
+        </div>
       );
     } else if (session) {
       return (
-        <div className={classes.checkoutBtnDiv}>
-          <button className={classes.menuFormSubmit} onClick={timeOutFlash}>
-            Add To Cart
-          </button>
-          <p ref={addToInvoiceFlash}>Added to checkout invoice</p>
+        <div
+          className={classes.checkoutBtnDiv}
+          style={{
+            position: "absolute",
+            bottom: "0",
+            backgroundColor: "white",
+          }}
+        >
+          <div style={{ position: "sticky" }}>
+            <button
+              className={classes.menuFormSubmit}
+              onClick={timeOutFlash}
+              form={classes.selectionForm}
+            >
+              Add To Cart
+            </button>
+            <p ref={addToInvoiceFlash}>Added to checkout invoice</p>
+          </div>
         </div>
       );
     }
@@ -70,10 +90,10 @@ function SelectionPanel(props) {
     setMaxToppingsFunction();
   }, [currCheckedSize]);
   function timeOutFlash() {
-    addToInvoiceFlash.current.style.display = "block";
+    addToInvoiceFlash.current.style.display = "inline-block";
     setTimeout(() => {
       addToInvoiceFlash.current.style.display = "none";
-    }, 1500);
+    }, 2000);
   }
   async function submitHandler(e) {
     e.preventDefault();
@@ -116,11 +136,7 @@ function SelectionPanel(props) {
         <p>{props.selectionData.description}</p>
       </div>
       <div className={classes.selectionOptions}>
-        <form
-          className={classes.selectionForm}
-          method="POST"
-          onSubmit={submitHandler}
-        >
+        <form id={classes.selectionForm} method="POST" onSubmit={submitHandler}>
           <div className={classes.quantityInput}>
             <h1>Quantity</h1>
             <button
@@ -172,13 +188,15 @@ function SelectionPanel(props) {
           </div>
           {props.selectionData.flavors.length === 0 ? null : (
             <div className={classes.flavorInputs}>
+              {props.selectionData.name === "Joy Cheesecake" && (
+                <p>Choose a minimum of 2 flavors to 6</p>
+              )}
               <h1>Flavors</h1>
               {props.selectionData.name === "Joy Cheesecake"
                 ? props.selectionData.flavors.map((item, index) => (
                     <div key={index}>
                       <input
                         type="checkbox"
-                required={true}
                         onClick={(e) => {
                           if (e.target.checked) {
                             setSelectedFlavor([...selectedFlavor, item]);
@@ -383,7 +401,6 @@ function SelectionPanel(props) {
               <input
                 type="checkbox"
                 value="Bouqet"
-                
                 onClick={(e) => {
                   if (e.target.checked) {
                     setSelectedGift([
@@ -413,9 +430,10 @@ function SelectionPanel(props) {
               ></textarea>
             </div>
           </div>
-          {isLoggedIn()}
         </form>
       </div>
+      {isLoggedIn()}
+
       {/* <div className={classes.selectionBottomBanner}>
         <h3>Total</h3>
         <p>720EGP</p>
