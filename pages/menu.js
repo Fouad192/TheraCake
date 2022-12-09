@@ -35,26 +35,16 @@ export async function getServerSideProps(ctx) {
   const {cheesecake, brownies} = menuData
 
 
-  let session = await getSession(ctx)
-  if (session) {
-    const cartItems = await Cart.find({ userId: session.user._id });
-    let cartItemCount = cartItems.length;
+    // const cartItems = await Cart.find({ userId: session.user._id });
+    // let cartItemCount = cartItems.length;
     return {
       props: {
         cheesecakeMenuData: JSON.parse(JSON.stringify(cheesecake)),
         browniesMenuData: JSON.parse(JSON.stringify(brownies)),
-        session: session,
-        count: typeof cartItems !== "undefined" ? cartItemCount : 0,
+        session: await getSession(ctx),
+        // count: typeof cartItems !== "undefined" ? cartItemCount : 0,
       },
     };
-  } else if (!session) {
-    return {
-      props: {
-        cheesecakeMenuData: JSON.parse(JSON.stringify(cheesecake)),
-        browniesMenuData: JSON.parse(JSON.stringify(brownies)),
-        session: session,
-      },
-    };
-  }
+  
 }
 export default MenuPage
