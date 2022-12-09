@@ -8,17 +8,17 @@
     
 }
 #sortInput {
-    border: 1px #FF7DA3 solid;
-    outline-color: #FF7DA3;
+    border: 1px #ff5689 solid;
+    outline-color: #ff5689;
     border-radius: 10px;
     padding: 1em;
     margin-left: 1em;
 }
 .adminOrderInputs input {
     padding: 1em 1em;
-    border: 1px #FF7DA3 solid;
+    border: 1px #ff5689 solid;
     border-radius: 15px;
-    outline-color: #FF7DA3;
+    outline-color: #ff5689;
 }
 .filter {
     grid-column: 2/6;
@@ -51,7 +51,7 @@
 }
 .orderBriefContainer {
     width: 100%;
-    border: 2px #FF7DA3 solid;
+    border: 2px #ff5689 solid;
     border-radius: 15px 15px 0 0;
     padding: 1em;
     display: flex;
@@ -69,12 +69,12 @@
     width: 30%;
     border-radius: 10px;
     background-color: white;
-    border: 1px #FF7DA3 solid;
+    border: 1px #ff5689 solid;
     /* width: 15%; */
 }
 .statusBtn {
 color: white;
-background-color: #FF7DA3;
+background-color: #ff5689;
 border-radius: 10px;
 padding: 1em;
 border: none;
@@ -82,7 +82,7 @@ cursor: pointer;
 }
 .status button {
     background-color: white;
-    color: #FF7DA3;
+    color: #ff5689;
     padding: 1em 1em;
     border: none;
     border-bottom: 1px rgba(0, 0, 0, 0.1) solid;
@@ -93,7 +93,7 @@ cursor: pointer;
 }
 .status button:hover {
     color: white;
-    background-color: #FF7DA3;
+    background-color: #ff5689;
     border-radius: 0;
 }
 .status button:last-child:hover {
@@ -104,7 +104,7 @@ cursor: pointer;
 }
 .orderBriefContainer:hover {
     color: white;
-    background-color: #FF7DA3;
+    background-color: #ff5689;
 
 }
 .statusContainer {
@@ -113,7 +113,7 @@ margin-top: 1em;
 
 .orderBriefContainer:hover .statusContainer button {
     background-color: white;
-    color: #FF7DA3;
+    color: #ff5689;
 }
 .orderBriefContainer:hover .pending {
     color: white;
@@ -239,25 +239,25 @@ margin: 0.5em 0;
     cursor: pointer;
 }
 .addressBtns button:first-child {
-    border: 1px #FF7DA3 solid;
-    color: #FF7DA3;
+    border: 1px #ff5689 solid;
+    color: #ff5689;
     background-color: white;
     padding: 1em 4em;
 }
 .addressBtns button:first-child:hover {
     /* border: none; */
         color: white;
-        background-color: #FF7DA3;
+        background-color: #ff5689;
 }
 .addressBtns button:last-child {
     border: none;
     color: white;
-    background-color: #FF7DA3;
+    background-color: #ff5689;
 }
 .addressHeader button {
     border: none;
     background-color: transparent;
-    color: #FF7DA3;
+    color: #ff5689;
     font-size: 16px;
     cursor: pointer;
 }

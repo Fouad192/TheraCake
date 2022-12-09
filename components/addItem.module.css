@@ -3,7 +3,7 @@
     position: absolute;
     background-color: white;
     padding: 2em;
-    border: 2px #ff7da3 solid;
+    border: 2px #ff5689 solid;
     justify-self: center;
     z-index: 2;
     border-radius: 10px;
@@ -22,18 +22,18 @@
 
 .itemName input {
     border-radius: 10px;
-    border: 1px #ff7da3 solid;
+    border: 1px #ff5689 solid;
     padding: 1em;
-    outline-color: #ff7da3;
+    outline-color: #ff5689;
 }
 
 .itemDescription textarea {
     resize: none;
     width: 100%;
-    border: 1px #ff7da3 solid;
+    border: 1px #ff5689 solid;
     border-radius: 10px;
     padding: 1em;
-    outline-color: #ff7da3;
+    outline-color: #ff5689;
 }
 
 
@@ -54,12 +54,12 @@
 .extraInput input,
 .flavorInput input,
 .toppingInput input {
-    border: 1px #ff7da3 solid;
+    border: 1px #ff5689 solid;
     margin-right: 1em;
     margin-bottom: 1em;
     padding: 0.5em;
     border-radius: 10px;
-    outline-color: #ff7da3;
+    outline-color: #ff5689;
 }
 
 
@@ -67,7 +67,7 @@
 .topping button {
     border: none;
     color: white;
-    background-color: #ff7da3;
+    background-color: #ff5689;
     padding: 0.5em 2em;
     border-radius: 15px;
 }
@@ -115,7 +115,7 @@
 
 .file label {
     cursor: pointer;
-    background-color: #ff7da3;
+    background-color: #ff5689;
     color: white;
     padding: 0.5em;
     border-radius: 15px;
@@ -125,7 +125,7 @@
 }
 .addItemSubmit {
     cursor: pointer;
-    background-color: #ff7da3;
+    background-color: #ff5689;
     color: white;
     padding: 1em 2em;
     border-radius: 15px;
@@ -152,7 +152,7 @@ margin: 0.5em 0;
 .sizes button, .extras button, .flavor button, .topping button {
     border: none;
         color: white;
-        background-color: #ff7da3;
+        background-color: #ff5689;
         padding: 0.5em 2em;
         border-radius: 10px;
         /* margin-bottom: 0.5em; */

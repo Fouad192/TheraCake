@@ -14,7 +14,7 @@
 }
 .checkoutDiv {
     text-align: center;
-    background-color: #FF7DA3;
+    background-color: #ff5689;
     margin-bottom: 1em;
     border-radius: 10px;
     padding: 0.6em 0;
@@ -38,7 +38,7 @@
 
 .addItemBtn {
     color: white;
-    background-color: #FF7DA3;
+    background-color: #ff5689;
     float: right;
     /* width: 30%; */
     cursor: pointer;
@@ -64,7 +64,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border: 2px #FF7DA3 solid;
+    border: 2px #ff5689 solid;
     padding: 1em;
     border-radius: 15px;
     margin-bottom: 1em;
@@ -81,7 +81,7 @@
     font-size: 20px;
 }
 .menuItemDetails p:first-of-type {
-    color: #FF7DA3;
+    color: #ff5689;
 }
 .menuItemDetails h1 {
     font-size: 20px;
@@ -89,7 +89,7 @@
 .menuItemDetails button {
     margin-right: 1em;
     border: none;
-        background-color: #FF7DA3;
+        background-color: #ff5689;
         color: white;
         border-radius: 15px;
         padding: 0.6em 1em;

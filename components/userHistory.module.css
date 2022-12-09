@@ -29,12 +29,12 @@
     text-align: center;
     font-family: 'Ubuntu', sans-serif;
     font-size: 60px;
-    color: #FF7DA3;
+    color: #ff5689;
     margin-top: 10%;
 }
 .orderHistoryBriefContainer {
     width: 100%;
-    border: 2px #FF7DA3 solid;
+    border: 2px #ff5689 solid;
     border-radius: 15px 15px 0 0;
     padding: 1em;
     display: flex;
@@ -46,7 +46,7 @@
 
 .orderHistoryBriefContainer:hover {
     color: white;
-    background-color: #FF7DA3;
+    background-color: #ff5689;
 
 }
 
@@ -168,7 +168,7 @@
     cursor: pointer;
         border: none;
             color: white;
-            background-color: #FF7DA3;
+            background-color: #ff5689;
 }
 .itemHistorySubDetails div {
     display: flex;

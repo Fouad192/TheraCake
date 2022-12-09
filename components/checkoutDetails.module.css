@@ -13,7 +13,7 @@
     align-items: center;
 }
 .informationContainer>h1 {
-    color: #FF7DA3;
+    color: #ff5689;
     font-size: 32px;
 }
 .freeExtraDiv {
@@ -31,7 +31,7 @@
 }
 
 .toppingDiv div:last-child p {
-    color: #FF7DA3;
+    color: #ff5689;
 }
 
 .toppingDiv div p {
@@ -44,11 +44,11 @@
     font-weight: 600;
 }
 .dateNote {
-    color: #FF7DA3;
+    color: #ff5689;
     margin-bottom: 1em;
 }
 .apartmentContainer>button, .workplaceContainer > button, .villaContainer > button {
-    border: 2px #FF7DA3 solid;
+    border: 2px #ff5689 solid;
     border-radius: 15px;
     color: black;
     background-color: white;
@@ -62,7 +62,7 @@
 }
 .apartmentContainer > button:hover, .workplaceContainer > button:hover, .villaContainer > button:hover {
     color: white;
-    background-color: #FF7DA3;
+    background-color: #ff5689;
 }
 .personalDetailsForm {
     width: 100%;
@@ -84,21 +84,21 @@
 .personalDetailsForm form div input {
     width: 45%;
     padding: 1em 2em;
-    border: 1px #FF7DA3 solid;
+    border: 1px #ff5689 solid;
     border-radius: 15px;
-    outline-color: #FF7DA3;
+    outline-color: #ff5689;
 }
 
 .personalDetailsForm form textarea {
     width: 100%;
     resize: none;
-    border: 1px #FF7DA3 solid;
+    border: 1px #ff5689 solid;
     border-radius: 15px;
     padding: 1em;
-    outline-color: #FF7DA3;
+    outline-color: #ff5689;
 }
 #apartmentSubmitBtn, #workplaceSubmitBtn, #villaSubmitBtn {
-    background-color: #FF7DA3;
+    background-color: #ff5689;
     color: white;
     padding: 1em 2em;
     border: none;
@@ -112,7 +112,7 @@
 }
 .invoiceContainer > h1 {
     font-size: 32px;
-    color: #FF7DA3;
+    color: #ff5689;
     margin-bottom: 0.5em;
 }
 .invoiceContainer hr {
@@ -151,7 +151,7 @@
 }
 
 .size .price, .gift .price, .vat .price, .deliveryFee .price, .total .price {
-    color: #FF7DA3;
+    color: #ff5689;
 }
 
 .vat, .deliveryFee, .total {
@@ -167,16 +167,16 @@ margin: 1em 0;
  font-size: 20px;
 }
 #selectGov {
-    border: 1px #FF7DA3 solid;
+    border: 1px #ff5689 solid;
     border-radius: 10px;
     width: 45%;
-    outline: #FF7DA3;
+    outline: #ff5689;
     padding: 0 2em;
 }
 .addMoreItems {
-    color: #FF7DA3;
+    color: #ff5689;
     background-color: white;
-    border: 1px #FF7DA3 solid;
+    border: 1px #ff5689 solid;
     border-radius: 10px;
     padding: 1em 2em;
     cursor: pointer;
@@ -184,7 +184,7 @@ margin: 1em 0;
     width: 40%;
 }
 .addMoreItems:hover {
-    background-color: #FF7DA3;
+    background-color: #ff5689;
     color: white;
 }
 
