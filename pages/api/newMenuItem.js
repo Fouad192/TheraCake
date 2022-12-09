@@ -38,7 +38,7 @@ export default async function handler(req, res) {
     try {
       const cheesecakeMenuData = await MenuItem.find({category: 'cheesecake'});
   const browniesMenuData = await MenuItem.find({category: 'brownies'});
-  res.send({cheesecake: cheesecakeMenuData, brownies: browniesMenuData})
+  res.status(200).send({cheesecake: cheesecakeMenuData, brownies: browniesMenuData})
     } catch (err) {
       console.log(err)
     }
