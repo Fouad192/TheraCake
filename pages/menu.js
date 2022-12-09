@@ -30,6 +30,7 @@ function MenuPage(props) {
 }
 
 export async function getServerSideProps(ctx) {
+  await dbConnect()
   const menuData = await fetch('http://localhost:3000/api/newMenuItem', {method: 'GET'}).then(r => r.json())
   const {cheesecake, brownies} = menuData
 
