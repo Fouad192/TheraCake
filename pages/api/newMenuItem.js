@@ -33,14 +33,5 @@ export default async function handler(req, res) {
     } catch (err) {
       console.log(err)
     }
-  } else if(req.method === 'GET') {
-    await dbConnect()
-    try {
-      const cheesecakeMenuData = await MenuItem.find({category: 'cheesecake'});
-  const browniesMenuData = await MenuItem.find({category: 'brownies'});
-  res.send({cheesecake: cheesecakeMenuData, brownies: browniesMenuData})
-    } catch (err) {
-      console.log(err)
-    }
-  }
+  } 
 }

@@ -30,8 +30,9 @@ function MenuPage(props) {
 }
 
 export async function getServerSideProps(ctx) {
-  const menuData = await fetch('http://localhost:3000/api/newMenuItem', {method: 'GET'}).then(r => r.json())
-  const {cheesecake, brownies} = menuData
+  await dbConnect();
+  const cheesecakeMenuData = await MenuItem.find({category: 'cheesecake'});
+  const browniesMenuData = await MenuItem.find({category: 'brownies'});
 
 
   let session = await getSession(ctx)
@@ -40,8 +41,8 @@ export async function getServerSideProps(ctx) {
     let cartItemCount = cartItems.length;
     return {
       props: {
-        cheesecakeMenuData: JSON.parse(JSON.stringify(cheesecake)),
-        browniesMenuData: JSON.parse(JSON.stringify(brownies)),
+        cheesecakeMenuData: JSON.parse(JSON.stringify(cheesecakeMenuData)),
+        browniesMenuData: JSON.parse(JSON.stringify(browniesMenuData)),
         session: session,
         count: typeof cartItems !== "undefined" ? cartItemCount : 0,
       },
@@ -49,8 +50,8 @@ export async function getServerSideProps(ctx) {
   } else if (!session) {
     return {
       props: {
-        cheesecakeMenuData: JSON.parse(JSON.stringify(cheesecake)),
-        browniesMenuData: JSON.parse(JSON.stringify(brownies)),
+        cheesecakeMenuData: JSON.parse(JSON.stringify(cheesecakeMenuData)),
+        browniesMenuData: JSON.parse(JSON.stringify(browniesMenuData)),
         session: session,
       },
     };
