@@ -16,25 +16,23 @@ function AdminOrders(props) {
   let dispatchedFilterRef = useRef();
   let readyFilterRef = useRef();
   let completedFilterRef = useRef();
+  let cancelledFilterRef = useRef();
   useEffect(() => {
-
     const searchResult = props.orders.filter((order) =>
-   
       `${order.firstName?.toLowerCase()} ${order.lastName?.toLowerCase()}`.includes(
         search.toLowerCase()
       )
     );
 
     if (!!searchResult.length) {
-      setResult(searchResult);
+      setFilter(searchResult);
     } else {
-      setResult([]);
+      setFilter(props.orders);
     }
 
     if (!search.length) {
-      setResult([]);
+      setFilter(props.orders);
     }
-    console.log(result);
   }, [search]);
 
   useEffect(() => {
@@ -67,13 +65,6 @@ function AdminOrders(props) {
     }
   }, [sort]);
 
-  // let toggleStatusPopup = () => {
-  //     if (!statusPopup) {
-  //         openStatusPopup(true);
-  //     } else {
-  //         openStatusPopup(false);
-  //     }
-  // };
   return (
     <>
       <section className={classes.adminOrderGrid}>
@@ -100,75 +91,246 @@ function AdminOrders(props) {
         <div className={classes.filter}>
           <button
             ref={allFilterRef}
-            onClick={() =>
-              (allFilterRef.current.style.borderBottom = "4px #ff7da3 solid")
-            }
+            onClick={() => {
+              setFilter(props.orders);
+              allFilterRef.current.style.borderBottom = "4px #ff7da3 solid";
+              allFilterRef.current.style.color = "#ff7da3";
+
+              pendingFilterRef.current.style.color = "black";
+              pendingFilterRef.current.style.borderBottom = "none";
+
+              acceptedFilterRef.current.style.color = "black";
+              acceptedFilterRef.current.style.borderBottom = "none";
+
+              dispatchedFilterRef.current.style.color = "black";
+              dispatchedFilterRef.current.style.borderBottom = "none";
+
+              readyFilterRef.current.style.color = "black";
+              readyFilterRef.current.style.borderBottom = "none";
+
+              completedFilterRef.current.style.color = "black";
+              completedFilterRef.current.style.borderBottom = "none";
+
+              cancelledFilterRef.current.style.color = "black";
+              cancelledFilterRef.current.style.borderBottom = "none";
+            }}
           >
-            All
+            All ({props.orders.length})
           </button>
           <button
             ref={pendingFilterRef}
-            onClick={() =>
+            onClick={() => {
               setFilter(
                 props.orders.filter((order) => order.status === "Pending")
-              )
-            }
+              );
+              pendingFilterRef.current.style.borderBottom = "4px #ff7da3 solid";
+              pendingFilterRef.current.style.color = "#ff7da3";
+
+              allFilterRef.current.style.color = "black";
+              allFilterRef.current.style.borderBottom = "none";
+
+              acceptedFilterRef.current.style.color = "black";
+              acceptedFilterRef.current.style.borderBottom = "none";
+
+              dispatchedFilterRef.current.style.color = "black";
+              dispatchedFilterRef.current.style.borderBottom = "none";
+
+              readyFilterRef.current.style.color = "black";
+              readyFilterRef.current.style.borderBottom = "none";
+
+              completedFilterRef.current.style.color = "black";
+              completedFilterRef.current.style.borderBottom = "none";
+
+              cancelledFilterRef.current.style.color = "black";
+              cancelledFilterRef.current.style.borderBottom = "none";
+            }}
           >
-            Pending
+            Pending (
+            {props.orders.filter((order) => order.status === "Pending").length})
           </button>
           <button
             ref={acceptedFilterRef}
-            onClick={() =>
+            onClick={() => {
               setFilter(
                 props.orders.filter((order) => order.status === "Accepted")
-              )
-            }
+              );
+
+              acceptedFilterRef.current.style.borderBottom =
+                "4px #ff7da3 solid";
+              acceptedFilterRef.current.style.color = "#ff7da3";
+
+              allFilterRef.current.style.color = "black";
+              allFilterRef.current.style.borderBottom = "none";
+
+              pendingFilterRef.current.style.color = "black";
+              pendingFilterRef.current.style.borderBottom = "none";
+
+              dispatchedFilterRef.current.style.color = "black";
+              dispatchedFilterRef.current.style.borderBottom = "none";
+
+              readyFilterRef.current.style.color = "black";
+              readyFilterRef.current.style.borderBottom = "none";
+
+              completedFilterRef.current.style.color = "black";
+              completedFilterRef.current.style.borderBottom = "none";
+
+              cancelledFilterRef.current.style.color = "black";
+              cancelledFilterRef.current.style.borderBottom = "none";
+            }}
           >
-            Accepted
+            Accepted (
+            {props.orders.filter((order) => order.status === "Accepted").length}
+            )
           </button>
           <button
             ref={readyFilterRef}
-            onClick={() =>
+            onClick={() => {
               setFilter(
                 props.orders.filter((order) => order.status === "Ready")
-              )
-            }
+              );
+              readyFilterRef.current.style.borderBottom = "4px #ff7da3 solid";
+              readyFilterRef.current.style.color = "#ff7da3";
+
+              allFilterRef.current.style.color = "black";
+              allFilterRef.current.style.borderBottom = "none";
+
+              acceptedFilterRef.current.style.color = "black";
+              acceptedFilterRef.current.style.borderBottom = "none";
+
+              dispatchedFilterRef.current.style.color = "black";
+              dispatchedFilterRef.current.style.borderBottom = "none";
+
+              pendingFilterRef.current.style.color = "black";
+              pendingFilterRef.current.style.borderBottom = "none";
+
+              completedFilterRef.current.style.color = "black";
+              completedFilterRef.current.style.borderBottom = "none";
+
+              cancelledFilterRef.current.style.color = "black";
+              cancelledFilterRef.current.style.borderBottom = "none";
+            }}
           >
-            Ready
+            Ready (
+            {props.orders.filter((order) => order.status === "Ready").length})
           </button>
           <button
             ref={dispatchedFilterRef}
-            onClick={() =>
+            onClick={() => {
               setFilter(
                 props.orders.filter((order) => order.status === "Delivered")
-              )
-            }
+              );
+              dispatchedFilterRef.current.style.borderBottom =
+                "4px #ff7da3 solid";
+              dispatchedFilterRef.current.style.color = "#ff7da3";
+
+              allFilterRef.current.style.color = "black";
+              allFilterRef.current.style.borderBottom = "none";
+
+              acceptedFilterRef.current.style.color = "black";
+              acceptedFilterRef.current.style.borderBottom = "none";
+
+              pendingFilterRef.current.style.color = "black";
+              pendingFilterRef.current.style.borderBottom = "none";
+
+              readyFilterRef.current.style.color = "black";
+              readyFilterRef.current.style.borderBottom = "none";
+
+              completedFilterRef.current.style.color = "black";
+              completedFilterRef.current.style.borderBottom = "none";
+
+              cancelledFilterRef.current.style.color = "black";
+              cancelledFilterRef.current.style.borderBottom = "none";
+            }}
           >
-            Dispatched
+            Dispatched (
+            {
+              props.orders.filter((order) => order.status === "Delivered")
+                .length
+            }
+            )
           </button>
           <button
             ref={completedFilterRef}
-            onClick={() =>
+            onClick={() => {
               setFilter(
                 props.orders.filter((order) => order.status === "Completed")
-              )
-            }
+              );
+              completedFilterRef.current.style.borderBottom =
+                "4px #ff7da3 solid";
+              completedFilterRef.current.style.color = "#ff7da3";
+
+              allFilterRef.current.style.color = "black";
+              allFilterRef.current.style.borderBottom = "none";
+
+              acceptedFilterRef.current.style.color = "black";
+              acceptedFilterRef.current.style.borderBottom = "none";
+
+              dispatchedFilterRef.current.style.color = "black";
+              dispatchedFilterRef.current.style.borderBottom = "none";
+
+              readyFilterRef.current.style.color = "black";
+              readyFilterRef.current.style.borderBottom = "none";
+
+              pendingFilterRef.current.style.color = "black";
+              pendingFilterRef.current.style.borderBottom = "none";
+
+              cancelledFilterRef.current.style.color = "black";
+              cancelledFilterRef.current.style.borderBottom = "none";
+            }}
           >
-            Completed
+            Completed (
+            {
+              props.orders.filter((order) => order.status === "Completed")
+                .length
+            }
+            )
+          </button>
+          <button
+            ref={cancelledFilterRef}
+            onClick={() => {
+              setFilter(
+                props.orders.filter((order) => order.status === "Cancelled")
+              );
+              cancelledFilterRef.current.style.borderBottom =
+                "4px #ff7da3 solid";
+              cancelledFilterRef.current.style.color = "#ff7da3";
+
+              allFilterRef.current.style.color = "black";
+              allFilterRef.current.style.borderBottom = "none";
+
+              acceptedFilterRef.current.style.color = "black";
+              acceptedFilterRef.current.style.borderBottom = "none";
+
+              dispatchedFilterRef.current.style.color = "black";
+              dispatchedFilterRef.current.style.borderBottom = "none";
+
+              readyFilterRef.current.style.color = "black";
+              readyFilterRef.current.style.borderBottom = "none";
+
+              completedFilterRef.current.style.color = "black";
+              completedFilterRef.current.style.borderBottom = "none";
+
+              pendingFilterRef.current.style.color = "black";
+              pendingFilterRef.current.style.borderBottom = "none";
+            }}
+          >
+            Cancelled (
+            {props.orders.filter((order) => order.status === "Cancelled").length})
           </button>
         </div>
-        
+
         {filter &&
           filter.map((order, index) => <OrderItem order={order} key={index} />)}
 
-         {result?.length &&
+        {result?.length &&
           result.map((r, index) => <OrderItem order={r} key={uuid()} />)}
 
         {!result.length &&
           !search &&
+          !filter &&
           props.orders.map((order, index) => (
             <OrderItem order={order} key={uuid()} />
-          ))} 
+          ))}
       </section>
     </>
   );

@@ -91,7 +91,9 @@ encodeData()
       body: JSON.stringify(status)
     })
     const data = await response.json()
-    console.log(data)
+      setTimeout(() => {
+        router.reload(window.location.pathname);
+      }, 500);
   }
   async function deleteOrder() {
     const response = await fetch('/api/checkout', {
@@ -217,7 +219,7 @@ encodeData()
               <p>{order.totalPrice}</p>
             </div>
             <hr />
-            <div className={classes.statusTimeline}>
+            {/* <div className={classes.statusTimeline}>
               <h1>Status Timeline</h1>
               <div>
                 <h5>Order Submitted</h5>
@@ -231,7 +233,7 @@ encodeData()
                 <h5>Order Out For Delivery</h5>
                 <p>- By Amira Salah</p>
               </div>
-            </div>
+            </div> */}
           </div>
           <div className={classes.addressDetails}>
             <div className={classes.addressHeader}>
@@ -300,6 +302,9 @@ encodeData()
                   <button onClick={deleteOrder}>Delete Order</button>
                   <button value="Delivered" onClick={(e) => setStatus(e)}>
                     Order Delievered
+                  </button>
+                  <button value="Cancelled" onClick={(e) => setStatus(e)}>
+                    Cancel Order
                   </button>
                 </div>
               )}

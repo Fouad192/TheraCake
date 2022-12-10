@@ -21,7 +21,7 @@
     outline-color: #ff5689;
 }
 .filter {
-    grid-column: 2/6;
+    grid-column: 2/8;
     justify-content: space-between;
     display: flex;
     margin-bottom: 2em;
@@ -361,8 +361,13 @@ margin: 0.5em 0;
 }
 
 @media (max-width: 500px) {
+    .filter {
+        grid-column: 1/13;
+        margin: 0 1em;
+    }
     .filter button {
-        font-size: 12px;
+        font-size: 10px;
+        margin-right: 0.5em;
     }
     .adminOrderInputs input, #sortInput {
         padding: 0.5em 1em;
