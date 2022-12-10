@@ -258,7 +258,7 @@ const imageUploadData = await fetch('https://api.cloudinary.com/v1_1/dswtzq3ze/i
             <div key={uuid()} className={classes.toppingInput}>
               <input
                 type="text"
-                placeholder="Flavor Name"
+                placeholder="Topping Name"
                 ref={(element) => {
                   itemToppings.current[index] = element;
                 }}

@@ -246,6 +246,7 @@ function SelectionPanel(props) {
           {props.selectionData.toppings.length === 0 ? null : (
             <div className={classes.toppings}>
               <h1>Toppings</h1>
+              {props.selectionData.name === 'Mountain Of Heaven' ? <p>Select from 1 to 3 toppings</p> : null}
               {props.selectionData.toppings.map((item, index) => {
                 return (
                   <div key={index}>
