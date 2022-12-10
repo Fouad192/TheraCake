@@ -217,7 +217,7 @@ function AdminOrders(props) {
             ref={dispatchedFilterRef}
             onClick={() => {
               setFilter(
-                props.orders.filter((order) => order.status === "Delivered")
+                props.orders.filter((order) => order.status === "On the way")
               );
               dispatchedFilterRef.current.style.borderBottom =
                 "4px #ff7da3 solid";
@@ -244,7 +244,7 @@ function AdminOrders(props) {
           >
             Dispatched (
             {
-              props.orders.filter((order) => order.status === "Delivered")
+              props.orders.filter((order) => order.status === "On the way")
                 .length
             }
             )
@@ -253,7 +253,7 @@ function AdminOrders(props) {
             ref={completedFilterRef}
             onClick={() => {
               setFilter(
-                props.orders.filter((order) => order.status === "Completed")
+                props.orders.filter((order) => order.status === "Delievered")
               );
               completedFilterRef.current.style.borderBottom =
                 "4px #ff7da3 solid";
@@ -280,7 +280,7 @@ function AdminOrders(props) {
           >
             Completed (
             {
-              props.orders.filter((order) => order.status === "Completed")
+              props.orders.filter((order) => order.status === "Delievered")
                 .length
             }
             )
