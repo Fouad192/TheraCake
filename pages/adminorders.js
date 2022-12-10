@@ -3,6 +3,7 @@ import AdminOrders from "../components/adminOrders";
 import dbConnect from "../lib/dbConnect";
 import OrderCheckout from "../models/order";
 import Navbar from "../components/navbar";
+import Head from 'next/head'
 import Footer from "../components/footer";
 import classes from '../components/adminOrders.module.css'
 function AdminOrdersPage(props) {
@@ -10,10 +11,18 @@ function AdminOrdersPage(props) {
 
     return (
       <>
-   <Navbar/>
-       
-        <AdminOrders orders={props.checkoutOrders}/>
-<Footer/>
+        <Head>
+          <title>Manage Orders</title>
+          <meta
+            name="description"
+            content="This dessert made with great love,
+extreme dedication and the best quality"
+          />
+        </Head>
+        <Navbar />
+
+        <AdminOrders orders={props.checkoutOrders} />
+        <Footer />
       </>
     );
 }

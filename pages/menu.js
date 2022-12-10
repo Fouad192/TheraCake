@@ -1,6 +1,8 @@
 import Footer from "../components/footer";
 import Menu from "../components/Menu";
 import Navbar from "../components/navbar";
+import Head from "next/head";
+
 import dbConnect from "../lib/dbConnect";
 import MenuItem from "../models/menuItems";
 import Cart from "../models/cart";
@@ -12,6 +14,14 @@ function MenuPage(props) {
 
   return (
     <>
+      <Head>
+        <title>Thera Menu</title>
+        <meta
+          name="description"
+          content="This dessert made with great love,
+extreme dedication and the best quality"
+        />
+      </Head>
       {session ? <Navbar count={props.count} /> : <Navbar />}
 
       <Menu

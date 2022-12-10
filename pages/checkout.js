@@ -5,20 +5,28 @@ import Cart from '../models/cart'
 import OrderCheckout from "../models/order";
 import { getSession } from "next-auth/react";
 import Footer from "../components/footer";
+import Head from 'next/head'
 import Navbar from "../components/navbar";
 function checkout(props) {
    
     return (
       <>
-  <Navbar/>
+        <Head>
+          <title>Checkout</title>
+          <meta
+            name="description"
+            content="This dessert made with great love,
+extreme dedication and the best quality"
+          />
+        </Head>
+        <Navbar />
         <CheckoutDetails
           addedItems={props.addedItems}
           apartmentAddressData={props.apartmentAddressData}
           villaAddressData={props.villaAddressData}
           companyAddressData={props.companyAddressData}
-
         />
-   <Footer/>
+        <Footer />
       </>
     ); 
    

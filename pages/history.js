@@ -6,10 +6,19 @@ import { getSession } from "next-auth/react";
 import dbConnect from "../lib/dbConnect";
 import uuid from "react-uuid";
 import classes from '../components/userHistory.module.css'
+import Head from 'next/head'
 function History(props) {
   
     return (
       <>
+        <Head>
+          <title>Previous Orders</title>
+          <meta
+            name="description"
+            content="This dessert made with great love,
+extreme dedication and the best quality"
+          />
+        </Head>
         <Navbar />
         <section className={classes.ifNoHistorySection}>
           {props.orderHistory.length === 0 && <h1>No previous orders</h1>}
@@ -18,7 +27,7 @@ function History(props) {
             <UserHistory order={order} key={uuid()} />
           ))}
         </section>
-        <Footer/>
+        <Footer />
       </>
     );
 }
