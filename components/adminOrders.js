@@ -9,7 +9,7 @@ function AdminOrders(props) {
   const [search, setSearch] = useState("");
   const [result, setResult] = useState([]);
   const [sort, setSort] = useState("");
-  let [filter, setFilter] = useState();
+  let [filter, setFilter] = useState(props.orders);
   let allFilterRef = useRef();
   let pendingFilterRef = useRef();
   let acceptedFilterRef = useRef();
@@ -18,7 +18,7 @@ function AdminOrders(props) {
   let completedFilterRef = useRef();
   let cancelledFilterRef = useRef();
   useEffect(() => {
-    const searchResult = props.orders.filter((order) =>
+    const searchResult = filter.filter((order) =>
       `${order.firstName?.toLowerCase()} ${order.lastName?.toLowerCase()}`.includes(
         search.toLowerCase()
       )
@@ -27,7 +27,7 @@ function AdminOrders(props) {
     if (!!searchResult.length) {
       setFilter(searchResult);
     } else {
-      setFilter(props.orders);
+      setFilter([]);
     }
 
     if (!search.length) {
@@ -36,32 +36,32 @@ function AdminOrders(props) {
   }, [search]);
 
   useEffect(() => {
-    const high = [...props.orders].sort(
+    const high = [...filter].sort(
       (a, b) => parseFloat(b.totalPrice) - parseFloat(a.totalPrice)
     );
 
-    const low = [...props.orders].sort(
+    const low = [...filter].sort(
       (a, b) => parseFloat(a.totalPrice) - parseFloat(b.totalPrice)
     );
 
-    const old = [...props.orders].sort(
+    const old = [...filter].sort(
       (a, b) => new Date(a.dateSubmitted) - new Date(b.dateSubmitted)
     );
 
-    const recent = [...props.orders].sort(
+    const recent = [...filter].sort(
       (a, b) => new Date(b.dateSubmitted) - new Date(a.dateSubmitted)
     );
 
     if (sort === "high") {
-      setResult(high);
+      setFilter(high);
     } else if (sort === "low") {
-      setResult(low);
+      setFilter(low);
     } else if (sort === "new") {
-      setResult(recent);
+      setFilter(recent);
     } else if (sort === "old") {
-      setResult(old);
+      setFilter(old);
     } else if (sort === "default") {
-      setResult([...props.orders]);
+      setFilter([...props.orders]);
     }
   }, [sort]);
 
@@ -322,15 +322,15 @@ function AdminOrders(props) {
         {filter &&
           filter.map((order, index) => <OrderItem order={order} key={index} />)}
 
-        {result?.length &&
-          result.map((r, index) => <OrderItem order={r} key={uuid()} />)}
+        {/* {result?.length &&
+          result.map((r, index) => <OrderItem order={r} key={uuid()} />)} */}
 
-        {!result.length &&
+        {/* {!result.length &&
           !search &&
           !filter &&
           props.orders.map((order, index) => (
             <OrderItem order={order} key={uuid()} />
-          ))}
+          ))} */}
       </section>
     </>
   );
