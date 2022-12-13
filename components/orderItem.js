@@ -110,10 +110,7 @@ encodeData()
         className={classes.orderBriefContainer}
         onClick={() => showDetails(!details)}
       >
-        <div>
-          <h3>Yesterday</h3>
-          <p className={classes.lightText}>5:14AM</p>
-        </div>
+        
         <div>
           <p>{order.orderNumber}</p>
           <p>{`${order.firstName} ${order.lastName}`}</p>
