@@ -147,119 +147,126 @@ function CheckoutDetails(props) {
   }
   async function apartmentSubmitHandler(e) {
     e.preventDefault();
-  
-    let thisOrderId = orderid.generate();
-    let currentTime = orderid.getTime(thisOrderId);
-    const orderData = {
-      addressType: "apartment",
-      userId: session.user._id,
-      orderItems: props.addedItems,
-      orderNumber: thisOrderId,
-      dateSubmitted: currentTime,
-      firstName: apartmentInputs.firstName,
-      lastName: apartmentInputs.lastName,
-      mobile: apartmentInputs.mobile,
-      backupMobile: apartmentInputs.backupMobile,
-      email: apartmentInputs.email,
-      governorate: apartmentInputs.governorate,
-      city: apartmentInputs.city,
-      area: apartmentInputs.area,
-      street: apartmentInputs.street,
-      building: apartmentInputs.building,
-      floor: apartmentInputs.floor,
-      apartment: apartmentInputs.apartment,
-      instructions: apartmentInputs.instructions,
-      scheduled: apartmentInputs.scheduled,
-      totalPrice: calculateTotalPriceDb(),
-    };
-    const response = await fetch("/api/checkout", {
-      method: "POST",
-      body: JSON.stringify(orderData),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = await response.json();
-    console.log(data);
-  
-      router.push('/thankyou')
+    if (props.addedItems.length === 0) {
+      alert("Please Add Items To Your Cart");
+    } else {
+      let thisOrderId = orderid.generate();
+      let currentTime = orderid.getTime(thisOrderId);
+      const orderData = {
+        addressType: "apartment",
+        userId: session.user._id,
+        orderItems: props.addedItems,
+        orderNumber: thisOrderId,
+        dateSubmitted: currentTime,
+        firstName: apartmentInputs.firstName,
+        lastName: apartmentInputs.lastName,
+        mobile: apartmentInputs.mobile,
+        backupMobile: apartmentInputs.backupMobile,
+        email: apartmentInputs.email,
+        governorate: apartmentInputs.governorate,
+        city: apartmentInputs.city,
+        area: apartmentInputs.area,
+        street: apartmentInputs.street,
+        building: apartmentInputs.building,
+        floor: apartmentInputs.floor,
+        apartment: apartmentInputs.apartment,
+        instructions: apartmentInputs.instructions,
+        scheduled: apartmentInputs.scheduled,
+        totalPrice: calculateTotalPriceDb(),
+      };
+      const response = await fetch("/api/checkout", {
+        method: "POST",
+        body: JSON.stringify(orderData),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await response.json();
+      console.log(data);
+
+      router.push("/thankyou");
+    }
   }
   async function villaSubmitHandler(e) {
     e.preventDefault();
 
+    if (props.addedItems.length === 0) {
+      alert("Please Add Items To Your Cart");
+    } else {
+      let thisOrderId = orderid.generate();
+      let currentTime = orderid.getTime(thisOrderId);
+      const orderData = {
+        addressType: "villa",
+        userId: session.user._id,
+        orderItems: props.addedItems,
+        orderNumber: thisOrderId,
+        dateSubmitted: currentTime,
+        firstName: villaInputs.firstName,
+        lastName: villaInputs.lastName,
+        mobile: villaInputs.mobile,
+        backupMobile: villaInputs.backupMobile,
+        email: villaInputs.email,
+        governorate: villaInputs.governorate,
+        city: villaInputs.city,
+        area: villaInputs.area,
+        street: villaInputs.street,
 
-    let thisOrderId = orderid.generate();
-    let currentTime = orderid.getTime(thisOrderId);
-    const orderData = {
-      addressType: "villa",
-      userId: session.user._id,
-      orderItems: props.addedItems,
-      orderNumber: thisOrderId,
-      dateSubmitted: currentTime,
-      firstName: villaInputs.firstName,
-      lastName: villaInputs.lastName,
-      mobile: villaInputs.mobile,
-      backupMobile: villaInputs.backupMobile,
-      email: villaInputs.email,
-      governorate: villaInputs.governorate,
-      city: villaInputs.city,
-      area: villaInputs.area,
-      street: villaInputs.street,
-
-      villa: villaInputs.villa,
-      instructions: villaInputs.instructions,
-      scheduled: villaInputs.scheduled,
-      totalPrice: calculateTotalPriceDb(),
-    };
-    const response = await fetch("/api/checkout", {
-      method: "POST",
-      body: JSON.stringify(orderData),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = await response.json();
-    console.log(data);
-         router.push("/thankyou");
-
+        villa: villaInputs.villa,
+        instructions: villaInputs.instructions,
+        scheduled: villaInputs.scheduled,
+        totalPrice: calculateTotalPriceDb(),
+      };
+      const response = await fetch("/api/checkout", {
+        method: "POST",
+        body: JSON.stringify(orderData),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await response.json();
+      console.log(data);
+      router.push("/thankyou");
+    }
   }
   async function companySubmitHandler(e) {
     e.preventDefault();
+    if (props.addedItems.length === 0) {
+      alert("Please Add Items To Your Cart");
+    } else {
+      let thisOrderId = orderid.generate();
+      let currentTime = orderid.getTime(thisOrderId);
+      const orderData = {
+        addressType: "company",
+        userId: session.user._id,
+        orderItems: props.addedItems,
+        orderNumber: thisOrderId,
+        dateSubmitted: currentTime,
+        firstName: companyInputs.firstName,
+        lastName: companyInputs.lastName,
+        mobile: companyInputs.mobile,
+        backupMobile: companyInputs.backupMobile,
+        email: companyInputs.email,
+        governorate: companyInputs.governorate,
+        city: companyInputs.city,
+        area: companyInputs.area,
+        street: companyInputs.street,
 
-    let thisOrderId = orderid.generate();
-    let currentTime = orderid.getTime(thisOrderId);
-    const orderData = {
-      addressType: "company",
-      userId: session.user._id,
-      orderItems: props.addedItems,
-      orderNumber: thisOrderId,
-      dateSubmitted: currentTime,
-      firstName: companyInputs.firstName,
-      lastName: companyInputs.lastName,
-      mobile: companyInputs.mobile,
-      backupMobile: companyInputs.backupMobile,
-      email: companyInputs.email,
-      governorate: companyInputs.governorate,
-      city: companyInputs.city,
-      area: companyInputs.area,
-      street: companyInputs.street,
-
-      company: companyInputs.company,
-      instructions: companyInputs.instructions,
-      scheduled: companyInputs.scheduled,
-      totalPrice: calculateTotalPriceDb(),
-    };
-    const response = await fetch("/api/checkout", {
-      method: "POST",
-      body: JSON.stringify(orderData),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = await response.json();
-    console.log(data);
-             router.push("/thankyou");
-
+        company: companyInputs.company,
+        instructions: companyInputs.instructions,
+        scheduled: companyInputs.scheduled,
+        totalPrice: calculateTotalPriceDb(),
+      };
+      const response = await fetch("/api/checkout", {
+        method: "POST",
+        body: JSON.stringify(orderData),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await response.json();
+      console.log(data);
+      router.push("/thankyou");
+    }
   }
   function handleApartmentInputChange(e) {
     const { name, value } = e.target;
