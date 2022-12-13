@@ -148,10 +148,13 @@ encodeData()
                   <p>{item.sizePrice[0].price * item.quantity}</p>
                 </div>
                 <div className={classes.itemSubDetails}>
+                  <p>{item.sizePrice[0].size}</p>
+                </div>
+                <div className={classes.itemFlavors}>
                   {item.flavors.length > 1 ? (
                     item.flavors.map((flavor, index) => (
                       <p key={index}>
-                        <span>{flavor}</span>
+                       {flavor}
                       </p>
                     ))
                   ) : (

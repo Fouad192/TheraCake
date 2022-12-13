@@ -37,7 +37,7 @@ export async function getServerSideProps(ctx) {
 
   await dbConnect();
 
-  const cartData = await OrderCheckout.find({ userId: sessionData.user._id });
+  const cartData = await OrderCheckout.find({ email: sessionData.user.email });
   return {
     props: {
       orderHistory: JSON.parse(JSON.stringify(cartData)),

@@ -189,6 +189,15 @@ margin-top: 1em;
     color: rgba(0, 0, 0, 0.6);
     margin-bottom: 0.5em;
 }
+.itemFlavors {
+width: 78%;
+    float: right;
+}
+.itemFlavors p{
+    color: rgba(0, 0, 0, 0.6);
+    margin-bottom: 0.5em;
+    
+}
 .deliveryFees, .subtotal, .total {
     display: flex;
     justify-content: space-between;
@@ -265,6 +274,9 @@ margin: 0.5em 0;
     display: flex;
     justify-content: space-between;
     width: 100%;
+}
+.itemSubDetails p {
+    display: block;
 }
 @media(max-width: 1200px) {
     .adminOrderInputs {
@@ -377,7 +389,7 @@ margin: 0.5em 0;
         grid-column: 1/13;
         text-align: center;
     }
-     .orderTitleDetails, .itemSubDetails, .subtotal, .deliveryFees, .total, .toppingsDiv {
+     .orderTitleDetails, .itemSubDetails, .subtotal, .deliveryFees, .total, .toppingsDiv, .itemFlavors {
         width: 100%;
      }
     
