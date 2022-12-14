@@ -15,10 +15,11 @@ export default NextAuth({
       clientId: process.env.FACEBOOK_CLIENT_ID,
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
       authorization: {
+        
         params: {
           redirect_uri: "https://theracakecairo.com/api/auth/callback/facebook",
           prompt: "consent",
-          access_type: "offline",
+          // access_type: "offline",
           scope: "email",
           response_type: "code",
         },
