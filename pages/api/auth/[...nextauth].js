@@ -14,14 +14,7 @@ export default NextAuth({
     FacebookProvider({
       clientId: process.env.FACEBOOK_CLIENT_ID,
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-      authorization: {
-        params: {
-          prompt: "consent",
-          // access_type: "offline",
-          // response_type: "code",
-          // redirect_uri: "https://theracakecairo.com/api/auth/callback/facebook",
-        },
-      },
+      authorization: "https://m.facebook.com/o/oauth2/auth?response_type=code&prompt=consent"
     }),
   ],
   secret: process.env.JWT_SECRET,
