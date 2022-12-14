@@ -17,9 +17,9 @@ export default NextAuth({
       authorization: {
         params: {
           prompt: "consent",
-          access_type: "offline",
-          response_type: "code",
-          redirect_uri: "https://theracakecairo.com/api/auth/callback/facebook",
+          // access_type: "offline",
+          // response_type: "code",
+          // redirect_uri: "https://theracakecairo.com/api/auth/callback/facebook",
         },
       },
     }),
