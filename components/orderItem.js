@@ -197,6 +197,9 @@ encodeData()
                 <div className={classes.notes}>
                   <p>{order.orderItems[0].notes}</p>
                 </div>
+                <div className={classes.notes}>
+                  <p>{order.instructions}</p>
+                </div>
                 <hr />
               </div>
             ))}
