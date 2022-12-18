@@ -198,12 +198,16 @@ width: 78%;
     margin-bottom: 0.5em;
     
 }
-.deliveryFees, .subtotal, .total {
+.deliveryFees, .subtotal, .total, .notes {
     display: flex;
     justify-content: space-between;
     width: 78%;
     float: right;
     margin-bottom: 0.5em;
+
+}
+.notes p {
+    color: rgba(0, 0, 0, 1);
 }
 .statusTimeline {
         width: 78%;
@@ -346,8 +350,9 @@ margin: 0.5em 0;
                 .orderTitleDetails {
                     float: left;
                 }
-                .subtotal, .deliveryFees, .total {
+                .subtotal, .deliveryFees, .total, .notes {
                     float: left;
+
                 }
                 .toppingsDiv {
                     float: left;
@@ -389,7 +394,7 @@ margin: 0.5em 0;
         grid-column: 1/13;
         text-align: center;
     }
-     .orderTitleDetails, .itemSubDetails, .subtotal, .deliveryFees, .total, .toppingsDiv, .itemFlavors {
+     .orderTitleDetails, .itemSubDetails, .subtotal, .deliveryFees, .total, .toppingsDiv, .itemFlavors, .notes {
         width: 100%;
      }
     

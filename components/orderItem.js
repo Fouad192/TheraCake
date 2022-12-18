@@ -110,7 +110,6 @@ encodeData()
         className={classes.orderBriefContainer}
         onClick={() => showDetails(!details)}
       >
-        
         <div>
           <p>{order.orderNumber}</p>
           <p>{`${order.firstName} ${order.lastName}`}</p>
@@ -150,9 +149,7 @@ encodeData()
                 <div className={classes.itemFlavors}>
                   {item.flavors.length > 1 ? (
                     item.flavors.map((flavor, index) => (
-                      <p key={index}>
-                       {flavor}
-                      </p>
+                      <p key={index}>{flavor}</p>
                     ))
                   ) : (
                     <p>{item.flavors[0]}</p>
@@ -197,6 +194,9 @@ encodeData()
                     })}
                   </div>
                 </div>
+                <div className={classes.notes}>
+                  <p>{order.orderItems[0].notes}</p>
+                </div>
                 <hr />
               </div>
             ))}
@@ -216,6 +216,7 @@ encodeData()
               <p>Total</p>
               <p>{order.totalPrice}</p>
             </div>
+
             <hr />
             {/* <div className={classes.statusTimeline}>
               <h1>Status Timeline</h1>
