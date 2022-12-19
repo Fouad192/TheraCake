@@ -199,26 +199,28 @@ function Menu(props) {
             {browniesData.map((item, index) => (
               <div className={classes.menuItem} key={uuid()}>
                 <div className={classes.menuItemDetails}>
-                  <div className={classes.adminModifyAndDelete}>
-                    <Image
-                      src={deleteIcon}
-                      alt="DeleteIcon"
-                      onClick={() => {
-                        deleteItemHandler(item);
-                        setTimeout(() => {
-                          router.reload(window.location.pathname);
-                        }, 500);
-                      }}
-                    />
-                    <Image
-                      src={editIcon}
-                      alt="EditIcon"
-                      onClick={() => {
-                        setToBeEdited(item);
-                        openEditItem(true);
-                      }}
-                    />
-                  </div>
+                  {isAuthorized && (
+                    <div className={classes.adminModifyAndDelete}>
+                      <Image
+                        src={deleteIcon}
+                        alt="DeleteIcon"
+                        onClick={() => {
+                          deleteItemHandler(item);
+                          setTimeout(() => {
+                            router.reload(window.location.pathname);
+                          }, 500);
+                        }}
+                      />
+                      <Image
+                        src={editIcon}
+                        alt="EditIcon"
+                        onClick={() => {
+                          setToBeEdited(item);
+                          openEditItem(true);
+                        }}
+                      />
+                    </div>
+                  )}
                   <h1>{item.name}</h1>
                   <p>
                     {item.toppings.map((topping, index, toppingArray) => {
