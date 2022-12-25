@@ -91,7 +91,9 @@ encodeData()
       body: JSON.stringify(status)
     })
     const data = await response.json()
-    
+     setTimeout(() => {
+       router.reload(window.location.pathname);
+     }, 500);
   }
   async function deleteOrder() {
     const response = await fetch('/api/checkout', {

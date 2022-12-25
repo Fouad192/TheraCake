@@ -253,7 +253,7 @@ function AdminOrders(props) {
             ref={completedFilterRef}
             onClick={() => {
               setFilter(
-                props.orders.filter((order) => order.status === "Delievered")
+                props.orders.filter((order) => order.status === "Delivered")
               );
               completedFilterRef.current.style.borderBottom =
                 "4px #ff7da3 solid";
@@ -280,7 +280,7 @@ function AdminOrders(props) {
           >
             Completed (
             {
-              props.orders.filter((order) => order.status === "Delievered")
+              props.orders.filter((order) => order.status === "Delivered")
                 .length
             }
             )
