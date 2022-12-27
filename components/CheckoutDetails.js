@@ -1,13 +1,12 @@
 import classes from "./checkoutDetails.module.css";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import deleteIcon from "../public/delete.png";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import uuid from "react-uuid";
-import AddItem from "./addItem";
-
+import handleCardPayment from "../pages/api/cardPayment";
 const orderid = require("order-id")("key");
 
 function CheckoutDetails(props) {
@@ -19,7 +18,127 @@ function CheckoutDetails(props) {
 
   let [maxDate, setMaxDate] = useState();
   let [minDate, setMinDate] = useState();
+  let [totalPrice, setTotalPrice] = useState(calculateTotalPriceDb())
+  // let [itemsNo, setItemNo] = useState(0);
+  // useEffect(() => {
+  //   let noOfItems = 0;
+  //   props.addedItems.map((item) => {
+  //     return (noOfItems += parseInt(item.quantity));
+  //   });
+  //   setItemNo(noOfItems);
+  // }, []);
+  // const API =
+  //   "ZXlKaGJHY2lPaUpJVXpVeE1pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SmpiR0Z6Y3lJNklrMWxjbU5vWVc1MElpd2libUZ0WlNJNkltbHVhWFJwWVd3aUxDSndjbTltYVd4bFgzQnJJam8yTlRBek56ZDkucUd0LVJyS21OZzlFbDM3VHFpRFRsdjZlUm9jLVVMQ2VhRURsWjY5a3c0YVhTM3d2RnFuSTlYYmpLNG1KbU9sUURIeXhLSUxQaTFJeVZ5VTNoQlJXdlE="; // your api here
+  // const integrationID = 3178867;
+  // function sendMail() {
+  //   emailjs
+  //     .send(
+  //       "service_a3dk9vt",
+  //       "template_2shv7m8",
+  //       { from_name: "TheraCake" },
+  //       "28Q8DENkU-oYYZuQc"
+  //     )
+  //     .then(
+  //       function (response) {
+  //         console.log("SUCCESS!", response.status, response.text);
+  //       },
+  //       function (error) {
+  //         console.log("FAILED...", error);
+  //       }
+  //     );
+  // }
+  // async function firstStep() {
+  //   let data = {
+  //     api_key: API,
+  //   };
 
+  //   let request = await fetch("https://accept.paymob.com/api/auth/tokens", {
+  //     method: "post",
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify(data),
+  //   });
+
+  //   let response = await request.json();
+
+  //   let token = response.token;
+
+  //   secondStep(token);
+  // }
+
+  // async function secondStep(token) {
+  //   let data = {
+  //     auth_token: token,
+  //     delivery_needed: "true",
+  //     amount_cents: `${calculateTotalPriceDb() * 100}`,
+  //     currency: "EGP",
+  //     items: [props.addedItems],
+  //   };
+
+  //   let request = await fetch(
+  //     "https://accept.paymob.com/api/ecommerce/orders",
+  //     {
+  //       method: "post",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify(data),
+  //     }
+  //   );
+
+  //   let response = await request.json();
+
+  //   let id = response.id;
+
+  //   thirdStep(token, id);
+  // }
+
+  // async function thirdStep(token, id) {
+  //   let data = {
+  //     auth_token: token,
+  //     amount_cents: `${calculateTotalPriceDb() * 100}`,
+  //     expiration: 3600,
+  //     order_id: id,
+  //     billing_data: {
+  //       apartment: "803",
+  //       email: "claudette09@exa.com",
+  //       floor: "42",
+  //       first_name: "Clifford",
+  //       street: "Ethan Land",
+  //       building: "8028",
+  //       phone_number: "+86(8)9135210487",
+  //       shipping_method: "PKG",
+  //       postal_code: "01898",
+  //       city: "Jaskolskiburgh",
+  //       country: "CR",
+  //       last_name: "Nicolas",
+  //       state: "Utah",
+  //     },
+  //     currency: "EGP",
+  //     integration_id: integrationID,
+  //   };
+
+  //   let request = await fetch(
+  //     "https://accept.paymob.com/api/acceptance/payment_keys",
+  //     {
+  //       method: "post",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify(data),
+  //     }
+  //   );
+
+  //   let response = await request.json();
+
+  //   let TheToken = response.token;
+  //   console.log(TheToken);
+  //   cardPayment(TheToken);
+  // }
+
+  // async function cardPayment(token) {
+  //   let iframeURL = `https://accept.paymob.com/api/acceptance/iframes/710230?payment_token=${token}`;
+  //   router.replace(iframeURL);
+  // }
+
+  // setTimeout(() => {
+  //   firstStep()
+  // }, 1000);
   useEffect(() => {
     if (props.apartmentAddressData[apartmentLastIndex]) {
       let initialApartmentAddressDetails = {
@@ -111,17 +230,7 @@ function CheckoutDetails(props) {
       setMinDate(formattedTomorrowDate);
     }
   }, []);
-  // useEffect(() => {
-  //   // if("geolocation" in navigator) {
-  //   //   console.log('Available')
-  //   // } else {
-  //   //   console.log('Not available')
-  //   // }
-  //   navigator.geolocation.getCurrentPosition(function (position) {
-  //     console.log(`Latitude is ${position.coords.latitude}`);
-  //     console.log(`Longitude is ${position.coords.longitude}`);
-  //   });
-  // }, []);
+
   let [apartmentDetails, showApartmentDetails] = useState(false);
   let [villaDetails, showVillaDetails] = useState(false);
   let [workplaceDetails, showWorkplaceDetails] = useState(false);
@@ -129,6 +238,7 @@ function CheckoutDetails(props) {
   let [apartmentInputs, setApartmentInputs] = useState({});
   let [villaInputs, setVillaInputs] = useState({});
   let [companyInputs, setCompanyInputs] = useState({});
+  // const [payMethod, setPayMethod] = useState("cash");
   function calculateTotalPriceDb() {
     let sum = 0;
     props.addedItems.map((item) => {
@@ -142,8 +252,11 @@ function CheckoutDetails(props) {
         sum += parseInt(gift.price) * item.quantity;
       });
     });
-    sum = sum + 45;
-    return sum;
+      if (sum <= 450) {
+        return sum + 45;
+      } else if (sum > 450) {
+        return sum;
+      }
   }
   async function apartmentSubmitHandler(e) {
     e.preventDefault();
@@ -182,8 +295,10 @@ function CheckoutDetails(props) {
         },
       });
       const data = await response.json();
-      console.log(data);
 
+      // if (payMethod === "visa") {
+      //   firstStep();
+      // }
       router.push("/thankyou");
     }
   }
@@ -263,6 +378,7 @@ function CheckoutDetails(props) {
           "Content-Type": "application/json",
         },
       });
+
       const data = await response.json();
       console.log(data);
       router.push("/thankyou");
@@ -287,7 +403,46 @@ function CheckoutDetails(props) {
       showApartmentDetails(true);
     }
   };
+  // function discount() {
+  //   let sum = 0;
+  //   let discountedItem;
+  //   if (props.addedItems.length === 2) {
+  //     for (let i = 0; i <= props.addedItems.length; i++) {
+  //       for (let j = i + 1; j < props.addedItems.length; j++) {
+  //         if (
+  //           parseInt(props.addedItems[i].sizePrice[0].price) >
+  //           parseInt(props.addedItems[j].sizePrice[0].price)
+  //         ) {
+  //           sum +=
+  //             parseInt(props.addedItems[j].sizePrice[0].price) +
+  //             parseInt(props.addedItems[i].sizePrice[0].price) -
+  //             (parseInt(props.addedItems[j].sizePrice[0].price) * 20) / 100;
+  //         } else {
+  //            sum +=
+  //              parseInt(props.addedItems[i].sizePrice[0].price) +
+  //              parseInt(props.addedItems[j].sizePrice[0].price) -
+  //              (parseInt(props.addedItems[i].sizePrice[0].price) * 20) / 100;
+  //         }
+  //       }
+  //     }
+  //   } else if(props.addedItems.length === 3) {
+  //     for (let i = 0; i <= props.addedItems.length; i++) {
+  //       for (let j = i + 1; j < props.addedItems.length; j++) {
+  //         if (
+  //           parseInt(props.addedItems[i].sizePrice[0].price) >
+  //           parseInt(props.addedItems[j].sizePrice[0].price)
+  //         ) {
+  //           sum +=
+  //             parseInt(props.addedItems[j].sizePrice[0].price) +
+  //             parseInt(props.addedItems[i].sizePrice[0].price) -
+  //             (parseInt(props.addedItems[j].sizePrice[0].price) * 20) / 100;
+  //         }
+  //       }
+  //     }
+  //   }
 
+  //   return sum;
+  // }
   function totalDue() {
     let sum = 0;
 
@@ -302,8 +457,11 @@ function CheckoutDetails(props) {
         sum += parseInt(gift.price) * item.quantity;
       });
     });
-
-    return sum + 45;
+    if(sum <= 450) {
+      return sum + 45;
+    } else if(sum > 450) {
+      return sum
+    }
   }
 
   let workplaceDetailsHandler = () => {
@@ -468,6 +626,16 @@ function CheckoutDetails(props) {
                         value={apartmentInputs.instructions}
                       />
                     </div>
+                    {/* <div>
+                      <h1>Payment Method</h1>
+                      <select
+                        defaultValue=""
+                        onChange={(e) => setPayMethod(e.target.value)}
+                      >
+                        <option value="cash">Cash</option>
+                        <option value="visa">Visa</option>
+                      </select>
+                    </div> */}
                     <div className={classes.scheduleInputs}>
                       <div>
                         <h1>Schedule Delivery</h1>
@@ -868,7 +1036,11 @@ function CheckoutDetails(props) {
             <>
               <div className={classes.deliveryFee}>
                 <p>Delivery</p>
-                <p className={classes.price}>45 EGP</p>
+                {totalPrice > 450 ? (
+                  <p className={classes.price} style={{textDecoration: 'line-through'}}>45 EGP</p>
+                ) : (
+                  <p className={classes.price}>45 EGP</p>
+                )}
               </div>
               <div className={classes.total}>
                 <p>Total</p>

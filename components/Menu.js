@@ -114,9 +114,9 @@ function Menu(props) {
             </button>
           </div>
           <div className={classes.offer}>
-            <p>Buy one item and get 20% off on the second</p>
-            <p>Buy two items and get 30% off on the third</p>
-            <p>FREE Shipping on orders over 450EGP</p>
+            <p>Buy ONE get the 2nd 20% off</p>
+            <p>Buy TWO get the 3rd 30% off</p>
+            <p>FREE shipping for orders more than 450LE</p>
           </div>
           {isAuthorized ? (
             <button className={classes.addItemBtn} onClick={toggleAddItemBtn}>

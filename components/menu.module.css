@@ -15,9 +15,11 @@
 .offer {
 color: #E31552;
 display: flex;
-justify-content: center;
+flex-direction: column;
 margin: 1em 0;
 text-align: center;
+font-weight: bold;
+font-size: 18px;
 }
 .checkoutDiv {
     text-align: center;
@@ -152,22 +154,15 @@ align-items: center;
         grid-row: 1;
         grid-column: 2/13;
     }
-    .offer {
-        width: 80%;
-        align-self: center;
-    }
-    .offer p {
-        margin-right: 0.5em;
-    }
+ 
+ 
     
 }
 @media (max-width:800px) {
     .checkoutDiv {
         display: block;
     }
-    .offer {
-        width: 100%;
-    }
+
 }
 
 @media(max-width: 650px) {
@@ -189,9 +184,9 @@ align-items: center;
                   .menuNavigation button {
                       padding: 1em 3em;
                   }
-                  .offer p {
-                    font-size: 14px;
-                  }
+                  /* .offer p {
+                    font-size: 1px;
+                  } */
 }
 @media(max-width: 550px) {
     .priceBtnDiv {
@@ -235,16 +230,16 @@ align-items: center;
 
 
 @media (max-width: 435px) {
-.offer p {
+/* .offer p {
         font-size: 13px;
-    }
+    } */
 }
 
 @media (max-width: 360px) {
     .menuNavigation button {
         padding: 1em 2.5em;
     }
-        .offer p {
+        /* .offer p {
             font-size: 12px;
-        }
+        } */
 }
