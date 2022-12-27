@@ -39,9 +39,9 @@ function SelectionPanel(props) {
       return (
         <div
           className={classes.checkoutBtnDiv}
-          style={{ position: "absolute", bottom: "0"}}
+          style={{ position: "absolute", bottom: "0" }}
         >
-          <div style={{position: 'sticky'}}>
+          <div style={{ position: "sticky" }}>
             <button className={classes.menuFormSubmit} onClick={() => signIn()}>
               Add To Cart
             </button>
@@ -97,34 +97,41 @@ function SelectionPanel(props) {
   }
   async function submitHandler(e) {
     e.preventDefault();
-    const orderData = {
-      userId: session.user._id,
-      quantity: quantity,
-      name: props.selectionData.name,
-      sizePrice: selectedSize,
-      extraPrice: selectedExtra,
-      flavors: selectedFlavor,
-      toppings: selectedToppings,
-      notes,
-      giftPrice: selectedGift,
-      freePistachio: selectedFreeExtra,
-    };
-    const response = await fetch("/api/addToCart", {
-      method: "POST",
-      body: JSON.stringify(orderData),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = await response.json();
-    console.log(data);
-    setTimeout(() => {
-      router.reload(window.location.pathname);
-    }, 1000);
+    try {
+      const orderData = {
+        userId: session.user._id,
+        quantity: quantity,
+        name: props.selectionData.name,
+        sizePrice: selectedSize,
+        extraPrice: selectedExtra,
+        flavors: selectedFlavor,
+        toppings: selectedToppings,
+        notes,
+        giftPrice: selectedGift,
+        freePistachio: selectedFreeExtra,
+      };
+      const response = await fetch("/api/addToCart", {
+        method: "POST",
+        body: JSON.stringify(orderData),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await response.json();
+      console.log(data);
+      setTimeout(() => {
+        router.reload(window.location.pathname);
+      }, 1000);
+    } catch (e) {
+      alert(e.message);
+    }
   }
 
   useEffect(() => {
-    selectionPanelRef.current.scrollIntoView({ behavior: "smooth", block: 'nearest' });
+    selectionPanelRef.current.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest",
+    });
   });
   return (
     <div className={classes.selectionPanel} ref={selectionPanelRef}>
@@ -246,7 +253,9 @@ function SelectionPanel(props) {
           {props.selectionData.toppings.length === 0 ? null : (
             <div className={classes.toppings}>
               <h1>Toppings</h1>
-              {props.selectionData.name === 'Mountain Of Heaven' ? <p>Select from 1 to 3 toppings</p> : null}
+              {props.selectionData.name === "Mountain Of Heaven" ? (
+                <p>Select from 1 to 3 toppings</p>
+              ) : null}
               {props.selectionData.toppings.map((item, index) => {
                 return (
                   <div key={index}>
