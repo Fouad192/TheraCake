@@ -260,7 +260,8 @@ function CheckoutDetails(props) {
   }
   async function apartmentSubmitHandler(e) {
     e.preventDefault();
-    if (props.addedItems.length === 0) {
+    try {
+       if (props.addedItems.length === 0) {
       alert("Please Add Items To Your Cart");
     } else {
       let thisOrderId = orderid.generate();
@@ -301,11 +302,15 @@ function CheckoutDetails(props) {
       // }
       router.push("/thankyou");
     }
+    } catch(e) {
+      alert(e.message)
+    }
+   
   }
   async function villaSubmitHandler(e) {
     e.preventDefault();
-
-    if (props.addedItems.length === 0) {
+    try {
+if (props.addedItems.length === 0) {
       alert("Please Add Items To Your Cart");
     } else {
       let thisOrderId = orderid.generate();
@@ -342,10 +347,15 @@ function CheckoutDetails(props) {
       console.log(data);
       router.push("/thankyou");
     }
+    } catch (e) {
+      alert(e.message)
+    }
+    
   }
   async function companySubmitHandler(e) {
     e.preventDefault();
-    if (props.addedItems.length === 0) {
+    try {
+       if (props.addedItems.length === 0) {
       alert("Please Add Items To Your Cart");
     } else {
       let thisOrderId = orderid.generate();
@@ -383,6 +393,10 @@ function CheckoutDetails(props) {
       console.log(data);
       router.push("/thankyou");
     }
+    } catch (e) {
+      alert(e.message)
+    }
+   
   }
   function handleApartmentInputChange(e) {
     const { name, value } = e.target;
