@@ -125,10 +125,15 @@ function UserHistory({order}) {
                       })}
                     </div>
                   </div>
+                  <div className={classes.notes}>
+                    <p>{item.notes}</p>
+                  </div>
                   <hr />
                 </div>
               ))}
-
+              <div className={classes.notes}>
+                <p>{order.instructions}</p>
+              </div>
               <div className={classes.historySubtotal}>
                 <p>Subtotal</p>
                 <p>{sum}</p>

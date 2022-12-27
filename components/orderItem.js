@@ -197,15 +197,15 @@ encodeData()
                   </div>
                 </div>
                 <div className={classes.notes}>
-                  <p>{order.orderItems[0].notes}</p>
+                  <p>{item.notes}</p>
                 </div>
-                <div className={classes.notes}>
-                  <p>{order.instructions}</p>
-                </div>
+
                 <hr />
               </div>
             ))}
-
+            <div className={classes.notes}>
+              <p>{order.instructions}</p>
+            </div>
             <div className={classes.subtotal}>
               <p>Subtotal</p>
               <p>{sum}</p>
