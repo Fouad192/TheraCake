@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import uuid from "react-uuid";
-import handleCardPayment from "../pages/api/cardPayment";
+// import handleCardPayment from "../pages/api/cardPayment";
 const orderid = require("order-id")("key");
 
 function CheckoutDetails(props) {

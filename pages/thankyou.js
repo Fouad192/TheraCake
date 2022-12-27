@@ -2,7 +2,7 @@ import classes from "../components/thankyou.module.css";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Head from "next/head";
-import handleCardPayment from "./api/cardPayment";
+// import handleCardPayment from "./api/cardPayment";
 function ThankYou() {
   const router = useRouter();
   const [isApproved, setStatus] = useState()
