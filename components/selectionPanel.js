@@ -39,7 +39,7 @@ function SelectionPanel(props) {
       return (
         <div
           className={classes.checkoutBtnDiv}
-          style={{ position: "absolute", bottom: "0", backgroundColor: "white" }}
+          style={{ position: "absolute", bottom: "0"}}
         >
           <div style={{position: 'sticky'}}>
             <button className={classes.menuFormSubmit} onClick={() => signIn()}>
