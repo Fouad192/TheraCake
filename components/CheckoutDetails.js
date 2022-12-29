@@ -199,6 +199,13 @@ function CheckoutDetails(props) {
   }, []);
 
   useEffect(() => {
+    let janDate = new Date(new Date().setDate(new Date().getDate() + 3));
+    let formattedJanDate = new Date(
+      janDate.getTime() - janDate.getTimezoneOffset() * 60000
+    )
+      .toISOString()
+      .split("T")[0];
+
     let currentTime = new Date().getHours();
     let tomorrowDate = new Date(new Date().setDate(new Date().getDate() + 1));
     let afterTomorrowDate = new Date(
@@ -223,12 +230,12 @@ function CheckoutDetails(props) {
       .toISOString()
       .split("T")[0];
     setMaxDate(formattedDate);
-
-    if (currentTime >= 21) {
-      setMinDate(formattedAfterTomorrowDate);
-    } else {
-      setMinDate(formattedTomorrowDate);
-    }
+setMinDate(formattedJanDate)
+    // if (currentTime >= 21) {
+    //   setMinDate(formattedAfterTomorrowDate);
+    // } else {
+    //   setMinDate(formattedTomorrowDate);
+    // }
   }, []);
 
   let [apartmentDetails, showApartmentDetails] = useState(false);
