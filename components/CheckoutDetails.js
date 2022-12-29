@@ -18,62 +18,15 @@ function CheckoutDetails(props) {
 
   let [maxDate, setMaxDate] = useState();
   let [minDate, setMinDate] = useState();
-  const [totalPrice, setTotalPrice] = useState();
-  const [discountedAmount, setDiscountedAmount] = useState();
-  const [itemsNo, setItemNo] = useState(0);
-  const [discountedItemPrice, setDiscountedItemPrice] = useState();
-  const [itemPrice, setItemPrice] = useState();
-  function calculateItemPriceOnly() {
-    let sum = 0;
-    props.addedItems.map((item) => {
-      item.sizePrice.map((size) => {
-        sum += parseInt(size.price) * item.quantity;
-      });
-    });
-    sum -= discountedAmount;
-    setItemPrice(sum);
-  }
-  function yarab() {
-    // const mapObj = new Map()
-    // props.addedItems.map((item, index) => {
-    //   mapObj.set(index, item)
-    // })
-
-    // console.log(mapObj.values())
-    let priceArr = [];
-    props.addedItems.map((item) => {
-      priceArr.push(item.sizePrice[0].price);
-    });
-    setDiscountedItemPrice(Math.min(...priceArr));
-    // setTotalPrice(totalPrice - discountedAmount)
-    if (itemsNo === 2) {
-      setDiscountedAmount((Math.min(...priceArr) * 20) / 100);
-    } else if (itemsNo > 2) {
-      setDiscountedAmount((Math.min(...priceArr) * 30) / 100);
-    } else {
-      setDiscountedAmount(0);
-    }
-  }
-  useEffect(() => {
-    yarab();
-    calculateItemPriceOnly();
-    if (discountedAmount > 0) {
-      if (itemPrice + discountedAmount >= 450) {
-        setTotalPrice(calculateTotalPriceDb() - discountedAmount);
-      } else if (itemPrice + discountedAmount < 450) {
-        setTotalPrice(calculateTotalPriceDb() - discountedAmount + 45);
-      }
-    } else {
-      setTotalPrice(calculateTotalPriceDb)
-    }
-  }, [discountedAmount]);
-  useEffect(() => {
-    let noOfItems = 0;
-    props.addedItems.map((item) => {
-      return (noOfItems += parseInt(item.quantity));
-    });
-    setItemNo(noOfItems);
-  }, []);
+  let [totalPrice, setTotalPrice] = useState(calculateTotalPriceDb())
+  // let [itemsNo, setItemNo] = useState(0);
+  // useEffect(() => {
+  //   let noOfItems = 0;
+  //   props.addedItems.map((item) => {
+  //     return (noOfItems += parseInt(item.quantity));
+  //   });
+  //   setItemNo(noOfItems);
+  // }, []);
   // const API =
   //   "ZXlKaGJHY2lPaUpJVXpVeE1pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SmpiR0Z6Y3lJNklrMWxjbU5vWVc1MElpd2libUZ0WlNJNkltbHVhWFJwWVd3aUxDSndjbTltYVd4bFgzQnJJam8yTlRBek56ZDkucUd0LVJyS21OZzlFbDM3VHFpRFRsdjZlUm9jLVVMQ2VhRURsWjY5a3c0YVhTM3d2RnFuSTlYYmpLNG1KbU9sUURIeXhLSUxQaTFJeVZ5VTNoQlJXdlE="; // your api here
   // const integrationID = 3178867;
@@ -296,151 +249,154 @@ function CheckoutDetails(props) {
         sum += parseInt(extra.price) * item.quantity;
       });
       item.giftPrice.map((gift) => {
-        sum += parseInt(gift.price);
+        sum += parseInt(gift.price) * item.quantity;
       });
     });
-    if (sum <= 450) {
-      return sum + 45;
-    } else if (sum > 450) {
-      return sum;
-    }
+      if (sum <= 450) {
+        return sum + 45;
+      } else if (sum > 450) {
+        return sum;
+      }
   }
   async function apartmentSubmitHandler(e) {
     e.preventDefault();
     try {
-      if (props.addedItems.length === 0) {
-        alert("Please Add Items To Your Cart");
-      } else {
-        let thisOrderId = orderid.generate();
-        let currentTime = orderid.getTime(thisOrderId);
-        const orderData = {
-          addressType: "apartment",
-          userId: session.user._id,
-          orderItems: props.addedItems,
-          orderNumber: thisOrderId,
-          dateSubmitted: currentTime,
-          firstName: apartmentInputs.firstName,
-          lastName: apartmentInputs.lastName,
-          mobile: apartmentInputs.mobile,
-          backupMobile: apartmentInputs.backupMobile,
-          email: apartmentInputs.email,
-          governorate: apartmentInputs.governorate,
-          city: apartmentInputs.city,
-          area: apartmentInputs.area,
-          street: apartmentInputs.street,
-          building: apartmentInputs.building,
-          floor: apartmentInputs.floor,
-          apartment: apartmentInputs.apartment,
-          instructions: apartmentInputs.instructions,
-          scheduled: apartmentInputs.scheduled,
-          totalPrice: totalPrice,
-        };
-        const response = await fetch("/api/checkout", {
-          method: "POST",
-          body: JSON.stringify(orderData),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        const data = await response.json();
+       if (props.addedItems.length === 0) {
+      alert("Please Add Items To Your Cart");
+    } else {
+      let thisOrderId = orderid.generate();
+      let currentTime = orderid.getTime(thisOrderId);
+      const orderData = {
+        addressType: "apartment",
+        userId: session.user._id,
+        orderItems: props.addedItems,
+        orderNumber: thisOrderId,
+        dateSubmitted: currentTime,
+        firstName: apartmentInputs.firstName,
+        lastName: apartmentInputs.lastName,
+        mobile: apartmentInputs.mobile,
+        backupMobile: apartmentInputs.backupMobile,
+        email: apartmentInputs.email,
+        governorate: apartmentInputs.governorate,
+        city: apartmentInputs.city,
+        area: apartmentInputs.area,
+        street: apartmentInputs.street,
+        building: apartmentInputs.building,
+        floor: apartmentInputs.floor,
+        apartment: apartmentInputs.apartment,
+        instructions: apartmentInputs.instructions,
+        scheduled: apartmentInputs.scheduled,
+        totalPrice: calculateTotalPriceDb(),
+      };
+      const response = await fetch("/api/checkout", {
+        method: "POST",
+        body: JSON.stringify(orderData),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await response.json();
 
-        // if (payMethod === "visa") {
-        //   firstStep();
-        // }
-        router.push("/thankyou");
-      }
-    } catch (e) {
-      alert(e.message);
+      // if (payMethod === "visa") {
+      //   firstStep();
+      // }
+      router.push("/thankyou");
     }
+    } catch(e) {
+      alert(e.message)
+    }
+   
   }
   async function villaSubmitHandler(e) {
     e.preventDefault();
     try {
-      if (props.addedItems.length === 0) {
-        alert("Please Add Items To Your Cart");
-      } else {
-        let thisOrderId = orderid.generate();
-        let currentTime = orderid.getTime(thisOrderId);
-        const orderData = {
-          addressType: "villa",
-          userId: session.user._id,
-          orderItems: props.addedItems,
-          orderNumber: thisOrderId,
-          dateSubmitted: currentTime,
-          firstName: villaInputs.firstName,
-          lastName: villaInputs.lastName,
-          mobile: villaInputs.mobile,
-          backupMobile: villaInputs.backupMobile,
-          email: villaInputs.email,
-          governorate: villaInputs.governorate,
-          city: villaInputs.city,
-          area: villaInputs.area,
-          street: villaInputs.street,
+if (props.addedItems.length === 0) {
+      alert("Please Add Items To Your Cart");
+    } else {
+      let thisOrderId = orderid.generate();
+      let currentTime = orderid.getTime(thisOrderId);
+      const orderData = {
+        addressType: "villa",
+        userId: session.user._id,
+        orderItems: props.addedItems,
+        orderNumber: thisOrderId,
+        dateSubmitted: currentTime,
+        firstName: villaInputs.firstName,
+        lastName: villaInputs.lastName,
+        mobile: villaInputs.mobile,
+        backupMobile: villaInputs.backupMobile,
+        email: villaInputs.email,
+        governorate: villaInputs.governorate,
+        city: villaInputs.city,
+        area: villaInputs.area,
+        street: villaInputs.street,
 
-          villa: villaInputs.villa,
-          instructions: villaInputs.instructions,
-          scheduled: villaInputs.scheduled,
-          totalPrice: totalPrice,
-        };
-        const response = await fetch("/api/checkout", {
-          method: "POST",
-          body: JSON.stringify(orderData),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        const data = await response.json();
-        console.log(data);
-        router.push("/thankyou");
-      }
-    } catch (e) {
-      alert(e.message);
+        villa: villaInputs.villa,
+        instructions: villaInputs.instructions,
+        scheduled: villaInputs.scheduled,
+        totalPrice: calculateTotalPriceDb(),
+      };
+      const response = await fetch("/api/checkout", {
+        method: "POST",
+        body: JSON.stringify(orderData),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await response.json();
+      console.log(data);
+      router.push("/thankyou");
     }
+    } catch (e) {
+      alert(e.message)
+    }
+    
   }
   async function companySubmitHandler(e) {
     e.preventDefault();
     try {
-      if (props.addedItems.length === 0) {
-        alert("Please Add Items To Your Cart");
-      } else {
-        let thisOrderId = orderid.generate();
-        let currentTime = orderid.getTime(thisOrderId);
-        const orderData = {
-          addressType: "company",
-          userId: session.user._id,
-          orderItems: props.addedItems,
-          orderNumber: thisOrderId,
-          dateSubmitted: currentTime,
-          firstName: companyInputs.firstName,
-          lastName: companyInputs.lastName,
-          mobile: companyInputs.mobile,
-          backupMobile: companyInputs.backupMobile,
-          email: companyInputs.email,
-          governorate: companyInputs.governorate,
-          city: companyInputs.city,
-          area: companyInputs.area,
-          street: companyInputs.street,
+       if (props.addedItems.length === 0) {
+      alert("Please Add Items To Your Cart");
+    } else {
+      let thisOrderId = orderid.generate();
+      let currentTime = orderid.getTime(thisOrderId);
+      const orderData = {
+        addressType: "company",
+        userId: session.user._id,
+        orderItems: props.addedItems,
+        orderNumber: thisOrderId,
+        dateSubmitted: currentTime,
+        firstName: companyInputs.firstName,
+        lastName: companyInputs.lastName,
+        mobile: companyInputs.mobile,
+        backupMobile: companyInputs.backupMobile,
+        email: companyInputs.email,
+        governorate: companyInputs.governorate,
+        city: companyInputs.city,
+        area: companyInputs.area,
+        street: companyInputs.street,
 
-          company: companyInputs.company,
-          instructions: companyInputs.instructions,
-          scheduled: companyInputs.scheduled,
-          totalPrice: totalPrice,
-        };
-        const response = await fetch("/api/checkout", {
-          method: "POST",
-          body: JSON.stringify(orderData),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
+        company: companyInputs.company,
+        instructions: companyInputs.instructions,
+        scheduled: companyInputs.scheduled,
+        totalPrice: calculateTotalPriceDb(),
+      };
+      const response = await fetch("/api/checkout", {
+        method: "POST",
+        body: JSON.stringify(orderData),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-        const data = await response.json();
-        console.log(data);
-        router.push("/thankyou");
-      }
-    } catch (e) {
-      alert(e.message);
+      const data = await response.json();
+      console.log(data);
+      router.push("/thankyou");
     }
+    } catch (e) {
+      alert(e.message)
+    }
+   
   }
   function handleApartmentInputChange(e) {
     const { name, value } = e.target;
@@ -512,14 +468,13 @@ function CheckoutDetails(props) {
         sum += parseInt(extra.price) * item.quantity;
       });
       item.giftPrice.map((gift) => {
-        sum += parseInt(gift.price);
+        sum += parseInt(gift.price) * item.quantity;
       });
     });
-    // console.log(sum)
-    if (itemPrice <= 450) {
+    if(sum <= 450) {
       return sum + 45;
-    } else if (itemPrice > 450) {
-      return sum;
+    } else if(sum > 450) {
+      return sum
     }
   }
 
@@ -547,7 +502,7 @@ function CheckoutDetails(props) {
   }
   return (
     <>
-      <section className={classes.checkoutDetailsGrid} onClick={yarab}>
+      <section className={classes.checkoutDetailsGrid}>
         <div className={classes.informationContainer}>
           <h1>Delivery Details</h1>
           <div className={classes.apartmentContainer}>
@@ -1015,10 +970,7 @@ function CheckoutDetails(props) {
               <div className={classes.size}>
                 <p>{addedItem?.sizePrice[0]?.size}</p>
                 <p className={classes.price}>
-                  {addedItem.sizePrice[0]?.price == discountedItemPrice
-                    ? addedItem?.sizePrice[0]?.price * addedItem?.quantity -
-                      discountedAmount
-                    : addedItem?.sizePrice[0]?.price * addedItem?.quantity}
+                  {addedItem?.sizePrice[0]?.price * addedItem?.quantity}
                 </p>
               </div>
               {addedItem.freePistachio === "Free Pistachio" && (
@@ -1079,7 +1031,9 @@ function CheckoutDetails(props) {
                   {addedItem.giftPrice?.map((gift, index) => (
                     <div className={classes.gift} key={uuid()}>
                       <p>{gift.gift}</p>
-                      <p className={classes.price}>{gift.price}</p>
+                      <p className={classes.price}>
+                        {gift.price * addedItem.quantity}
+                      </p>
                     </div>
                   ))}
                 </div>
@@ -1096,20 +1050,15 @@ function CheckoutDetails(props) {
             <>
               <div className={classes.deliveryFee}>
                 <p>Delivery</p>
-                {itemPrice > 450 ? (
-                  <p
-                    className={classes.price}
-                    style={{ textDecoration: "line-through" }}
-                  >
-                    45 EGP
-                  </p>
+                {totalPrice > 450 ? (
+                  <p className={classes.price} style={{textDecoration: 'line-through'}}>45 EGP</p>
                 ) : (
                   <p className={classes.price}>45 EGP</p>
                 )}
               </div>
               <div className={classes.total}>
                 <p>Total</p>
-                <p className={classes.price}>{totalDue() - discountedAmount}</p>
+                <p className={classes.price}>{totalDue()}</p>
               </div>
               <Link href="/menu">
                 <button className={classes.addMoreItems}>Add More Items</button>
