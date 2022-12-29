@@ -161,7 +161,7 @@ encodeData()
                   <div className={classes.itemSubDetails} key={uuid()}>
                     <div>
                       <p>{gift.gift}</p>
-                      <p>{gift.price * item.quantity}</p>
+                      <p>{gift.price}</p>
                     </div>
                   </div>
                 ))}
