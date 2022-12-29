@@ -18,7 +18,7 @@ function CheckoutDetails(props) {
 
   let [maxDate, setMaxDate] = useState();
   let [minDate, setMinDate] = useState();
-  let [totalPrice, setTotalPrice] = useState(calculateTotalPriceDb())
+  let [totalPrice, setTotalPrice] = useState(calculateTotalPriceDb());
   // let [itemsNo, setItemNo] = useState(0);
   // useEffect(() => {
   //   let noOfItems = 0;
@@ -252,151 +252,145 @@ function CheckoutDetails(props) {
         sum += parseInt(gift.price) * item.quantity;
       });
     });
-      if (sum <= 450) {
-        return sum + 45;
-      } else if (sum > 450) {
-        return sum;
-      }
+
+    return sum + 45;
   }
   async function apartmentSubmitHandler(e) {
     e.preventDefault();
     try {
-       if (props.addedItems.length === 0) {
-      alert("Please Add Items To Your Cart");
-    } else {
-      let thisOrderId = orderid.generate();
-      let currentTime = orderid.getTime(thisOrderId);
-      const orderData = {
-        addressType: "apartment",
-        userId: session.user._id,
-        orderItems: props.addedItems,
-        orderNumber: thisOrderId,
-        dateSubmitted: currentTime,
-        firstName: apartmentInputs.firstName,
-        lastName: apartmentInputs.lastName,
-        mobile: apartmentInputs.mobile,
-        backupMobile: apartmentInputs.backupMobile,
-        email: apartmentInputs.email,
-        governorate: apartmentInputs.governorate,
-        city: apartmentInputs.city,
-        area: apartmentInputs.area,
-        street: apartmentInputs.street,
-        building: apartmentInputs.building,
-        floor: apartmentInputs.floor,
-        apartment: apartmentInputs.apartment,
-        instructions: apartmentInputs.instructions,
-        scheduled: apartmentInputs.scheduled,
-        totalPrice: calculateTotalPriceDb(),
-      };
-      const response = await fetch("/api/checkout", {
-        method: "POST",
-        body: JSON.stringify(orderData),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const data = await response.json();
+      if (props.addedItems.length === 0) {
+        alert("Please Add Items To Your Cart");
+      } else {
+        let thisOrderId = orderid.generate();
+        let currentTime = orderid.getTime(thisOrderId);
+        const orderData = {
+          addressType: "apartment",
+          userId: session.user._id,
+          orderItems: props.addedItems,
+          orderNumber: thisOrderId,
+          dateSubmitted: currentTime,
+          firstName: apartmentInputs.firstName,
+          lastName: apartmentInputs.lastName,
+          mobile: apartmentInputs.mobile,
+          backupMobile: apartmentInputs.backupMobile,
+          email: apartmentInputs.email,
+          governorate: apartmentInputs.governorate,
+          city: apartmentInputs.city,
+          area: apartmentInputs.area,
+          street: apartmentInputs.street,
+          building: apartmentInputs.building,
+          floor: apartmentInputs.floor,
+          apartment: apartmentInputs.apartment,
+          instructions: apartmentInputs.instructions,
+          scheduled: apartmentInputs.scheduled,
+          totalPrice: calculateTotalPriceDb(),
+        };
+        const response = await fetch("/api/checkout", {
+          method: "POST",
+          body: JSON.stringify(orderData),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        const data = await response.json();
 
-      // if (payMethod === "visa") {
-      //   firstStep();
-      // }
-      router.push("/thankyou");
+        // if (payMethod === "visa") {
+        //   firstStep();
+        // }
+        router.push("/thankyou");
+      }
+    } catch (e) {
+      alert(e.message);
     }
-    } catch(e) {
-      alert(e.message)
-    }
-   
   }
   async function villaSubmitHandler(e) {
     e.preventDefault();
     try {
-if (props.addedItems.length === 0) {
-      alert("Please Add Items To Your Cart");
-    } else {
-      let thisOrderId = orderid.generate();
-      let currentTime = orderid.getTime(thisOrderId);
-      const orderData = {
-        addressType: "villa",
-        userId: session.user._id,
-        orderItems: props.addedItems,
-        orderNumber: thisOrderId,
-        dateSubmitted: currentTime,
-        firstName: villaInputs.firstName,
-        lastName: villaInputs.lastName,
-        mobile: villaInputs.mobile,
-        backupMobile: villaInputs.backupMobile,
-        email: villaInputs.email,
-        governorate: villaInputs.governorate,
-        city: villaInputs.city,
-        area: villaInputs.area,
-        street: villaInputs.street,
+      if (props.addedItems.length === 0) {
+        alert("Please Add Items To Your Cart");
+      } else {
+        let thisOrderId = orderid.generate();
+        let currentTime = orderid.getTime(thisOrderId);
+        const orderData = {
+          addressType: "villa",
+          userId: session.user._id,
+          orderItems: props.addedItems,
+          orderNumber: thisOrderId,
+          dateSubmitted: currentTime,
+          firstName: villaInputs.firstName,
+          lastName: villaInputs.lastName,
+          mobile: villaInputs.mobile,
+          backupMobile: villaInputs.backupMobile,
+          email: villaInputs.email,
+          governorate: villaInputs.governorate,
+          city: villaInputs.city,
+          area: villaInputs.area,
+          street: villaInputs.street,
 
-        villa: villaInputs.villa,
-        instructions: villaInputs.instructions,
-        scheduled: villaInputs.scheduled,
-        totalPrice: calculateTotalPriceDb(),
-      };
-      const response = await fetch("/api/checkout", {
-        method: "POST",
-        body: JSON.stringify(orderData),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const data = await response.json();
-      console.log(data);
-      router.push("/thankyou");
-    }
+          villa: villaInputs.villa,
+          instructions: villaInputs.instructions,
+          scheduled: villaInputs.scheduled,
+          totalPrice: calculateTotalPriceDb(),
+        };
+        const response = await fetch("/api/checkout", {
+          method: "POST",
+          body: JSON.stringify(orderData),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        const data = await response.json();
+        console.log(data);
+        router.push("/thankyou");
+      }
     } catch (e) {
-      alert(e.message)
+      alert(e.message);
     }
-    
   }
   async function companySubmitHandler(e) {
     e.preventDefault();
     try {
-       if (props.addedItems.length === 0) {
-      alert("Please Add Items To Your Cart");
-    } else {
-      let thisOrderId = orderid.generate();
-      let currentTime = orderid.getTime(thisOrderId);
-      const orderData = {
-        addressType: "company",
-        userId: session.user._id,
-        orderItems: props.addedItems,
-        orderNumber: thisOrderId,
-        dateSubmitted: currentTime,
-        firstName: companyInputs.firstName,
-        lastName: companyInputs.lastName,
-        mobile: companyInputs.mobile,
-        backupMobile: companyInputs.backupMobile,
-        email: companyInputs.email,
-        governorate: companyInputs.governorate,
-        city: companyInputs.city,
-        area: companyInputs.area,
-        street: companyInputs.street,
+      if (props.addedItems.length === 0) {
+        alert("Please Add Items To Your Cart");
+      } else {
+        let thisOrderId = orderid.generate();
+        let currentTime = orderid.getTime(thisOrderId);
+        const orderData = {
+          addressType: "company",
+          userId: session.user._id,
+          orderItems: props.addedItems,
+          orderNumber: thisOrderId,
+          dateSubmitted: currentTime,
+          firstName: companyInputs.firstName,
+          lastName: companyInputs.lastName,
+          mobile: companyInputs.mobile,
+          backupMobile: companyInputs.backupMobile,
+          email: companyInputs.email,
+          governorate: companyInputs.governorate,
+          city: companyInputs.city,
+          area: companyInputs.area,
+          street: companyInputs.street,
 
-        company: companyInputs.company,
-        instructions: companyInputs.instructions,
-        scheduled: companyInputs.scheduled,
-        totalPrice: calculateTotalPriceDb(),
-      };
-      const response = await fetch("/api/checkout", {
-        method: "POST",
-        body: JSON.stringify(orderData),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+          company: companyInputs.company,
+          instructions: companyInputs.instructions,
+          scheduled: companyInputs.scheduled,
+          totalPrice: calculateTotalPriceDb(),
+        };
+        const response = await fetch("/api/checkout", {
+          method: "POST",
+          body: JSON.stringify(orderData),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
 
-      const data = await response.json();
-      console.log(data);
-      router.push("/thankyou");
-    }
+        const data = await response.json();
+        console.log(data);
+        router.push("/thankyou");
+      }
     } catch (e) {
-      alert(e.message)
+      alert(e.message);
     }
-   
   }
   function handleApartmentInputChange(e) {
     const { name, value } = e.target;
@@ -471,11 +465,8 @@ if (props.addedItems.length === 0) {
         sum += parseInt(gift.price) * item.quantity;
       });
     });
-    if(sum <= 450) {
-      return sum + 45;
-    } else if(sum > 450) {
-      return sum
-    }
+
+    return sum + 45;
   }
 
   let workplaceDetailsHandler = () => {
@@ -1050,11 +1041,7 @@ if (props.addedItems.length === 0) {
             <>
               <div className={classes.deliveryFee}>
                 <p>Delivery</p>
-                {totalPrice > 450 ? (
-                  <p className={classes.price} style={{textDecoration: 'line-through'}}>45 EGP</p>
-                ) : (
-                  <p className={classes.price}>45 EGP</p>
-                )}
+                <p className={classes.price}>45 EGP</p>
               </div>
               <div className={classes.total}>
                 <p>Total</p>
