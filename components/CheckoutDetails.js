@@ -199,12 +199,12 @@ function CheckoutDetails(props) {
   }, []);
 
   useEffect(() => {
-    let janDate = new Date(new Date().setDate(new Date().getDate() + 3));
-    let formattedJanDate = new Date(
-      janDate.getTime() - janDate.getTimezoneOffset() * 60000
-    )
-      .toISOString()
-      .split("T")[0];
+    // let janDate = new Date(new Date().setDate(new Date().getDate() + 3));
+    // let formattedJanDate = new Date(
+    //   janDate.getTime() - janDate.getTimezoneOffset() * 60000
+    // )
+    //   .toISOString()
+    //   .split("T")[0];
 
     let currentTime = new Date().getHours();
     let tomorrowDate = new Date(new Date().setDate(new Date().getDate() + 1));
@@ -230,7 +230,7 @@ function CheckoutDetails(props) {
       .toISOString()
       .split("T")[0];
     setMaxDate(formattedDate);
-setMinDate(formattedJanDate)
+setMinDate("2023-01-01");
     // if (currentTime >= 21) {
     //   setMinDate(formattedAfterTomorrowDate);
     // } else {
