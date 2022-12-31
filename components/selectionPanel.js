@@ -296,6 +296,7 @@ function SelectionPanel(props) {
           {props.selectionData.toppings.length === 0 ? null : (
             <div className={classes.toppings}>
               <h1>Toppings</h1>
+              <p>Select up to {`${maxToppings}`} toppings</p>
               {props.selectionData.name === "Mountain Of Heaven" ? (
                 <p>Select from 1 to 3 toppings</p>
               ) : null}
