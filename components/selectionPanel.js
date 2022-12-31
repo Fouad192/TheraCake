@@ -97,33 +97,76 @@ function SelectionPanel(props) {
   }
   async function submitHandler(e) {
     e.preventDefault();
-    try {
-      const orderData = {
-        userId: session.user._id,
-        quantity: quantity,
-        name: props.selectionData.name,
-        sizePrice: selectedSize,
-        extraPrice: selectedExtra,
-        flavors: selectedFlavor,
-        toppings: selectedToppings,
-        notes,
-        giftPrice: selectedGift,
-        freePistachio: selectedFreeExtra,
-      };
-      const response = await fetch("/api/addToCart", {
-        method: "POST",
-        body: JSON.stringify(orderData),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const data = await response.json();
-      console.log(data);
-      setTimeout(() => {
-        router.reload(window.location.pathname);
-      }, 1000);
-    } catch (e) {
-      alert(e.message);
+    if (session) {
+      try {
+        const orderData = {
+          userId: session.user._id,
+          quantity: quantity,
+          name: props.selectionData.name,
+          sizePrice: selectedSize,
+          extraPrice: selectedExtra,
+          flavors: selectedFlavor,
+          toppings: selectedToppings,
+          notes,
+          giftPrice: selectedGift,
+          freePistachio: selectedFreeExtra,
+        };
+        const response = await fetch("/api/addToCart", {
+          method: "POST",
+          body: JSON.stringify(orderData),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        const data = await response.json();
+        console.log(data);
+        setTimeout(() => {
+          router.reload(window.location.pathname);
+        }, 1000);
+      } catch (e) {
+        alert(e.message);
+      }
+    } else {
+      try {
+        const cartArr = [
+          {
+            quantity: quantity,
+            name: props.selectionData.name,
+            sizePrice: [selectedSize],
+            extraPrice: selectedExtra,
+            flavors: [selectedFlavor],
+            toppings: [selectedToppings],
+            notes,
+            giftPrice: selectedGift,
+            freePistachio: selectedFreeExtra,
+          },
+        ];
+
+        if (localStorage.getItem("items")) {
+          let pushArray = JSON.parse(localStorage.getItem("items"));
+          await pushArray.push({
+            quantity: quantity,
+            name: props.selectionData.name,
+            sizePrice: [selectedSize],
+            extraPrice: selectedExtra,
+            flavors: [selectedFlavor],
+            toppings: [selectedToppings],
+            notes,
+            giftPrice: selectedGift,
+            freePistachio: selectedFreeExtra,
+          });
+          localStorage.setItem("items", JSON.stringify(pushArray));
+          console.log('secondItem')
+        } else {
+          localStorage.setItem("items", JSON.stringify(cartArr));
+          console.log('firstItem')
+        }
+        setTimeout(() => {
+          router.reload(window.location.pathname);
+        }, 1000);
+      } catch (e) {
+        alert(e.message);
+      }
     }
   }
 
@@ -442,7 +485,26 @@ function SelectionPanel(props) {
           </div>
         </form>
       </div>
-      {isLoggedIn()}
+      {/* {isLoggedIn()} */}
+      <div
+        className={classes.checkoutBtnDiv}
+        style={{
+          position: "absolute",
+          bottom: "0",
+          backgroundColor: "white",
+        }}
+      >
+        <div style={{ position: "sticky" }}>
+          <button
+            className={classes.menuFormSubmit}
+            onClick={timeOutFlash}
+            form={classes.selectionForm}
+          >
+            Add To Cart
+          </button>
+          <p ref={addToInvoiceFlash}>Added to checkout invoice</p>
+        </div>
+      </div>
 
       {/* <div className={classes.selectionBottomBanner}>
         <h3>Total</h3>

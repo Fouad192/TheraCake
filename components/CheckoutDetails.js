@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import uuid from "react-uuid";
+import { render } from "react-dom";
 // import handleCardPayment from "../pages/api/cardPayment";
 const orderid = require("order-id")("key");
 
@@ -15,10 +16,253 @@ function CheckoutDetails(props) {
   const apartmentLastIndex = props.apartmentAddressData.length - 1;
   const villaLastIndex = props.villaAddressData.length - 1;
   const companyLastIndex = props.companyAddressData.length - 1;
-
+  const [localCart, setLocalCart] = useState([]);
   let [maxDate, setMaxDate] = useState();
   let [minDate, setMinDate] = useState();
   let [totalPrice, setTotalPrice] = useState(calculateTotalPriceDb());
+
+  useEffect(() => {
+    if (
+      typeof localStorage.getItem("items") !== "undefined" &&
+      localStorage.getItem("items") !== ""
+    ) {
+      setLocalCart(JSON.parse(localStorage.getItem("items")));
+    }
+  }, []);
+  function renderDeliveryTab() {
+    if (props.addedItems.length != 0) {
+      return (
+        <>
+          <div className={classes.deliveryFee}>
+            <p>Delivery</p>
+            <p className={classes.price}>45 EGP</p>
+          </div>
+          <div className={classes.total}>
+            <p>Total</p>
+            <p className={classes.price}>{totalDue()}</p>
+          </div>
+          <Link href="/menu">
+            <button className={classes.addMoreItems}>Add More Items</button>
+          </Link>
+        </>
+      );
+    }
+
+    if (localCart?.length != 0 && localCart !== null && !session) {
+      return (
+        <>
+          <div className={classes.deliveryFee}>
+            <p>Delivery</p>
+            <p className={classes.price}>45 EGP</p>
+          </div>
+          <div className={classes.total}>
+            <p>Total</p>
+            <p className={classes.price}>{anonymousTotalDue()}</p>
+          </div>
+          <Link href="/menu">
+            <button className={classes.addMoreItems}>Add More Items</button>
+          </Link>
+        </>
+      );
+    }
+  }
+  function renderCart() {
+    if (props.addedItems.length > 0) {
+      return props.addedItems.map((addedItem) => (
+        <div className={classes.item} key={uuid()}>
+          <div className={classes.deleteDiv}>
+            <h1>{`${addedItem.quantity}x ${addedItem.name}`}</h1>
+            <Image
+              src={deleteIcon}
+              alt="deleteIcon"
+              onClick={() => {
+                deleteItemHandler(addedItem);
+                setTimeout(() => {
+                  router.reload(window.location.pathname);
+                }, 500);
+              }}
+            />
+          </div>
+
+          <div className={classes.size}>
+            <p>{addedItem?.sizePrice[0]?.size}</p>
+            <p className={classes.price}>
+              {addedItem?.sizePrice[0]?.price * addedItem?.quantity}
+            </p>
+          </div>
+          {addedItem.freePistachio === "Free Pistachio" && (
+            <div className={classes.freeExtraDiv}>
+              <p>Free Extra Pistachio</p>
+            </div>
+          )}
+          {addedItem.toppings.map((toppingObj) => {
+            if (Object.keys(toppingObj).length >= 1) {
+              return (
+                <p key={uuid()} id={classes.toppingsP}>
+                  Toppings
+                </p>
+              );
+            }
+          })}
+          <div className={classes.toppingDiv}>
+            <div>
+              {addedItem.toppings.map((toppingObj) => {
+                return Object.keys(toppingObj).map((topping) => (
+                  <p key={topping}>{`${topping}`}</p>
+                ));
+              })}
+            </div>
+            <div>
+              {addedItem.toppings.map((toppingObj) => {
+                return Object.values(toppingObj).map((qt) => (
+                  <p key={qt}>{`${qt}x`}</p>
+                ));
+              })}
+            </div>
+          </div>
+          <div className={classes.flavor}>
+            {addedItem.flavors.length > 1 ? (
+              addedItem.flavors.map((flavor, index) => (
+                <p key={index}>
+                  <span>{flavor}</span>
+                </p>
+              ))
+            ) : (
+              <p>{addedItem.flavors[0]}</p>
+            )}
+          </div>
+          {addedItem.extraPrice.length === 0 ? null : (
+            <div>
+              {addedItem.extraPrice?.map((extra, index) => (
+                <div className={classes.gift} key={uuid()}>
+                  <p>{extra.extra}</p>
+                  <p className={classes.price}>
+                    {extra.price * addedItem.quantity}
+                  </p>
+                </div>
+              ))}
+            </div>
+          )}
+          {addedItem.giftPrice.length === 0 ? null : (
+            <div>
+              {addedItem.giftPrice?.map((gift, index) => (
+                <div className={classes.gift} key={uuid()}>
+                  <p>{gift.gift}</p>
+                  <p className={classes.price}>
+                    {gift.price * addedItem.quantity}
+                  </p>
+                </div>
+              ))}
+            </div>
+          )}
+
+          <div>
+            <p>{addedItem.notes}</p>
+          </div>
+
+          <hr />
+        </div>
+      ));
+    } else if (props.addedItems.length === 0 && !session) {
+      return localCart?.map((addedItem, index) => (
+        <div className={classes.item} key={uuid()}>
+          <div className={classes.deleteDiv}>
+            <h1>{`${addedItem.quantity}x ${addedItem.name}`}</h1>
+            <Image
+              src={deleteIcon}
+              alt="deleteIcon"
+              onClick={() => {
+                const newCart = localCart;
+                newCart.splice(index, 1);
+                localStorage.setItem("items", JSON.stringify(newCart));
+                setTimeout(() => {
+                  router.reload(window.location.pathname);
+                }, 500);
+              }}
+            />
+          </div>
+
+          <div className={classes.size}>
+            <p>{addedItem?.sizePrice[0]?.size}</p>
+            <p className={classes.price}>
+              {addedItem?.sizePrice[0]?.price * addedItem?.quantity}
+            </p>
+          </div>
+          {addedItem.freePistachio === "Free Pistachio" && (
+            <div className={classes.freeExtraDiv}>
+              <p>Free Extra Pistachio</p>
+            </div>
+          )}
+          {addedItem.toppings.map((toppingObj) => {
+            if (Object.keys(toppingObj).length >= 1) {
+              return (
+                <p key={uuid()} id={classes.toppingsP}>
+                  Toppings
+                </p>
+              );
+            }
+          })}
+          <div className={classes.toppingDiv}>
+            <div>
+              {addedItem.toppings.map((toppingObj) => {
+                return Object.keys(toppingObj).map((topping) => (
+                  <p key={topping}>{`${topping}`}</p>
+                ));
+              })}
+            </div>
+            <div>
+              {addedItem.toppings.map((toppingObj) => {
+                return Object.values(toppingObj).map((qt) => (
+                  <p key={qt}>{`${qt}x`}</p>
+                ));
+              })}
+            </div>
+          </div>
+          <div className={classes.flavor}>
+            {addedItem.flavors.length > 1 ? (
+              addedItem.flavors.map((flavor, index) => (
+                <p key={index}>
+                  <span>{flavor}</span>
+                </p>
+              ))
+            ) : (
+              <p>{addedItem.flavors[0]}</p>
+            )}
+          </div>
+          {addedItem.extraPrice.length === 0 ? null : (
+            <div>
+              {addedItem.extraPrice?.map((extra, index) => (
+                <div className={classes.gift} key={uuid()}>
+                  <p>{extra.extra}</p>
+                  <p className={classes.price}>
+                    {extra.price * addedItem.quantity}
+                  </p>
+                </div>
+              ))}
+            </div>
+          )}
+          {addedItem.giftPrice.length === 0 ? null : (
+            <div>
+              {addedItem.giftPrice?.map((gift, index) => (
+                <div className={classes.gift} key={uuid()}>
+                  <p>{gift.gift}</p>
+                  <p className={classes.price}>
+                    {gift.price * addedItem.quantity}
+                  </p>
+                </div>
+              ))}
+            </div>
+          )}
+
+          <div>
+            <p>{addedItem.notes}</p>
+          </div>
+
+          <hr />
+        </div>
+      ));
+    }
+  }
   // let [itemsNo, setItemNo] = useState(0);
   // useEffect(() => {
   //   let noOfItems = 0;
@@ -230,7 +474,7 @@ function CheckoutDetails(props) {
       .toISOString()
       .split("T")[0];
     setMaxDate(formattedDate);
-setMinDate("2023-01-01");
+    setMinDate("2023-01-01");
     // if (currentTime >= 21) {
     //   setMinDate(formattedAfterTomorrowDate);
     // } else {
@@ -264,139 +508,273 @@ setMinDate("2023-01-01");
   }
   async function apartmentSubmitHandler(e) {
     e.preventDefault();
-    try {
-      if (props.addedItems.length === 0) {
-        alert("Please Add Items To Your Cart");
-      } else {
-        let thisOrderId = orderid.generate();
-        let currentTime = orderid.getTime(thisOrderId);
-        const orderData = {
-          addressType: "apartment",
-          userId: session.user._id,
-          orderItems: props.addedItems,
-          orderNumber: thisOrderId,
-          dateSubmitted: currentTime,
-          firstName: apartmentInputs.firstName,
-          lastName: apartmentInputs.lastName,
-          mobile: apartmentInputs.mobile,
-          backupMobile: apartmentInputs.backupMobile,
-          email: apartmentInputs.email,
-          governorate: apartmentInputs.governorate,
-          city: apartmentInputs.city,
-          area: apartmentInputs.area,
-          street: apartmentInputs.street,
-          building: apartmentInputs.building,
-          floor: apartmentInputs.floor,
-          apartment: apartmentInputs.apartment,
-          instructions: apartmentInputs.instructions,
-          scheduled: apartmentInputs.scheduled,
-          totalPrice: calculateTotalPriceDb(),
-        };
-        const response = await fetch("/api/checkout", {
-          method: "POST",
-          body: JSON.stringify(orderData),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        const data = await response.json();
+    if(session) {
+      try {
+        if (props.addedItems.length === 0) {
+          alert("Please Add Items To Your Cart");
+        } else {
+          let thisOrderId = orderid.generate();
+          let currentTime = orderid.getTime(thisOrderId);
+          const orderData = {
+            addressType: "apartment",
+            userId: session.user._id,
+            orderItems: props.addedItems,
+            orderNumber: thisOrderId,
+            dateSubmitted: currentTime,
+            firstName: apartmentInputs.firstName,
+            lastName: apartmentInputs.lastName,
+            mobile: apartmentInputs.mobile,
+            backupMobile: apartmentInputs.backupMobile,
+            email: apartmentInputs.email,
+            governorate: apartmentInputs.governorate,
+            city: apartmentInputs.city,
+            area: apartmentInputs.area,
+            street: apartmentInputs.street,
+            building: apartmentInputs.building,
+            floor: apartmentInputs.floor,
+            apartment: apartmentInputs.apartment,
+            instructions: apartmentInputs.instructions,
+            scheduled: apartmentInputs.scheduled,
+            totalPrice: calculateTotalPriceDb(),
+          };
+          const response = await fetch("/api/checkout", {
+            method: "POST",
+            body: JSON.stringify(orderData),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+          const data = await response.json();
 
-        // if (payMethod === "visa") {
-        //   firstStep();
-        // }
-        router.push("/thankyou");
+          // if (payMethod === "visa") {
+          //   firstStep();
+          // }
+          router.push("/thankyou");
+        }
+      } catch (e) {
+        alert(e.message);
       }
-    } catch (e) {
-      alert(e.message);
+    } else if(!session) {
+      try {
+        if (localCart.length === 0) {
+          alert("Please Add Items To Your Cart");
+        } else {
+          let thisOrderId = orderid.generate();
+          let currentTime = orderid.getTime(thisOrderId);
+          const orderData = {
+            addressType: "apartment",
+            orderItems: localCart,
+            orderNumber: thisOrderId,
+            dateSubmitted: currentTime,
+            firstName: apartmentInputs.firstName,
+            lastName: apartmentInputs.lastName,
+            mobile: apartmentInputs.mobile,
+            backupMobile: apartmentInputs.backupMobile,
+            email: apartmentInputs.email,
+            governorate: apartmentInputs.governorate,
+            city: apartmentInputs.city,
+            area: apartmentInputs.area,
+            street: apartmentInputs.street,
+            building: apartmentInputs.building,
+            floor: apartmentInputs.floor,
+            apartment: apartmentInputs.apartment,
+            instructions: apartmentInputs.instructions,
+            scheduled: apartmentInputs.scheduled,
+            totalPrice: anonymousTotalDue(),
+          };
+          const response = await fetch("/api/checkout", {
+            method: "POST",
+            body: JSON.stringify(orderData),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+          const data = await response.json();
+
+          // if (payMethod === "visa") {
+          //   firstStep();
+          // }
+          router.push("/thankyou");
+        }
+      } catch (e) {
+        alert(e.message);
+      }
     }
   }
   async function villaSubmitHandler(e) {
     e.preventDefault();
-    try {
-      if (props.addedItems.length === 0) {
-        alert("Please Add Items To Your Cart");
-      } else {
-        let thisOrderId = orderid.generate();
-        let currentTime = orderid.getTime(thisOrderId);
-        const orderData = {
-          addressType: "villa",
-          userId: session.user._id,
-          orderItems: props.addedItems,
-          orderNumber: thisOrderId,
-          dateSubmitted: currentTime,
-          firstName: villaInputs.firstName,
-          lastName: villaInputs.lastName,
-          mobile: villaInputs.mobile,
-          backupMobile: villaInputs.backupMobile,
-          email: villaInputs.email,
-          governorate: villaInputs.governorate,
-          city: villaInputs.city,
-          area: villaInputs.area,
-          street: villaInputs.street,
+    if(session) {
+      try {
+        if (props.addedItems.length === 0) {
+          alert("Please Add Items To Your Cart");
+        } else {
+          let thisOrderId = orderid.generate();
+          let currentTime = orderid.getTime(thisOrderId);
+          const orderData = {
+            addressType: "villa",
+            userId: session.user._id,
+            orderItems: props.addedItems,
+            orderNumber: thisOrderId,
+            dateSubmitted: currentTime,
+            firstName: villaInputs.firstName,
+            lastName: villaInputs.lastName,
+            mobile: villaInputs.mobile,
+            backupMobile: villaInputs.backupMobile,
+            email: villaInputs.email,
+            governorate: villaInputs.governorate,
+            city: villaInputs.city,
+            area: villaInputs.area,
+            street: villaInputs.street,
 
-          villa: villaInputs.villa,
-          instructions: villaInputs.instructions,
-          scheduled: villaInputs.scheduled,
-          totalPrice: calculateTotalPriceDb(),
-        };
-        const response = await fetch("/api/checkout", {
-          method: "POST",
-          body: JSON.stringify(orderData),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        const data = await response.json();
-        console.log(data);
-        router.push("/thankyou");
+            villa: villaInputs.villa,
+            instructions: villaInputs.instructions,
+            scheduled: villaInputs.scheduled,
+            totalPrice: calculateTotalPriceDb(),
+          };
+          const response = await fetch("/api/checkout", {
+            method: "POST",
+            body: JSON.stringify(orderData),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+          const data = await response.json();
+          console.log(data);
+          router.push("/thankyou");
+        }
+      } catch (e) {
+        alert(e.message);
       }
-    } catch (e) {
-      alert(e.message);
+    } else if(!session) {
+      try {
+        if (localCart.length === 0) {
+          alert("Please Add Items To Your Cart");
+        } else {
+          let thisOrderId = orderid.generate();
+          let currentTime = orderid.getTime(thisOrderId);
+          const orderData = {
+            addressType: "villa",
+            orderItems: localCart,
+            orderNumber: thisOrderId,
+            dateSubmitted: currentTime,
+            firstName: villaInputs.firstName,
+            lastName: villaInputs.lastName,
+            mobile: villaInputs.mobile,
+            backupMobile: villaInputs.backupMobile,
+            email: villaInputs.email,
+            governorate: villaInputs.governorate,
+            city: villaInputs.city,
+            area: villaInputs.area,
+            street: villaInputs.street,
+
+            villa: villaInputs.villa,
+            instructions: villaInputs.instructions,
+            scheduled: villaInputs.scheduled,
+            totalPrice: anonymousTotalDue(),
+          };
+          const response = await fetch("/api/checkout", {
+            method: "POST",
+            body: JSON.stringify(orderData),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+          const data = await response.json();
+          console.log(data);
+          router.push("/thankyou");
+        }
+      } catch (e) {
+        alert(e.message);
+      }
     }
   }
   async function companySubmitHandler(e) {
     e.preventDefault();
-    try {
-      if (props.addedItems.length === 0) {
-        alert("Please Add Items To Your Cart");
-      } else {
-        let thisOrderId = orderid.generate();
-        let currentTime = orderid.getTime(thisOrderId);
-        const orderData = {
-          addressType: "company",
-          userId: session.user._id,
-          orderItems: props.addedItems,
-          orderNumber: thisOrderId,
-          dateSubmitted: currentTime,
-          firstName: companyInputs.firstName,
-          lastName: companyInputs.lastName,
-          mobile: companyInputs.mobile,
-          backupMobile: companyInputs.backupMobile,
-          email: companyInputs.email,
-          governorate: companyInputs.governorate,
-          city: companyInputs.city,
-          area: companyInputs.area,
-          street: companyInputs.street,
+    if(session) {
+      try {
+        if (props.addedItems.length === 0) {
+          alert("Please Add Items To Your Cart");
+        } else {
+          let thisOrderId = orderid.generate();
+          let currentTime = orderid.getTime(thisOrderId);
+          const orderData = {
+            addressType: "company",
+            userId: session.user._id,
+            orderItems: props.addedItems,
+            orderNumber: thisOrderId,
+            dateSubmitted: currentTime,
+            firstName: companyInputs.firstName,
+            lastName: companyInputs.lastName,
+            mobile: companyInputs.mobile,
+            backupMobile: companyInputs.backupMobile,
+            email: companyInputs.email,
+            governorate: companyInputs.governorate,
+            city: companyInputs.city,
+            area: companyInputs.area,
+            street: companyInputs.street,
 
-          company: companyInputs.company,
-          instructions: companyInputs.instructions,
-          scheduled: companyInputs.scheduled,
-          totalPrice: calculateTotalPriceDb(),
-        };
-        const response = await fetch("/api/checkout", {
-          method: "POST",
-          body: JSON.stringify(orderData),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
+            company: companyInputs.company,
+            instructions: companyInputs.instructions,
+            scheduled: companyInputs.scheduled,
+            totalPrice: calculateTotalPriceDb(),
+          };
+          const response = await fetch("/api/checkout", {
+            method: "POST",
+            body: JSON.stringify(orderData),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
 
-        const data = await response.json();
-        console.log(data);
-        router.push("/thankyou");
+          const data = await response.json();
+          console.log(data);
+          router.push("/thankyou");
+        }
+      } catch (e) {
+        alert(e.message);
       }
-    } catch (e) {
-      alert(e.message);
+    } else if(!session) {
+      try {
+        if (localCart.length === 0) {
+          alert("Please Add Items To Your Cart");
+        } else {
+          let thisOrderId = orderid.generate();
+          let currentTime = orderid.getTime(thisOrderId);
+          const orderData = {
+            addressType: "company",
+            orderItems: localCart,
+            orderNumber: thisOrderId,
+            dateSubmitted: currentTime,
+            firstName: companyInputs.firstName,
+            lastName: companyInputs.lastName,
+            mobile: companyInputs.mobile,
+            backupMobile: companyInputs.backupMobile,
+            email: companyInputs.email,
+            governorate: companyInputs.governorate,
+            city: companyInputs.city,
+            area: companyInputs.area,
+            street: companyInputs.street,
+
+            company: companyInputs.company,
+            instructions: companyInputs.instructions,
+            scheduled: companyInputs.scheduled,
+            totalPrice: anonymousTotalDue(),
+          };
+          const response = await fetch("/api/checkout", {
+            method: "POST",
+            body: JSON.stringify(orderData),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+
+          const data = await response.json();
+          console.log(data);
+          router.push("/thankyou");
+        }
+      } catch (e) {
+        alert(e.message);
+      }
     }
   }
   function handleApartmentInputChange(e) {
@@ -475,7 +853,23 @@ setMinDate("2023-01-01");
 
     return sum + 45;
   }
+  function anonymousTotalDue() {
+    let sum = 0;
 
+    localCart?.map((item) => {
+      item.sizePrice.map((size) => {
+        sum += parseInt(size.price) * item.quantity;
+      });
+      item.extraPrice.map((extra) => {
+        sum += parseInt(extra.price) * item.quantity;
+      });
+      item.giftPrice.map((gift) => {
+        sum += parseInt(gift.price) * item.quantity;
+      });
+    });
+
+    return sum + 45;
+  }
   let workplaceDetailsHandler = () => {
     if (workplaceDetails) {
       showWorkplaceDetails(false);
@@ -949,116 +1343,9 @@ setMinDate("2023-01-01");
         <div className={classes.invoiceContainer}>
           <h1 onClick={totalDue}>Invoice</h1>
           <hr />
-          {props.addedItems.map((addedItem) => (
-            <div className={classes.item} key={uuid()}>
-              <div className={classes.deleteDiv}>
-                <h1>{`${addedItem.quantity}x ${addedItem.name}`}</h1>
-                <Image
-                  src={deleteIcon}
-                  alt="deleteIcon"
-                  onClick={() => {
-                    deleteItemHandler(addedItem);
-                    setTimeout(() => {
-                      router.reload(window.location.pathname);
-                    }, 500);
-                  }}
-                />
-              </div>
-
-              <div className={classes.size}>
-                <p>{addedItem?.sizePrice[0]?.size}</p>
-                <p className={classes.price}>
-                  {addedItem?.sizePrice[0]?.price * addedItem?.quantity}
-                </p>
-              </div>
-              {addedItem.freePistachio === "Free Pistachio" && (
-                <div className={classes.freeExtraDiv}>
-                  <p>Free Extra Pistachio</p>
-                </div>
-              )}
-              {addedItem.toppings.map((toppingObj) => {
-                if (Object.keys(toppingObj).length >= 1) {
-                  return (
-                    <p key={uuid()} id={classes.toppingsP}>
-                      Toppings
-                    </p>
-                  );
-                }
-              })}
-              <div className={classes.toppingDiv}>
-                <div>
-                  {addedItem.toppings.map((toppingObj) => {
-                    return Object.keys(toppingObj).map((topping) => (
-                      <p key={topping}>{`${topping}`}</p>
-                    ));
-                  })}
-                </div>
-                <div>
-                  {addedItem.toppings.map((toppingObj) => {
-                    return Object.values(toppingObj).map((qt) => (
-                      <p key={qt}>{`${qt}x`}</p>
-                    ));
-                  })}
-                </div>
-              </div>
-              <div className={classes.flavor}>
-                {addedItem.flavors.length > 1 ? (
-                  addedItem.flavors.map((flavor, index) => (
-                    <p key={index}>
-                      <span>{flavor}</span>
-                    </p>
-                  ))
-                ) : (
-                  <p>{addedItem.flavors[0]}</p>
-                )}
-              </div>
-              {addedItem.extraPrice.length === 0 ? null : (
-                <div>
-                  {addedItem.extraPrice?.map((extra, index) => (
-                    <div className={classes.gift} key={uuid()}>
-                      <p>{extra.extra}</p>
-                      <p className={classes.price}>
-                        {extra.price * addedItem.quantity}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              )}
-              {addedItem.giftPrice.length === 0 ? null : (
-                <div>
-                  {addedItem.giftPrice?.map((gift, index) => (
-                    <div className={classes.gift} key={uuid()}>
-                      <p>{gift.gift}</p>
-                      <p className={classes.price}>
-                        {gift.price * addedItem.quantity}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              )}
-
-              <div>
-                <p>{addedItem.notes}</p>
-              </div>
-
-              <hr />
-            </div>
-          ))}
-          {props.addedItems.length != 0 && (
-            <>
-              <div className={classes.deliveryFee}>
-                <p>Delivery</p>
-                <p className={classes.price}>45 EGP</p>
-              </div>
-              <div className={classes.total}>
-                <p>Total</p>
-                <p className={classes.price}>{totalDue()}</p>
-              </div>
-              <Link href="/menu">
-                <button className={classes.addMoreItems}>Add More Items</button>
-              </Link>
-            </>
-          )}
+          {renderCart()}
+          {renderDeliveryTab()}
+    
         </div>
       </section>
     </>

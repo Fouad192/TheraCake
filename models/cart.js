@@ -4,7 +4,7 @@ let Schema = mongoose.Schema;
 let cart = new Schema({
   userId: {
     type: String,
-    required: true,
+    // required: true,
   },
   quantity: {
     type: Number,

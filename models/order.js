@@ -4,7 +4,7 @@ let Schema = mongoose.Schema;
 let orderDetails = new Schema({
   userId: {
     type: String,
-    required: true
+    // required: true
   },
   addressType: {
     type: String

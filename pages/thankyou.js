@@ -3,16 +3,22 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Head from "next/head";
 // import handleCardPayment from "./api/cardPayment";
+import { useSession } from "next-auth/react";
+
 function ThankYou() {
   const router = useRouter();
-  const [isApproved, setStatus] = useState()
-  const [status, addStatus] = useState()
-
+  const { data: session } = useSession();
+  const [isApproved, setStatus] = useState();
+  const [status, addStatus] = useState();
 
   useEffect(() => {
-    setTimeout(() => {
-      router.push("/history");
-    }, 2000);
+    if (session) {
+      setTimeout(() => {
+        router.push("/history");
+      }, 2000);
+    } else if(!session) {
+      router.push('/menu')
+    }
   });
   // useEffect(() => {
   //   const data = handleCardPayment()
@@ -28,7 +34,7 @@ function ThankYou() {
   //   console.log(router.query)
   //   console.log(success)
   // }, [router]);
- 
+
   return (
     <>
       <Head>
@@ -40,12 +46,12 @@ extreme dedication and the best quality"
         />
       </Head>
       {/* {isApproved === 'true' ? ( */}
-        <div className={classes.container}>
-          <h1>Thank you for your order</h1>
-          <p>You will be redirected to your order history page</p>
-        </div>
+      <div className={classes.container}>
+        <h1>Thank you for your order</h1>
+        <p>You will be redirected to your order history page</p>
+      </div>
       {/* ) : ( */}
-        {/* <div className={classes.container}>
+      {/* <div className={classes.container}>
           <h1>An Error Has Occured With Your Transaction</h1>
           <p>Please try a different card or payment method</p>
         </div> */}

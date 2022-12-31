@@ -39,11 +39,11 @@ export async function getServerSideProps(ctx) {
 
     await dbConnect();
 
-    const cartData = await Cart.find({userId: sessionData.user._id})
+    const cartData = await Cart.find({userId: sessionData?.user._id})
     // let cartItemCount = cartDada.length
-    const apartmentAddressData = await OrderCheckout.find({userId: sessionData.user._id, addressType: 'apartment'})
-    const villaAddressData = await OrderCheckout.find({userId: sessionData.user._id, addressType: 'villa'})
-    const companyAddressData = await OrderCheckout.find({userId: sessionData.user._id, addressType: 'company'})
+    const apartmentAddressData = await OrderCheckout.find({userId: sessionData?.user._id, addressType: 'apartment'})
+    const villaAddressData = await OrderCheckout.find({userId: sessionData?.user._id, addressType: 'villa'})
+    const companyAddressData = await OrderCheckout.find({userId: sessionData?.user._id, addressType: 'company'})
     return {
         props: {
             addedItems: JSON.parse(JSON.stringify((cartData))),

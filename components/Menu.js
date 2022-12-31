@@ -113,11 +113,11 @@ function Menu(props) {
               Brownies
             </button>
           </div>
-          <div className={classes.offer}>
+          {/* <div className={classes.offer}>
             <p>Buy ONE get the 2nd 20% off</p>
             <p>Buy TWO get the 3rd 30% off</p>
             <p>FREE Shipping on orders over 450EGP</p>
-          </div>
+          </div> */}
           {isAuthorized ? (
             <button className={classes.addItemBtn} onClick={toggleAddItemBtn}>
               Add Item

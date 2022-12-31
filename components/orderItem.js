@@ -17,7 +17,7 @@ function OrderItem({ order }) {
     let apartmentText = `Order Number: ${order.orderNumber} \n Client Name: ${
       order.firstName
     } ${order.lastName} \n Mobile Number: ${order.mobile} \n Total: ${
-       45 + sum
+       order.totalPrice
     } \n Address: ${order.governorate} - ${order.city} \n ${order.area} - Street: ${order.street} \n Building Number: ${order.building} - Floor: ${order.floor} - Apartment Number: ${order.apartment} \n Payment Method: Cash`;
    let encoded = encodeURI(apartmentText)
   //  let redirectLink = `https://wa.me/?text=${encoded}`;
@@ -26,7 +26,7 @@ function OrderItem({ order }) {
      let apartmentText = `Order Number: ${order.orderNumber} \n Client Name: ${
        order.firstName
      } ${order.lastName} \n Mobile Number: ${order.mobile} \n Total: ${
-       45 + sum
+       order.totalPrice
      } \n Address: ${order.governorate} - ${order.city} \n ${order.area} - Street: ${
        order.street
      } \n Villa Number: ${order.villa}
@@ -38,7 +38,7 @@ function OrderItem({ order }) {
      let apartmentText = `Order Number: ${order.orderNumber} \n Client Name: ${
        order.firstName
      } ${order.lastName} \n Mobile Number: ${order.mobile} \n Total: ${
-        45 + sum
+        order.totalPrice
      } \n Address: ${order.governorate} - ${order.city} \n ${order.area} - Street: ${
        order.street
      } \n Company Name: ${order.company}

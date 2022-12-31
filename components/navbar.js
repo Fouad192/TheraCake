@@ -9,8 +9,6 @@ import Badge from "@mui/material/Badge";
 function Navbar(props) {
   const { data: session } = useSession();
   let [authorized, setAuthorized] = useState();
-  
-
 
   let [isNavOpen, showNav] = useState(false);
   useEffect(() => {
@@ -39,7 +37,7 @@ function Navbar(props) {
             <li>
               <Link href="/menu">Menu</Link>
               {props.count ? (
-                <Badge badgeContent={props.count} color='primary'>
+                <Badge badgeContent={props.count} color="primary">
                   <Link href="/checkout">Checkout</Link>
                 </Badge>
               ) : (
@@ -116,6 +114,9 @@ function Navbar(props) {
             <li>
               <Link href="/">Home</Link>
               <Link href="/menu">Menu</Link>
+
+              <Link href="/checkout">Checkout</Link>
+
               <button className={classes.signBtns} onClick={() => signIn()}>
                 Sign In
               </button>
@@ -134,6 +135,10 @@ function Navbar(props) {
             <ul>
               <li>
                 <Link href="/menu">Menu</Link>
+              </li>
+              <hr/>
+              <li>
+                <Link href="/checkout">Checkout</Link>
               </li>
               <hr />
 
