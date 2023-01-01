@@ -1,5 +1,5 @@
 import classes from "./checkoutDetails.module.css";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import deleteIcon from "../public/delete.png";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -19,8 +19,9 @@ function CheckoutDetails(props) {
   const [localCart, setLocalCart] = useState([]);
   let [maxDate, setMaxDate] = useState();
   let [minDate, setMinDate] = useState();
+  const [disableBtn, setDisableBtn] = useState()
   let [totalPrice, setTotalPrice] = useState(calculateTotalPriceDb());
-
+  const submitBtnRef = useRef();
   useEffect(() => {
     if (
       typeof localStorage.getItem("items") !== "undefined" &&
@@ -476,7 +477,7 @@ function CheckoutDetails(props) {
     )
       .toISOString()
       .split("T")[0];
-    setMaxDate(formattedDate);
+    setMaxDate("2023-01-02");
     setMinDate("2023-01-01");
     // if (currentTime >= 21) {
     //   setMinDate(formattedAfterTomorrowDate);
@@ -510,7 +511,10 @@ function CheckoutDetails(props) {
     return sum + 45;
   }
   async function apartmentSubmitHandler(e) {
-    e.preventDefault();
+    setDisableBtn(true)
+    setTimeout(() => {
+      setDisableBtn(false)
+    }, 2000);
     if (session) {
       try {
         if (props.addedItems.length === 0) {
@@ -540,19 +544,23 @@ function CheckoutDetails(props) {
             scheduled: apartmentInputs.scheduled,
             totalPrice: calculateTotalPriceDb(),
           };
-          const response = await fetch("/api/checkout", {
+        
+             const response = await fetch("/api/checkout", {
             method: "POST",
             body: JSON.stringify(orderData),
             headers: {
               "Content-Type": "application/json",
             },
           });
+          router.push("/thankyou");
+
+   
+         
           const data = await response.json();
 
           // if (payMethod === "visa") {
           //   firstStep();
           // }
-          router.push("/thankyou");
         }
       } catch (e) {
         alert(e.message);
@@ -1062,7 +1070,12 @@ function CheckoutDetails(props) {
                     <p className={classes.dateNote}>
                       Orders placed after 9PM will be delievered after tomorrow
                     </p>
-                    <button id={classes.apartmentSubmitBtn}>Place Order</button>
+                    <button
+                      id={classes.apartmentSubmitBtn}
+                      disabled={disableBtn}
+                    >
+                      Place Order
+                    </button>
                   </form>
                 </div>
               </div>
@@ -1195,7 +1208,9 @@ function CheckoutDetails(props) {
                     <p className={classes.dateNote}>
                       Orders placed after 9PM will be delievered after tomorrow
                     </p>
-                    <button id={classes.villaSubmitBtn}>Place Order</button>
+                    <button id={classes.villaSubmitBtn} disabled={disableBtn}>
+                      Place Order
+                    </button>
                   </form>
                 </div>
               </div>
@@ -1336,7 +1351,12 @@ function CheckoutDetails(props) {
                       Orders placed after 9PM will be delievered after tomorrow
                     </p>
 
-                    <button id={classes.workplaceSubmitBtn}>Place Order</button>
+                    <button
+                      id={classes.workplaceSubmitBtn}
+                      disabled={disableBtn}
+                    >
+                      Place Order
+                    </button>
                   </form>
                 </div>
               </div>
