@@ -384,61 +384,64 @@ function CheckoutDetails(props) {
   //   firstStep()
   // }, 1000);
   useEffect(() => {
-    if (props.apartmentAddressData[apartmentLastIndex]) {
-      let initialApartmentAddressDetails = {
-        firstName: props.apartmentAddressData[apartmentLastIndex].firstName,
-        lastName: props.apartmentAddressData[apartmentLastIndex].lastName,
-        mobile: props.apartmentAddressData[apartmentLastIndex].mobile,
-        backupMobile:
-          props.apartmentAddressData[apartmentLastIndex].backupMobile,
-        email: props.apartmentAddressData[apartmentLastIndex].email,
-        governorate: props.apartmentAddressData[apartmentLastIndex].governorate,
-        city: props.apartmentAddressData[apartmentLastIndex].city,
-        area: props.apartmentAddressData[apartmentLastIndex].area,
-        street: props.apartmentAddressData[apartmentLastIndex].street,
-        building: props.apartmentAddressData[apartmentLastIndex].building,
-        floor: props.apartmentAddressData[apartmentLastIndex].floor,
-        apartment: props.apartmentAddressData[apartmentLastIndex].apartment,
-        instructions: "",
-        scheduled: "",
-      };
-      setApartmentInputs(initialApartmentAddressDetails);
-    } else if (!props.apartmentAddressData[apartmentLastIndex]) {
-      setApartmentInputs({});
-    }
-    if (props.villaAddressData[villaLastIndex]) {
-      let initialVillaAddressDetails = {
-        firstName: props.villaAddressData[villaLastIndex].firstName,
-        lastName: props.villaAddressData[villaLastIndex].lastName,
-        mobile: props.villaAddressData[villaLastIndex].mobile,
-        backupMobile: props.villaAddressData[villaLastIndex].backupMobile,
-        email: props.villaAddressData[villaLastIndex].email,
-        governorate: props.villaAddressData[villaLastIndex].governorate,
-        city: props.villaAddressData[villaLastIndex].city,
-        area: props.villaAddressData[villaLastIndex].area,
-        street: props.villaAddressData[villaLastIndex].street,
-        villa: props.villaAddressData[villaLastIndex].villa,
-        instructions: "",
-        scheduled: "",
-      };
-      setVillaInputs(initialVillaAddressDetails);
-    }
-    if (props.companyAddressData[companyLastIndex]) {
-      let initialCompanyAddressDetails = {
-        firstName: props.companyAddressData[companyLastIndex].firstName,
-        lastName: props.companyAddressData[companyLastIndex].lastName,
-        mobile: props.companyAddressData[companyLastIndex].mobile,
-        backupMobile: props.companyAddressData[companyLastIndex].backupMobile,
-        email: props.companyAddressData[companyLastIndex].email,
-        governorate: props.companyAddressData[companyLastIndex].governorate,
-        city: props.companyAddressData[companyLastIndex].city,
-        area: props.companyAddressData[companyLastIndex].area,
-        street: props.companyAddressData[companyLastIndex].street,
-        company: props.companyAddressData[companyLastIndex].company,
-        instructions: "",
-        scheduled: "",
-      };
-      setCompanyInputs(initialCompanyAddressDetails);
+    if (session) {
+      if (props.apartmentAddressData[apartmentLastIndex]) {
+        let initialApartmentAddressDetails = {
+          firstName: props.apartmentAddressData[apartmentLastIndex].firstName,
+          lastName: props.apartmentAddressData[apartmentLastIndex].lastName,
+          mobile: props.apartmentAddressData[apartmentLastIndex].mobile,
+          backupMobile:
+            props.apartmentAddressData[apartmentLastIndex].backupMobile,
+          email: props.apartmentAddressData[apartmentLastIndex].email,
+          governorate:
+            props.apartmentAddressData[apartmentLastIndex].governorate,
+          city: props.apartmentAddressData[apartmentLastIndex].city,
+          area: props.apartmentAddressData[apartmentLastIndex].area,
+          street: props.apartmentAddressData[apartmentLastIndex].street,
+          building: props.apartmentAddressData[apartmentLastIndex].building,
+          floor: props.apartmentAddressData[apartmentLastIndex].floor,
+          apartment: props.apartmentAddressData[apartmentLastIndex].apartment,
+          instructions: "",
+          scheduled: "",
+        };
+        setApartmentInputs(initialApartmentAddressDetails);
+      } else if (!props.apartmentAddressData[apartmentLastIndex]) {
+        setApartmentInputs({});
+      }
+      if (props.villaAddressData[villaLastIndex]) {
+        let initialVillaAddressDetails = {
+          firstName: props.villaAddressData[villaLastIndex].firstName,
+          lastName: props.villaAddressData[villaLastIndex].lastName,
+          mobile: props.villaAddressData[villaLastIndex].mobile,
+          backupMobile: props.villaAddressData[villaLastIndex].backupMobile,
+          email: props.villaAddressData[villaLastIndex].email,
+          governorate: props.villaAddressData[villaLastIndex].governorate,
+          city: props.villaAddressData[villaLastIndex].city,
+          area: props.villaAddressData[villaLastIndex].area,
+          street: props.villaAddressData[villaLastIndex].street,
+          villa: props.villaAddressData[villaLastIndex].villa,
+          instructions: "",
+          scheduled: "",
+        };
+        setVillaInputs(initialVillaAddressDetails);
+      }
+      if (props.companyAddressData[companyLastIndex]) {
+        let initialCompanyAddressDetails = {
+          firstName: props.companyAddressData[companyLastIndex].firstName,
+          lastName: props.companyAddressData[companyLastIndex].lastName,
+          mobile: props.companyAddressData[companyLastIndex].mobile,
+          backupMobile: props.companyAddressData[companyLastIndex].backupMobile,
+          email: props.companyAddressData[companyLastIndex].email,
+          governorate: props.companyAddressData[companyLastIndex].governorate,
+          city: props.companyAddressData[companyLastIndex].city,
+          area: props.companyAddressData[companyLastIndex].area,
+          street: props.companyAddressData[companyLastIndex].street,
+          company: props.companyAddressData[companyLastIndex].company,
+          instructions: "",
+          scheduled: "",
+        };
+        setCompanyInputs(initialCompanyAddressDetails);
+      }
     }
   }, []);
 
@@ -508,7 +511,7 @@ function CheckoutDetails(props) {
   }
   async function apartmentSubmitHandler(e) {
     e.preventDefault();
-    if(session) {
+    if (session) {
       try {
         if (props.addedItems.length === 0) {
           alert("Please Add Items To Your Cart");
@@ -554,7 +557,7 @@ function CheckoutDetails(props) {
       } catch (e) {
         alert(e.message);
       }
-    } else if(!session) {
+    } else if (!session) {
       try {
         if (localCart.length === 0) {
           alert("Please Add Items To Your Cart");
@@ -603,7 +606,7 @@ function CheckoutDetails(props) {
   }
   async function villaSubmitHandler(e) {
     e.preventDefault();
-    if(session) {
+    if (session) {
       try {
         if (props.addedItems.length === 0) {
           alert("Please Add Items To Your Cart");
@@ -645,7 +648,7 @@ function CheckoutDetails(props) {
       } catch (e) {
         alert(e.message);
       }
-    } else if(!session) {
+    } else if (!session) {
       try {
         if (localCart.length === 0) {
           alert("Please Add Items To Your Cart");
@@ -690,7 +693,7 @@ function CheckoutDetails(props) {
   }
   async function companySubmitHandler(e) {
     e.preventDefault();
-    if(session) {
+    if (session) {
       try {
         if (props.addedItems.length === 0) {
           alert("Please Add Items To Your Cart");
@@ -733,7 +736,7 @@ function CheckoutDetails(props) {
       } catch (e) {
         alert(e.message);
       }
-    } else if(!session) {
+    } else if (!session) {
       try {
         if (localCart.length === 0) {
           alert("Please Add Items To Your Cart");
@@ -1345,7 +1348,6 @@ function CheckoutDetails(props) {
           <hr />
           {renderCart()}
           {renderDeliveryTab()}
-    
         </div>
       </section>
     </>
