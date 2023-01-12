@@ -158,10 +158,10 @@ function SelectionPanel(props) {
             freePistachio: selectedFreeExtra,
           });
           localStorage.setItem("items", JSON.stringify(pushArray));
-          console.log('secondItem')
+          console.log("secondItem");
         } else {
           localStorage.setItem("items", JSON.stringify(cartArr));
-          console.log('firstItem')
+          console.log("firstItem");
         }
         setTimeout(() => {
           router.reload(window.location.pathname);
@@ -181,7 +181,12 @@ function SelectionPanel(props) {
   return (
     <div className={classes.selectionPanel} ref={selectionPanelRef}>
       <div className={classes.selectionImage}>
-        <Image src={props.selectionData.img} alt="basicCake" width={1000} height={100}/>
+        <Image
+          src={props.selectionData.img}
+          alt="basicCake"
+          width={1000}
+          height={100}
+        />
       </div>
       <div className={classes.selectionHeaders}>
         <h1>{props.selectionData.name}</h1>
@@ -298,8 +303,10 @@ function SelectionPanel(props) {
           {props.selectionData.toppings.length === 0 ? null : (
             <div className={classes.toppings}>
               <h1>Toppings</h1>
-              {typeof maxToppings !== 'undefined' ? <p>Select up to {`${maxToppings}`} toppings</p> : null}
-              
+              {typeof maxToppings !== "undefined" ? (
+                <p>Select up to {`${maxToppings}`} toppings</p>
+              ) : null}
+
               {props.selectionData.name === "Mountain Of Heaven" ? (
                 <p>Select from 1 to 3 toppings</p>
               ) : null}
@@ -325,20 +332,29 @@ function SelectionPanel(props) {
                                 [e.target.name]: 1,
                               };
                             } else {
-                             
+                              console.log("hi");
 
                               return {
                                 ...prevState,
                                 [e.target.name]: isNaN(prevState[e.target.name])
                                   ? 1
-                                  : prevState[e.target.name]++,
+                                  : prevState[e.target.name] + 1,
                               };
                             }
                           } else {
-                            return {
-                              ...prevState,
-                              [e.target.name]: prevState[e.target.name],
-                            };
+                            console.log("hi from return same num");
+                            if (
+                              prevState.hasOwnProperty(
+                                [e.target.name].toString()
+                              )
+                            ) {
+                              return {
+                                ...prevState,
+                                [e.target.name]: prevState[e.target.name],
+                              };
+                            } else {
+                              return {...prevState}
+                            }
                           }
                         });
                       }}
@@ -360,10 +376,9 @@ function SelectionPanel(props) {
                       name={item}
                       onClick={(e) =>
                         setSelectedToppings((prevState) => {
-                 
                           return {
                             ...prevState,
-                            [e.target.name]: prevState[e.target.name]--,
+                            [e.target.name]: prevState[e.target.name] - 1,
                           };
                         })
                       }
