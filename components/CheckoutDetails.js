@@ -394,6 +394,7 @@ function CheckoutDetails(props) {
     let response = await request.json();
 
     let id = response.id;
+    console.log(response)
     orderData["paymobId"] = id;
     orderData["paymentMethod"] = "visa";
     const internalRequest = await fetch("/api/cardPayment", {
@@ -553,7 +554,7 @@ function CheckoutDetails(props) {
                 "Content-Type": "application/json",
               },
             });
-            // sendMail()
+            sendMail()
             router.push("/thankyou");
 
             // const data = await response.json();
@@ -603,7 +604,7 @@ function CheckoutDetails(props) {
                 "Content-Type": "application/json",
               },
             });
-            // sendMail()
+            sendMail()
             router.push("/thankyou");
           }
         }
@@ -652,7 +653,7 @@ function CheckoutDetails(props) {
                 "Content-Type": "application/json",
               },
             });
-            // sendMail()
+            sendMail()
             router.push("/thankyou");
 
             // const data = await response.json();
@@ -699,7 +700,7 @@ function CheckoutDetails(props) {
                 "Content-Type": "application/json",
               },
             });
-            // sendMail();
+            sendMail();
 
             router.push("/thankyou");
 
@@ -751,7 +752,7 @@ function CheckoutDetails(props) {
                 "Content-Type": "application/json",
               },
             });
-            // sendMail();
+            sendMail();
 
             router.push("/thankyou");
 
@@ -798,7 +799,7 @@ function CheckoutDetails(props) {
                 "Content-Type": "application/json",
               },
             });
-            // sendMail();
+            sendMail();
 
             router.push("/thankyou");
 
@@ -829,46 +830,7 @@ function CheckoutDetails(props) {
       showApartmentDetails(true);
     }
   };
-  // function discount() {
-  //   let sum = 0;
-  //   let discountedItem;
-  //   if (props.addedItems.length === 2) {
-  //     for (let i = 0; i <= props.addedItems.length; i++) {
-  //       for (let j = i + 1; j < props.addedItems.length; j++) {
-  //         if (
-  //           parseInt(props.addedItems[i].sizePrice[0].price) >
-  //           parseInt(props.addedItems[j].sizePrice[0].price)
-  //         ) {
-  //           sum +=
-  //             parseInt(props.addedItems[j].sizePrice[0].price) +
-  //             parseInt(props.addedItems[i].sizePrice[0].price) -
-  //             (parseInt(props.addedItems[j].sizePrice[0].price) * 20) / 100;
-  //         } else {
-  //            sum +=
-  //              parseInt(props.addedItems[i].sizePrice[0].price) +
-  //              parseInt(props.addedItems[j].sizePrice[0].price) -
-  //              (parseInt(props.addedItems[i].sizePrice[0].price) * 20) / 100;
-  //         }
-  //       }
-  //     }
-  //   } else if(props.addedItems.length === 3) {
-  //     for (let i = 0; i <= props.addedItems.length; i++) {
-  //       for (let j = i + 1; j < props.addedItems.length; j++) {
-  //         if (
-  //           parseInt(props.addedItems[i].sizePrice[0].price) >
-  //           parseInt(props.addedItems[j].sizePrice[0].price)
-  //         ) {
-  //           sum +=
-  //             parseInt(props.addedItems[j].sizePrice[0].price) +
-  //             parseInt(props.addedItems[i].sizePrice[0].price) -
-  //             (parseInt(props.addedItems[j].sizePrice[0].price) * 20) / 100;
-  //         }
-  //       }
-  //     }
-  //   }
-
-  //   return sum;
-  // }
+ 
   function totalDue() {
     let sum = 0;
 
@@ -1067,7 +1029,7 @@ function CheckoutDetails(props) {
                         value={apartmentInputs.instructions}
                       />
                     </div>
-                    <div>
+                    {/* <div>
                       <h1>Payment Method</h1>
                       <select
                         id={classes.payMethodSelect}
@@ -1077,7 +1039,7 @@ function CheckoutDetails(props) {
                         <option value="cash">Cash</option>
                         <option value="visa">Visa</option>
                       </select>
-                    </div>
+                    </div> */}
                     <div className={classes.scheduleInputs}>
                       <div>
                         <h1>Schedule Delivery</h1>

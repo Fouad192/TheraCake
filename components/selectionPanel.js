@@ -79,6 +79,8 @@ function SelectionPanel(props) {
         setMaxToppings(9);
       } else if (currCheckedSize.includes("12")) {
         setMaxToppings(12);
+      } else if (currCheckedSize.includes("6")) {
+        setMaxToppings(6);
       } else if (currCheckedSize.includes("20")) {
         setMaxToppings(20);
       }
@@ -323,8 +325,7 @@ function SelectionPanel(props) {
                                 [e.target.name]: 1,
                               };
                             } else {
-                              console.log(prevState[e.target.name]);
-                              console.log(prevState[e.target.name]++);
+                             
 
                               return {
                                 ...prevState,
@@ -359,8 +360,7 @@ function SelectionPanel(props) {
                       name={item}
                       onClick={(e) =>
                         setSelectedToppings((prevState) => {
-                          console.log(prevState[e.target.name]);
-                          console.log(prevState[e.target.name]--);
+                 
                           return {
                             ...prevState,
                             [e.target.name]: prevState[e.target.name]--,

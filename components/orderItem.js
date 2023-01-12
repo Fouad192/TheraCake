@@ -290,7 +290,7 @@ encodeData()
               )}
             </div>
             <div className={classes.addressBtns}>
-              <button>View Map</button>
+              {/* <button>View Map</button> */}
               <Link target="_blank" href={`https://wa.me/?text=${encodedText}`}>
                 <button onClick={encodeData}>Send Via Whatsapp</button>
               </Link>

@@ -265,7 +265,7 @@ function Menu(props) {
             ))}
           </div>
         </div>
-        {/* {itemProps ? <SelectionPanel selectionData={itemProps} /> : null} */}
+        {itemProps ? <SelectionPanel selectionData={itemProps} /> : null}
 
         {/* {returnSelectionPanel()} */}
       </section>
