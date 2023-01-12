@@ -1070,6 +1070,7 @@ function CheckoutDetails(props) {
                     <div>
                       <h1>Payment Method</h1>
                       <select
+                        id={classes.payMethodSelect}
                         defaultValue=""
                         onChange={(e) => setPayMethod(e.target.value)}
                       >
