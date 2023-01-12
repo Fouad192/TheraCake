@@ -1,5 +1,6 @@
 import dbConnect from "../../lib/dbConnect";
 import OrderCheckout from "../../models/order";
+import emailjs from '@emailjs/browser'
 async function handleCardPayment(req, res) {
   if (req?.method === "POST" && req?.body.type !== "orderItems") {
     res.json({message: 'done'});
@@ -21,6 +22,21 @@ async function handleCardPayment(req, res) {
           }
         }
       );
+      emailjs
+        .send(
+          "service_a3dk9vt",
+          "template_2shv7m8",
+          { from_name: "TheraCake" },
+          "28Q8DENkU-oYYZuQc"
+        )
+        .then(
+          function (response) {
+            console.log("SUCCESS!");
+          },
+          function (error) {
+            alert(error);
+          }
+        );
     } else if (paymobAPIData.success === false) {
       OrderCheckout.findOneAndDelete(
         { paymobId: paymobAPIData.order.id },

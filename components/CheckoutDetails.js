@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import uuid from "react-uuid";
-
+import emailjs from '@emailjs/browser'
 // import handleCardPayment from "../pages/api/cardPayment";
 const orderid = require("order-id")("key");
 
@@ -553,6 +553,7 @@ function CheckoutDetails(props) {
                 "Content-Type": "application/json",
               },
             });
+            sendMail()
             router.push("/thankyou");
 
             // const data = await response.json();
@@ -602,6 +603,7 @@ function CheckoutDetails(props) {
                 "Content-Type": "application/json",
               },
             });
+            sendMail()
             router.push("/thankyou");
           }
         }
@@ -650,6 +652,7 @@ function CheckoutDetails(props) {
                 "Content-Type": "application/json",
               },
             });
+            sendMail()
             router.push("/thankyou");
 
             // const data = await response.json();
@@ -696,6 +699,8 @@ function CheckoutDetails(props) {
                 "Content-Type": "application/json",
               },
             });
+            sendMail();
+
             router.push("/thankyou");
 
             // const data = await response.json();
@@ -746,6 +751,8 @@ function CheckoutDetails(props) {
                 "Content-Type": "application/json",
               },
             });
+            sendMail();
+
             router.push("/thankyou");
 
             // const data = await response.json();
@@ -791,6 +798,8 @@ function CheckoutDetails(props) {
                 "Content-Type": "application/json",
               },
             });
+            sendMail();
+
             router.push("/thankyou");
 
             // const data = await response.json();
