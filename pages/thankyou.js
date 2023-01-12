@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import Head from "next/head";
 import { useSession } from "next-auth/react";
 import { sha512 } from "js-sha512";
-// import { getHash } from "next/dist/server/image-optimizer";
 function ThankYou(props) {
   const router = useRouter();
   const { data: session } = useSession();
