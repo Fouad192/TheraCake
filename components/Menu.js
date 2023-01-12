@@ -99,6 +99,7 @@ function Menu(props) {
           <AddItem
             toggleAddItemPopup={toggleAddItemPopup}
             onAddItem={addItemHandler}
+            key="addItem"
           />
         )}
         {editItemPopup && (
@@ -264,7 +265,7 @@ function Menu(props) {
             ))}
           </div>
         </div>
-        {/* {itemProps ? <SelectionPanel selectionData={itemProps} /> : null} */}
+        {itemProps ? <SelectionPanel selectionData={itemProps} /> : null}
 
         {/* {returnSelectionPanel()} */}
       </section>

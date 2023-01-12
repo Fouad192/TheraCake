@@ -6,14 +6,14 @@ import { useRouter } from "next/router";
 import uuid from "react-uuid";
 
 function EditItem({ data, openEditItem }) {
-  let router = useRouter();
-  let [itemName, setItemName] = useState(data.name);
-  let [itemDescription, setItemDescription] = useState(data.description);
-  let [itemFlavor, setItemFlavor] = useState(data.flavors);
-  let [itemExtras, setItemExtras] = useState(data.extraPrice);
-  let [itemToppings, setItemToppings] = useState(data.toppings);
-  let [itemCategory, setItemCategory] = useState(data.category);
-  let [itemSizes, setItemSizes] = useState(data.sizePrice);
+  const router = useRouter();
+  const [itemName, setItemName] = useState(data.name);
+  const [itemDescription, setItemDescription] = useState(data.description);
+  const [itemFlavor, setItemFlavor] = useState(data.flavors);
+  const [itemExtras, setItemExtras] = useState(data.extraPrice);
+  const [itemToppings, setItemToppings] = useState(data.toppings);
+  const [itemCategory, setItemCategory] = useState(data.category);
+  const [itemSizes, setItemSizes] = useState(data.sizePrice);
  
   let fileInputRef = useRef();
 

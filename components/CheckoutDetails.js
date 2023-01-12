@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import uuid from "react-uuid";
-import { render } from "react-dom";
+
 // import handleCardPayment from "../pages/api/cardPayment";
 const orderid = require("order-id")("key");
 
@@ -19,9 +19,19 @@ function CheckoutDetails(props) {
   const [localCart, setLocalCart] = useState([]);
   let [maxDate, setMaxDate] = useState();
   let [minDate, setMinDate] = useState();
-  const [disableBtn, setDisableBtn] = useState()
+  const [disableBtn, setDisableBtn] = useState();
+  const [visaData, setVisaData] = useState();
   let [totalPrice, setTotalPrice] = useState(calculateTotalPriceDb());
+  let [apartmentDetails, showApartmentDetails] = useState(false);
+  let [villaDetails, showVillaDetails] = useState(false);
+  let [workplaceDetails, showWorkplaceDetails] = useState(false);
+  let [giftPrices, setGiftPrices] = useState([]);
+  let [apartmentInputs, setApartmentInputs] = useState({});
+  let [villaInputs, setVillaInputs] = useState({});
+  let [companyInputs, setCompanyInputs] = useState({});
+  const [payMethod, setPayMethod] = useState("cash");
   const submitBtnRef = useRef();
+
   useEffect(() => {
     if (
       typeof localStorage.getItem("items") !== "undefined" &&
@@ -30,6 +40,67 @@ function CheckoutDetails(props) {
       setLocalCart(JSON.parse(localStorage.getItem("items")));
     }
   }, []);
+  useEffect(() => {
+    if (session) {
+      if (props.apartmentAddressData[apartmentLastIndex]) {
+        let initialApartmentAddressDetails = {
+          firstName: props.apartmentAddressData[apartmentLastIndex].firstName,
+          lastName: props.apartmentAddressData[apartmentLastIndex].lastName,
+          mobile: props.apartmentAddressData[apartmentLastIndex].mobile,
+          backupMobile:
+            props.apartmentAddressData[apartmentLastIndex].backupMobile,
+          email: props.apartmentAddressData[apartmentLastIndex].email,
+          governorate:
+            props.apartmentAddressData[apartmentLastIndex].governorate,
+          city: props.apartmentAddressData[apartmentLastIndex].city,
+          area: props.apartmentAddressData[apartmentLastIndex].area,
+          street: props.apartmentAddressData[apartmentLastIndex].street,
+          building: props.apartmentAddressData[apartmentLastIndex].building,
+          floor: props.apartmentAddressData[apartmentLastIndex].floor,
+          apartment: props.apartmentAddressData[apartmentLastIndex].apartment,
+          instructions: "",
+          scheduled: "",
+        };
+        setApartmentInputs(initialApartmentAddressDetails);
+      } else if (!props.apartmentAddressData[apartmentLastIndex]) {
+        setApartmentInputs({});
+      }
+      if (props.villaAddressData[villaLastIndex]) {
+        let initialVillaAddressDetails = {
+          firstName: props.villaAddressData[villaLastIndex].firstName,
+          lastName: props.villaAddressData[villaLastIndex].lastName,
+          mobile: props.villaAddressData[villaLastIndex].mobile,
+          backupMobile: props.villaAddressData[villaLastIndex].backupMobile,
+          email: props.villaAddressData[villaLastIndex].email,
+          governorate: props.villaAddressData[villaLastIndex].governorate,
+          city: props.villaAddressData[villaLastIndex].city,
+          area: props.villaAddressData[villaLastIndex].area,
+          street: props.villaAddressData[villaLastIndex].street,
+          villa: props.villaAddressData[villaLastIndex].villa,
+          instructions: "",
+          scheduled: "",
+        };
+        setVillaInputs(initialVillaAddressDetails);
+      }
+      if (props.companyAddressData[companyLastIndex]) {
+        let initialCompanyAddressDetails = {
+          firstName: props.companyAddressData[companyLastIndex].firstName,
+          lastName: props.companyAddressData[companyLastIndex].lastName,
+          mobile: props.companyAddressData[companyLastIndex].mobile,
+          backupMobile: props.companyAddressData[companyLastIndex].backupMobile,
+          email: props.companyAddressData[companyLastIndex].email,
+          governorate: props.companyAddressData[companyLastIndex].governorate,
+          city: props.companyAddressData[companyLastIndex].city,
+          area: props.companyAddressData[companyLastIndex].area,
+          street: props.companyAddressData[companyLastIndex].street,
+          company: props.companyAddressData[companyLastIndex].company,
+          instructions: "",
+          scheduled: "",
+        };
+        setCompanyInputs(initialCompanyAddressDetails);
+      }
+    }
+  }, [session]);
   function renderDeliveryTab() {
     if (props.addedItems.length != 0) {
       return (
@@ -264,195 +335,129 @@ function CheckoutDetails(props) {
       ));
     }
   }
-  // let [itemsNo, setItemNo] = useState(0);
-  // useEffect(() => {
-  //   let noOfItems = 0;
-  //   props.addedItems.map((item) => {
-  //     return (noOfItems += parseInt(item.quantity));
-  //   });
-  //   setItemNo(noOfItems);
-  // }, []);
-  // const API =
-  //   "ZXlKaGJHY2lPaUpJVXpVeE1pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SmpiR0Z6Y3lJNklrMWxjbU5vWVc1MElpd2libUZ0WlNJNkltbHVhWFJwWVd3aUxDSndjbTltYVd4bFgzQnJJam8yTlRBek56ZDkucUd0LVJyS21OZzlFbDM3VHFpRFRsdjZlUm9jLVVMQ2VhRURsWjY5a3c0YVhTM3d2RnFuSTlYYmpLNG1KbU9sUURIeXhLSUxQaTFJeVZ5VTNoQlJXdlE="; // your api here
-  // const integrationID = 3178867;
-  // function sendMail() {
-  //   emailjs
-  //     .send(
-  //       "service_a3dk9vt",
-  //       "template_2shv7m8",
-  //       { from_name: "TheraCake" },
-  //       "28Q8DENkU-oYYZuQc"
-  //     )
-  //     .then(
-  //       function (response) {
-  //         console.log("SUCCESS!", response.status, response.text);
-  //       },
-  //       function (error) {
-  //         console.log("FAILED...", error);
-  //       }
-  //     );
-  // }
-  // async function firstStep() {
-  //   let data = {
-  //     api_key: API,
-  //   };
 
-  //   let request = await fetch("https://accept.paymob.com/api/auth/tokens", {
-  //     method: "post",
-  //     headers: { "Content-Type": "application/json" },
-  //     body: JSON.stringify(data),
-  //   });
+  const API =
+    "ZXlKaGJHY2lPaUpJVXpVeE1pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SnVZVzFsSWpvaU1UWTJOekU1TXpRNE1pNDBOREUwTmpJaUxDSndjbTltYVd4bFgzQnJJam8xT0RnNU9EY3NJbU5zWVhOeklqb2lUV1Z5WTJoaGJuUWlmUS5xMmdCYmpIQ0NWZ0JTRndMTVV2QkdsX2x6SFkxM3pEZ2hmV1pSQnVYWXowMS1PTmwxekxVN0s2Nl92MkQwS2lFTGJZM2h0bjZHNjl3U1U4bDlJSjdUQQ=="; // your api here
+  const integrationID = 3071814;
+  function sendMail() {
+    emailjs
+      .send(
+        "service_a3dk9vt",
+        "template_2shv7m8",
+        { from_name: "TheraCake" },
+        "28Q8DENkU-oYYZuQc"
+      )
+      .then(
+        function (response) {
+          console.log("SUCCESS!");
+        },
+        function (error) {
+         alert(error)
+        }
+      );
+  }
+  async function firstStep(orderData) {
+    let data = {
+      api_key: API,
+    };
 
-  //   let response = await request.json();
+    let request = await fetch("https://accept.paymob.com/api/auth/tokens", {
+      method: "post",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
 
-  //   let token = response.token;
+    let response = await request.json();
 
-  //   secondStep(token);
-  // }
+    let token = response.token;
 
-  // async function secondStep(token) {
-  //   let data = {
-  //     auth_token: token,
-  //     delivery_needed: "true",
-  //     amount_cents: `${calculateTotalPriceDb() * 100}`,
-  //     currency: "EGP",
-  //     items: [props.addedItems],
-  //   };
+    secondStep(token, orderData);
+  }
 
-  //   let request = await fetch(
-  //     "https://accept.paymob.com/api/ecommerce/orders",
-  //     {
-  //       method: "post",
-  //       headers: { "Content-Type": "application/json" },
-  //       body: JSON.stringify(data),
-  //     }
-  //   );
-
-  //   let response = await request.json();
-
-  //   let id = response.id;
-
-  //   thirdStep(token, id);
-  // }
-
-  // async function thirdStep(token, id) {
-  //   let data = {
-  //     auth_token: token,
-  //     amount_cents: `${calculateTotalPriceDb() * 100}`,
-  //     expiration: 3600,
-  //     order_id: id,
-  //     billing_data: {
-  //       apartment: "803",
-  //       email: "claudette09@exa.com",
-  //       floor: "42",
-  //       first_name: "Clifford",
-  //       street: "Ethan Land",
-  //       building: "8028",
-  //       phone_number: "+86(8)9135210487",
-  //       shipping_method: "PKG",
-  //       postal_code: "01898",
-  //       city: "Jaskolskiburgh",
-  //       country: "CR",
-  //       last_name: "Nicolas",
-  //       state: "Utah",
-  //     },
-  //     currency: "EGP",
-  //     integration_id: integrationID,
-  //   };
-
-  //   let request = await fetch(
-  //     "https://accept.paymob.com/api/acceptance/payment_keys",
-  //     {
-  //       method: "post",
-  //       headers: { "Content-Type": "application/json" },
-  //       body: JSON.stringify(data),
-  //     }
-  //   );
-
-  //   let response = await request.json();
-
-  //   let TheToken = response.token;
-  //   console.log(TheToken);
-  //   cardPayment(TheToken);
-  // }
-
-  // async function cardPayment(token) {
-  //   let iframeURL = `https://accept.paymob.com/api/acceptance/iframes/710230?payment_token=${token}`;
-  //   router.replace(iframeURL);
-  // }
-
-  // setTimeout(() => {
-  //   firstStep()
-  // }, 1000);
-  useEffect(() => {
-    if (session) {
-      if (props.apartmentAddressData[apartmentLastIndex]) {
-        let initialApartmentAddressDetails = {
-          firstName: props.apartmentAddressData[apartmentLastIndex].firstName,
-          lastName: props.apartmentAddressData[apartmentLastIndex].lastName,
-          mobile: props.apartmentAddressData[apartmentLastIndex].mobile,
-          backupMobile:
-            props.apartmentAddressData[apartmentLastIndex].backupMobile,
-          email: props.apartmentAddressData[apartmentLastIndex].email,
-          governorate:
-            props.apartmentAddressData[apartmentLastIndex].governorate,
-          city: props.apartmentAddressData[apartmentLastIndex].city,
-          area: props.apartmentAddressData[apartmentLastIndex].area,
-          street: props.apartmentAddressData[apartmentLastIndex].street,
-          building: props.apartmentAddressData[apartmentLastIndex].building,
-          floor: props.apartmentAddressData[apartmentLastIndex].floor,
-          apartment: props.apartmentAddressData[apartmentLastIndex].apartment,
-          instructions: "",
-          scheduled: "",
-        };
-        setApartmentInputs(initialApartmentAddressDetails);
-      } else if (!props.apartmentAddressData[apartmentLastIndex]) {
-        setApartmentInputs({});
+  async function secondStep(token, orderData) {
+    let data = {
+      auth_token: token,
+      delivery_needed: "true",
+      amount_cents: `${calculateTotalPriceDb() * 100}`,
+      currency: "EGP",
+      items: [],
+    };
+    let request = await fetch(
+      "https://accept.paymob.com/api/ecommerce/orders",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
       }
-      if (props.villaAddressData[villaLastIndex]) {
-        let initialVillaAddressDetails = {
-          firstName: props.villaAddressData[villaLastIndex].firstName,
-          lastName: props.villaAddressData[villaLastIndex].lastName,
-          mobile: props.villaAddressData[villaLastIndex].mobile,
-          backupMobile: props.villaAddressData[villaLastIndex].backupMobile,
-          email: props.villaAddressData[villaLastIndex].email,
-          governorate: props.villaAddressData[villaLastIndex].governorate,
-          city: props.villaAddressData[villaLastIndex].city,
-          area: props.villaAddressData[villaLastIndex].area,
-          street: props.villaAddressData[villaLastIndex].street,
-          villa: props.villaAddressData[villaLastIndex].villa,
-          instructions: "",
-          scheduled: "",
-        };
-        setVillaInputs(initialVillaAddressDetails);
+    );
+
+    let response = await request.json();
+
+    let id = response.id;
+    orderData["paymobId"] = id;
+    orderData["paymentMethod"] = "visa";
+    const internalRequest = await fetch("/api/cardPayment", {
+      method: "POST",
+      body: JSON.stringify({
+        type: "orderItems",
+        dataItems: orderData,
+      }),
+      headers: { "Content-Type": "application/json" },
+    });
+    let internalResponse = await internalRequest.json();
+
+    thirdStep(token, id);
+  }
+
+  async function thirdStep(token, id) {
+    let data = {
+      auth_token: token,
+      amount_cents: `${calculateTotalPriceDb() * 100}`,
+      // amount_cents: 100,
+      expiration: 3600,
+      order_id: id,
+      billing_data: {
+        apartment: "803",
+        email: "claudette09@exa.com",
+        floor: "42",
+        first_name: "Clifford",
+        street: "Ethan Land",
+        building: "8028",
+        phone_number: "+86(8)9135210487",
+        shipping_method: "PKG",
+        postal_code: "01898",
+        city: "Jaskolskiburgh",
+        country: "CR",
+        last_name: "Nicolas",
+        state: "Utah",
+      },
+      currency: "EGP",
+      integration_id: integrationID,
+    };
+
+    let request = await fetch(
+      "https://accept.paymob.com/api/acceptance/payment_keys",
+      {
+        method: "post",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
       }
-      if (props.companyAddressData[companyLastIndex]) {
-        let initialCompanyAddressDetails = {
-          firstName: props.companyAddressData[companyLastIndex].firstName,
-          lastName: props.companyAddressData[companyLastIndex].lastName,
-          mobile: props.companyAddressData[companyLastIndex].mobile,
-          backupMobile: props.companyAddressData[companyLastIndex].backupMobile,
-          email: props.companyAddressData[companyLastIndex].email,
-          governorate: props.companyAddressData[companyLastIndex].governorate,
-          city: props.companyAddressData[companyLastIndex].city,
-          area: props.companyAddressData[companyLastIndex].area,
-          street: props.companyAddressData[companyLastIndex].street,
-          company: props.companyAddressData[companyLastIndex].company,
-          instructions: "",
-          scheduled: "",
-        };
-        setCompanyInputs(initialCompanyAddressDetails);
-      }
-    }
-  }, []);
+    );
+
+    let response = await request.json();
+
+    let TheToken = response.token;
+    cardPayment(TheToken);
+  }
+
+  async function cardPayment(token) {
+    let iframeURL = `https://accept.paymob.com/api/acceptance/iframes/690689?payment_token=${token}`;
+    router.replace(iframeURL);
+  }
+
+
 
   useEffect(() => {
-    // let janDate = new Date(new Date().setDate(new Date().getDate() + 3));
-    // let formattedJanDate = new Date(
-    //   janDate.getTime() - janDate.getTimezoneOffset() * 60000
-    // )
-    //   .toISOString()
-    //   .split("T")[0];
 
     let currentTime = new Date().getHours();
     let tomorrowDate = new Date(new Date().setDate(new Date().getDate() + 1));
@@ -477,23 +482,15 @@ function CheckoutDetails(props) {
     )
       .toISOString()
       .split("T")[0];
-    setMaxDate("2023-01-02");
-    setMinDate("2023-01-01");
-    // if (currentTime >= 21) {
-    //   setMinDate(formattedAfterTomorrowDate);
-    // } else {
-    //   setMinDate(formattedTomorrowDate);
-    // }
+      setMaxDate(formattedDate);
+      if (currentTime >= 21) {
+        setMinDate(formattedAfterTomorrowDate);
+      } else {
+        setMinDate(formattedTomorrowDate);
+      }
+
   }, []);
 
-  let [apartmentDetails, showApartmentDetails] = useState(false);
-  let [villaDetails, showVillaDetails] = useState(false);
-  let [workplaceDetails, showWorkplaceDetails] = useState(false);
-  let [giftPrices, setGiftPrices] = useState([]);
-  let [apartmentInputs, setApartmentInputs] = useState({});
-  let [villaInputs, setVillaInputs] = useState({});
-  let [companyInputs, setCompanyInputs] = useState({});
-  // const [payMethod, setPayMethod] = useState("cash");
   function calculateTotalPriceDb() {
     let sum = 0;
     props.addedItems.map((item) => {
@@ -511,9 +508,10 @@ function CheckoutDetails(props) {
     return sum + 45;
   }
   async function apartmentSubmitHandler(e) {
-    setDisableBtn(true)
+    e.preventDefault();
+    setDisableBtn(true);
     setTimeout(() => {
-      setDisableBtn(false)
+      setDisableBtn(false);
     }, 2000);
     if (session) {
       try {
@@ -544,23 +542,21 @@ function CheckoutDetails(props) {
             scheduled: apartmentInputs.scheduled,
             totalPrice: calculateTotalPriceDb(),
           };
-        
-             const response = await fetch("/api/checkout", {
-            method: "POST",
-            body: JSON.stringify(orderData),
-            headers: {
-              "Content-Type": "application/json",
-            },
-          });
-          router.push("/thankyou");
 
-   
-         
-          const data = await response.json();
+          if (payMethod === "visa") {
+            firstStep(orderData);
+          } else if (payMethod === "cash") {
+            const response = await fetch("/api/checkout", {
+              method: "POST",
+              body: JSON.stringify(orderData),
+              headers: {
+                "Content-Type": "application/json",
+              },
+            });
+            router.push("/thankyou");
 
-          // if (payMethod === "visa") {
-          //   firstStep();
-          // }
+            // const data = await response.json();
+          }
         }
       } catch (e) {
         alert(e.message);
@@ -593,19 +589,21 @@ function CheckoutDetails(props) {
             scheduled: apartmentInputs.scheduled,
             totalPrice: anonymousTotalDue(),
           };
-          const response = await fetch("/api/checkout", {
-            method: "POST",
-            body: JSON.stringify(orderData),
-            headers: {
-              "Content-Type": "application/json",
-            },
-          });
-          const data = await response.json();
 
-          // if (payMethod === "visa") {
-          //   firstStep();
-          // }
-          router.push("/thankyou");
+          // const data = await response.json();
+
+          if (payMethod === "visa") {
+            firstStep(orderData);
+          } else if (payMethod === "cash") {
+            const response = await fetch("/api/checkout", {
+              method: "POST",
+              body: JSON.stringify(orderData),
+              headers: {
+                "Content-Type": "application/json",
+              },
+            });
+            router.push("/thankyou");
+          }
         }
       } catch (e) {
         alert(e.message);
@@ -636,22 +634,26 @@ function CheckoutDetails(props) {
             city: villaInputs.city,
             area: villaInputs.area,
             street: villaInputs.street,
-
             villa: villaInputs.villa,
             instructions: villaInputs.instructions,
             scheduled: villaInputs.scheduled,
             totalPrice: calculateTotalPriceDb(),
           };
-          const response = await fetch("/api/checkout", {
-            method: "POST",
-            body: JSON.stringify(orderData),
-            headers: {
-              "Content-Type": "application/json",
-            },
-          });
-          const data = await response.json();
-          console.log(data);
-          router.push("/thankyou");
+ 
+          if (payMethod === "visa") {
+            firstStep(orderData);
+          } else if (payMethod === "cash") {
+            const response = await fetch("/api/checkout", {
+              method: "POST",
+              body: JSON.stringify(orderData),
+              headers: {
+                "Content-Type": "application/json",
+              },
+            });
+            router.push("/thankyou");
+
+            // const data = await response.json();
+          }
         }
       } catch (e) {
         alert(e.message);
@@ -683,16 +685,21 @@ function CheckoutDetails(props) {
             scheduled: villaInputs.scheduled,
             totalPrice: anonymousTotalDue(),
           };
-          const response = await fetch("/api/checkout", {
-            method: "POST",
-            body: JSON.stringify(orderData),
-            headers: {
-              "Content-Type": "application/json",
-            },
-          });
-          const data = await response.json();
-          console.log(data);
-          router.push("/thankyou");
+         
+          if (payMethod === "visa") {
+            firstStep(orderData);
+          } else if (payMethod === "cash") {
+            const response = await fetch("/api/checkout", {
+              method: "POST",
+              body: JSON.stringify(orderData),
+              headers: {
+                "Content-Type": "application/json",
+              },
+            });
+            router.push("/thankyou");
+
+            // const data = await response.json();
+          }
         }
       } catch (e) {
         alert(e.message);
@@ -729,17 +736,20 @@ function CheckoutDetails(props) {
             scheduled: companyInputs.scheduled,
             totalPrice: calculateTotalPriceDb(),
           };
-          const response = await fetch("/api/checkout", {
-            method: "POST",
-            body: JSON.stringify(orderData),
-            headers: {
-              "Content-Type": "application/json",
-            },
-          });
+          if (payMethod === "visa") {
+            firstStep(orderData);
+          } else if (payMethod === "cash") {
+            const response = await fetch("/api/checkout", {
+              method: "POST",
+              body: JSON.stringify(orderData),
+              headers: {
+                "Content-Type": "application/json",
+              },
+            });
+            router.push("/thankyou");
 
-          const data = await response.json();
-          console.log(data);
-          router.push("/thankyou");
+            // const data = await response.json();
+          }
         }
       } catch (e) {
         alert(e.message);
@@ -771,17 +781,20 @@ function CheckoutDetails(props) {
             scheduled: companyInputs.scheduled,
             totalPrice: anonymousTotalDue(),
           };
-          const response = await fetch("/api/checkout", {
-            method: "POST",
-            body: JSON.stringify(orderData),
-            headers: {
-              "Content-Type": "application/json",
-            },
-          });
+          if (payMethod === "visa") {
+            firstStep(orderData);
+          } else if (payMethod === "cash") {
+            const response = await fetch("/api/checkout", {
+              method: "POST",
+              body: JSON.stringify(orderData),
+              headers: {
+                "Content-Type": "application/json",
+              },
+            });
+            router.push("/thankyou");
 
-          const data = await response.json();
-          console.log(data);
-          router.push("/thankyou");
+            // const data = await response.json();
+          }
         }
       } catch (e) {
         alert(e.message);
@@ -903,6 +916,8 @@ function CheckoutDetails(props) {
     const data = await response.json();
     console.log(data);
   }
+
+  // firstStep()
   return (
     <>
       <section className={classes.checkoutDetailsGrid}>
@@ -1043,7 +1058,7 @@ function CheckoutDetails(props) {
                         value={apartmentInputs.instructions}
                       />
                     </div>
-                    {/* <div>
+                    <div>
                       <h1>Payment Method</h1>
                       <select
                         defaultValue=""
@@ -1052,7 +1067,7 @@ function CheckoutDetails(props) {
                         <option value="cash">Cash</option>
                         <option value="visa">Visa</option>
                       </select>
-                    </div> */}
+                    </div>
                     <div className={classes.scheduleInputs}>
                       <div>
                         <h1>Schedule Delivery</h1>

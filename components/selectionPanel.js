@@ -179,7 +179,7 @@ function SelectionPanel(props) {
   return (
     <div className={classes.selectionPanel} ref={selectionPanelRef}>
       <div className={classes.selectionImage}>
-        <Image src={props.selectionData.img} alt="basicCake" />
+        <Image src={props.selectionData.img} alt="basicCake" width={1000} height={100}/>
       </div>
       <div className={classes.selectionHeaders}>
         <h1>{props.selectionData.name}</h1>

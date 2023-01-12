@@ -6,8 +6,18 @@ let orderDetails = new Schema({
     type: String,
     // required: true
   },
+  paymobId: {
+    type: Number,
+  },
+  paymentMethod: {
+    type: String,
+  },
+  paid: {
+    type: Boolean,
+    default: false,
+  },
   addressType: {
-    type: String
+    type: String,
   },
   orderNumber: {
     type: String,
@@ -36,7 +46,7 @@ let orderDetails = new Schema({
   },
   governorate: {
     type: String,
-    default: 'Cairo'
+    default: "Cairo",
   },
   city: {
     type: String,
@@ -73,11 +83,11 @@ let orderDetails = new Schema({
   },
   status: {
     type: String,
-    default: 'Pending'
+    default: "Pending",
   },
   totalPrice: {
-   type: Number, 
-  }
+    type: Number,
+  },
 });
 
 mongoose.models = {};

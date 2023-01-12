@@ -1,282 +1,350 @@
-import classes from './addItem.module.css'
-import closeIcon from '../public/close.png'
-import Image from 'next/image';
-import { useRef, useState } from 'react';
-import { useRouter } from 'next/router';
-import uuid from 'react-uuid';
-
+import classes from "./addItem.module.css";
+import closeIcon from "../public/close.png";
+import Image from "next/image";
+import { useRef, useState } from "react";
+import { useRouter } from "next/router";
+import uuid from "react-uuid";
 
 function AddItem(props) {
-  const router = useRouter()
-  let [sizeDiv, setSizeDiv] = useState(0)
-  let [extraDiv, setExtraDiv] = useState(0)
-  let [flavorDiv, setFlavorDiv] = useState(0)
-  let [toppingDiv, setToppingDiv] = useState(0)
-  let [imageSrc, setImageSrc] = useState()
-  let [uploadData, setUploadData] = useState()
-  let itemName = useRef();
-  let itemDescription = useRef();
-  let itemCategory = useRef()
-  // let itemImage = useRef();
-  let itemSizes = useRef([]);
-  let itemPrices = useRef([]);
-  let itemExtras = useRef([]);
-  let extrasPrices = useRef([]);
-  let itemFlavors = useRef([]);
-  let itemToppings = useRef([]);
-  let fileInputRef = useRef()
+  const router = useRouter();
+  let [sizeDiv, setSizeDiv] = useState(0);
+  let [extraDiv, setExtraDiv] = useState(0);
+  let [flavorDiv, setFlavorDiv] = useState(0);
+  let [toppingDiv, setToppingDiv] = useState(0);
+  let [imageSrc, setImageSrc] = useState();
+  let [uploadData, setUploadData] = useState();
+  const [itemName, setItemName] = useState();
+  const [itemDescription, setItemDescription] = useState();
+  const [itemFlavors, setItemFlavor] = useState([]);
+  const [itemExtras, setItemExtras] = useState([]);
+  const [itemToppings, setItemToppings] = useState([]);
+  const [itemCategory, setItemCategory] = useState();
+  const [itemSizes, setItemSizes] = useState([]);
+  let fileInputRef = useRef();
   async function submitHandler(e) {
-   
-    e.preventDefault()
-   const fileInput = fileInputRef.current
-   let imageData = new FormData()
-   for(const file of fileInput.files) {
-    imageData.append('file', file)
-   }
-   imageData.append('upload_preset', 'menuImages')
-const imageUploadData = await fetch('https://api.cloudinary.com/v1_1/dswtzq3ze/image/upload', {
-  method: 'POST',
-  body: imageData
-}).then(r => r.json())
-
-    let sizePriceArr = []
-    let extraPriceArr = []
-    let flavorList = []
-    let toppingList = []
-    itemSizes.current.forEach((element, index) => (
-      sizePriceArr.push({size: element.value})
-    ))
-    itemPrices.current.forEach((element, index) => (
-      sizePriceArr[index].price = element.value
-    ))
-    itemExtras.current.forEach((element, index) => {
-      if(element) {
-      extraPriceArr.push({ extra: element.value });
-      } else {
-        null
+    e.preventDefault();
+    const fileInput = fileInputRef.current;
+    let imageData = new FormData();
+    for (const file of fileInput.files) {
+      imageData.append("file", file);
+    }
+    imageData.append("upload_preset", "menuImages");
+    const imageUploadData = await fetch(
+      "https://api.cloudinary.com/v1_1/dswtzq3ze/image/upload",
+      {
+        method: "POST",
+        body: imageData,
       }
-  })
-    extrasPrices.current.forEach((element, index) => {
-      if(element) {
-      extraPriceArr[index].price = element.value
+    ).then((r) => r.json());  
 
-      } else {
-        null
-      }
-  })
-    itemFlavors.current.forEach((element, index) => (
-      flavorList.push(element.value)
-    )) 
-    itemToppings.current.forEach((element, index) => (
-      toppingList.push(element.value)
-    )) 
-    console.log(itemCategory.current.checked)
     const itemData = {
-      category: itemCategory.current.value,
-      name: itemName.current.value,
-      description: itemDescription.current.value,
+      category: itemCategory,
+      name: itemName,
+      description: itemDescription,
       sizePrice: sizePriceArr,
       extraPrice: extraPriceArr,
       flavors: flavorList,
       toppings: toppingList,
-      img: imageUploadData.secure_url
-   
-
-    }
-    props.onAddItem(itemData)
-     setTimeout(() => {
-       router.reload(window.location.pathname);
-     }, 500);
+      img: imageUploadData.secure_url,
+    };
+    props.onAddItem(itemData);
+    setTimeout(() => {
+      router.reload(window.location.pathname);
+    }, 500);
   }
 
   function addSize() {
-    setSizeDiv(sizeDiv + 1)
+    setSizeDiv(sizeDiv + 1);
   }
   function addExtra() {
-    setExtraDiv(extraDiv + 1)
+    setExtraDiv(extraDiv + 1);
   }
   function addFlavor() {
-    setFlavorDiv(flavorDiv + 1)
+    setFlavorDiv(flavorDiv + 1);
   }
   function addTopping() {
-    setToppingDiv(toppingDiv + 1)
+    setToppingDiv(toppingDiv + 1);
   }
   function removeSize() {
-    setSizeDiv(sizeDiv - 1)
+    setSizeDiv(sizeDiv - 1);
   }
   function removeExtra() {
-    setExtraDiv(extraDiv - 1)
+    setExtraDiv(extraDiv - 1);
   }
   function removeFlavor() {
-    setFlavorDiv(flavorDiv - 1)
+    setFlavorDiv(flavorDiv - 1);
   }
   function removeTopping() {
-    setToppingDiv(toppingDiv - 1)
+    setToppingDiv(toppingDiv - 1);
   }
-    let closePopup = () => {
-        props.toggleAddItemPopup(false)
-    }
-    return (
-      <div className={classes.addItemPopupContainer}>
-        <Image
-          id={classes.closeIconStyle}
-          src={closeIcon}
-          onClick={closePopup}
-          alt="CloseIcon"
-        />
-        <form action="/api/newMenuItem" onSubmit={submitHandler} method="post">
-          <div className={classes.itemCategory}>
-            <h1 onClick={() => console.log(itemCategory.current.value)}>
-              Category
-            </h1>
-            <div>
-              <input
-                type="radio"
-                name="category"
-                value="cheesecake"
-                onClick={(e) => (itemCategory.current = e.target)}
-              />
-              <label>Cheesecake</label>
-            </div>
-            <div>
-              <input
-                type="radio"
-                name="category"
-                value="brownies"
-                onClick={(e) => (itemCategory.current = e.target)}
-              />
-              <label>Brownies</label>
-            </div>
+  let closePopup = () => {
+    props.toggleAddItemPopup(false);
+  };
+  return (
+    <div className={classes.addItemPopupContainer}>
+      <Image
+        id={classes.closeIconStyle}
+        src={closeIcon}
+        onClick={closePopup}
+        alt="CloseIcon"
+      />
+      <form action="/api/newMenuItem" onSubmit={submitHandler} method="post">
+        <div className={classes.itemCategory}>
+          <h1>Category</h1>
+          <div>
+            <input
+              type="radio"
+              name="category"
+              value="cheesecake"
+              onClick={(e) => setItemCategory(e.target.value)}
+            />
+            <label>Cheesecake</label>
           </div>
-          <div className={classes.itemName}>
-            <label htmlFor="itemName">Item name</label>
-            <input type="text" name="name" id="itemName" ref={itemName} />
+          <div>
+            <input
+              type="radio"
+              name="category"
+              value="brownies"
+              onClick={(e) => setItemCategory(e.target.value)}
+            />
+            <label>Brownies</label>
           </div>
-          <div className={classes.itemDescription}>
-            <label htmlFor="itemDescription">Item description</label>
-            <textarea
-              rows="5"
-              name="description"
-              id="itemDescription"
-              ref={itemDescription}
+        </div>
+        <div className={classes.itemName}>
+          <label htmlFor="itemName">Item name</label>
+          <input
+            type="text"
+            name="name"
+            id="itemName"
+            onChange={(e) => setItemName(e.target.value)}
+          />
+        </div>
+        <div className={classes.itemDescription}>
+          <label htmlFor="itemDescription">Item description</label>
+          <textarea
+            rows="5"
+            name="description"
+            id="itemDescription"
+            onChange={(e) => setItemDescription(e.target.value)}
+            // ref={itemDescription}
+          />
+        </div>
+        <div className={classes.sizes}>
+          <h1>Sizes</h1>
+          <button onClick={addSize} type="button">
+            Add More
+          </button>
+          {sizeDiv > 0 ? (
+            <button
+              onClick={() => {
+                removeSize();
+                let copyItemSizes = itemSizes;
+                copyItemSizes.splice(sizeDiv - 1, 1);
+                setItemSizes(copyItemSizes);
+              }}
+              type="button"
+            >
+              Remove Size
+            </button>
+          ) : null}
+        </div>
+        {[...Array(sizeDiv)].map((item, index) => (
+          <div key={index} className={classes.sizeInput}>
+            <input
+              type="text"
+              placeholder="Size Name"
+              value={itemSizes[index]?.size}
+              onChange={(e) => {
+                if (itemSizes[index]) {
+                  setItemSizes((prevState) =>
+                    prevState?.map((obj) => {
+                      if (obj === itemSizes[index]) {
+                        return { ...obj, size: e.target.value };
+                      }
+                      return obj;
+                    })
+                  );
+                } else {
+                  setItemSizes([...itemSizes, { size: e.target.value }]);
+                }
+              }}
+            />
+            <input
+              type="number"
+              placeholder="Size Price"
+              value={itemSizes[index]?.price}
+              onChange={(e) => {
+                if (itemSizes[index]) {
+                  setItemSizes((prevState) =>
+                    prevState?.map((obj) => {
+                      if (obj === itemSizes[index]) {
+                        return { ...obj, price: e.target.value };
+                      }
+                      return obj;
+                    })
+                  );
+                } else {
+                  setItemSizes([...itemSizes, { price: e.target.value }]);
+                }
+              }}
             />
           </div>
-          <div className={classes.sizes}>
-            <h1>Sizes</h1>
-            <button onClick={addSize} type="button">
-              Add More
+        ))}
+        <div className={classes.extras}>
+          <h1>Extras</h1>
+          <button onClick={addExtra} type="button">
+            Add Extra
+          </button>
+          {extraDiv > 0 ? (
+            <button
+              onClick={() => {
+                removeExtra();
+                let copyItemExtras = itemExtras;
+                copyItemExtras.splice(extraDiv - 1, 1);
+                setItemExtras(copyItemExtras);
+              }}
+              type="button"
+            >
+              Remove Extra
             </button>
-            {sizeDiv > 0 ? (
-              <button onClick={removeSize} type="button">
-                Remove Size
-              </button>
-            ) : null}
+          ) : null}
+        </div>
+        {[...Array(extraDiv)].map((item, index) => (
+          <div key={index} className={classes.extraInput}>
+            <input
+              type="text"
+              placeholder="Extra Name"
+              value={itemExtras[index]?.extra}
+              onChange={(e) => {
+                if (itemExtras[index]) {
+                  setItemExtras((prevState) =>
+                    prevState?.map((obj) => {
+                      if (obj === itemExtras[index]) {
+                        return { ...obj, extra: e.target.value };
+                      }
+                      return obj;
+                    })
+                  );
+                } else {
+                  setItemExtras([...itemExtras, { extra: e.target.value }]);
+                }
+              }}
+            />
+            <input
+              type="number"
+              placeholder="Extra Price"
+              value={itemExtras[index]?.price}
+              onChange={(e) => {
+                if (itemExtras[index]) {
+                  setItemExtras((prevState) =>
+                    prevState?.map((obj) => {
+                      if (obj === itemExtras[index]) {
+                        return { ...obj, price: e.target.value };
+                      }
+                      return obj;
+                    })
+                  );
+                } else {
+                  setItemExtras([...itemExtras, { price: e.target.value }]);
+                }
+              }}
+            />
           </div>
-          {[...Array(sizeDiv)].map((item, index) => (
-            <div key={uuid()} className={classes.sizeInput}>
-              <input
-                type="text"
-                placeholder="Size Name"
-                ref={(element) => {
-                  itemSizes.current[index] = element;
-                }}
-              />
-              <input
-                type="number"
-                placeholder="Size Price"
-                ref={(el) => {
-                  itemPrices.current[index] = el;
-                }}
-              />
-            </div>
-          ))}
-          <div className={classes.extras}>
-            <h1>Extras</h1>
-            <button onClick={addExtra} type="button">
-              Add Extra
-            </button>
-            {extraDiv > 0 ? (
-              <button onClick={removeExtra} type="button">
-                Remove Extra
-              </button>
-            ) : null}
-          </div>
-          {[...Array(extraDiv)].map((item, index) => (
-            <div key={uuid()} className={classes.extraInput}>
-              <input
-                type="text"
-                placeholder="Extra Name"
-                ref={(element) => {
-                  itemExtras.current[index] = element;
-                }}
-              />
-              <input
-                type="number"
-                placeholder="Extra Price"
-                ref={(el) => {
-                  extrasPrices.current[index] = el;
-                }}
-              />
-            </div>
-          ))}
-          <div className={classes.flavor}>
-            <h1>Flavors</h1>
+        ))}
+        <div className={classes.flavor}>
+          <h1>Flavors</h1>
 
-            <button type="button" onClick={addFlavor}>
-              Add Flavor
+          <button type="button" onClick={addFlavor}>
+            Add Flavor
+          </button>
+          {flavorDiv > 0 ? (
+            <button
+              onClick={() => {
+                removeFlavor();
+                let copyItemFlavors = itemFlavors;
+                copyItemFlavors.splice(sizeDiv - 1, 1);
+                setItemFlavor(copyItemFlavors);
+              }}
+              type="button"
+            >
+              Remove Flavor
             </button>
-            {flavorDiv > 0 ? (
-              <button onClick={removeFlavor} type="button">
-                Remove Flavor
-              </button>
-            ) : null}
+          ) : null}
+        </div>
+        {[...Array(flavorDiv)].map((item, index) => (
+          <div key={index} className={classes.flavorInput}>
+            <input
+              type="text"
+              placeholder="Flavor Name"
+              value={itemFlavors[index] || ""}
+              onChange={(e) => {
+                const nextFlavors = itemFlavors.map((c, i) => {
+                  if (i === index) {
+                    return (c = e.target.value);
+                  } else {
+                    return c;
+                  }
+                });
+                if (nextFlavors.length - 1 < index) {
+                  nextFlavors.push(e.target.value);
+                }
+              
+                setItemFlavor(nextFlavors);
+              }}
+            />
           </div>
-          {[...Array(flavorDiv)].map((item, index) => (
-            <div key={uuid()} className={classes.flavorInput}>
-              <input
-                type="text"
-                placeholder="Flavor Name"
-                ref={(element) => {
-                  itemFlavors.current[index] = element;
-                }}
-              />
-            </div>
-          ))}
-          <div className={classes.topping}>
-            <h1>Toppings</h1>
+        ))}
+        <div className={classes.topping}>
+          <h1>Toppings</h1>
 
-            <button type="button" onClick={addTopping}>
-              Add topping
+          <button type="button" onClick={addTopping}>
+            Add topping
+          </button>
+          {toppingDiv > 0 ? (
+            <button onClick={() => {
+               removeTopping();
+                let copyItemToppings = itemToppings;
+                copyItemToppings.splice(sizeDiv - 1, 1);
+                setItemToppings(copyItemToppings);
+            }} type="button">
+              Remove Topping
             </button>
-            {toppingDiv > 0 ? (
-              <button onClick={removeTopping} type="button">
-                Remove Topping
-              </button>
-            ) : null}
+          ) : null}
+        </div>
+        {[...Array(toppingDiv)].map((item, index) => (
+          <div key={index} className={classes.toppingInput}>
+            <input
+              type="text"
+              placeholder="Topping Name"
+              onChange={(e) => {
+                const nextToppings = itemToppings.map((c, i) => {
+                  if (i === index) {
+                    return (c = e.target.value);
+                  } else {
+                    return c;
+                  }
+                });
+                if (nextToppings.length - 1 < index) {
+                  nextToppings.push(e.target.value);
+                }
+               
+                setItemToppings(nextToppings);
+              }}
+            />
           </div>
-          {[...Array(toppingDiv)].map((item, index) => (
-            <div key={uuid()} className={classes.toppingInput}>
-              <input
-                type="text"
-                placeholder="Topping Name"
-                ref={(element) => {
-                  itemToppings.current[index] = element;
-                }}
-              />
-            </div>
-          ))}
-          <div className={classes.file}>
-            <label for="fileInput">Choose Image</label>
-            <input type="file" ref={fileInputRef} />
-          </div>
-          <input
-            type="submit"
-            value="Add Item"
-            className={classes.addItemSubmit}
-          />
-        </form>
-      </div>
-    );
+        ))}
+        <div className={classes.file}>
+          <label for="fileInput">Choose Image</label>
+          <input type="file" ref={fileInputRef} />
+        </div>
+        <input
+          type="submit"
+          value="Add Item"
+          className={classes.addItemSubmit}
+        />
+      </form>
+    </div>
+  );
 }
 
-export default AddItem
+export default AddItem;

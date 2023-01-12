@@ -122,13 +122,23 @@ encodeData()
           <p>{`${order.city} - ${order.governorate}`}</p>
         </div>
         <div>
-          <h3>Cash</h3>
+          {order.paymentMethod === "visa" ? <h3>Visa</h3> : <h3>Cash</h3>}
+
           <p className={classes.lightText}>{order.totalPrice}</p>
         </div>
         <div>
           <p>{order.scheduled}</p>
           <p>{`${convertTimestampToTime()} - ${convertTimestampToDate()}`}</p>
         </div>
+        {order.paymentMethod === "visa" ? (
+          <div>
+            {order.paid ? (
+              <p className={classes.pending}>Paid</p>
+            ) : (
+              <p className={classes.pending}>Unpaid</p>
+            )}
+          </div>
+        ) : null}
 
         <div>
           <p className={classes.pending}>{order.status}</p>
