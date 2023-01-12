@@ -114,10 +114,10 @@ function Menu(props) {
               Brownies
             </button>
           </div>
-          {/* <div className={classes.offer}>
+          <div className={classes.offer}>
             <p>We are sorry for not accepting orders currently due to maintainance, thank you for understanding</p>
          
-          </div> */}
+          </div>
           {isAuthorized ? (
             <button className={classes.addItemBtn} onClick={toggleAddItemBtn}>
               Add Item
