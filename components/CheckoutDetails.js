@@ -378,7 +378,7 @@ function CheckoutDetails(props) {
     let data = {
       auth_token: token,
       delivery_needed: "true",
-      amount_cents: `${calculateTotalPriceDb() * 100}`,
+      amount_cents: 100,
       currency: "EGP",
       items: [],
     };
@@ -412,8 +412,8 @@ function CheckoutDetails(props) {
   async function thirdStep(token, id) {
     let data = {
       auth_token: token,
-      amount_cents: `${calculateTotalPriceDb() * 100}`,
-      // amount_cents: 100,
+      amount_cents: 100,
+      // amount_cents: 1calc00,
       expiration: 3600,
       order_id: id,
       billing_data: {
@@ -553,7 +553,7 @@ function CheckoutDetails(props) {
                 "Content-Type": "application/json",
               },
             });
-            sendMail()
+            // sendMail()
             router.push("/thankyou");
 
             // const data = await response.json();
@@ -603,7 +603,7 @@ function CheckoutDetails(props) {
                 "Content-Type": "application/json",
               },
             });
-            sendMail()
+            // sendMail()
             router.push("/thankyou");
           }
         }
@@ -652,7 +652,7 @@ function CheckoutDetails(props) {
                 "Content-Type": "application/json",
               },
             });
-            sendMail()
+            // sendMail()
             router.push("/thankyou");
 
             // const data = await response.json();
@@ -699,7 +699,7 @@ function CheckoutDetails(props) {
                 "Content-Type": "application/json",
               },
             });
-            sendMail();
+            // sendMail();
 
             router.push("/thankyou");
 
@@ -751,7 +751,7 @@ function CheckoutDetails(props) {
                 "Content-Type": "application/json",
               },
             });
-            sendMail();
+            // sendMail();
 
             router.push("/thankyou");
 
@@ -798,7 +798,7 @@ function CheckoutDetails(props) {
                 "Content-Type": "application/json",
               },
             });
-            sendMail();
+            // sendMail();
 
             router.push("/thankyou");
 

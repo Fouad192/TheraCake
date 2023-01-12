@@ -8,7 +8,7 @@ function ThankYou(props) {
   const router = useRouter();
   const { data: session } = useSession();
   const [isApproved, setStatus] = useState();
-  const [status, addStatus] = useState();
+  const [redirected, isRedirected] = useState();
 
   useEffect(() => {
     if (session) {
@@ -23,8 +23,45 @@ function ThankYou(props) {
   useEffect(() => {
     const { success } = router.query;
     setStatus(success);
+console.log(router.query)
+    if (Object.keys(router.query).length === 0) {
+      isRedirected(false);
+    } else {
+      isRedirected(true);
+    }
+    
   }, [router]);
-
+  function returnRender() {
+    if (redirected) {
+      if (isApproved === 'true') {
+        return (
+          <div className={classes.container}>
+            <h1>Thank you for your order</h1>
+            {session ? (
+              <p>You will be redirected to your order history page</p>
+            ) : null}
+          </div>
+        );
+      } else if(isApproved === 'false') {
+        
+        return (
+          <div className={classes.container}>
+            <h1>An Error Has Occured With Your Transaction</h1>
+            <p>Please try a different card or payment method</p>
+          </div>
+        );
+      }
+    } else if(!redirected) {
+      return (
+        <div className={classes.container}>
+          <h1>Thank you for your order</h1>
+          {session ? (
+            <p>You will be redirected to your order history page</p>
+          ) : null}
+        </div>
+      );
+    }
+  }
   return (
     <>
       <Head>
@@ -35,21 +72,7 @@ function ThankYou(props) {
 extreme dedication and the best quality"
         />
       </Head>
-      {isApproved === "true" ? (
-        <div className={classes.container}>
-          <h1>Thank you for your order</h1>
-          {session ? (
-            <p>You will be redirected to your order history page</p>
-          ) : (
-           null
-          )}
-        </div>
-      ) : (
-        <div className={classes.container}>
-          <h1>An Error Has Occured With Your Transaction</h1>
-          <p>Please try a different card or payment method</p>
-        </div>
-      )}
+      {returnRender()}
     </>
   );
 }
