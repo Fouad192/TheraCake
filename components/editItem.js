@@ -23,7 +23,6 @@ function EditItem({ data, openEditItem }) {
   const itemId = data._id;
 
   async function handleEditSubmit(e) {
-    console.log(itemId);
     e.preventDefault();
     const fileInput = fileInputRef.current;
     let imageData = new FormData();
@@ -60,7 +59,6 @@ function EditItem({ data, openEditItem }) {
       },
     });
     const data = await response.json();
-    console.log(data);
     setTimeout(() => {
       router.reload(window.location.pathname);
     }, 500);

@@ -12,6 +12,9 @@ let orderDetails = new Schema({
   paymentMethod: {
     type: String,
   },
+  transactionId: {
+    type: Number
+  },
   paid: {
     type: Boolean,
     default: false,

@@ -14,26 +14,26 @@ function ThankYou(props) {
     if (session) {
       setTimeout(() => {
         router.push("/history");
-      }, 2000);
+      }, 4000);
     } else if (!session) {
-      router.push("/menu");
+      setTimeout(() => {
+        router.push("/menu");
+      }, 4000);
     }
   });
 
   useEffect(() => {
     const { success } = router.query;
     setStatus(success);
-console.log(router.query)
     if (Object.keys(router.query).length === 0) {
       isRedirected(false);
     } else {
       isRedirected(true);
     }
-    
   }, [router]);
   function returnRender() {
     if (redirected) {
-      if (isApproved === 'true') {
+      if (isApproved === "true") {
         return (
           <div className={classes.container}>
             <h1>Thank you for your order</h1>
@@ -42,8 +42,7 @@ console.log(router.query)
             ) : null}
           </div>
         );
-      } else if(isApproved === 'false') {
-        
+      } else if (isApproved === "false") {
         return (
           <div className={classes.container}>
             <h1>An Error Has Occured With Your Transaction</h1>
@@ -51,7 +50,7 @@ console.log(router.query)
           </div>
         );
       }
-    } else if(!redirected) {
+    } else if (!redirected) {
       return (
         <div className={classes.container}>
           <h1>Thank you for your order</h1>

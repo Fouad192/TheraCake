@@ -81,7 +81,6 @@ function Menu(props) {
       },
     });
     const data = await response.json();
-    console.log(data);
   }
   async function deleteItemHandler(item) {
     const response = await fetch("/api/newMenuItem", {
@@ -89,7 +88,6 @@ function Menu(props) {
       body: item._id,
     });
     const data = await response.json();
-    console.log(data);
   }
 
   return (
@@ -135,7 +133,6 @@ function Menu(props) {
             {cheesecakes.map((item, index) => (
               <div
                 className={classes.menuItem}
-                onClick={() => console.log(item)}
                 key={uuid()}
               >
                 <div className={classes.menuItemDetails}>

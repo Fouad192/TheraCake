@@ -338,7 +338,8 @@ function CheckoutDetails(props) {
 
   const API =
     "ZXlKaGJHY2lPaUpJVXpVeE1pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SnVZVzFsSWpvaU1UWTJOekU1TXpRNE1pNDBOREUwTmpJaUxDSndjbTltYVd4bFgzQnJJam8xT0RnNU9EY3NJbU5zWVhOeklqb2lUV1Z5WTJoaGJuUWlmUS5xMmdCYmpIQ0NWZ0JTRndMTVV2QkdsX2x6SFkxM3pEZ2hmV1pSQnVYWXowMS1PTmwxekxVN0s2Nl92MkQwS2lFTGJZM2h0bjZHNjl3U1U4bDlJSjdUQQ=="; // your api here
-  const integrationID = 3071814;
+
+  const integrationID = 2984427;
   function sendMail() {
     emailjs
       .send(
@@ -378,7 +379,7 @@ function CheckoutDetails(props) {
     let data = {
       auth_token: token,
       delivery_needed: "true",
-      amount_cents: 100,
+      amount_cents: orderData.totalPrice * 100,
       currency: "EGP",
       items: [],
     };
@@ -394,7 +395,7 @@ function CheckoutDetails(props) {
     let response = await request.json();
 
     let id = response.id;
-    console.log(response)
+    // console.log(response)
     orderData["paymobId"] = id;
     orderData["paymentMethod"] = "visa";
     const internalRequest = await fetch("/api/cardPayment", {
@@ -407,30 +408,38 @@ function CheckoutDetails(props) {
     });
     let internalResponse = await internalRequest.json();
 
-    thirdStep(token, id);
+    thirdStep(token, id, orderData);
   }
 
-  async function thirdStep(token, id) {
+  async function thirdStep(token, id, orderData) {
+
     let data = {
       auth_token: token,
-      amount_cents: 100,
-      // amount_cents: 1calc00,
+      amount_cents: orderData.totalPrice * 100,
       expiration: 3600,
       order_id: id,
       billing_data: {
-        apartment: "803",
-        email: "claudette09@exa.com",
-        floor: "42",
-        first_name: "Clifford",
-        street: "Ethan Land",
-        building: "8028",
-        phone_number: "+86(8)9135210487",
-        shipping_method: "PKG",
-        postal_code: "01898",
-        city: "Jaskolskiburgh",
-        country: "CR",
-        last_name: "Nicolas",
-        state: "Utah",
+        apartment: "N/A",
+        email:
+          apartmentInputs.email || companyInputs.email || villaInputs.email,
+        floor: "N/A",
+        first_name:
+          apartmentInputs.firstName ||
+          companyInputs.firstName ||
+          villaInputs.firstName,
+        street: "N/A",
+        building: "N/A",
+        phone_number:
+          apartmentInputs.mobile || companyInputs.mobile || villaInputs.mobile,
+        shipping_method: "N/A",
+        postal_code: "N/A",
+        city: "N/A",
+        country: "EG",
+        last_name:
+          apartmentInputs.lastName ||
+          companyInputs.lastName ||
+          villaInputs.lastName,
+        state: "N/A",
       },
       currency: "EGP",
       integration_id: integrationID,
@@ -446,8 +455,8 @@ function CheckoutDetails(props) {
     );
 
     let response = await request.json();
-
     let TheToken = response.token;
+
     cardPayment(TheToken);
   }
 
@@ -513,7 +522,7 @@ function CheckoutDetails(props) {
     setDisableBtn(true);
     setTimeout(() => {
       setDisableBtn(false);
-    }, 2000);
+    }, 4000);
     if (session) {
       try {
         if (props.addedItems.length === 0) {
@@ -615,6 +624,10 @@ function CheckoutDetails(props) {
   }
   async function villaSubmitHandler(e) {
     e.preventDefault();
+     setDisableBtn(true);
+     setTimeout(() => {
+       setDisableBtn(false);
+     }, 4000);
     if (session) {
       try {
         if (props.addedItems.length === 0) {
@@ -714,6 +727,10 @@ function CheckoutDetails(props) {
   }
   async function companySubmitHandler(e) {
     e.preventDefault();
+     setDisableBtn(true);
+     setTimeout(() => {
+       setDisableBtn(false);
+     }, 4000);
     if (session) {
       try {
         if (props.addedItems.length === 0) {
@@ -885,7 +902,7 @@ function CheckoutDetails(props) {
       body: item._id,
     });
     const data = await response.json();
-    console.log(data);
+    // console.log(data);
   }
 
   // firstStep()
@@ -1029,17 +1046,18 @@ function CheckoutDetails(props) {
                         value={apartmentInputs.instructions}
                       />
                     </div>
-                    {/* <div>
+                    <div>
                       <h1>Payment Method</h1>
                       <select
                         id={classes.payMethodSelect}
                         defaultValue=""
+                        value={payMethod}
                         onChange={(e) => setPayMethod(e.target.value)}
                       >
                         <option value="cash">Cash</option>
                         <option value="visa">Visa</option>
                       </select>
-                    </div> */}
+                    </div>
                     <div className={classes.scheduleInputs}>
                       <div>
                         <h1>Schedule Delivery</h1>
@@ -1177,6 +1195,18 @@ function CheckoutDetails(props) {
                         value={villaInputs.instructions}
                         onChange={handleVillaInputChange}
                       />
+                    </div>
+                    <div>
+                      <h1>Payment Method</h1>
+                      <select
+                        id={classes.payMethodSelect}
+                        defaultValue=""
+                        value={payMethod}
+                        onChange={(e) => setPayMethod(e.target.value)}
+                      >
+                        <option value="cash">Cash</option>
+                        <option value="visa">Visa</option>
+                      </select>
                     </div>
                     <div className={classes.scheduleInputs}>
                       <div>
@@ -1319,6 +1349,18 @@ function CheckoutDetails(props) {
                         value={companyInputs.instructions}
                         onChange={handleCompanyInputChange}
                       />
+                    </div>
+                    <div>
+                      <h1>Payment Method</h1>
+                      <select
+                        id={classes.payMethodSelect}
+                        defaultValue=""
+                        value={payMethod}
+                        onChange={(e) => setPayMethod(e.target.value)}
+                      >
+                        <option value="cash">Cash</option>
+                        <option value="visa">Visa</option>
+                      </select>
                     </div>
                     <div className={classes.scheduleInputs}>
                       <div>

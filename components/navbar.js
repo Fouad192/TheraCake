@@ -81,7 +81,7 @@ function Navbar(props) {
                 <Link href="/history">History</Link>
               </li>
               <hr />
-              {session.user.email === "anwarcitcm@gmail.com" && (
+              {authorized && (
                 <li>
                   <Link href="/adminorders">Admin</Link>
                 </li>

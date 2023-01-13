@@ -101,7 +101,7 @@ encodeData()
        body: order._id
     })
     const data = await response.json()
-    console.log(data)
+
     setTimeout(() => {
        router.reload(window.location.pathname);
     }, 500);
@@ -137,6 +137,7 @@ encodeData()
             ) : (
               <p className={classes.pending}>Unpaid</p>
             )}
+            {order.transactionId ? <p>{order.transactionId}</p> : null}
           </div>
         ) : null}
 
