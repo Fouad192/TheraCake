@@ -42,7 +42,7 @@ function Home() {
 
                 {isAuthorized ? (
                   <li>
-                    <Link href="/adminorders">Admin Orders</Link>
+                    <Link href="/bf06617af457f5fe41b4a547b8b4cab4">Admin Orders</Link>
                   </li>
                 ) : null}
                 <li>
@@ -85,7 +85,7 @@ function Home() {
 
                 {isAuthorized ? (
                   <li>
-                    <Link href="/adminorders">Admin</Link>
+                    <Link href="/bf06617af457f5fe41b4a547b8b4cab4">Admin</Link>
                   </li>
                 ) : null}
 
@@ -131,9 +131,9 @@ function Home() {
                       <Link href="/history">History</Link>
                     </li>
                     <hr />
-                    {session.user.email === "anwarcitcm@gmail.com" && (
+                    {isAuthorized && (
                       <li>
-                        <Link href="/adminorders">Admin</Link>
+                        <Link href="/bf06617af457f5fe41b4a547b8b4cab4">Admin</Link>
                       </li>
                     )}
 

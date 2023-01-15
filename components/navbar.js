@@ -45,7 +45,11 @@ function Navbar(props) {
               )}
 
               <Link href="/history">History</Link>
-              {authorized && <Link href="/adminorders">Admin Orders</Link>}
+              {authorized && (
+                <Link href="/bf06617af457f5fe41b4a547b8b4cab4">
+                  Admin Orders
+                </Link>
+              )}
               <button
                 className={classes.signBtns}
                 onClick={() =>
@@ -83,7 +87,7 @@ function Navbar(props) {
               <hr />
               {authorized && (
                 <li>
-                  <Link href="/adminorders">Admin</Link>
+                  <Link href="/bf06617af457f5fe41b4a547b8b4cab4">Admin</Link>
                 </li>
               )}
 
