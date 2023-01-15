@@ -102,13 +102,13 @@ function UserHistory({order}) {
                       </div>
                     </div>
                   ))}
-                  {item.freePistachio === "Free Pistachio" && (
+                  {/* {item.freePistachio === "Free Pistachio" && (
                     <div className={classes.itemHistorySubDetails}>
                       <div>
                         <p>Free Extra Pistachio</p>
                       </div>
                     </div>
-                  )}
+                  )} */}
                   {item.extraPrice.map((extra) => (
                     <div className={classes.itemHistorySubDetails} key={uuid()}>
                       <div>

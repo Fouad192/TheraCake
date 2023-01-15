@@ -30,9 +30,9 @@ let cart = new Schema({
   notes: {
     type: String,
   },
-  freePistachio: {
-    type: String,
-  },
+  // freePistachio: {
+  //   type: String,
+  // },
   giftPrice: {
     type: [],
   },

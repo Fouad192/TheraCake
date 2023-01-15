@@ -18,9 +18,9 @@ function SelectionPanel(props) {
   let [selectedExtra, setSelectedExtra] = useState([]);
   let [selectedGift, setSelectedGift] = useState([]);
   let [selectedToppings, setSelectedToppings] = useState({});
-  let [selectedFreeExtra, setSelectedFreeExtra] = useState(
-    "No Free Extra Pistachio"
-  );
+  // let [selectedFreeExtra, setSelectedFreeExtra] = useState(
+  //   "No Free Extra Pistachio"
+  // );
 
   let [notes, setNotes] = useState();
   // let [props.selectionData, setCurrMenuItem] = useState(props.selectionData)
@@ -111,7 +111,7 @@ function SelectionPanel(props) {
           toppings: selectedToppings,
           notes,
           giftPrice: selectedGift,
-          freePistachio: selectedFreeExtra,
+          // freePistachio: selectedFreeExtra,
         };
         const response = await fetch("/api/addToCart", {
           method: "POST",
@@ -140,7 +140,7 @@ function SelectionPanel(props) {
             toppings: [selectedToppings],
             notes,
             giftPrice: selectedGift,
-            freePistachio: selectedFreeExtra,
+            // freePistachio: selectedFreeExtra,
           },
         ];
 
@@ -155,7 +155,7 @@ function SelectionPanel(props) {
             toppings: [selectedToppings],
             notes,
             giftPrice: selectedGift,
-            freePistachio: selectedFreeExtra,
+            // freePistachio: selectedFreeExtra,
           });
           localStorage.setItem("items", JSON.stringify(pushArray));
           console.log("secondItem");
@@ -282,7 +282,7 @@ function SelectionPanel(props) {
               <hr />
             </div>
           )}
-          {props.selectionData.name === "Original Thera Cake Brownies" &&
+          {/* {props.selectionData.name === "Original Thera Cake Brownies" &&
           currCheckedSize === "20 Mini Pieces" ? (
             <div className={classes.freeExtra}>
               <h1>Free Extra</h1>
@@ -299,7 +299,7 @@ function SelectionPanel(props) {
               />
               <label>Free Extra Pistachio</label>
             </div>
-          ) : null}
+          ) : null} */}
           {props.selectionData.toppings.length === 0 ? null : (
             <div className={classes.toppings}>
               <h1>Toppings</h1>

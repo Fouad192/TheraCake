@@ -162,11 +162,11 @@ function CheckoutDetails(props) {
               {addedItem?.sizePrice[0]?.price * addedItem?.quantity}
             </p>
           </div>
-          {addedItem.freePistachio === "Free Pistachio" && (
+          {/* {addedItem.freePistachio === "Free Pistachio" && (
             <div className={classes.freeExtraDiv}>
               <p>Free Extra Pistachio</p>
             </div>
-          )}
+          )} */}
           {addedItem.toppings.map((toppingObj) => {
             if (Object.keys(toppingObj).length >= 1) {
               return (
@@ -260,11 +260,11 @@ function CheckoutDetails(props) {
               {addedItem?.sizePrice[0]?.price * addedItem?.quantity}
             </p>
           </div>
-          {addedItem.freePistachio === "Free Pistachio" && (
+          {/* {addedItem.freePistachio === "Free Pistachio" && (
             <div className={classes.freeExtraDiv}>
               <p>Free Extra Pistachio</p>
             </div>
-          )}
+          )} */}
           {addedItem.toppings.map((toppingObj) => {
             if (Object.keys(toppingObj).length >= 1) {
               return (
