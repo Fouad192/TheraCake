@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import uuid from "react-uuid";
-import emailjs from '@emailjs/browser'
+import emailjs from "@emailjs/browser";
 // import handleCardPayment from "../pages/api/cardPayment";
 const orderid = require("order-id")("key");
 
@@ -30,7 +30,6 @@ function CheckoutDetails(props) {
   let [villaInputs, setVillaInputs] = useState({});
   let [companyInputs, setCompanyInputs] = useState({});
   const [payMethod, setPayMethod] = useState("cash");
-  const submitBtnRef = useRef();
 
   useEffect(() => {
     if (
@@ -48,7 +47,7 @@ function CheckoutDetails(props) {
           lastName: props.apartmentAddressData[apartmentLastIndex].lastName,
           mobile: props.apartmentAddressData[apartmentLastIndex].mobile,
           backupMobile:
-            props.apartmentAddressData[apartmentLastIndex].backupMobile,
+            props.apartmentAddressData[apartmentLastIndex].backupMobile || "",
           email: props.apartmentAddressData[apartmentLastIndex].email,
           governorate:
             props.apartmentAddressData[apartmentLastIndex].governorate,
@@ -62,15 +61,13 @@ function CheckoutDetails(props) {
           scheduled: "",
         };
         setApartmentInputs(initialApartmentAddressDetails);
-      } else if (!props.apartmentAddressData[apartmentLastIndex]) {
-        setApartmentInputs({});
-      }
+      } 
       if (props.villaAddressData[villaLastIndex]) {
         let initialVillaAddressDetails = {
           firstName: props.villaAddressData[villaLastIndex].firstName,
           lastName: props.villaAddressData[villaLastIndex].lastName,
           mobile: props.villaAddressData[villaLastIndex].mobile,
-          backupMobile: props.villaAddressData[villaLastIndex].backupMobile,
+          backupMobile: props.villaAddressData[villaLastIndex].backupMobile || "",
           email: props.villaAddressData[villaLastIndex].email,
           governorate: props.villaAddressData[villaLastIndex].governorate,
           city: props.villaAddressData[villaLastIndex].city,
@@ -87,7 +84,7 @@ function CheckoutDetails(props) {
           firstName: props.companyAddressData[companyLastIndex].firstName,
           lastName: props.companyAddressData[companyLastIndex].lastName,
           mobile: props.companyAddressData[companyLastIndex].mobile,
-          backupMobile: props.companyAddressData[companyLastIndex].backupMobile,
+          backupMobile: props.companyAddressData[companyLastIndex].backupMobile || "",
           email: props.companyAddressData[companyLastIndex].email,
           governorate: props.companyAddressData[companyLastIndex].governorate,
           city: props.companyAddressData[companyLastIndex].city,
@@ -353,7 +350,7 @@ function CheckoutDetails(props) {
           console.log("SUCCESS!");
         },
         function (error) {
-         alert(error)
+          alert(error);
         }
       );
   }
@@ -412,7 +409,6 @@ function CheckoutDetails(props) {
   }
 
   async function thirdStep(token, id, orderData) {
-
     let data = {
       auth_token: token,
       amount_cents: orderData.totalPrice * 100,
@@ -465,10 +461,7 @@ function CheckoutDetails(props) {
     router.replace(iframeURL);
   }
 
-
-
   useEffect(() => {
-
     let currentTime = new Date().getHours();
     let tomorrowDate = new Date(new Date().setDate(new Date().getDate() + 1));
     let afterTomorrowDate = new Date(
@@ -492,13 +485,12 @@ function CheckoutDetails(props) {
     )
       .toISOString()
       .split("T")[0];
-      setMaxDate(formattedDate);
-      if (currentTime >= 21) {
-        setMinDate(formattedAfterTomorrowDate);
-      } else {
-        setMinDate(formattedTomorrowDate);
-      }
-
+    setMaxDate(formattedDate);
+    if (currentTime >= 21) {
+      setMinDate(formattedAfterTomorrowDate);
+    } else {
+      setMinDate(formattedTomorrowDate);
+    }
   }, []);
 
   function calculateTotalPriceDb() {
@@ -624,10 +616,10 @@ function CheckoutDetails(props) {
   }
   async function villaSubmitHandler(e) {
     e.preventDefault();
-     setDisableBtn(true);
-     setTimeout(() => {
-       setDisableBtn(false);
-     }, 4000);
+    setDisableBtn(true);
+    setTimeout(() => {
+      setDisableBtn(false);
+    }, 4000);
     if (session) {
       try {
         if (props.addedItems.length === 0) {
@@ -655,7 +647,7 @@ function CheckoutDetails(props) {
             scheduled: villaInputs.scheduled,
             totalPrice: calculateTotalPriceDb(),
           };
- 
+
           if (payMethod === "visa") {
             firstStep(orderData);
           } else if (payMethod === "cash") {
@@ -702,7 +694,7 @@ function CheckoutDetails(props) {
             scheduled: villaInputs.scheduled,
             totalPrice: anonymousTotalDue(),
           };
-         
+
           if (payMethod === "visa") {
             firstStep(orderData);
           } else if (payMethod === "cash") {
@@ -727,10 +719,10 @@ function CheckoutDetails(props) {
   }
   async function companySubmitHandler(e) {
     e.preventDefault();
-     setDisableBtn(true);
-     setTimeout(() => {
-       setDisableBtn(false);
-     }, 4000);
+    setDisableBtn(true);
+    setTimeout(() => {
+      setDisableBtn(false);
+    }, 4000);
     if (session) {
       try {
         if (props.addedItems.length === 0) {
@@ -847,7 +839,7 @@ function CheckoutDetails(props) {
       showApartmentDetails(true);
     }
   };
- 
+
   function totalDue() {
     let sum = 0;
 
