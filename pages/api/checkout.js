@@ -9,7 +9,7 @@ export default async function handler(req, res) {
       await checkoutdetails.save();
       res.status(201).json({ message: "Checked out!" });
     } catch (err) {
-      console.log(err.message);
+      alert(err.message);
     }
   } else if(req.method === 'PUT') {
    await dbConnect();
