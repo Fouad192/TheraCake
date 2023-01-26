@@ -61,13 +61,14 @@ function CheckoutDetails(props) {
           scheduled: "",
         };
         setApartmentInputs(initialApartmentAddressDetails);
-      } 
+      }
       if (props.villaAddressData[villaLastIndex]) {
         let initialVillaAddressDetails = {
           firstName: props.villaAddressData[villaLastIndex].firstName,
           lastName: props.villaAddressData[villaLastIndex].lastName,
           mobile: props.villaAddressData[villaLastIndex].mobile,
-          backupMobile: props.villaAddressData[villaLastIndex].backupMobile || "",
+          backupMobile:
+            props.villaAddressData[villaLastIndex].backupMobile || "",
           email: props.villaAddressData[villaLastIndex].email,
           governorate: props.villaAddressData[villaLastIndex].governorate,
           city: props.villaAddressData[villaLastIndex].city,
@@ -84,7 +85,8 @@ function CheckoutDetails(props) {
           firstName: props.companyAddressData[companyLastIndex].firstName,
           lastName: props.companyAddressData[companyLastIndex].lastName,
           mobile: props.companyAddressData[companyLastIndex].mobile,
-          backupMobile: props.companyAddressData[companyLastIndex].backupMobile || "",
+          backupMobile:
+            props.companyAddressData[companyLastIndex].backupMobile || "",
           email: props.companyAddressData[companyLastIndex].email,
           governorate: props.companyAddressData[companyLastIndex].governorate,
           city: props.companyAddressData[companyLastIndex].city,
@@ -548,15 +550,19 @@ function CheckoutDetails(props) {
           if (payMethod === "visa") {
             firstStep(orderData);
           } else if (payMethod === "cash") {
-            const response = await fetch("/api/checkout", {
-              method: "POST",
-              body: JSON.stringify(orderData),
-              headers: {
-                "Content-Type": "application/json",
-              },
-            });
-            sendMail()
-            router.push("/thankyou");
+            try {
+              const response = await fetch("/api/checkout", {
+                method: "POST",
+                body: JSON.stringify(orderData),
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              });
+              sendMail();
+              router.push("/thankyou");
+            } catch (err) {
+              alert(err.message);
+            }
 
             // const data = await response.json();
           }
@@ -598,15 +604,19 @@ function CheckoutDetails(props) {
           if (payMethod === "visa") {
             firstStep(orderData);
           } else if (payMethod === "cash") {
-            const response = await fetch("/api/checkout", {
-              method: "POST",
-              body: JSON.stringify(orderData),
-              headers: {
-                "Content-Type": "application/json",
-              },
-            });
-            sendMail()
-            router.push("/thankyou");
+            try {
+              const response = await fetch("/api/checkout", {
+                method: "POST",
+                body: JSON.stringify(orderData),
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              });
+              sendMail();
+              router.push("/thankyou");
+            } catch (err) {
+              alert(err.message);
+            }
           }
         }
       } catch (e) {
@@ -651,15 +661,19 @@ function CheckoutDetails(props) {
           if (payMethod === "visa") {
             firstStep(orderData);
           } else if (payMethod === "cash") {
-            const response = await fetch("/api/checkout", {
-              method: "POST",
-              body: JSON.stringify(orderData),
-              headers: {
-                "Content-Type": "application/json",
-              },
-            });
-            sendMail()
-            router.push("/thankyou");
+            try {
+              const response = await fetch("/api/checkout", {
+                method: "POST",
+                body: JSON.stringify(orderData),
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              });
+              sendMail();
+              router.push("/thankyou");
+            } catch (err) {
+              alert(err.message);
+            }
 
             // const data = await response.json();
           }
@@ -698,16 +712,20 @@ function CheckoutDetails(props) {
           if (payMethod === "visa") {
             firstStep(orderData);
           } else if (payMethod === "cash") {
-            const response = await fetch("/api/checkout", {
-              method: "POST",
-              body: JSON.stringify(orderData),
-              headers: {
-                "Content-Type": "application/json",
-              },
-            });
-            sendMail();
+            try {
+              const response = await fetch("/api/checkout", {
+                method: "POST",
+                body: JSON.stringify(orderData),
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              });
+              sendMail();
 
-            router.push("/thankyou");
+              router.push("/thankyou");
+            } catch (err) {
+              alert(err.message);
+            }
 
             // const data = await response.json();
           }
@@ -754,16 +772,20 @@ function CheckoutDetails(props) {
           if (payMethod === "visa") {
             firstStep(orderData);
           } else if (payMethod === "cash") {
-            const response = await fetch("/api/checkout", {
-              method: "POST",
-              body: JSON.stringify(orderData),
-              headers: {
-                "Content-Type": "application/json",
-              },
-            });
-            sendMail();
+            try {
+              const response = await fetch("/api/checkout", {
+                method: "POST",
+                body: JSON.stringify(orderData),
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              });
+              sendMail();
 
-            router.push("/thankyou");
+              router.push("/thankyou");
+            } catch (err) {
+              alert(err.message);
+            }
 
             // const data = await response.json();
           }
@@ -801,16 +823,20 @@ function CheckoutDetails(props) {
           if (payMethod === "visa") {
             firstStep(orderData);
           } else if (payMethod === "cash") {
-            const response = await fetch("/api/checkout", {
-              method: "POST",
-              body: JSON.stringify(orderData),
-              headers: {
-                "Content-Type": "application/json",
-              },
-            });
-            sendMail();
+            try {
+              const response = await fetch("/api/checkout", {
+                method: "POST",
+                body: JSON.stringify(orderData),
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              });
+              sendMail();
 
-            router.push("/thankyou");
+              router.push("/thankyou");
+            } catch (error) {
+              alert(error.message);
+            }
 
             // const data = await response.json();
           }

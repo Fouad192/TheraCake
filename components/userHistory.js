@@ -46,10 +46,7 @@ function UserHistory({order}) {
         onClick={() => showDetails(!details)}
       >
         <div className={classes.orderHistoryBriefContainer}>
-          <div>
-            <h3>Yesterday</h3>
-            <p className={classes.lightText}>5:14AM</p>
-          </div>
+         
           <div>
             <p>{order.orderNumber}</p>
             <p>{`${order.firstName} ${order.lastName}`}</p>

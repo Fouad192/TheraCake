@@ -14,11 +14,11 @@ function ThankYou(props) {
     if (session) {
       setTimeout(() => {
         router.push("/history");
-      }, 4000);
+      }, 3000);
     } else if (!session) {
       setTimeout(() => {
         router.push("/menu");
-      }, 4000);
+      }, 3000);
     }
   });
 
