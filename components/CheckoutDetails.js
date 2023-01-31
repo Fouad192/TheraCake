@@ -558,7 +558,7 @@ function CheckoutDetails(props) {
                   "Content-Type": "application/json",
                 },
               });
-              sendMail();
+              // sendMail();
               router.push("/thankyou");
             } catch (err) {
               alert(err.message);
@@ -612,7 +612,7 @@ function CheckoutDetails(props) {
                   "Content-Type": "application/json",
                 },
               });
-              sendMail();
+              // sendMail();
               router.push("/thankyou");
             } catch (err) {
               alert(err.message);
@@ -669,7 +669,7 @@ function CheckoutDetails(props) {
                   "Content-Type": "application/json",
                 },
               });
-              sendMail();
+              // sendMail();
               router.push("/thankyou");
             } catch (err) {
               alert(err.message);
@@ -720,7 +720,7 @@ function CheckoutDetails(props) {
                   "Content-Type": "application/json",
                 },
               });
-              sendMail();
+              // sendMail();
 
               router.push("/thankyou");
             } catch (err) {
@@ -780,7 +780,7 @@ function CheckoutDetails(props) {
                   "Content-Type": "application/json",
                 },
               });
-              sendMail();
+              // sendMail();
 
               router.push("/thankyou");
             } catch (err) {
@@ -831,7 +831,7 @@ function CheckoutDetails(props) {
                   "Content-Type": "application/json",
                 },
               });
-              sendMail();
+              // sendMail();
 
               router.push("/thankyou");
             } catch (error) {
