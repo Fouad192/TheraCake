@@ -550,21 +550,18 @@ function CheckoutDetails(props) {
           if (payMethod === "visa") {
             firstStep(orderData);
           } else if (payMethod === "cash") {
-            try {
-              const response = await fetch("/api/checkout", {
-                method: "POST",
-                body: JSON.stringify(orderData),
-                headers: {
-                  "Content-Type": "application/json",
-                },
-              });
-              // sendMail();
+            const response = await fetch("/api/checkout", {
+              method: "POST",
+              body: JSON.stringify(orderData),
+              headers: {
+                "Content-Type": "application/json",
+              },
+            });
+            const data = await response.json();
+            if (data.message === "Checked out!") {
+              sendMail();
               router.push("/thankyou");
-            } catch (err) {
-              alert(err.message);
             }
-
-            // const data = await response.json();
           }
         }
       } catch (e) {
@@ -604,18 +601,17 @@ function CheckoutDetails(props) {
           if (payMethod === "visa") {
             firstStep(orderData);
           } else if (payMethod === "cash") {
-            try {
-              const response = await fetch("/api/checkout", {
-                method: "POST",
-                body: JSON.stringify(orderData),
-                headers: {
-                  "Content-Type": "application/json",
-                },
-              });
-              // sendMail();
+            const response = await fetch("/api/checkout", {
+              method: "POST",
+              body: JSON.stringify(orderData),
+              headers: {
+                "Content-Type": "application/json",
+              },
+            });
+            const data = await response.json();
+            if (data.message === "Checked out!") {
+              sendMail();
               router.push("/thankyou");
-            } catch (err) {
-              alert(err.message);
             }
           }
         }
@@ -661,21 +657,18 @@ function CheckoutDetails(props) {
           if (payMethod === "visa") {
             firstStep(orderData);
           } else if (payMethod === "cash") {
-            try {
-              const response = await fetch("/api/checkout", {
-                method: "POST",
-                body: JSON.stringify(orderData),
-                headers: {
-                  "Content-Type": "application/json",
-                },
-              });
-              // sendMail();
+            const response = await fetch("/api/checkout", {
+              method: "POST",
+              body: JSON.stringify(orderData),
+              headers: {
+                "Content-Type": "application/json",
+              },
+            });
+            const data = await response.json();
+            if (data.message === "Checked out!") {
+              sendMail();
               router.push("/thankyou");
-            } catch (err) {
-              alert(err.message);
             }
-
-            // const data = await response.json();
           }
         }
       } catch (e) {
@@ -712,19 +705,17 @@ function CheckoutDetails(props) {
           if (payMethod === "visa") {
             firstStep(orderData);
           } else if (payMethod === "cash") {
-            try {
-              const response = await fetch("/api/checkout", {
-                method: "POST",
-                body: JSON.stringify(orderData),
-                headers: {
-                  "Content-Type": "application/json",
-                },
-              });
-              // sendMail();
-
+            const response = await fetch("/api/checkout", {
+              method: "POST",
+              body: JSON.stringify(orderData),
+              headers: {
+                "Content-Type": "application/json",
+              },
+            });
+            const data = await response.json();
+            if (data.message === "Checked out!") {
+              sendMail();
               router.push("/thankyou");
-            } catch (err) {
-              alert(err.message);
             }
 
             // const data = await response.json();
@@ -772,19 +763,17 @@ function CheckoutDetails(props) {
           if (payMethod === "visa") {
             firstStep(orderData);
           } else if (payMethod === "cash") {
-            try {
-              const response = await fetch("/api/checkout", {
-                method: "POST",
-                body: JSON.stringify(orderData),
-                headers: {
-                  "Content-Type": "application/json",
-                },
-              });
-              // sendMail();
-
+            const response = await fetch("/api/checkout", {
+              method: "POST",
+              body: JSON.stringify(orderData),
+              headers: {
+                "Content-Type": "application/json",
+              },
+            });
+            const data = await response.json();
+            if (data.message === "Checked out!") {
+              sendMail();
               router.push("/thankyou");
-            } catch (err) {
-              alert(err.message);
             }
 
             // const data = await response.json();
@@ -823,22 +812,18 @@ function CheckoutDetails(props) {
           if (payMethod === "visa") {
             firstStep(orderData);
           } else if (payMethod === "cash") {
-            try {
-              const response = await fetch("/api/checkout", {
-                method: "POST",
-                body: JSON.stringify(orderData),
-                headers: {
-                  "Content-Type": "application/json",
-                },
-              });
-              // sendMail();
-
+            const response = await fetch("/api/checkout", {
+              method: "POST",
+              body: JSON.stringify(orderData),
+              headers: {
+                "Content-Type": "application/json",
+              },
+            });
+            const data = await response.json();
+            if (data.message === "Checked out!") {
+              sendMail();
               router.push("/thankyou");
-            } catch (error) {
-              alert(error.message);
             }
-
-            // const data = await response.json();
           }
         }
       } catch (e) {
