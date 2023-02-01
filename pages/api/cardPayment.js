@@ -5,12 +5,9 @@ async function handleCardPayment(req, res) {
   await dbConnect()
   if (req?.method === "POST" && req?.body.type !== "orderItems") {
     let paymobAPIData = req.body.obj;
-    res.status(201).json({ message: 'Success' });
   
-
     if (paymobAPIData.success === true) {
-     
-      OrderCheckout.findOneAndUpdate(
+     await OrderCheckout.findOneAndUpdate(
         { paymobId: paymobAPIData.order.id },
         { paid: true, transactionId: paymobAPIData.id },
         { new: true },
@@ -20,8 +17,10 @@ async function handleCardPayment(req, res) {
           }
         }
       );
+    res.status(201).json({ message: "Success" });
+
     } else if (paymobAPIData.success === false) {
-      OrderCheckout.findOneAndDelete(
+     await OrderCheckout.findOneAndDelete(
         { paymobId: paymobAPIData.order.id },
         (err, doc) => {
           if (err) {
@@ -30,6 +29,8 @@ async function handleCardPayment(req, res) {
         }
       );
     }
+    res.status(201).json({ message: "Payment failed" });
+
   }
   if (req?.method === "POST" && req.body.type === "orderItems") {
     const checkoutdetails = new OrderCheckout(req.body.dataItems);
