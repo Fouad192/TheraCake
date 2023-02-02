@@ -465,7 +465,7 @@ function CheckoutDetails(props) {
 
   useEffect(() => {
     let currentTime = new Date().getHours();
-    let tomorrowDate = new Date(new Date().setDate(new Date().getDate() + 1));
+    let tomorrowDate = new Date(new Date().setDate(new Date().getDate() + 2));
     let afterTomorrowDate = new Date(
       new Date().setDate(new Date().getDate() + 2)
     );
@@ -1049,7 +1049,7 @@ function CheckoutDetails(props) {
                         value={apartmentInputs.instructions}
                       />
                     </div>
-                    <div>
+                    {/* <div>
                       <h1>Payment Method</h1>
                       <select
                         id={classes.payMethodSelect}
@@ -1060,7 +1060,7 @@ function CheckoutDetails(props) {
                         <option value="cash">Cash</option>
                         <option value="visa">Visa</option>
                       </select>
-                    </div>
+                    </div> */}
                     <div className={classes.scheduleInputs}>
                       <div>
                         <h1>Schedule Delivery</h1>
