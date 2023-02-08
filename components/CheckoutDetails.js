@@ -1199,7 +1199,7 @@ function CheckoutDetails(props) {
                         onChange={handleVillaInputChange}
                       />
                     </div>
-                    <div>
+                    {/* <div>
                       <h1>Payment Method</h1>
                       <select
                         id={classes.payMethodSelect}
@@ -1210,7 +1210,7 @@ function CheckoutDetails(props) {
                         <option value="cash">Cash</option>
                         <option value="visa">Visa</option>
                       </select>
-                    </div>
+                    </div> */}
                     <div className={classes.scheduleInputs}>
                       <div>
                         <h1>Schedule Delivery</h1>
@@ -1353,7 +1353,7 @@ function CheckoutDetails(props) {
                         onChange={handleCompanyInputChange}
                       />
                     </div>
-                    <div>
+                    {/* <div>
                       <h1>Payment Method</h1>
                       <select
                         id={classes.payMethodSelect}
@@ -1364,7 +1364,7 @@ function CheckoutDetails(props) {
                         <option value="cash">Cash</option>
                         <option value="visa">Visa</option>
                       </select>
-                    </div>
+                    </div> */}
                     <div className={classes.scheduleInputs}>
                       <div>
                         <h1>Schedule Delivery</h1>

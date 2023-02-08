@@ -475,7 +475,7 @@ function SelectionPanel(props) {
                   if (e.target.checked) {
                     setSelectedGift([
                       ...selectedGift,
-                      { gift: e.target.value, price: 130 },
+                      { gift: e.target.value, price: 160 },
                     ]);
                   } else if (!e.target.checked) {
                     setSelectedGift(
@@ -485,7 +485,7 @@ function SelectionPanel(props) {
                 }}
               />
               <label>Bouqet (6 flowers)</label>
-              <p>130EGP</p>
+              <p>160EGP</p>
             </div>
 
             <hr />
