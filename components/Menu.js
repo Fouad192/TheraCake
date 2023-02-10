@@ -113,7 +113,7 @@ function Menu(props) {
             </button>
           </div>
           <div className={classes.offer}>
-            <p>Enjoy 20% off on our pumpkin special cheese cake </p>
+            <p>Enjoy 20% off on your pumpkin Special Cheesecake </p>
           </div>
           {isAuthorized ? (
             <button className={classes.addItemBtn} onClick={toggleAddItemBtn}>

@@ -467,7 +467,7 @@ function CheckoutDetails(props) {
     let currentTime = new Date().getHours();
     let tomorrowDate = new Date(new Date().setDate(new Date().getDate() + 1));
     let afterTomorrowDate = new Date(
-      new Date().setDate(new Date().getDate() + 2)
+      new Date().setDate(new Date().getDate() + 3)
     );
     let date = new Date(new Date().setDate(new Date().getDate() + 7));
 
