@@ -1,19 +1,17 @@
 import classes from "./selectionPanel.module.css";
-import basicSelectionImg from "../public/basicSelectionImg.png";
+
 import Image from "next/image";
-import plusIcon from "../public/icon/plus.svg";
-import minusIcon from "../public/icon/minus.png";
-import { useSession, signIn, signOut } from "next-auth/react";
+
+import { useSession } from "next-auth/react";
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/router";
-import uuid from "react-uuid";
-import Navbar from "../components/navbar";
-import Footer from "../components/footer";
+
 function SelectionPanel(props) {
   const router = useRouter();
 
   let [quantity, setQuantity] = useState(1);
   let [selectedSize, setSelectedSize] = useState();
+  const [originalPrice, setOriginalPrice] = useState()
   let [selectedFlavor, setSelectedFlavor] = useState([]);
   let [selectedExtra, setSelectedExtra] = useState([]);
   let [selectedGift, setSelectedGift] = useState([]);
@@ -31,47 +29,62 @@ function SelectionPanel(props) {
   let quantityRef = useRef();
   let addToInvoiceFlash = useRef();
   useEffect(() => {
-    console.log("re-rendered");
-  });
-  const { data: session } = useSession();
-  function isLoggedIn() {
-    if (!session) {
-      return (
-        <div
-          className={classes.checkoutBtnDiv}
-          style={{ position: "absolute", bottom: "0" }}
-        >
-          <div style={{ position: "sticky" }}>
-            <button className={classes.menuFormSubmit} onClick={() => signIn()}>
-              Add To Cart
-            </button>
-          </div>
-        </div>
-      );
-    } else if (session) {
-      return (
-        <div
-          className={classes.checkoutBtnDiv}
-          style={{
-            position: "absolute",
-            bottom: "0",
-            backgroundColor: "white",
-          }}
-        >
-          <div style={{ position: "sticky" }}>
-            <button
-              className={classes.menuFormSubmit}
-              onClick={timeOutFlash}
-              form={classes.selectionForm}
-            >
-              Add To Cart
-            </button>
-            <p ref={addToInvoiceFlash}>Added to checkout invoice</p>
-          </div>
-        </div>
-      );
+    setSelectedSize([])
+setSelectedFlavor([])
+setSelectedExtra([])
+setSelectedGift([])
+setSelectedToppings({})
+  }, [props])
+  useEffect(() => {
+    if(selectedFlavor === 'Pumpkin ') {
+      setSelectedSize((prevState) => ({...prevState, price: originalPrice - (originalPrice * 20/100)}))
+    } else if(selectedFlavor !== 'Pumpkin ') {
+      setSelectedSize((prevState) => ({
+        ...prevState,
+        price: originalPrice,
+      }));
     }
-  }
+  }, [selectedFlavor, selectedSize?.size]);
+  
+  const { data: session } = useSession();
+  // function isLoggedIn() {
+  //   if (!session) {
+  //     return (
+  //       <div
+  //         className={classes.checkoutBtnDiv}
+  //         style={{ position: "absolute", bottom: "0" }}
+  //       >
+  //         <div style={{ position: "sticky" }}>
+  //           <button className={classes.menuFormSubmit} onClick={() => signIn()}>
+  //             Add To Cart
+  //           </button>
+  //         </div>
+  //       </div>
+  //     );
+  //   } else if (session) {
+  //     return (
+  //       <div
+  //         className={classes.checkoutBtnDiv}
+  //         style={{
+  //           position: "absolute",
+  //           bottom: "0",
+  //           backgroundColor: "white",
+  //         }}
+  //       >
+  //         <div style={{ position: "sticky" }}>
+  //           <button
+  //             className={classes.menuFormSubmit}
+  //             onClick={timeOutFlash}
+  //             form={classes.selectionForm}
+  //           >
+  //             Add To Cart
+  //           </button>
+  //           <p ref={addToInvoiceFlash}>Added to checkout invoice</p>
+  //         </div>
+  //       </div>
+  //     );
+  //   }
+  // }
 
   function setMaxToppingsFunction() {
     if (currCheckedSize) {
@@ -179,7 +192,7 @@ function SelectionPanel(props) {
     });
   });
   return (
-    <div className={classes.selectionPanel} ref={selectionPanelRef}>
+    <div className={classes.selectionPanel} ref={selectionPanelRef} key={props.selectionData.name}>
       <div className={classes.selectionImage}>
         <Image
           src={props.selectionData.img}
@@ -232,7 +245,7 @@ function SelectionPanel(props) {
                       if (e.target.checked) {
                         setCheckedSize(e.target.value);
                       }
-
+                      setOriginalPrice(item.price)
                       setSelectedSize({ size: item.size, price: item.price });
                     }}
                   />

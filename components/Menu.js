@@ -252,6 +252,7 @@ function Menu(props) {
                 </div>
                 <div className={classes.menuItemImage}>
                   <Image
+
                     src={item.img}
                     alt="basicCake"
                     width={150}
@@ -262,7 +263,8 @@ function Menu(props) {
             ))}
           </div>
         </div>
-        {itemProps ? <SelectionPanel selectionData={itemProps} /> : null}
+      
+        {itemProps ? <SelectionPanel selectionData={itemProps}/> : null}
 
         {/* {returnSelectionPanel()} */}
       </section>
