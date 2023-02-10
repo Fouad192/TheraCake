@@ -26,6 +26,7 @@ export default NextAuth({
       },
     }),
   ],
+  // debug: true,
   secret: process.env.JWT_SECRET,
   adapter: MongoDBAdapter(clientPromise),
   callbacks: {
