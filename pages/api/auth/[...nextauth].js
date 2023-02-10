@@ -9,21 +9,18 @@ export default NextAuth({
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      authorization:
-      {
+      authorization: {
         params: {
-          redirect_uri: 'https://theracakecairo.com/api/auth/callbacl/google',
+          redirect_uri: "https://theracakecairo.com/api/auth/callback/google",
           prompt: "consent",
-          scope: 'email'
-        }
-      }
-        
+          scope: "email",
+        },
+      },
     }),
     FacebookProvider({
       clientId: process.env.FACEBOOK_CLIENT_ID,
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
       authorization: {
-        
         params: {
           redirect_uri: "https://theracakecairo.com/api/auth/callback/facebook",
           prompt: "consent",
