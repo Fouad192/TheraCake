@@ -112,10 +112,9 @@ function Menu(props) {
               Brownies
             </button>
           </div>
-          {/* <div className={classes.offer}>
-            <p>We are sorry for not accepting orders currently due to maintainance, thank you for understanding</p>
-         
-          </div> */}
+          <div className={classes.offer}>
+            <p>Enjoy 20% off on our pumpkin special cheese cake </p>
+          </div>
           {isAuthorized ? (
             <button className={classes.addItemBtn} onClick={toggleAddItemBtn}>
               Add Item
@@ -131,10 +130,7 @@ function Menu(props) {
             ref={cheesecakeMenu}
           >
             {cheesecakes.map((item, index) => (
-              <div
-                className={classes.menuItem}
-                key={uuid()}
-              >
+              <div className={classes.menuItem} key={uuid()}>
                 <div className={classes.menuItemDetails}>
                   {isAuthorized && (
                     <div className={classes.adminModifyAndDelete}>
@@ -252,7 +248,6 @@ function Menu(props) {
                 </div>
                 <div className={classes.menuItemImage}>
                   <Image
-
                     src={item.img}
                     alt="basicCake"
                     width={150}
@@ -263,8 +258,8 @@ function Menu(props) {
             ))}
           </div>
         </div>
-      
-        {itemProps ? <SelectionPanel selectionData={itemProps}/> : null}
+
+        {itemProps ? <SelectionPanel selectionData={itemProps} /> : null}
 
         {/* {returnSelectionPanel()} */}
       </section>
