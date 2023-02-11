@@ -356,6 +356,23 @@ function CheckoutDetails(props) {
         }
       );
   }
+  function sendClientMail(inputs) {
+    emailjs
+      .send(
+        "service_a3dk9vt",
+        "template_hu0yp1u",
+        { client_mail: inputs.email, to_name: inputs.firstName, message: `Your order has been confirmed and will arrive on ${inputs.scheduled} \n If you're a registed user on the website, you can track your order status through your history page`  },
+        "28Q8DENkU-oYYZuQc"
+      )
+      .then(
+        function (response) {
+          console.log("SUCCESS!");
+        },
+        function (error) {
+          alert(error);
+        }
+      );
+  }
   async function firstStep(orderData) {
     let data = {
       api_key: API,
@@ -467,7 +484,7 @@ function CheckoutDetails(props) {
     let currentTime = new Date().getHours();
     let tomorrowDate = new Date(new Date().setDate(new Date().getDate() + 1));
     let afterTomorrowDate = new Date(
-      new Date().setDate(new Date().getDate() + 3)
+      new Date().setDate(new Date().getDate() + 2)
     );
     let date = new Date(new Date().setDate(new Date().getDate() + 7));
 
@@ -546,7 +563,7 @@ function CheckoutDetails(props) {
             scheduled: apartmentInputs.scheduled,
             totalPrice: calculateTotalPriceDb(),
           };
-
+   
           if (payMethod === "visa") {
             firstStep(orderData);
           } else if (payMethod === "cash") {
@@ -560,6 +577,7 @@ function CheckoutDetails(props) {
             const data = await response.json();
             if (data.message === "Checked out!") {
               sendMail();
+              sendClientMail(apartmentInputs)
               router.push("/thankyou");
             }
           }
@@ -611,6 +629,8 @@ function CheckoutDetails(props) {
             const data = await response.json();
             if (data.message === "Checked out!") {
               sendMail();
+              sendClientMail(apartmentInputs);
+
               router.push("/thankyou");
             }
           }
@@ -667,6 +687,8 @@ function CheckoutDetails(props) {
             const data = await response.json();
             if (data.message === "Checked out!") {
               sendMail();
+              sendClientMail(villaInputs);
+
               router.push("/thankyou");
             }
           }
@@ -715,6 +737,8 @@ function CheckoutDetails(props) {
             const data = await response.json();
             if (data.message === "Checked out!") {
               sendMail();
+              sendClientMail(villaInputs);
+
               router.push("/thankyou");
             }
 
@@ -773,6 +797,8 @@ function CheckoutDetails(props) {
             const data = await response.json();
             if (data.message === "Checked out!") {
               sendMail();
+              sendClientMail(companyInputs);
+
               router.push("/thankyou");
             }
 
@@ -822,6 +848,8 @@ function CheckoutDetails(props) {
             const data = await response.json();
             if (data.message === "Checked out!") {
               sendMail();
+              sendClientMail(companyInputs);
+
               router.push("/thankyou");
             }
           }
