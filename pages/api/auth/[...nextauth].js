@@ -3,19 +3,26 @@ import GoogleProvider from "next-auth/providers/google";
 import FacebookProvider from "next-auth/providers/facebook";
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 import clientPromise from "../../../lib/mongodb";
+import Google from "next-auth/providers/google";
+
 export default NextAuth({
   providers: [
-    GoogleProvider({
+    // Google
+    Google({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      authorization:
-        "https://accounts.google.com/o/oauth2/auth?response_type=code&prompt=consent",
+      // authorization: {
+      //   params: {
+      //     redirect_uri: "https://theracakecairo.com/api/auth/callback/google",
+      //     prompt: "consent",
+      //     scope: "email",
+      //   },
+      // },
     }),
     FacebookProvider({
       clientId: process.env.FACEBOOK_CLIENT_ID,
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
       authorization: {
-        
         params: {
           redirect_uri: "https://theracakecairo.com/api/auth/callback/facebook",
           prompt: "consent",
@@ -26,7 +33,7 @@ export default NextAuth({
       },
     }),
   ],
-  // debug: true,
+  debug: true,
   secret: process.env.NEXTAUTH_SECRET,
   adapter: MongoDBAdapter(clientPromise),
   callbacks: {
