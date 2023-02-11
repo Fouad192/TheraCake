@@ -482,7 +482,7 @@ function CheckoutDetails(props) {
 
   useEffect(() => {
     let currentTime = new Date().getHours();
-    let tomorrowDate = new Date(new Date().setDate(new Date().getDate() + 1));
+    let tomorrowDate = new Date(new Date().setDate(new Date().getDate() + 2));
     let afterTomorrowDate = new Date(
       new Date().setDate(new Date().getDate() + 2)
     );
