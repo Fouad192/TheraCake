@@ -361,7 +361,11 @@ function CheckoutDetails(props) {
       .send(
         "service_a3dk9vt",
         "template_hu0yp1u",
-        { client_mail: inputs.email, to_name: inputs.firstName, message: `Your order has been confirmed and will arrive on ${inputs.scheduled} \n If you're a registed user on the website, you can track your order status through your history page`  },
+        {
+          client_mail: inputs.email,
+          to_name: inputs.firstName,
+          message: `Your order has been confirmed and will arrive on ${inputs.scheduled} \n If you're a registed user on the website, you can track your order status through your history page`,
+        },
         "28Q8DENkU-oYYZuQc"
       )
       .then(
@@ -395,7 +399,11 @@ function CheckoutDetails(props) {
     let data = {
       auth_token: token,
       delivery_needed: "true",
-      amount_cents: orderData.totalPrice * 100,
+      amount_cents: Math.ceil(
+        parseInt(
+          orderData.totalPrice + (orderData.totalPrice * 2.5 / 100) + 2.5
+        )
+      ) * 100,
       currency: "EGP",
       items: [],
     };
@@ -430,7 +438,9 @@ function CheckoutDetails(props) {
   async function thirdStep(token, id, orderData) {
     let data = {
       auth_token: token,
-      amount_cents: orderData.totalPrice * 100,
+      amount_cents: Math.ceil(parseInt(
+        orderData.totalPrice + (orderData.totalPrice * 2.5 / 100) + 2.5
+      )) * 100,
       expiration: 3600,
       order_id: id,
       billing_data: {
@@ -563,7 +573,7 @@ function CheckoutDetails(props) {
             scheduled: apartmentInputs.scheduled,
             totalPrice: calculateTotalPriceDb(),
           };
-   
+
           if (payMethod === "visa") {
             firstStep(orderData);
           } else if (payMethod === "cash") {
@@ -577,7 +587,7 @@ function CheckoutDetails(props) {
             const data = await response.json();
             if (data.message === "Checked out!") {
               sendMail();
-              sendClientMail(apartmentInputs)
+              sendClientMail(apartmentInputs);
               router.push("/thankyou");
             }
           }
@@ -1077,18 +1087,25 @@ function CheckoutDetails(props) {
                         value={apartmentInputs.instructions}
                       />
                     </div>
-                    {/* <div>
+                    <div>
                       <h1>Payment Method</h1>
                       <select
                         id={classes.payMethodSelect}
-                        defaultValue=""
+                        // defaultValue=""
                         value={payMethod}
                         onChange={(e) => setPayMethod(e.target.value)}
                       >
                         <option value="cash">Cash</option>
                         <option value="visa">Visa</option>
                       </select>
-                    </div> */}
+                    </div>
+                    {payMethod === "visa" ? (
+                      <p className={classes.dateNote}>
+                        There is a fee of 2.5% + 2.5EGP on the total order price
+                        on visa payments
+                      </p>
+                    ) : null}
+
                     <div className={classes.scheduleInputs}>
                       <div>
                         <h1>Schedule Delivery</h1>
@@ -1106,6 +1123,7 @@ function CheckoutDetails(props) {
                     <p className={classes.dateNote}>
                       Orders placed after 9PM will be delievered after tomorrow
                     </p>
+
                     <button
                       id={classes.apartmentSubmitBtn}
                       disabled={disableBtn}
@@ -1227,7 +1245,7 @@ function CheckoutDetails(props) {
                         onChange={handleVillaInputChange}
                       />
                     </div>
-                    {/* <div>
+                    <div>
                       <h1>Payment Method</h1>
                       <select
                         id={classes.payMethodSelect}
@@ -1238,7 +1256,13 @@ function CheckoutDetails(props) {
                         <option value="cash">Cash</option>
                         <option value="visa">Visa</option>
                       </select>
-                    </div> */}
+                    </div>
+                    {payMethod === "visa" ? (
+                      <p className={classes.dateNote}>
+                        There is a fee of 2.5% + 2.5EGP on the total order price
+                        on visa payments
+                      </p>
+                    ) : null}
                     <div className={classes.scheduleInputs}>
                       <div>
                         <h1>Schedule Delivery</h1>
@@ -1381,7 +1405,7 @@ function CheckoutDetails(props) {
                         onChange={handleCompanyInputChange}
                       />
                     </div>
-                    {/* <div>
+                    <div>
                       <h1>Payment Method</h1>
                       <select
                         id={classes.payMethodSelect}
@@ -1392,7 +1416,13 @@ function CheckoutDetails(props) {
                         <option value="cash">Cash</option>
                         <option value="visa">Visa</option>
                       </select>
-                    </div> */}
+                    </div>
+                    {payMethod === "visa" ? (
+                      <p className={classes.dateNote}>
+                        There is a fee of 2.5% + 2.5EGP on the total order price
+                        on visa payments
+                      </p>
+                    ) : null}
                     <div className={classes.scheduleInputs}>
                       <div>
                         <h1>Schedule Delivery</h1>
