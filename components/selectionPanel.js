@@ -28,13 +28,7 @@ function SelectionPanel(props) {
   let toppingCountRef = useRef([]);
   let quantityRef = useRef();
   let addToInvoiceFlash = useRef();
-  useEffect(() => {
-    setSelectedSize([])
-setSelectedFlavor([])
-setSelectedExtra([])
-setSelectedGift([])
-setSelectedToppings({})
-  }, [props])
+  
   useEffect(() => {
     if(selectedFlavor === 'Pumpkin ') {
       setSelectedSize((prevState) => ({...prevState, price: originalPrice - (originalPrice * 20/100)}))
@@ -45,46 +39,15 @@ setSelectedToppings({})
       }));
     }
   }, [selectedFlavor, selectedSize?.size]);
-  
+  useEffect(() => {
+    setSelectedSize([]);
+    setSelectedFlavor([]);
+    setSelectedExtra([]);
+    setSelectedGift([]);
+    setSelectedToppings({});
+  }, [props.selectionData]);
   const { data: session } = useSession();
-  // function isLoggedIn() {
-  //   if (!session) {
-  //     return (
-  //       <div
-  //         className={classes.checkoutBtnDiv}
-  //         style={{ position: "absolute", bottom: "0" }}
-  //       >
-  //         <div style={{ position: "sticky" }}>
-  //           <button className={classes.menuFormSubmit} onClick={() => signIn()}>
-  //             Add To Cart
-  //           </button>
-  //         </div>
-  //       </div>
-  //     );
-  //   } else if (session) {
-  //     return (
-  //       <div
-  //         className={classes.checkoutBtnDiv}
-  //         style={{
-  //           position: "absolute",
-  //           bottom: "0",
-  //           backgroundColor: "white",
-  //         }}
-  //       >
-  //         <div style={{ position: "sticky" }}>
-  //           <button
-  //             className={classes.menuFormSubmit}
-  //             onClick={timeOutFlash}
-  //             form={classes.selectionForm}
-  //           >
-  //             Add To Cart
-  //           </button>
-  //           <p ref={addToInvoiceFlash}>Added to checkout invoice</p>
-  //         </div>
-  //       </div>
-  //     );
-  //   }
-  // }
+  
 
   function setMaxToppingsFunction() {
     if (currCheckedSize) {
