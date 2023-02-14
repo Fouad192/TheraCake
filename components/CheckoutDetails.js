@@ -342,10 +342,10 @@ function CheckoutDetails(props) {
   function sendMail() {
     emailjs
       .send(
-        "service_a3dk9vt",
-        "template_2shv7m8",
+        "service_mqrj1xg",
+        "template_676mrmp",
         { from_name: "TheraCake" },
-        "28Q8DENkU-oYYZuQc"
+        "iGqINwiui-ldCoAAX"
       )
       .then(
         function (response) {
@@ -359,14 +359,14 @@ function CheckoutDetails(props) {
   function sendClientMail(inputs) {
     emailjs
       .send(
-        "service_a3dk9vt",
-        "template_hu0yp1u",
+        "service_mqrj1xg",
+        "template_k01ublk",
         {
           client_mail: inputs.email,
           to_name: inputs.firstName,
           message: `Your order has been confirmed and will arrive on ${inputs.scheduled} \n If you're a registed user on the website, you can track your order status through your history page`,
         },
-        "28Q8DENkU-oYYZuQc"
+        "iGqINwiui-ldCoAAX"
       )
       .then(
         function (response) {
