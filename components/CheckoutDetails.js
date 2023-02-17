@@ -399,11 +399,12 @@ function CheckoutDetails(props) {
     let data = {
       auth_token: token,
       delivery_needed: "true",
-      amount_cents: Math.ceil(
-        parseInt(
-          orderData.totalPrice + (orderData.totalPrice * 2.5 / 100) + 2.5
-        )
-      ) * 100,
+      amount_cents:
+        Math.ceil(
+          parseInt(
+            orderData.totalPrice + (orderData.totalPrice * 2.5) / 100 + 2.5
+          )
+        ) * 100,
       currency: "EGP",
       items: [],
     };
@@ -438,9 +439,12 @@ function CheckoutDetails(props) {
   async function thirdStep(token, id, orderData) {
     let data = {
       auth_token: token,
-      amount_cents: Math.ceil(parseInt(
-        orderData.totalPrice + (orderData.totalPrice * 2.5 / 100) + 2.5
-      )) * 100,
+      amount_cents:
+        Math.ceil(
+          parseInt(
+            orderData.totalPrice + (orderData.totalPrice * 2.5) / 100 + 2.5
+          )
+        ) * 100,
       expiration: 3600,
       order_id: id,
       billing_data: {
@@ -981,17 +985,23 @@ function CheckoutDetails(props) {
                     </div>
                     <div>
                       <input
-                        type="number"
+                        type="text"
                         required
+                        
                         name="mobile"
+                        minLength={11}
+                        maxLength={20}
                         placeholder="Mobile Number"
                         value={apartmentInputs.mobile}
                         onChange={handleApartmentInputChange}
                       />
                       <input
-                        type="number"
+                        type="text"
                         name="backupMobile"
-                        placeholder="Backup Mobile Number"
+                        
+                        minLength={11}
+                        maxLength={20}
+                        placeholder="Whatsapp number"
                         onChange={handleApartmentInputChange}
                         value={apartmentInputs.backupMobile}
                       />
@@ -1162,17 +1172,23 @@ function CheckoutDetails(props) {
                     </div>
                     <div>
                       <input
-                        type="number"
+                        type="text"
+                        
                         name="mobile"
+                        minLength={11}
+                        maxLength={20}
                         placeholder="Mobile Number"
                         value={villaInputs.mobile}
                         onChange={handleVillaInputChange}
                         required
                       />
                       <input
-                        type="number"
+                        type="text"
+                        
                         name="backupMobile"
-                        placeholder="Backup Mobile Number"
+                        minLength={11}
+                        maxLength={20}
+                        placeholder="Whatsapp Number"
                         onChange={handleVillaInputChange}
                         value={villaInputs.backupMobile}
                       />
@@ -1315,17 +1331,23 @@ function CheckoutDetails(props) {
                     </div>
                     <div>
                       <input
-                        type="number"
+                        type="text"
                         name="mobile"
+                        minLength={11}
+                        maxLength={20}
                         placeholder="Mobile Number"
                         required
+                        
                         value={companyInputs.mobile}
                         onChange={handleCompanyInputChange}
                       />
                       <input
-                        type="number"
+                        type="text"
+                        
                         name="backupMobile"
-                        placeholder="Backup Mobile Number"
+                        minLength={11}
+                        maxLength={20}
+                        placeholder="Whatsapp Number"
                         onChange={handleCompanyInputChange}
                         value={companyInputs.backupMobile}
                       />

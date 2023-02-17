@@ -116,6 +116,7 @@ encodeData()
           <p>{order.orderNumber}</p>
           <p>{`${order.firstName} ${order.lastName}`}</p>
           <p>{order.mobile}</p>
+          {order.backupMobile ? <p>{order.backupMobile}</p> : null}
           <p>{order.email}</p>
         </div>
         <div>
