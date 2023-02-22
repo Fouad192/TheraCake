@@ -112,9 +112,9 @@ function Menu(props) {
               Brownies
             </button>
           </div>
-          <div className={classes.offer}>
+          {/* <div className={classes.offer}>
             <p>Enjoy 20% off on your pumpkin Special Cheesecake </p>
-          </div>
+          </div> */}
           {isAuthorized ? (
             <button className={classes.addItemBtn} onClick={toggleAddItemBtn}>
               Add Item
@@ -258,7 +258,6 @@ function Menu(props) {
             ))}
           </div>
         </div>
-
         {itemProps ? <SelectionPanel selectionData={itemProps} /> : null}
 
         {/* {returnSelectionPanel()} */}
