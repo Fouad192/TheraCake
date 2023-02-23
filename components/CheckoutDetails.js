@@ -26,7 +26,7 @@ function CheckoutDetails(props) {
   let [minDate, setMinDate] = useState();
   const [disableBtn, setDisableBtn] = useState();
   const [visaData, setVisaData] = useState();
-  const [muiDate, setMuiDate] = useState(dayjs().add(1, 'day').format('YYYY-MM-DD'));
+  const [muiDate, setMuiDate] = useState();
   let [totalPrice, setTotalPrice] = useState(calculateTotalPriceDb());
   let [apartmentDetails, showApartmentDetails] = useState(false);
   let [villaDetails, showVillaDetails] = useState(false);
@@ -546,8 +546,10 @@ const disableDates = (date) => {
     setMaxDate(date);
     if (currentTime >= 21) {
       setMinDate(afterTomorrowDate);
+      setMuiDate(afterTomorrowDate)
     } else {
       setMinDate(tomorrowDate);
+      setMuiDate(tomorrowDate)
     }
   }, []);
 
