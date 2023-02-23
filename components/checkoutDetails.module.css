@@ -13,6 +13,7 @@
 .informationContainer {
     grid-column: 2/7;
 }
+
 .scheduleInputs div {
     align-items: center;
 }
@@ -72,26 +73,38 @@
     width: 100%;
     margin-bottom: 2em;
 }
+.MuiPaper-root {
+    background-color: #eaea87;
+}
 
 .personalDetailsForm h1 {
     font-size: 20px;
     font-weight: medium;
 }
 
-.personalDetailsForm form div {
+.personalDetailsForm form div:not(.scheduleInputs div, .scheduleInputs) {
     width: 100%;
     display: flex;
     justify-content: space-between;
     margin: 1em 0;
     align-items: center;
 }
+.scheduleInputs {
+    margin: 1rem 0;
+}
 
-.personalDetailsForm form div input {
-    width: 45%;
-    padding: 1em 2em;
-    border: 1px #ff5689 solid;
-    border-radius: 15px;
-    outline-color: #ff5689;
+.scheduleInputs div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.styledInput {
+        width: 45%;
+        padding: 1em 2em;
+        border: 1px #ff5689 solid;
+        border-radius: 15px;
+        outline-color: #ff5689;
 }
 
 .personalDetailsForm form textarea {

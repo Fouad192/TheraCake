@@ -18,6 +18,7 @@ function SelectionPanel(props) {
   let [selectedExtra, setSelectedExtra] = useState([]);
   let [selectedGift, setSelectedGift] = useState([]);
   let [selectedToppings, setSelectedToppings] = useState({});
+  const [mouseClickedTopping, handleMouseClick] = useState()
   // let [selectedFreeExtra, setSelectedFreeExtra] = useState(
   //   "No Free Extra Pistachio"
   // );
@@ -32,8 +33,16 @@ function SelectionPanel(props) {
   let addToInvoiceFlash = useRef();
 
   const { data: session } = useSession();
-  
-
+  useEffect(() => {
+    setSelectedSize([]);
+    setSelectedFlavor([]);
+    setSelectedExtra([]);
+    setSelectedGift([]);
+    setSelectedToppings({});
+  }, [props.selectionData]);
+  useEffect(() => {
+    setSelectedExtra(selectedExtra.filter((item) => item.quantity != 0));
+  }, [mouseClickedTopping]);
   function setMaxToppingsFunction() {
     if (currCheckedSize) {
       if (currCheckedSize.includes("9")) {
@@ -314,7 +323,7 @@ function SelectionPanel(props) {
                                 [e.target.name]: prevState[e.target.name],
                               };
                             } else {
-                              return {...prevState}
+                              return { ...prevState };
                             }
                           }
                         });
@@ -359,24 +368,75 @@ function SelectionPanel(props) {
               <h1>Extras</h1>
               {props.selectionData.extraPrice.map((item, index) => (
                 <div key={index}>
-                  <input
-                    type="checkbox"
-                    value={item.extra}
-                    onClick={(e) => {
-                      if (e.target.checked) {
-                        setSelectedExtra([
-                          ...selectedExtra,
-                          { extra: item.extra, price: item.price },
-                        ]);
-                      } else if (!e.target.checked) {
+                  <button
+                    name={item.extra}
+                    type="button"
+                    onClick={() => {
+                      setSelectedExtra([
+                        ...selectedExtra,
+                        {
+                          extra: item.extra,
+                          price: parseInt(item.price),
+                          quantity: 1,
+                        },
+                      ]);
+                      let matchExtra = selectedExtra?.find(
+                        (extra) => extra?.extra === item.extra
+                      );
+                      console.log(matchExtra);
+                      if (matchExtra?.quantity >= 1) {
                         setSelectedExtra(
-                          selectedExtra.filter(
-                            (extra) => extra.extra != item.extra
-                          )
+                          selectedExtra.map((subItem) => {
+                            if (subItem?.extra === item.extra) {
+                              return {
+                                ...subItem,
+                                price: parseInt(
+                                  item.price * (subItem.quantity + 1)
+                                ),
+                                quantity: subItem.quantity + 1,
+                              };
+                            } else {
+                              return subItem;
+                            }
+                          })
                         );
                       }
                     }}
+                  >
+                    +
+                  </button>
+                  <input
+                    readOnly
+                    value={
+                      selectedExtra.filter(
+                        (findItem) => findItem?.extra === item.extra
+                      )[0]?.quantity || 0
+                    }
                   />
+
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      handleMouseClick(!mouseClickedTopping)
+                      setSelectedExtra(
+                        selectedExtra?.map((decreaseItem) => {
+                          if (decreaseItem?.extra === item.extra) {
+                            if (decreaseItem.quantity > 0) {
+                              return {
+                                ...decreaseItem,
+                                quantity: decreaseItem?.quantity - 1,
+                                price: decreaseItem?.price - item.price,
+                              };
+                            }
+                          } else {
+                            return decreaseItem;
+                          }
+                        })
+                      );
+                    }}
+                  >
+                    -
+                  </button>
                   <label>{item.extra}</label>
                   <p id={classes.extraPrice}>{item.price}</p>
                 </div>

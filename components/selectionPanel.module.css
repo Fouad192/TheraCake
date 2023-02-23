@@ -94,7 +94,7 @@
 
 .sizesInputs label,
 .flavorInputs label,
-.giftInputs label, .extras label {
+.giftInputs label {
     font-size: 18px;
     font-weight: normal;
     margin-left: 0.5em;
@@ -247,28 +247,31 @@
     padding: 0.1em 0.5em;
 }
 
-.toppings div input {
+.toppings div input, .extras div input {
     width: 3.5%;
     border: none;
     margin: 0 0.5em;
+    text-align: center;
 }
-.toppings div button {
+.toppings div button, .extras div button {
     background-color: #ff5689;
         border: none;
         border-radius: 100%;
         color: white;
         cursor: pointer;
 }
-.toppings div button:first-child {
+.toppings div button:first-child, .extras div button:first-child {
     font-size: 18px;
         padding: 0.1em 0.4em;
         margin-left: 0.5em;
+        text-align: center;
 }
-.toppings div input + button {
+.toppings div input + button, .extras div input + button{
     font-size: 18px;
         padding: 0.1em 0.5em;
+        text-align: center;
 }
-.toppings div label {
+.toppings div label, .extras div label {
 margin-left: 0.5em;
 }
 @media (max-width: 1200px) {

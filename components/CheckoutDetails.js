@@ -1,9 +1,14 @@
 import classes from "./checkoutDetails.module.css";
 import { useEffect, useRef, useState } from "react";
 import deleteIcon from "../public/delete.png";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs from "dayjs";
+import { DatePicker } from "@mui/x-date-pickers";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
+import { TextField } from "@mui/material";
 import Link from "next/link";
 import uuid from "react-uuid";
 import emailjs from "@emailjs/browser";
@@ -21,6 +26,7 @@ function CheckoutDetails(props) {
   let [minDate, setMinDate] = useState();
   const [disableBtn, setDisableBtn] = useState();
   const [visaData, setVisaData] = useState();
+  const [muiDate, setMuiDate] = useState(dayjs().add(1, 'day').format('YYYY-MM-DD'));
   let [totalPrice, setTotalPrice] = useState(calculateTotalPriceDb());
   let [apartmentDetails, showApartmentDetails] = useState(false);
   let [villaDetails, showVillaDetails] = useState(false);
@@ -30,7 +36,9 @@ function CheckoutDetails(props) {
   let [villaInputs, setVillaInputs] = useState({});
   let [companyInputs, setCompanyInputs] = useState({});
   const [payMethod, setPayMethod] = useState("cash");
-
+const disableDates = (date) => {
+  return dayjs(date).format("DD") == 25;
+};
   useEffect(() => {
     if (
       typeof localStorage.getItem("items") !== "undefined" &&
@@ -206,9 +214,9 @@ function CheckoutDetails(props) {
             <div>
               {addedItem.extraPrice?.map((extra, index) => (
                 <div className={classes.gift} key={uuid()}>
-                  <p>{extra.extra}</p>
+                  <p>{extra?.extra}</p>
                   <p className={classes.price}>
-                    {extra.price * addedItem.quantity}
+                    {`${extra?.price} ${extra.quantity}x`}
                   </p>
                 </div>
               ))}
@@ -306,7 +314,7 @@ function CheckoutDetails(props) {
                 <div className={classes.gift} key={uuid()}>
                   <p>{extra.extra}</p>
                   <p className={classes.price}>
-                    {extra.price * addedItem.quantity}
+                    {extra?.price * addedItem.quantity}
                   </p>
                 </div>
               ))}
@@ -394,7 +402,7 @@ function CheckoutDetails(props) {
 
     secondStep(token, orderData);
   }
-
+  
   async function secondStep(token, orderData) {
     let data = {
       auth_token: token,
@@ -493,36 +501,53 @@ function CheckoutDetails(props) {
     let iframeURL = `https://accept.paymob.com/api/acceptance/iframes/690689?payment_token=${token}`;
     router.replace(iframeURL);
   }
+  const onDateChange = (newDate) => {
+    console.log('hi')
+    setMuiDate(newDate.format('YYYY-MM-DD'));
+  };
+  // useEffect(() => {
+  //   let currentTime = new Date().getHours();
+  //   let tomorrowDate = new Date(new Date().setDate(new Date().getDate() + 1));
+  //   let afterTomorrowDate = new Date(
+  //     new Date().setDate(new Date().getDate() + 2)
+  //   );
+  //   let date = new Date(new Date().setDate(new Date().getDate() + 7));
 
+  //   let formattedTomorrowDate = new Date(
+  //     tomorrowDate.getTime() - tomorrowDate.getTimezoneOffset() * 60000
+  //   )
+  //     .toISOString()
+  //     .split("T")[0];
+  //   let formattedAfterTomorrowDate = new Date(
+  //     afterTomorrowDate.getTime() -
+  //       afterTomorrowDate.getTimezoneOffset() * 60000
+  //   )
+  //     .toISOString()
+  //     .split("T")[0];
+  //   let formattedDate = new Date(
+  //     date.getTime() - date.getTimezoneOffset() * 60000
+  //   )
+  //     .toISOString()
+  //     .split("T")[0];
+  //   setMaxDate(formattedDate);
+  //   if (currentTime >= 21) {
+  //     setMinDate(formattedAfterTomorrowDate);
+  //   } else {
+  //     setMinDate(formattedTomorrowDate);
+  //   }
+  // }, []);
   useEffect(() => {
     let currentTime = new Date().getHours();
-    let tomorrowDate = new Date(new Date().setDate(new Date().getDate() + 1));
-    let afterTomorrowDate = new Date(
-      new Date().setDate(new Date().getDate() + 2)
-    );
-    let date = new Date(new Date().setDate(new Date().getDate() + 7));
+    let tomorrowDate = dayjs().add(1, 'day').format('YYYY-MM-DD');
+    let afterTomorrowDate = dayjs().add(2, "day").format("YYYY-MM-DD");
+    let date = dayjs().add(7, "day").format("YYYY-MM-DD");
 
-    let formattedTomorrowDate = new Date(
-      tomorrowDate.getTime() - tomorrowDate.getTimezoneOffset() * 60000
-    )
-      .toISOString()
-      .split("T")[0];
-    let formattedAfterTomorrowDate = new Date(
-      afterTomorrowDate.getTime() -
-        afterTomorrowDate.getTimezoneOffset() * 60000
-    )
-      .toISOString()
-      .split("T")[0];
-    let formattedDate = new Date(
-      date.getTime() - date.getTimezoneOffset() * 60000
-    )
-      .toISOString()
-      .split("T")[0];
-    setMaxDate(formattedDate);
+   
+    setMaxDate(date);
     if (currentTime >= 21) {
-      setMinDate(formattedAfterTomorrowDate);
+      setMinDate(afterTomorrowDate);
     } else {
-      setMinDate(formattedTomorrowDate);
+      setMinDate(tomorrowDate);
     }
   }, []);
 
@@ -530,13 +555,13 @@ function CheckoutDetails(props) {
     let sum = 0;
     props.addedItems.map((item) => {
       item.sizePrice.map((size) => {
-        sum += parseInt(size.price) * item.quantity;
+        sum += parseInt(size?.price) * item.quantity;
       });
       item.extraPrice.map((extra) => {
-        sum += parseInt(extra.price) * item.quantity;
+        sum += parseInt(extra?.price) * item.quantity;
       });
       item.giftPrice.map((gift) => {
-        sum += parseInt(gift.price) * item.quantity;
+        sum += parseInt(gift?.price) * item.quantity;
       });
     });
 
@@ -574,7 +599,7 @@ function CheckoutDetails(props) {
             floor: apartmentInputs.floor,
             apartment: apartmentInputs.apartment,
             instructions: apartmentInputs.instructions,
-            scheduled: apartmentInputs.scheduled,
+            scheduled: muiDate,
             totalPrice: calculateTotalPriceDb(),
           };
 
@@ -624,7 +649,7 @@ function CheckoutDetails(props) {
             floor: apartmentInputs.floor,
             apartment: apartmentInputs.apartment,
             instructions: apartmentInputs.instructions,
-            scheduled: apartmentInputs.scheduled,
+            scheduled: muiDate,
             totalPrice: anonymousTotalDue(),
           };
 
@@ -684,7 +709,7 @@ function CheckoutDetails(props) {
             street: villaInputs.street,
             villa: villaInputs.villa,
             instructions: villaInputs.instructions,
-            scheduled: villaInputs.scheduled,
+            scheduled: muiDate,
             totalPrice: calculateTotalPriceDb(),
           };
 
@@ -734,7 +759,7 @@ function CheckoutDetails(props) {
 
             villa: villaInputs.villa,
             instructions: villaInputs.instructions,
-            scheduled: villaInputs.scheduled,
+            scheduled: muiDate,
             totalPrice: anonymousTotalDue(),
           };
 
@@ -795,7 +820,7 @@ function CheckoutDetails(props) {
 
             company: companyInputs.company,
             instructions: companyInputs.instructions,
-            scheduled: companyInputs.scheduled,
+            scheduled: muiDate,
             totalPrice: calculateTotalPriceDb(),
           };
           if (payMethod === "visa") {
@@ -846,7 +871,7 @@ function CheckoutDetails(props) {
 
             company: companyInputs.company,
             instructions: companyInputs.instructions,
-            scheduled: companyInputs.scheduled,
+            scheduled: muiDate,
             totalPrice: anonymousTotalDue(),
           };
           if (payMethod === "visa") {
@@ -898,13 +923,13 @@ function CheckoutDetails(props) {
 
     props.addedItems?.map((item) => {
       item.sizePrice.map((size) => {
-        sum += parseInt(size.price) * item.quantity;
+        sum += parseInt(size?.price) * item.quantity;
       });
       item.extraPrice.map((extra) => {
-        sum += parseInt(extra.price) * item.quantity;
+        sum += parseInt(extra?.price) * item.quantity;
       });
       item.giftPrice.map((gift) => {
-        sum += parseInt(gift.price) * item.quantity;
+        sum += parseInt(gift?.price) * item.quantity;
       });
     });
 
@@ -968,6 +993,7 @@ function CheckoutDetails(props) {
                     <div>
                       <input
                         type="text"
+                        className={classes.styledInput}
                         required
                         name="firstName"
                         placeholder="First Name"
@@ -976,6 +1002,7 @@ function CheckoutDetails(props) {
                       />
                       <input
                         type="text"
+                        className={classes.styledInput}
                         required
                         placeholder="Last Name"
                         name="lastName"
@@ -986,8 +1013,8 @@ function CheckoutDetails(props) {
                     <div>
                       <input
                         type="text"
+                        className={classes.styledInput}
                         required
-                        
                         name="mobile"
                         minLength={11}
                         maxLength={20}
@@ -997,8 +1024,8 @@ function CheckoutDetails(props) {
                       />
                       <input
                         type="text"
+                        className={classes.styledInput}
                         name="backupMobile"
-                        
                         minLength={11}
                         maxLength={20}
                         placeholder="Whatsapp number"
@@ -1009,6 +1036,7 @@ function CheckoutDetails(props) {
                     <div>
                       <input
                         type="email"
+                        className={classes.styledInput}
                         required
                         name="email"
                         placeholder="Email"
@@ -1020,6 +1048,7 @@ function CheckoutDetails(props) {
                     <div>
                       <select
                         id={classes.selectGov}
+                        className={classes.styledInput}
                         name="governorate"
                         onChange={handleApartmentInputChange}
                       >
@@ -1035,6 +1064,7 @@ function CheckoutDetails(props) {
                       /> */}
                       <input
                         type="text"
+                        className={classes.styledInput}
                         name="city"
                         required
                         placeholder="City"
@@ -1045,6 +1075,7 @@ function CheckoutDetails(props) {
                     <div>
                       <input
                         type="text"
+                        className={classes.styledInput}
                         name="area"
                         required
                         placeholder="Area"
@@ -1053,6 +1084,7 @@ function CheckoutDetails(props) {
                       />
                       <input
                         type="text"
+                        className={classes.styledInput}
                         name="street"
                         required
                         placeholder="Street Name"
@@ -1063,6 +1095,7 @@ function CheckoutDetails(props) {
                     <div>
                       <input
                         type="text"
+                        className={classes.styledInput}
                         name="building"
                         required
                         placeholder="Building Number"
@@ -1071,6 +1104,7 @@ function CheckoutDetails(props) {
                       />
                       <input
                         type="text"
+                        className={classes.styledInput}
                         name="floor"
                         required
                         placeholder="Floor"
@@ -1081,6 +1115,7 @@ function CheckoutDetails(props) {
                     <div>
                       <input
                         type="text"
+                        className={classes.styledInput}
                         name="apartment"
                         required
                         placeholder="Apartment Number"
@@ -1091,6 +1126,7 @@ function CheckoutDetails(props) {
                     <div>
                       <textarea
                         placeholder="Instructions For Delivery"
+                        className={classes.styledInput}
                         rows="5"
                         name="instructions"
                         onChange={handleApartmentInputChange}
@@ -1101,6 +1137,7 @@ function CheckoutDetails(props) {
                       <h1>Payment Method</h1>
                       <select
                         id={classes.payMethodSelect}
+                        className={classes.styledInput}
                         // defaultValue=""
                         value={payMethod}
                         onChange={(e) => setPayMethod(e.target.value)}
@@ -1115,21 +1152,37 @@ function CheckoutDetails(props) {
                         on visa payments
                       </p>
                     ) : null}
-
-                    <div className={classes.scheduleInputs}>
-                      <div>
-                        <h1>Schedule Delivery</h1>
-                        <input
-                          required
-                          type="date"
-                          name="scheduled"
-                          max={maxDate}
-                          min={minDate}
-                          value={apartmentInputs.scheduled}
-                          onChange={handleApartmentInputChange}
-                        />
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <div className={classes.scheduleInputs}>
+                        <div>
+                          <h1>Schedule Delivery</h1>
+                          <DatePicker
+                            // onChange={handleApartmentInputChange}
+                            // value={apartmentInputs.scheduled}
+                            value={muiDate}
+                            onChange={onDateChange}
+                            inputFormat="YYYY-MM-DD"
+                            minDate={minDate}
+                            maxDate={maxDate}
+                            shouldDisableDate={disableDates}
+                            className={classes.muiInput}
+                            renderInput={(params) => (
+                              <TextField
+                                {...params}
+                                sx={{
+                                  ".MuiSvgIcon-root": { fill: "#ff5689" },
+                                  ".MuiOutlinedInput-notchedOutline": {
+                                    borderColor: "#ff5689",
+                                    borderRadius: "10px",
+                                  },
+                                }}
+                              />
+                            )}
+                          />
+                        </div>
                       </div>
-                    </div>
+                    </LocalizationProvider>
+
                     <p className={classes.dateNote}>
                       Orders placed after 9PM will be delievered after tomorrow
                     </p>
@@ -1155,6 +1208,7 @@ function CheckoutDetails(props) {
                     <div>
                       <input
                         type="text"
+                        className={classes.styledInput}
                         name="firstName"
                         placeholder="First Name"
                         value={villaInputs.firstName}
@@ -1163,6 +1217,7 @@ function CheckoutDetails(props) {
                       />
                       <input
                         type="text"
+                        className={classes.styledInput}
                         placeholder="Last Name"
                         name="lastName"
                         value={villaInputs.lastName}
@@ -1173,7 +1228,7 @@ function CheckoutDetails(props) {
                     <div>
                       <input
                         type="text"
-                        
+                        className={classes.styledInput}
                         name="mobile"
                         minLength={11}
                         maxLength={20}
@@ -1184,7 +1239,7 @@ function CheckoutDetails(props) {
                       />
                       <input
                         type="text"
-                        
+                        className={classes.styledInput}
                         name="backupMobile"
                         minLength={11}
                         maxLength={20}
@@ -1196,6 +1251,7 @@ function CheckoutDetails(props) {
                     <div>
                       <input
                         type="email"
+                        className={classes.styledInput}
                         name="email"
                         placeholder="Email"
                         onChange={handleVillaInputChange}
@@ -1207,6 +1263,7 @@ function CheckoutDetails(props) {
                     <div>
                       <select
                         id={classes.selectGov}
+                        className={classes.styledInput}
                         name="governorate"
                         onChange={handleVillaInputChange}
                       >
@@ -1217,6 +1274,7 @@ function CheckoutDetails(props) {
                       <input
                         type="text"
                         name="city"
+                        className={classes.styledInput}
                         placeholder="City"
                         onChange={handleVillaInputChange}
                         value={villaInputs.city}
@@ -1226,6 +1284,7 @@ function CheckoutDetails(props) {
                     <div>
                       <input
                         type="text"
+                        className={classes.styledInput}
                         name="area"
                         placeholder="Area"
                         onChange={handleVillaInputChange}
@@ -1234,6 +1293,7 @@ function CheckoutDetails(props) {
                       />
                       <input
                         type="text"
+                        className={classes.styledInput}
                         name="street"
                         placeholder="Street Name"
                         onChange={handleVillaInputChange}
@@ -1245,6 +1305,7 @@ function CheckoutDetails(props) {
                     <div>
                       <input
                         type="text"
+                        className={classes.styledInput}
                         name="villa"
                         placeholder="Villa Number"
                         onChange={handleVillaInputChange}
@@ -1255,6 +1316,7 @@ function CheckoutDetails(props) {
                     <div>
                       <textarea
                         placeholder="Instructions For Delivery"
+                        className={classes.styledInput}
                         rows="5"
                         name="instructions"
                         value={villaInputs.instructions}
@@ -1265,6 +1327,7 @@ function CheckoutDetails(props) {
                       <h1>Payment Method</h1>
                       <select
                         id={classes.payMethodSelect}
+                        className={classes.styledInput}
                         defaultValue=""
                         value={payMethod}
                         onChange={(e) => setPayMethod(e.target.value)}
@@ -1279,20 +1342,36 @@ function CheckoutDetails(props) {
                         on visa payments
                       </p>
                     ) : null}
-                    <div className={classes.scheduleInputs}>
-                      <div>
-                        <h1>Schedule Delivery</h1>
-                        <input
-                          required
-                          type="date"
-                          name="scheduled"
-                          max={maxDate}
-                          min={minDate}
-                          value={villaInputs.scheduled}
-                          onChange={handleVillaInputChange}
-                        />
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <div className={classes.scheduleInputs}>
+                        <div>
+                          <h1>Schedule Delivery</h1>
+                          <DatePicker
+                            // onChange={handleApartmentInputChange}
+                            // value={apartmentInputs.scheduled}
+                            value={muiDate}
+                            onChange={onDateChange}
+                            inputFormat="YYYY-MM-DD"
+                            minDate={minDate}
+                            maxDate={maxDate}
+                            shouldDisableDate={disableDates}
+                            className={classes.muiInput}
+                            renderInput={(params) => (
+                              <TextField
+                                {...params}
+                                sx={{
+                                  ".MuiSvgIcon-root": { fill: "#ff5689" },
+                                  ".MuiOutlinedInput-notchedOutline": {
+                                    borderColor: "#ff5689",
+                                    borderRadius: "10px",
+                                  },
+                                }}
+                              />
+                            )}
+                          />
+                        </div>
                       </div>
-                    </div>
+                    </LocalizationProvider>
                     <p className={classes.dateNote}>
                       Orders placed after 9PM will be delievered after tomorrow
                     </p>
@@ -1314,6 +1393,7 @@ function CheckoutDetails(props) {
                     <div>
                       <input
                         type="text"
+                        className={classes.styledInput}
                         name="firstName"
                         required
                         placeholder="First Name"
@@ -1322,6 +1402,7 @@ function CheckoutDetails(props) {
                       />
                       <input
                         type="text"
+                        className={classes.styledInput}
                         placeholder="Last Name"
                         required
                         name="lastName"
@@ -1332,18 +1413,18 @@ function CheckoutDetails(props) {
                     <div>
                       <input
                         type="text"
+                        className={classes.styledInput}
                         name="mobile"
                         minLength={11}
                         maxLength={20}
                         placeholder="Mobile Number"
                         required
-                        
                         value={companyInputs.mobile}
                         onChange={handleCompanyInputChange}
                       />
                       <input
                         type="text"
-                        
+                        className={classes.styledInput}
                         name="backupMobile"
                         minLength={11}
                         maxLength={20}
@@ -1355,6 +1436,7 @@ function CheckoutDetails(props) {
                     <div>
                       <input
                         type="email"
+                        className={classes.styledInput}
                         name="email"
                         required
                         placeholder="Email"
@@ -1366,6 +1448,7 @@ function CheckoutDetails(props) {
                     <div>
                       <select
                         id={classes.selectGov}
+                        className={classes.styledInput}
                         name="governorate"
                         onChange={handleCompanyInputChange}
                       >
@@ -1381,6 +1464,7 @@ function CheckoutDetails(props) {
                       /> */}
                       <input
                         type="text"
+                        className={classes.styledInput}
                         name="city"
                         required
                         placeholder="City"
@@ -1391,6 +1475,7 @@ function CheckoutDetails(props) {
                     <div>
                       <input
                         type="text"
+                        className={classes.styledInput}
                         name="area"
                         required
                         placeholder="Area"
@@ -1399,6 +1484,7 @@ function CheckoutDetails(props) {
                       />
                       <input
                         type="text"
+                        className={classes.styledInput}
                         name="street"
                         required
                         placeholder="Street Name"
@@ -1410,6 +1496,7 @@ function CheckoutDetails(props) {
                     <div>
                       <input
                         type="text"
+                        className={classes.styledInput}
                         name="company"
                         required
                         placeholder="Company Name"
@@ -1421,6 +1508,7 @@ function CheckoutDetails(props) {
                     <div>
                       <textarea
                         placeholder="Instructions For Delivery"
+                        className={classes.styledInput}
                         rows="5"
                         name="instructions"
                         value={companyInputs.instructions}
@@ -1431,6 +1519,7 @@ function CheckoutDetails(props) {
                       <h1>Payment Method</h1>
                       <select
                         id={classes.payMethodSelect}
+                        className={classes.styledInput}
                         defaultValue=""
                         value={payMethod}
                         onChange={(e) => setPayMethod(e.target.value)}
@@ -1445,20 +1534,37 @@ function CheckoutDetails(props) {
                         on visa payments
                       </p>
                     ) : null}
-                    <div className={classes.scheduleInputs}>
-                      <div>
-                        <h1>Schedule Delivery</h1>
-                        <input
-                          required
-                          type="date"
-                          name="scheduled"
-                          max={maxDate}
-                          min={minDate}
-                          value={companyInputs.scheduled}
-                          onChange={handleCompanyInputChange}
-                        />
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <div className={classes.scheduleInputs}>
+                        <div>
+                          <h1>Schedule Delivery</h1>
+                          <DatePicker
+                            // onChange={handleApartmentInputChange}
+                            // value={apartmentInputs.scheduled}
+                            value={muiDate}
+                            onChange={onDateChange}
+                            inputFormat="YYYY-MM-DD"
+                            minDate={minDate}
+                            maxDate={maxDate}
+                            shouldDisableDate={disableDates}
+                      
+                            className={classes.muiInput}
+                            renderInput={(params) => (
+                              <TextField
+                                {...params}
+                                sx={{
+                                  ".MuiSvgIcon-root": { fill: "#ff5689" },
+                                  ".MuiOutlinedInput-notchedOutline": {
+                                    borderColor: "#ff5689",
+                                    borderRadius: "10px",
+                                  },
+                                }}
+                              />
+                            )}
+                          />
+                        </div>
                       </div>
-                    </div>
+                    </LocalizationProvider>
                     <p className={classes.dateNote}>
                       Orders placed after 9PM will be delievered after tomorrow
                     </p>

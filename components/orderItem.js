@@ -188,8 +188,8 @@ encodeData()
                   <div className={classes.itemSubDetails} key={uuid()}>
                     <div>
                       <p>{extra.extra}</p>
-                      <p>{extra.price * item.quantity}</p>
-                    </div>
+                      <p>{`${extra.price} ${extra.quantity}x`}</p>
+                    </div> 
                   </div>
                 ))}
                 <div className={classes.toppingsDiv}>
