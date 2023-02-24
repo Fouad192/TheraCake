@@ -549,7 +549,7 @@ const disableDates = (date) => {
       setMuiDate(afterTomorrowDate)
     } else {
       setMinDate(tomorrowDate);
-      setMuiDate(tomorrowDate)
+      setMuiDate(afterTomorrowDate)
     }
   }, []);
 
