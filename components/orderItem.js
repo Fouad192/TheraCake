@@ -155,10 +155,10 @@ encodeData()
               <div key={uuid()}>
                 <div className={classes.orderTitleDetails}>
                   <h1>{`${item.quantity}x ${item.name}`}</h1>
-                  <p>{item.sizePrice[0].price * item.quantity}</p>
+                  <p>{item.sizePrice[0]?.price * item.quantity}</p>
                 </div>
                 <div className={classes.itemSubDetails}>
-                  <p>{item.sizePrice[0].size}</p>
+                  <p>{item.sizePrice[0]?.size}</p>
                 </div>
                 <div className={classes.itemFlavors}>
                   {item.flavors.length > 1 ? (
