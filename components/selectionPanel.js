@@ -187,7 +187,7 @@ function SelectionPanel(props) {
               -
             </button>
           </div>
-          <div className={classes.sizesInputs}>
+          <div className={classes.sizesInputs} key={props.selectionData._id}>
             <h1>Choose Size</h1>
 
             {props.selectionData.sizePrice.map((item, index) => {
