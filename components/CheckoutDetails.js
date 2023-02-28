@@ -502,7 +502,6 @@ const disableDates = (date) => {
     router.replace(iframeURL);
   }
   const onDateChange = (newDate) => {
-    console.log('hi')
     setMuiDate(newDate.format('YYYY-MM-DD'));
   };
   // useEffect(() => {
@@ -546,11 +545,11 @@ const disableDates = (date) => {
     setMaxDate(date);
     if (currentTime >= 21) {
       setMinDate(afterTomorrowDate);
-      setMuiDate(afterTomorrowDate)
     } else {
       setMinDate(tomorrowDate);
-      setMuiDate(afterTomorrowDate)
     }
+      setMuiDate('YYYY/MM/DD');
+
   }, []);
 
   function calculateTotalPriceDb() {
@@ -1157,7 +1156,7 @@ const disableDates = (date) => {
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                       <div className={classes.scheduleInputs}>
                         <div>
-                          <h1>Schedule Delivery</h1>
+                          <h1>Select delivery date</h1>
                           <DatePicker
                             // onChange={handleApartmentInputChange}
                             // value={apartmentInputs.scheduled}
@@ -1347,7 +1346,7 @@ const disableDates = (date) => {
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                       <div className={classes.scheduleInputs}>
                         <div>
-                          <h1>Schedule Delivery</h1>
+                          <h1>Select delivery date</h1>
                           <DatePicker
                             // onChange={handleApartmentInputChange}
                             // value={apartmentInputs.scheduled}
@@ -1539,7 +1538,7 @@ const disableDates = (date) => {
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                       <div className={classes.scheduleInputs}>
                         <div>
-                          <h1>Schedule Delivery</h1>
+                          <h1>Select delivery date</h1>
                           <DatePicker
                             // onChange={handleApartmentInputChange}
                             // value={apartmentInputs.scheduled}
