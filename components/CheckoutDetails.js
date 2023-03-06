@@ -548,10 +548,12 @@ const disableDates = (date) => {
     } else {
       setMinDate(tomorrowDate);
     }
-      setMuiDate('YYYY/MM/DD');
 
   }, []);
+useEffect(() => {
+      setMuiDate(minDate);
 
+}, [minDate])
   function calculateTotalPriceDb() {
     let sum = 0;
     props.addedItems.map((item) => {
