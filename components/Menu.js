@@ -154,32 +154,43 @@ function Menu(props) {
                       />
                     </div>
                   )}
+                  <div className={classes.nameFlavor}>
+                    <h1>{item.name}</h1>
 
-                  <h1>{item.name}</h1>
-
-                  <p>
-                    {item.flavors.map((flavor, index, flavorArray) => {
-                      if (flavorArray.length - 1 === index) {
-                        return <span key={uuid()}>{flavor}</span>;
-                      } else if (index < 4) {
-                        return <span key={uuid()}>{flavor}/</span>;
-                      }
-                    })}
-                  </p>
-                  <div className={classes.priceBtnDiv}>
-                    <button
-                      onClick={() => {
-                        // setIdx(index);
-                        // setCategoryDetect("cheesecake");
-                        setItemProps(item);
-                      }}
-                    >
-                      Select Your Options
-                    </button>
                     <p>
-                      {item.sizePrice[0].price} -{" "}
-                      {item.sizePrice[item.sizePrice.length - 1].price} EGP
+                      {item.flavors.map((flavor, index, flavorArray) => {
+                        if (flavorArray.length - 1 === index) {
+                          return <span key={uuid()}>{flavor}</span>;
+                        } else if (index < 4) {
+                          return <span key={uuid()}>{flavor}/</span>;
+                        }
+                      })}
                     </p>
+                  </div>
+
+                  <div className={classes.priceBtnDiv}>
+                    {item.name === "Joy bites cheesecake " ? null : (
+                      <button
+                        onClick={() => {
+                          // setIdx(index);
+                          // setCategoryDetect("cheesecake");
+                          setItemProps(item);
+                        }}
+                      >
+                        Select Your Options
+                      </button>
+                    )}
+
+                    {item.name === "Joy bites cheesecake " ? (
+                      <p style={{ fontWeight: "bold", fontSize: "1.3rem" }}>
+                        Out Of Stock
+                      </p>
+                    ) : (
+                      <p>
+                        {item.sizePrice[0].price} -{" "}
+                        {item.sizePrice[item.sizePrice.length - 1].price} EGP
+                      </p>
+                    )}
                   </div>
                 </div>
                 <div className={classes.menuItemImage}>

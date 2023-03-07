@@ -12,6 +12,13 @@
     display: flex;
     justify-content: space-between;
 }
+.nameFlavor p span {
+    display: inline-block;
+}
+.nameFlavor p {
+    text-align: center;
+    margin: 0.5rem 0;
+}
 .offer {
 color: #E31552;
 display: flex;
@@ -83,6 +90,7 @@ font-size: 18px;
 }
 .menuItemDetails {
     padding: 1em;
+    width: 60%;
 }
 .menuItemDetails button + p {
    
@@ -196,6 +204,8 @@ align-items: center;
     }
     .priceBtnDiv button {
         margin-top: 0.5em;
+        width: 100%;
+        font-size: 0.7rem;
     }
         .menuItemImage img {
             width: 90%;
