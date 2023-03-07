@@ -96,7 +96,7 @@ function SelectionPanel(props) {
           router.reload(window.location.pathname);
         }, 1000);
       } catch (e) {
-        alert(e.message);
+        console.log(e.message);
       }
     } else {
       try {
@@ -137,7 +137,7 @@ function SelectionPanel(props) {
           router.reload(window.location.pathname);
         }, 1000);
       } catch (e) {
-        alert(e.message);
+        console.log(e.message);
       }
     }
   }

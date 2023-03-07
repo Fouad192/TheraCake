@@ -16,7 +16,6 @@
     display: inline-block;
 }
 .nameFlavor p {
-    text-align: center;
     margin: 0.5rem 0;
 }
 .offer {
@@ -197,6 +196,9 @@ align-items: center;
                   } */
 }
 @media(max-width: 550px) {
+    .nameFlavor p {
+    text-align: center;
+    }
     .priceBtnDiv {
         flex-direction: column-reverse;
         align-items: flex-start;

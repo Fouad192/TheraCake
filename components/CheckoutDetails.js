@@ -360,7 +360,7 @@ const disableDates = (date) => {
           console.log("SUCCESS!");
         },
         function (error) {
-          alert(error);
+          console.log(error);
         }
       );
   }
@@ -381,7 +381,7 @@ const disableDates = (date) => {
           console.log("SUCCESS!");
         },
         function (error) {
-          alert(error);
+          console.log(error);
         }
       );
   }
@@ -579,7 +579,7 @@ useEffect(() => {
     if (session) {
       try {
         if (props.addedItems.length === 0) {
-          alert("Please Add Items To Your Cart");
+          console.log("Please Add Items To Your Cart");
         } else {
           let thisOrderId = orderid.generate();
           let currentTime = orderid.getTime(thisOrderId);
@@ -625,12 +625,12 @@ useEffect(() => {
           }
         }
       } catch (e) {
-        alert(e.message);
+        console.log(e.message);
       }
     } else if (!session) {
       try {
         if (localCart.length === 0) {
-          alert("Please Add Items To Your Cart");
+          console.log("Please Add Items To Your Cart");
         } else {
           let thisOrderId = orderid.generate();
           let currentTime = orderid.getTime(thisOrderId);
@@ -678,7 +678,7 @@ useEffect(() => {
           }
         }
       } catch (e) {
-        alert(e.message);
+        console.log(e.message);
       }
     }
   }
@@ -691,7 +691,7 @@ useEffect(() => {
     if (session) {
       try {
         if (props.addedItems.length === 0) {
-          alert("Please Add Items To Your Cart");
+          console.log("Please Add Items To Your Cart");
         } else {
           let thisOrderId = orderid.generate();
           let currentTime = orderid.getTime(thisOrderId);
@@ -736,12 +736,12 @@ useEffect(() => {
           }
         }
       } catch (e) {
-        alert(e.message);
+        console.log(e.message);
       }
     } else if (!session) {
       try {
         if (localCart.length === 0) {
-          alert("Please Add Items To Your Cart");
+          console.log("Please Add Items To Your Cart");
         } else {
           let thisOrderId = orderid.generate();
           let currentTime = orderid.getTime(thisOrderId);
@@ -788,7 +788,7 @@ useEffect(() => {
           }
         }
       } catch (e) {
-        alert(e.message);
+        console.log(e.message);
       }
     }
   }
@@ -801,7 +801,7 @@ useEffect(() => {
     if (session) {
       try {
         if (props.addedItems.length === 0) {
-          alert("Please Add Items To Your Cart");
+          console.log("Please Add Items To Your Cart");
         } else {
           let thisOrderId = orderid.generate();
           let currentTime = orderid.getTime(thisOrderId);
@@ -848,12 +848,12 @@ useEffect(() => {
           }
         }
       } catch (e) {
-        alert(e.message);
+        console.log(e.message);
       }
     } else if (!session) {
       try {
         if (localCart.length === 0) {
-          alert("Please Add Items To Your Cart");
+          console.log("Please Add Items To Your Cart");
         } else {
           let thisOrderId = orderid.generate();
           let currentTime = orderid.getTime(thisOrderId);
@@ -897,7 +897,7 @@ useEffect(() => {
           }
         }
       } catch (e) {
-        alert(e.message);
+        console.log(e.message);
       }
     }
   }
