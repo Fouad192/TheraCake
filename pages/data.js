@@ -57,7 +57,7 @@ function Data({ items }) {
 }
 
 export async function getServerSideProps() {
-  const res = await fetch("/api/dataAPI");
+  const res = await fetch("https://theracakecairo.com/api/dataAPI");
   const data = await res.json();
   const { items } = data;
   return {
