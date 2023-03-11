@@ -45,6 +45,11 @@ function Home() {
                     <Link href="/bf06617af457f5fe41b4a547b8b4cab4">Admin Orders</Link>
                   </li>
                 ) : null}
+                {isAuthorized ? (
+                  <li>
+                    <Link href="/data">Client Data</Link>
+                  </li>
+                ) : null}
                 <li>
                   <button onClick={() => signIn()}>Login</button>
                 </li>
@@ -86,6 +91,11 @@ function Home() {
                 {isAuthorized ? (
                   <li>
                     <Link href="/bf06617af457f5fe41b4a547b8b4cab4">Admin</Link>
+                  </li>
+                ) : null}
+                {isAuthorized ? (
+                  <li>
+                    <Link href="/data">Client Data</Link>
                   </li>
                 ) : null}
 

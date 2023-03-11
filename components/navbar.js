@@ -50,6 +50,11 @@ function Navbar(props) {
                   Admin Orders
                 </Link>
               )}
+              {authorized && (
+                <Link href="/data">
+                  Client Data
+                </Link>
+              )}
               <button
                 className={classes.signBtns}
                 onClick={() =>
@@ -88,6 +93,11 @@ function Navbar(props) {
               {authorized && (
                 <li>
                   <Link href="/bf06617af457f5fe41b4a547b8b4cab4">Admin</Link>
+                </li>
+              )}
+              {authorized && (
+                <li>
+                  <Link href="/data">Client Data</Link>
                 </li>
               )}
 

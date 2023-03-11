@@ -15,7 +15,7 @@ function ClientData({ client }) {
     });
     setSum(sumPrice);
   };
-  
+
   useEffect(() => {
     totalSpent();
   }, [client]);
@@ -36,21 +36,16 @@ function ClientData({ client }) {
         <div>
           <p>{`${client[0]?.city} - ${client[0]?.governorate}`}</p>
         </div>
-        {/* <div>
-          {order.paymentMethod === "visa" ? <h3>Visa</h3> : <h3>Cash</h3>}
+        
 
-          <p className={classes.lightText}>{client[0]?.totalPrice}</p>
-        </div> */}
         <div>
-          <p>{client[0]?.scheduled}</p>
-          {/* <p>{`${convertTimestampToTime()} - ${convertTimestampToDate()}`}</p> */}
-        </div>
-
-        {/* <div>
-          <p className={classes.pending}>{client[0]?.status}</p>
-        </div> */}
-        <div>
-          <p className={classes.pending}>{client.length}</p>
+          {client.length === 1 ? (
+            <p
+            >Ordered Once</p>
+          ) : (
+            <p
+            >{`Ordered ${client.length} times`}</p>
+          )}
         </div>
       </div>
       {details && (

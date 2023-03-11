@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import ClientData from "../components/clientData";
 import classes from "../components/adminOrders.module.css";
 import { useRouter } from "next/router";
+import Navbar from "../components/navbar";
+import Footer from "../components/footer";
 function Data({ items }) {
   const router = useRouter();
   // if(router?.isFallback) {
@@ -28,31 +30,26 @@ function Data({ items }) {
     setDataArray(arr);
   }, [items]);
   return (
-    <section className={classes.adminOrderGrid}>
-      <div className={classes.adminOrderInputs}>
-        <input type="search" placeholder="Search by name" />
-        <select defaultValue="" id={classes.sortInput}>
-          <option value="default">Default Sorting</option>
-          <option value="high">Price High to Low</option>
-          <option value="low">Price Low to High</option>
-          <option value="new">Recent Orders</option>
-          <option value="old">Oldest Orders</option>
-        </select>
-      </div>
-      <div className={classes.filter}>
-        <button>All</button>
-        <button>Pending</button>
-        <button>Accepted</button>
-        <button>Ready</button>
-        <button>Dispatched</button>
-        <button>Completed</button>
-        <button>Cancelled</button>
-      </div>
+    <>
+      <Navbar />
+      <section className={classes.adminOrderGrid}>
+        <div className={classes.adminOrderInputs}>
+          <input type="search" placeholder="Search by name" />
+          <select defaultValue="" id={classes.sortInput}>
+            <option value="default">Default Sorting</option>
+            <option value="high">Price High to Low</option>
+            <option value="low">Price Low to High</option>
+            <option value="new">Recent Orders</option>
+            <option value="old">Oldest Orders</option>
+          </select>
+        </div>
 
-      {dataArray.map((client, index) => (
-        <ClientData client={client} key={index} />
-      ))}
-    </section>
+        {dataArray.map((client, index) => (
+          <ClientData client={client} key={index} />
+        ))}
+      </section>
+      <Footer/>
+    </>
   );
 }
 
