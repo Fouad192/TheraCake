@@ -19,15 +19,14 @@ function Data({ items }) {
     });
   }, [items]);
   useEffect(() => {
-      let arr = [];
+    let arr = [];
 
-     for (let num of allNumbers) {
+    for (let num of allNumbers) {
       let foundDocument = items.filter((item) => item.mobile == num);
-      arr.push(foundDocument)
-       
-     }
-     setDataArray(arr);
-  }, [items])
+      arr.push(foundDocument);
+    }
+    setDataArray(arr);
+  }, [items]);
   return (
     <section className={classes.adminOrderGrid}>
       <div className={classes.adminOrderInputs}>
@@ -53,14 +52,12 @@ function Data({ items }) {
       {dataArray.map((client, index) => (
         <ClientData client={client} key={index} />
       ))}
-      <h3>{dataArray.length}</h3>
-      <h3>{items.length}</h3>
     </section>
   );
 }
 
 export async function getServerSideProps() {
-  const res = await fetch("http://localhost:3000/api/dataAPI");
+  const res = await fetch("/api/dataAPI");
   const data = await res.json();
   const { items } = data;
   return {
