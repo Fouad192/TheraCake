@@ -24,9 +24,10 @@ function CheckoutDetails(props) {
   const [localCart, setLocalCart] = useState([]);
   let [maxDate, setMaxDate] = useState();
   let [minDate, setMinDate] = useState();
+  const [muiDate, setMuiDate] = useState();
+
   const [disableBtn, setDisableBtn] = useState();
   const [visaData, setVisaData] = useState();
-  const [muiDate, setMuiDate] = useState();
   let [totalPrice, setTotalPrice] = useState(calculateTotalPriceDb());
   let [apartmentDetails, showApartmentDetails] = useState(false);
   let [villaDetails, showVillaDetails] = useState(false);
@@ -36,9 +37,9 @@ function CheckoutDetails(props) {
   let [villaInputs, setVillaInputs] = useState({});
   let [companyInputs, setCompanyInputs] = useState({});
   const [payMethod, setPayMethod] = useState("cash");
-const disableDates = (date) => {
-  return dayjs(date).format("DD") == 25 || dayjs(date).format("DD") == 2;
-};
+  const disableDates = (date) => {
+    return dayjs(date).format("DD") == 15;
+  };
   useEffect(() => {
     if (
       typeof localStorage.getItem("items") !== "undefined" &&
@@ -402,7 +403,7 @@ const disableDates = (date) => {
 
     secondStep(token, orderData);
   }
-  
+
   async function secondStep(token, orderData) {
     let data = {
       auth_token: token,
@@ -502,58 +503,29 @@ const disableDates = (date) => {
     router.replace(iframeURL);
   }
   const onDateChange = (newDate) => {
-    setMuiDate(newDate.format('YYYY-MM-DD'));
+    setMuiDate(newDate.format("YYYY-MM-DD"));
   };
-  // useEffect(() => {
-  //   let currentTime = new Date().getHours();
-  //   let tomorrowDate = new Date(new Date().setDate(new Date().getDate() + 1));
-  //   let afterTomorrowDate = new Date(
-  //     new Date().setDate(new Date().getDate() + 2)
-  //   );
-  //   let date = new Date(new Date().setDate(new Date().getDate() + 7));
 
-  //   let formattedTomorrowDate = new Date(
-  //     tomorrowDate.getTime() - tomorrowDate.getTimezoneOffset() * 60000
-  //   )
-  //     .toISOString()
-  //     .split("T")[0];
-  //   let formattedAfterTomorrowDate = new Date(
-  //     afterTomorrowDate.getTime() -
-  //       afterTomorrowDate.getTimezoneOffset() * 60000
-  //   )
-  //     .toISOString()
-  //     .split("T")[0];
-  //   let formattedDate = new Date(
-  //     date.getTime() - date.getTimezoneOffset() * 60000
-  //   )
-  //     .toISOString()
-  //     .split("T")[0];
-  //   setMaxDate(formattedDate);
-  //   if (currentTime >= 21) {
-  //     setMinDate(formattedAfterTomorrowDate);
-  //   } else {
-  //     setMinDate(formattedTomorrowDate);
-  //   }
-  // }, []);
   useEffect(() => {
     let currentTime = new Date().getHours();
-    let tomorrowDate = dayjs().add(1, 'day').format('YYYY-MM-DD');
+    let tomorrowDate = dayjs().add(1, "day").format("YYYY-MM-DD");
     let afterTomorrowDate = dayjs().add(2, "day").format("YYYY-MM-DD");
     let date = dayjs().add(7, "day").format("YYYY-MM-DD");
 
-   
     setMaxDate(date);
     if (currentTime >= 21) {
       setMinDate(afterTomorrowDate);
     } else {
       setMinDate(tomorrowDate);
     }
-
   }, []);
-useEffect(() => {
+  useEffect(() => {
+    if ((minDate === "2023-03-15")) {
+      setMinDate("2023-03-16");
+    } else {
       setMuiDate(minDate);
-
-}, [minDate])
+    }
+  }, [minDate]);
   function calculateTotalPriceDb() {
     let sum = 0;
     props.addedItems.map((item) => {
@@ -1550,7 +1522,6 @@ useEffect(() => {
                             minDate={minDate}
                             maxDate={maxDate}
                             shouldDisableDate={disableDates}
-                      
                             className={classes.muiInput}
                             renderInput={(params) => (
                               <TextField
