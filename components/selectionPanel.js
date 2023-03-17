@@ -18,7 +18,9 @@ function SelectionPanel(props) {
   let [selectedExtra, setSelectedExtra] = useState([]);
   let [selectedGift, setSelectedGift] = useState([]);
   let [selectedToppings, setSelectedToppings] = useState({});
-  const [mouseClickedTopping, handleMouseClick] = useState()
+  const [mouseClickedTopping, handleMouseClick] = useState();
+  const [isFlavorChanged, setIsFlavorChanged] = useState(false);
+  const [isSizeChanged, setIsSizeChanged] = useState(false);
   // let [selectedFreeExtra, setSelectedFreeExtra] = useState(
   //   "No Free Extra Pistachio"
   // );
@@ -43,6 +45,16 @@ function SelectionPanel(props) {
   useEffect(() => {
     setSelectedExtra(selectedExtra.filter((item) => item.quantity != 0));
   }, [mouseClickedTopping]);
+  useEffect(() => {
+    if (selectedFlavor === "Lotus" && selectedSize.size === "12 pieces ") {
+      setSelectedSize({ ...selectedSize, price: "350" });
+    } else if (
+      selectedFlavor === "Lotus" &&
+      selectedSize.size === "20 pieces "
+    ) {
+      setSelectedSize({ ...selectedSize, price: "420" });
+    }
+  }, [isFlavorChanged, isSizeChanged]);
   function setMaxToppingsFunction() {
     if (currCheckedSize) {
       if (currCheckedSize.includes("9")) {
@@ -148,6 +160,21 @@ function SelectionPanel(props) {
       block: "nearest",
     });
   });
+  const decideBrownieFlavor = (item) => {
+    if(props.selectionData.name === 'Blondie brownies ') {
+      if(selectedFlavor === "White Chocolate" && item.size === "12 pieces ") {
+        return <p>{item.price}</p>
+      } else if(selectedFlavor === "White Chocolate" && item.size === "20 pieces ") {
+        return <p>{item.price}</p>
+      } else if(selectedFlavor === "Lotus" && item.size === "12 pieces ") {
+        return <p>350</p>
+      } else if(selectedFlavor === "Lotus" && item.size === "20 pieces ") {
+        return <p>420</p>
+      }
+    } else {
+      return <p>{item.price}</p>
+    }
+  }
   return (
     <div className={classes.selectionPanel} ref={selectionPanelRef}>
       <div className={classes.selectionImage}>
@@ -188,6 +215,61 @@ function SelectionPanel(props) {
             </button>
           </div>
           <div className={classes.sizesInputs} key={props.selectionData._id}>
+            {props.selectionData.flavors.length === 0 ? null : (
+              <div className={classes.flavorInputs}>
+                {props.selectionData.name === "Joy Cheesecake" && (
+                  <p>Choose a minimum of 2 flavors to 6</p>
+                )}
+                <h1>Flavors</h1>
+                {props.selectionData.name === "Joy Cheesecake"
+                  ? props.selectionData.flavors.map((item, index) => (
+                      <div key={index}>
+                        <input
+                          type="checkbox"
+                          onClick={(e) => {
+                            if (e.target.checked) {
+                              setSelectedFlavor([...selectedFlavor, item]);
+                            } else if (!e.target.checked) {
+                              setSelectedFlavor(
+                                selectedFlavor.filter(
+                                  (flavor) => flavor != item
+                                )
+                              );
+                            }
+                          }}
+                        />
+                        <label>{item}</label>
+                      </div>
+                    ))
+                  : props.selectionData.flavors.map((item, index) => (
+                      <div key={index}>
+                        <input
+                          required
+                          type="radio"
+                          name="flavor"
+                          onClick={() => {
+                            if(item === 'White Chocolate') {
+                              if(selectedSize.size === '12 pieces ') {
+                                setSelectedSize({...selectedSize, price: '290'})
+                              } else if(selectedSize.size === '20 pieces ') {
+                                setSelectedSize({
+                                  ...selectedSize,
+                                  price: "350",
+                                });
+
+                              }
+                            }
+                            setSelectedFlavor(item);
+                            setIsFlavorChanged(!isFlavorChanged)
+                          }}
+                        />
+                        <label>{item}</label>
+                      </div>
+                    ))}
+
+                <hr />
+              </div>
+            )}
             <h1>Choose Size</h1>
 
             {props.selectionData.sizePrice.map((item, index) => {
@@ -197,79 +279,28 @@ function SelectionPanel(props) {
                     type="radio"
                     required
                     name="size"
+                    
                     value={item.size}
                     onClick={(e) => {
                       if (e.target.checked) {
                         setCheckedSize(e.target.value);
+                      setIsSizeChanged(!isSizeChanged);
+
                       }
 
                       setSelectedSize({ size: item.size, price: item.price });
                     }}
                   />
+
                   <label>{item.size}</label>
-                  <p>{item.price}</p>
+                  {decideBrownieFlavor(item)}
+                  
                 </div>
               );
             })}
             <hr />
           </div>
-          {props.selectionData.flavors.length === 0 ? null : (
-            <div className={classes.flavorInputs}>
-              {props.selectionData.name === "Joy Cheesecake" && (
-                <p>Choose a minimum of 2 flavors to 6</p>
-              )}
-              <h1>Flavors</h1>
-              {props.selectionData.name === "Joy Cheesecake"
-                ? props.selectionData.flavors.map((item, index) => (
-                    <div key={index}>
-                      <input
-                        type="checkbox"
-                        onClick={(e) => {
-                          if (e.target.checked) {
-                            setSelectedFlavor([...selectedFlavor, item]);
-                          } else if (!e.target.checked) {
-                            setSelectedFlavor(
-                              selectedFlavor.filter((flavor) => flavor != item)
-                            );
-                          }
-                        }}
-                      />
-                      <label>{item}</label>
-                    </div>
-                  ))
-                : props.selectionData.flavors.map((item, index) => (
-                    <div key={index}>
-                      <input
-                        required
-                        type="radio"
-                        name="flavor"
-                        onClick={() => setSelectedFlavor(item)}
-                      />
-                      <label>{item}</label>
-                    </div>
-                  ))}
 
-              <hr />
-            </div>
-          )}
-          {/* {props.selectionData.name === "Original Thera Cake Brownies" &&
-          currCheckedSize === "20 Mini Pieces" ? (
-            <div className={classes.freeExtra}>
-              <h1>Free Extra</h1>
-              <input
-                type="checkbox"
-                name="extraPistachio"
-                onClick={(e) => {
-                  if (e.target.checked) {
-                    setSelectedFreeExtra("Free Pistachio");
-                  } else if (!e.target.checked) {
-                    setSelectedFreeExtra("No Free Extra Pistachio");
-                  }
-                }}
-              />
-              <label>Free Extra Pistachio</label>
-            </div>
-          ) : null} */}
           {props.selectionData.toppings.length === 0 ? null : (
             <div className={classes.toppings}>
               <h1>Toppings</h1>
@@ -417,7 +448,7 @@ function SelectionPanel(props) {
                   <button
                     type="button"
                     onClick={(e) => {
-                      handleMouseClick(!mouseClickedTopping)
+                      handleMouseClick(!mouseClickedTopping);
                       setSelectedExtra(
                         selectedExtra?.map((decreaseItem) => {
                           if (decreaseItem?.extra === item.extra) {
