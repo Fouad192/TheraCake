@@ -252,24 +252,7 @@ function SelectionPanel(props) {
               <hr />
             </div>
           )}
-          {/* {props.selectionData.name === "Original Thera Cake Brownies" &&
-          currCheckedSize === "20 Mini Pieces" ? (
-            <div className={classes.freeExtra}>
-              <h1>Free Extra</h1>
-              <input
-                type="checkbox"
-                name="extraPistachio"
-                onClick={(e) => {
-                  if (e.target.checked) {
-                    setSelectedFreeExtra("Free Pistachio");
-                  } else if (!e.target.checked) {
-                    setSelectedFreeExtra("No Free Extra Pistachio");
-                  }
-                }}
-              />
-              <label>Free Extra Pistachio</label>
-            </div>
-          ) : null} */}
+     
           {props.selectionData.toppings.length === 0 ? null : (
             <div className={classes.toppings}>
               <h1>Toppings</h1>
