@@ -240,30 +240,21 @@ function Menu(props) {
                     })}
                   </p>
                   <div className={classes.priceBtnDiv}>
-                    {item.name === "Blondie brownies " ? null : (
-                      <button
-                        onClick={() => {
-                          setItemProps(item);
-                        }}
-                      >
-                        Select Your Options
-                      </button>
-                    )}
-                    {item.name === "Blondie brownies " ? (
-                      <p style={{ fontWeight: "bold", fontSize: "1.3rem" }}>
-                        Out Of Stock
-                      </p>
-                    ) : (
-                      <p>
-                        {item.sizePrice[0].price}{" "}
-                        {item.sizePrice.length > 1
-                          ? `- ${
-                              item.sizePrice[item.sizePrice.length - 1].price
-                            }`
-                          : null}{" "}
-                        EGP
-                      </p>
-                    )}
+                    <button
+                      onClick={() => {
+                        setItemProps(item);
+                      }}
+                    >
+                      Select Your Options
+                    </button>
+
+                    <p>
+                      {item.sizePrice[0].price}{" "}
+                      {item.sizePrice.length > 1
+                        ? `- ${item.sizePrice[item.sizePrice.length - 1].price}`
+                        : null}{" "}
+                      EGP
+                    </p>
                   </div>
                 </div>
                 <div className={classes.menuItemImage}>
