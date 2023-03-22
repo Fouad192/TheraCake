@@ -37,9 +37,9 @@ function CheckoutDetails(props) {
   let [villaInputs, setVillaInputs] = useState({});
   let [companyInputs, setCompanyInputs] = useState({});
   const [payMethod, setPayMethod] = useState("cash");
-  const disableDates = (date) => {
-    return dayjs(date).format("DD") == 15;
-  };
+  // const disableDates = (date) => {
+  //   // return dayjs(date).format("DD") == 15;
+  // };
   useEffect(() => {
     if (
       typeof localStorage.getItem("items") !== "undefined" &&
@@ -513,20 +513,20 @@ function CheckoutDetails(props) {
     let date = dayjs().add(7, "day").format("YYYY-MM-DD");
 
     setMaxDate(date);
-    if (currentTime >= 21) {
+    if (currentTime >= 18) {
       setMinDate(afterTomorrowDate);
     } else {
       setMinDate(tomorrowDate);
     }
   }, []);
-  useEffect(() => {
-    if (minDate === "2023-03-15") {
-      setMinDate("2023-03-16");
-      setMuiDate(minDate)
-    } else {
-      setMuiDate(minDate);
-    }
-  }, [minDate]);
+  // useEffect(() => {
+  //   if (minDate === "2023-03-15") {
+  //     setMinDate("2023-03-16");
+  //     setMuiDate(minDate)
+  //   } else {
+  //     setMuiDate(minDate);
+  //   }
+  // }, [minDate]);
   function calculateTotalPriceDb() {
     let sum = 0;
     props.addedItems.map((item) => {
@@ -1140,7 +1140,7 @@ function CheckoutDetails(props) {
                             inputFormat="YYYY-MM-DD"
                             minDate={minDate}
                             maxDate={maxDate}
-                            shouldDisableDate={disableDates}
+                            // shouldDisableDate={disableDates}
                             className={classes.muiInput}
                             renderInput={(params) => (
                               <TextField
