@@ -62,6 +62,8 @@ export async function getServerSideProps(ctx) {
       props: {
         cheesecakeMenuData: JSON.parse(JSON.stringify(cheesecakeMenuData)),
         browniesMenuData: JSON.parse(JSON.stringify(browniesMenuData)),
+        ramadanMenuData: JSON.parse(JSON.stringify(ramadanMenuData)),
+
         session: session,
       },
     };
