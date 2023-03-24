@@ -283,7 +283,7 @@ function SelectionPanel(props) {
                                   price: "350",
                                 });
                               }
-                            } else if(item === 'Tamr' || item === 'Kunafa') {
+                            } else if (item === "Tamr" || item === "Kunafa") {
                               if (selectedSize.size === "Medium") {
                                 setSelectedSize({
                                   ...selectedSize,
@@ -361,12 +361,15 @@ function SelectionPanel(props) {
                               accumlator + currentValue,
                             0
                           );
-                          if (e.target.name === "Baklava") {
-                            return { ...prevState, [e.target.name]: 1 };
+                          if (props.selectionData.name === "Ramadan Bites") {
+                            if (e.target.name === "Pistachio") {
+                              return { ...prevState, [e.target.name]: 1 };
+                            }
+                            if (e.target.name === "Pecan") {
+                              return { ...prevState, [e.target.name]: 1 };
+                            }
                           }
-                          if (e.target.name === "Pecan") {
-                            return { ...prevState, [e.target.name]: 1 };
-                          }
+
                           if (parseInt(sumToppings) !== parseInt(maxToppings)) {
                             if (Object.keys(prevState).length === 0) {
                               return {
