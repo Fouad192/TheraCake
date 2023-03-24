@@ -27,6 +27,7 @@ extreme dedication and the best quality"
       <Menu
         cheesecakeMenuData={props.cheesecakeMenuData}
         browniesMenuData={props.browniesMenuData}
+        ramadanMenuData={props.ramadanMenuData}
         session={props.session}
         count={props.count}
       />
@@ -39,7 +40,7 @@ export async function getServerSideProps(ctx) {
   await dbConnect();
   const cheesecakeMenuData = await MenuItem.find({ category: "cheesecake" });
   const browniesMenuData = await MenuItem.find({ category: "brownies" });
-
+  const ramadanMenuData = await MenuItem.find({category: 'ramadan'})
   // const cartItems = await Cart.find({ userId: session.user._id });
   // let cartItemCount = cartItems.length;
   let session = await getSession(ctx);
@@ -51,6 +52,7 @@ export async function getServerSideProps(ctx) {
       props: {
         cheesecakeMenuData: JSON.parse(JSON.stringify(cheesecakeMenuData)),
         browniesMenuData: JSON.parse(JSON.stringify(browniesMenuData)),
+        ramadanMenuData: JSON.parse(JSON.stringify(ramadanMenuData)),
         session: session,
         count: typeof cartItems !== "undefined" ? cartItemCount : 0,
       },

@@ -43,7 +43,9 @@ font-size: 18px;
 .menuNavigation button {
     border: none;
     border-radius: 15px;
-    padding: 1em 7em;
+    /* padding: 1em 5em; */
+    width: 30%;
+    padding: 1rem 0;
     cursor: pointer;
 }
 .menuNavigation button:first-child {
@@ -189,7 +191,7 @@ align-items: center;
             padding: 0;
         }
                   .menuNavigation button {
-                      padding: 1em 3em;
+                      /* padding: 1em 3em; */
                   }
                   /* .offer p {
                     font-size: 1px;
@@ -249,7 +251,7 @@ align-items: center;
 
 @media (max-width: 360px) {
     .menuNavigation button {
-        padding: 1em 2.5em;
+        /* padding: 1em 2.5em; */
     }
         /* .offer p {
             font-size: 12px;

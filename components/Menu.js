@@ -20,9 +20,11 @@ function Menu(props) {
   let [toBeEdited, setToBeEdited] = useState();
   let [isAuthorized, setAuthorized] = useState(false);
   let cheesecake = useRef();
+  let ramadan = useRef();
   let brownies = useRef();
   let cheesecakeMenu = useRef();
   let browniesMenu = useRef();
+  let ramadanMenu = useRef();
   let [itemProps, setItemProps] = useState()
   useEffect(() => {
     if (props.session) {
@@ -45,6 +47,7 @@ function Menu(props) {
   };
   let cheesecakes = props.cheesecakeMenuData;
   let browniesData = props.browniesMenuData;
+  const ramadanData = props.ramadanMenuData
   let selectedData = cheesecakes.concat(browniesData);
   function returnSelectionPanel() {
     if (categoryDetect === "cheesecake") {
@@ -61,16 +64,33 @@ function Menu(props) {
     cheesecake.current.style.backgroundColor = "#FFC9D9";
     brownies.current.style.color = "#464646";
     brownies.current.style.backgroundColor = "#F1F1F1";
+    ramadan.current.style.color = "#464646";
+    ramadan.current.style.backgroundColor = "#F1F1F1";
     cheesecakeMenu.current.style.display = "flex";
     browniesMenu.current.style.display = "none";
+    ramadanMenu.current.style.display = "none";
   };
   let browniesMenuHandler = () => {
     brownies.current.style.color = "#FFA800";
     brownies.current.style.backgroundColor = "#7E454D";
     cheesecake.current.style.color = "#464646";
     cheesecake.current.style.backgroundColor = "#F1F1F1";
+    ramadan.current.style.color = "#464646";
+    ramadan.current.style.backgroundColor = "#F1F1F1";
     browniesMenu.current.style.display = "flex";
     cheesecakeMenu.current.style.display = "none";
+    ramadanMenu.current.style.display = "none";
+  };
+  let ramadanMenuHandler = () => {
+    ramadan.current.style.color = "#fff";
+    ramadan.current.style.backgroundColor = "#FB0066";
+    cheesecake.current.style.color = "#464646";
+    cheesecake.current.style.backgroundColor = "#F1F1F1";
+    brownies.current.style.color = "#464646";
+    brownies.current.style.backgroundColor = "#F1F1F1";
+    ramadanMenu.current.style.display = "flex";
+    cheesecakeMenu.current.style.display = "none";
+    browniesMenu.current.style.display = "none";
   };
   async function addItemHandler(enteredMenuData) {
     const response = await fetch("/api/newMenuItem", {
@@ -107,6 +127,9 @@ function Menu(props) {
           <div className={classes.menuNavigation}>
             <button ref={cheesecake} onClick={cheesecakeMenuHandler}>
               Cheesecake
+            </button>
+            <button ref={ramadan} onClick={ramadanMenuHandler}>
+              Ramadan Cheesecake
             </button>
             <button ref={brownies} onClick={browniesMenuHandler}>
               Brownies
@@ -206,6 +229,70 @@ function Menu(props) {
           </div>
           <div className={classes.browniesMenuItemContainer} ref={browniesMenu}>
             {browniesData.map((item, index) => (
+              <div className={classes.menuItem} key={uuid()}>
+                <div className={classes.menuItemDetails}>
+                  {isAuthorized && (
+                    <div className={classes.adminModifyAndDelete}>
+                      <Image
+                        src={deleteIcon}
+                        alt="DeleteIcon"
+                        onClick={() => {
+                          deleteItemHandler(item);
+                          setTimeout(() => {
+                            router.reload(window.location.pathname);
+                          }, 500);
+                        }}
+                      />
+                      <Image
+                        src={editIcon}
+                        alt="EditIcon"
+                        onClick={() => {
+                          setToBeEdited(item);
+                          openEditItem(true);
+                        }}
+                      />
+                    </div>
+                  )}
+                  <h1>{item.name}</h1>
+                  <p>
+                    {item.toppings.map((topping, index, toppingArray) => {
+                      if (toppingArray.length - 1 === index) {
+                        return <span key={uuid()}>{topping}</span>;
+                      } else if (index < 4)
+                        return <span key={uuid()}>{topping}/</span>;
+                    })}
+                  </p>
+                  <div className={classes.priceBtnDiv}>
+                    <button
+                      onClick={() => {
+                        setItemProps(item);
+                      }}
+                    >
+                      Select Your Options
+                    </button>
+
+                    <p>
+                      {item.sizePrice[0].price}{" "}
+                      {item.sizePrice.length > 1
+                        ? `- ${item.sizePrice[item.sizePrice.length - 1].price}`
+                        : null}{" "}
+                      EGP
+                    </p>
+                  </div>
+                </div>
+                <div className={classes.menuItemImage}>
+                  <Image
+                    src={item.img}
+                    alt="basicCake"
+                    width={150}
+                    height={150}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className={classes.browniesMenuItemContainer} ref={ramadanMenu}>
+            {ramadanData.map((item, index) => (
               <div className={classes.menuItem} key={uuid()}>
                 <div className={classes.menuItemDetails}>
                   {isAuthorized && (

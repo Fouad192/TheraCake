@@ -53,6 +53,10 @@ function SelectionPanel(props) {
       selectedSize.size === "20 pieces "
     ) {
       setSelectedSize({ ...selectedSize, price: "420" });
+    } else if (selectedFlavor === "Baklava" && selectedSize.size === "Medium") {
+      setSelectedSize({ ...selectedSize, price: "635" });
+    } else if (selectedFlavor === "Baklava" && selectedSize.size === "Large") {
+      setSelectedSize({ ...selectedSize, price: "935" });
     }
   }, [isFlavorChanged, isSizeChanged]);
   function setMaxToppingsFunction() {
@@ -161,20 +165,39 @@ function SelectionPanel(props) {
     });
   });
   const decideBrownieFlavor = (item) => {
-    if(props.selectionData.name === 'Blondie brownies ') {
-      if(selectedFlavor === "White Chocolate" && item.size === "12 pieces ") {
-        return <p>{item.price}</p>
-      } else if(selectedFlavor === "White Chocolate" && item.size === "20 pieces ") {
-        return <p>{item.price}</p>
-      } else if(selectedFlavor === "Lotus" && item.size === "12 pieces ") {
-        return <p>350</p>
-      } else if(selectedFlavor === "Lotus" && item.size === "20 pieces ") {
-        return <p>420</p>
+    if (props.selectionData.name === "Blondie brownies ") {
+      if (selectedFlavor === "White Chocolate" && item.size === "12 pieces ") {
+        return <p>{item.price}</p>;
+      } else if (
+        selectedFlavor === "White Chocolate" &&
+        item.size === "20 pieces "
+      ) {
+        return <p>{item.price}</p>;
+      } else if (selectedFlavor === "Lotus" && item.size === "12 pieces ") {
+        return <p>350</p>;
+      } else if (selectedFlavor === "Lotus" && item.size === "20 pieces ") {
+        return <p>420</p>;
+      }
+    } else if (props.selectionData.name === "Lammah Cheesecake") {
+      if (
+        selectedFlavor === "Tamr" ||
+        (selectedFlavor === "Kunafa" && item.size === "Medium")
+      ) {
+        return <p>{item.price}</p>;
+      } else if (
+        selectedFlavor === "Tamr" ||
+        (selectedFlavor === "Kunafa" && item.size === "Large")
+      ) {
+        return <p>{item.price}</p>;
+      } else if (selectedFlavor === "Baklava" && item.size === "Medium") {
+        return <p>635</p>;
+      } else if (selectedFlavor === "Baklava" && item.size === "Large") {
+        return <p>935</p>;
       }
     } else {
-      return <p>{item.price}</p>
+      return <p>{item.price}</p>;
     }
-  }
+  };
   return (
     <div className={classes.selectionPanel} ref={selectionPanelRef}>
       <div className={classes.selectionImage}>
@@ -248,19 +271,33 @@ function SelectionPanel(props) {
                           type="radio"
                           name="flavor"
                           onClick={() => {
-                            if(item === 'White Chocolate') {
-                              if(selectedSize.size === '12 pieces ') {
-                                setSelectedSize({...selectedSize, price: '290'})
-                              } else if(selectedSize.size === '20 pieces ') {
+                            if (item === "White Chocolate") {
+                              if (selectedSize.size === "12 pieces ") {
+                                setSelectedSize({
+                                  ...selectedSize,
+                                  price: "290",
+                                });
+                              } else if (selectedSize.size === "20 pieces ") {
                                 setSelectedSize({
                                   ...selectedSize,
                                   price: "350",
                                 });
-
+                              }
+                            } else if(item === 'Tamr' || item === 'Kunafa') {
+                              if (selectedSize.size === "Medium") {
+                                setSelectedSize({
+                                  ...selectedSize,
+                                  price: "480",
+                                });
+                              } else if (selectedSize.size === "Large") {
+                                setSelectedSize({
+                                  ...selectedSize,
+                                  price: "720",
+                                });
                               }
                             }
                             setSelectedFlavor(item);
-                            setIsFlavorChanged(!isFlavorChanged)
+                            setIsFlavorChanged(!isFlavorChanged);
                           }}
                         />
                         <label>{item}</label>
@@ -279,13 +316,11 @@ function SelectionPanel(props) {
                     type="radio"
                     required
                     name="size"
-                    
                     value={item.size}
                     onClick={(e) => {
                       if (e.target.checked) {
                         setCheckedSize(e.target.value);
-                      setIsSizeChanged(!isSizeChanged);
-
+                        setIsSizeChanged(!isSizeChanged);
                       }
 
                       setSelectedSize({ size: item.size, price: item.price });
@@ -294,7 +329,6 @@ function SelectionPanel(props) {
 
                   <label>{item.size}</label>
                   {decideBrownieFlavor(item)}
-                  
                 </div>
               );
             })}
@@ -327,6 +361,12 @@ function SelectionPanel(props) {
                               accumlator + currentValue,
                             0
                           );
+                          if (e.target.name === "Baklava") {
+                            return { ...prevState, [e.target.name]: 1 };
+                          }
+                          if (e.target.name === "Pecan") {
+                            return { ...prevState, [e.target.name]: 1 };
+                          }
                           if (parseInt(sumToppings) !== parseInt(maxToppings)) {
                             if (Object.keys(prevState).length === 0) {
                               return {
