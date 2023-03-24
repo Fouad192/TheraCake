@@ -292,7 +292,7 @@ function Menu(props) {
             ))}
           </div>
           <div className={classes.browniesMenuItemContainer} ref={ramadanMenu}>
-            {ramadanData.map((item, index) => (
+            {ramadanData?.map((item, index) => (
               <div className={classes.menuItem} key={uuid()}>
                 <div className={classes.menuItemDetails}>
                   {isAuthorized && (
