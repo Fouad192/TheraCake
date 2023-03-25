@@ -519,7 +519,7 @@ function CheckoutDetails(props) {
       setMinDate(tomorrowDate);
     }
     setMuiDate(minDate)
-  }, []);
+  }, [minDate]);
   // useEffect(() => {
   //   if (minDate === "2023-03-15") {
   //     setMinDate("2023-03-16");
@@ -1161,7 +1161,7 @@ function CheckoutDetails(props) {
                     </LocalizationProvider>
 
                     <p className={classes.dateNote}>
-                      Orders placed after 9PM will be delievered after tomorrow
+                      Orders placed after 6PM will be delievered after tomorrow
                     </p>
 
                     <button
