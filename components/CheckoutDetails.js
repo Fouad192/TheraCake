@@ -1331,7 +1331,7 @@ function CheckoutDetails(props) {
                             inputFormat="YYYY-MM-DD"
                             minDate={minDate}
                             maxDate={maxDate}
-                            shouldDisableDate={disableDates}
+                            // shouldDisableDate={disableDates}
                             className={classes.muiInput}
                             renderInput={(params) => (
                               <TextField
@@ -1523,7 +1523,7 @@ function CheckoutDetails(props) {
                             inputFormat="YYYY-MM-DD"
                             minDate={minDate}
                             maxDate={maxDate}
-                            shouldDisableDate={disableDates}
+                            // shouldDisableDate={disableDates}
                             className={classes.muiInput}
                             renderInput={(params) => (
                               <TextField
