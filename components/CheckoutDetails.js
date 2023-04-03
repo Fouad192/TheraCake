@@ -41,6 +41,13 @@ function CheckoutDetails(props) {
   //   // return dayjs(date).format("DD") == 15;
   // };
   useEffect(() => {
+    if (session) {
+      setTotalPrice(calculateTotalPriceDb());
+    } else if (!session) {
+      setTotalPrice(anonymousTotalDue());
+    }
+  }, [session]);
+  useEffect(() => {
     if (
       typeof localStorage.getItem("items") !== "undefined" &&
       localStorage.getItem("items") !== ""
@@ -344,6 +351,7 @@ function CheckoutDetails(props) {
     }
   }
 
+
   const API =
     "ZXlKaGJHY2lPaUpJVXpVeE1pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SnVZVzFsSWpvaU1UWTJOekU1TXpRNE1pNDBOREUwTmpJaUxDSndjbTltYVd4bFgzQnJJam8xT0RnNU9EY3NJbU5zWVhOeklqb2lUV1Z5WTJoaGJuUWlmUS5xMmdCYmpIQ0NWZ0JTRndMTVV2QkdsX2x6SFkxM3pEZ2hmV1pSQnVYWXowMS1PTmwxekxVN0s2Nl92MkQwS2lFTGJZM2h0bjZHNjl3U1U4bDlJSjdUQQ=="; // your api here
 
@@ -432,16 +440,13 @@ function CheckoutDetails(props) {
     // console.log(response)
     orderData["paymobId"] = id;
     orderData["paymentMethod"] = "visa";
-    const internalRequest = await fetch("/api/cardPayment", {
+
+    const internalRequest = await fetch("/api/checkout", {
       method: "POST",
-      body: JSON.stringify({
-        type: "orderItems",
-        dataItems: orderData,
-      }),
+      body: JSON.stringify(orderData),
       headers: { "Content-Type": "application/json" },
     });
     let internalResponse = await internalRequest.json();
-
     thirdStep(token, id, orderData);
   }
 
@@ -518,7 +523,7 @@ function CheckoutDetails(props) {
     } else {
       setMinDate(tomorrowDate);
     }
-    setMuiDate(minDate)
+    setMuiDate(minDate);
   }, [minDate]);
   // useEffect(() => {
   //   if (minDate === "2023-03-15") {
@@ -579,7 +584,6 @@ function CheckoutDetails(props) {
             scheduled: muiDate,
             totalPrice: calculateTotalPriceDb(),
           };
-
           if (payMethod === "visa") {
             firstStep(orderData);
           } else if (payMethod === "cash") {
@@ -1110,7 +1114,7 @@ function CheckoutDetails(props) {
                         value={apartmentInputs.instructions}
                       />
                     </div>
-                    {/* <div>
+                    <div>
                       <h1>Payment Method</h1>
                       <select
                         id={classes.payMethodSelect}
@@ -1122,7 +1126,7 @@ function CheckoutDetails(props) {
                         <option value="cash">Cash</option>
                         <option value="visa">Visa</option>
                       </select>
-                    </div> */}
+                    </div>
                     {payMethod === "visa" ? (
                       <p className={classes.dateNote}>
                         There is a fee of 2.5% + 2.5EGP on the total order price
@@ -1300,7 +1304,7 @@ function CheckoutDetails(props) {
                         onChange={handleVillaInputChange}
                       />
                     </div>
-                    {/* <div>
+                    <div>
                       <h1>Payment Method</h1>
                       <select
                         id={classes.payMethodSelect}
@@ -1312,7 +1316,7 @@ function CheckoutDetails(props) {
                         <option value="cash">Cash</option>
                         <option value="visa">Visa</option>
                       </select>
-                    </div> */}
+                    </div>
                     {payMethod === "visa" ? (
                       <p className={classes.dateNote}>
                         There is a fee of 2.5% + 2.5EGP on the total order price
@@ -1492,7 +1496,7 @@ function CheckoutDetails(props) {
                         onChange={handleCompanyInputChange}
                       />
                     </div>
-                    {/* <div>
+                    <div>
                       <h1>Payment Method</h1>
                       <select
                         id={classes.payMethodSelect}
@@ -1504,7 +1508,7 @@ function CheckoutDetails(props) {
                         <option value="cash">Cash</option>
                         <option value="visa">Visa</option>
                       </select>
-                    </div> */}
+                    </div>
                     {payMethod === "visa" ? (
                       <p className={classes.dateNote}>
                         There is a fee of 2.5% + 2.5EGP on the total order price
