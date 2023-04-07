@@ -21,6 +21,8 @@ function Home() {
         setAuthorized(true);
       } else if (session.user.email === "mohamedaymanmoudy1@gmail.com") {
         setAuthorized(true);
+      } else if (session.user.email === "esraa.mostafa6.em@gmail.com") {
+        setAuthorized(true);
       } else if (session.user.email === "as6993507@gmail.com") {
         setAuthorized(true);
       } else {

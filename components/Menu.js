@@ -34,8 +34,10 @@ function Menu(props) {
         setAuthorized(true);
       } else if (props.session.user.email === "mohamedaymanmoudy1@gmail.com") {
         setAuthorized(true);
-      } else if(props.session.user.email === "theracakecairo@gmail.com") {
-        setAuthorized(true)
+      } else if (session.user.email === "esraa.mostafa6.em@gmail.com") {
+        setAuthorized(true);
+      } else if (props.session.user.email === "theracakecairo@gmail.com") {
+        setAuthorized(true);
       } else {
         setAuthorized(false);
       }
