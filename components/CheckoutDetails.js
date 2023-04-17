@@ -37,9 +37,9 @@ function CheckoutDetails(props) {
   let [villaInputs, setVillaInputs] = useState({});
   let [companyInputs, setCompanyInputs] = useState({});
   const [payMethod, setPayMethod] = useState("cash");
-  // const disableDates = (date) => {
-  //   // return dayjs(date).format("DD") == 15;
-  // };
+  const disableDates = (date) => {
+    return dayjs(date).format("DD") == 21;
+  };
   useEffect(() => {
     if (session) {
       setTotalPrice(calculateTotalPriceDb());
@@ -1145,7 +1145,7 @@ function CheckoutDetails(props) {
                             inputFormat="YYYY-MM-DD"
                             minDate={minDate}
                             maxDate={maxDate}
-                            // shouldDisableDate={disableDates}
+                            shouldDisableDate={disableDates}
                             className={classes.muiInput}
                             renderInput={(params) => (
                               <TextField
@@ -1335,7 +1335,7 @@ function CheckoutDetails(props) {
                             inputFormat="YYYY-MM-DD"
                             minDate={minDate}
                             maxDate={maxDate}
-                            // shouldDisableDate={disableDates}
+                            shouldDisableDate={disableDates}
                             className={classes.muiInput}
                             renderInput={(params) => (
                               <TextField
@@ -1527,7 +1527,7 @@ function CheckoutDetails(props) {
                             inputFormat="YYYY-MM-DD"
                             minDate={minDate}
                             maxDate={maxDate}
-                            // shouldDisableDate={disableDates}
+                            shouldDisableDate={disableDates}
                             className={classes.muiInput}
                             renderInput={(params) => (
                               <TextField
