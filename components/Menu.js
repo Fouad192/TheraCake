@@ -137,9 +137,9 @@ function Menu(props) {
               Brownies
             </button>
           </div>
-          {/* <div className={classes.offer}>
-            <p>Enjoy 20% off on your pumpkin Special Cheesecake </p>
-          </div> */}
+          <div className={classes.offer}>
+            <p>Enjoy 50% off on orders below 550EGP for delivery on 20/4</p>
+          </div>
           {isAuthorized ? (
             <button className={classes.addItemBtn} onClick={toggleAddItemBtn}>
               Add Item
