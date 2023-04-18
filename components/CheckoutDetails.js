@@ -38,7 +38,7 @@ function CheckoutDetails(props) {
   let [companyInputs, setCompanyInputs] = useState({});
   const [payMethod, setPayMethod] = useState("cash");
   const disableDates = (date) => {
-    return dayjs(date).format("DD") == 21;
+    return dayjs(date).format("DD") == 21 || dayjs(date).format("DD") == 20;
   };
   useEffect(() => {
     if (session) {
@@ -523,7 +523,7 @@ function CheckoutDetails(props) {
     } else {
       setMinDate(tomorrowDate);
     }
-    setMuiDate(minDate);
+    setMuiDate('2023-04-23');
   }, [minDate]);
   // useEffect(() => {
   //   if (minDate === "2023-03-15") {
