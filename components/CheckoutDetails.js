@@ -29,7 +29,6 @@ function CheckoutDetails(props) {
   const [disableBtn, setDisableBtn] = useState();
   const [visaData, setVisaData] = useState();
   let [totalPrice, setTotalPrice] = useState(calculateTotalPriceDb());
-  const [itemPrice, setItemPrice] = useState(null);
   let [apartmentDetails, showApartmentDetails] = useState(false);
   let [villaDetails, showVillaDetails] = useState(false);
   let [workplaceDetails, showWorkplaceDetails] = useState(false);
@@ -42,10 +41,6 @@ function CheckoutDetails(props) {
     return dayjs(date).format("DD") == 21 || dayjs(date).format("DD") == 20;
   };
   useEffect(() => {
-    calculateItemPrice();
-  }, [localCart, props.addedItems]);
-  
-  useEffect(() => {
     if (session) {
       setTotalPrice(calculateTotalPriceDb());
     } else if (!session) {
@@ -53,17 +48,13 @@ function CheckoutDetails(props) {
     }
   }, [session]);
   useEffect(() => {
-    if (!session) {
-      if (
-        typeof localStorage.getItem("items") !== "undefined" &&
-        localStorage.getItem("items") !== ""
-      ) {
-        setLocalCart(JSON.parse(localStorage.getItem("items")));
-      }
-    } else if (session) {
-      setLocalCart(null);
+    if (
+      typeof localStorage.getItem("items") !== "undefined" &&
+      localStorage.getItem("items") !== ""
+    ) {
+      setLocalCart(JSON.parse(localStorage.getItem("items")));
     }
-  }, [session]);
+  }, []);
   useEffect(() => {
     if (session) {
       if (props.apartmentAddressData[apartmentLastIndex]) {
@@ -135,11 +126,7 @@ function CheckoutDetails(props) {
           </div>
           <div className={classes.total}>
             <p>Total</p>
-            <p className={classes.price}>
-              {muiDate === "2023-04-20" && itemPrice <= 550
-                ? Math.ceil((itemPrice * 50) / 100 + calculateTotalPriceDb() - itemPrice)
-                : calculateTotalPriceDb()}
-            </p>
+            <p className={classes.price}>{totalDue()}</p>
           </div>
           <Link href="/menu">
             <button className={classes.addMoreItems}>Add More Items</button>
@@ -157,9 +144,7 @@ function CheckoutDetails(props) {
           </div>
           <div className={classes.total}>
             <p>Total</p>
-            <p className={classes.price}> {muiDate === "2023-04-20" && itemPrice <= 550
-                ? Math.ceil((itemPrice * 50) / 100 + anonymousTotalDue() - itemPrice)
-                : anonymousTotalDue()}</p>
+            <p className={classes.price}>{anonymousTotalDue()}</p>
           </div>
           <Link href="/menu">
             <button className={classes.addMoreItems}>Add More Items</button>
@@ -366,6 +351,7 @@ function CheckoutDetails(props) {
     }
   }
 
+
   const API =
     "ZXlKaGJHY2lPaUpJVXpVeE1pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SnVZVzFsSWpvaU1UWTJOekU1TXpRNE1pNDBOREUwTmpJaUxDSndjbTltYVd4bFgzQnJJam8xT0RnNU9EY3NJbU5zWVhOeklqb2lUV1Z5WTJoaGJuUWlmUS5xMmdCYmpIQ0NWZ0JTRndMTVV2QkdsX2x6SFkxM3pEZ2hmV1pSQnVYWXowMS1PTmwxekxVN0s2Nl92MkQwS2lFTGJZM2h0bjZHNjl3U1U4bDlJSjdUQQ=="; // your api here
 
@@ -563,24 +549,6 @@ function CheckoutDetails(props) {
 
     return sum + 45;
   }
-  const calculateItemPrice = () => {
-    let sum = 0;
-    if (session) {
-      props.addedItems.map((item) => {
-        item.sizePrice.map((size) => {
-          sum += parseInt(size?.price) * item.quantity;
-        });
-      });
-    } else if (!session) {
-      localCart?.map((item) => {
-        item.sizePrice.map((size) => {
-          sum += parseInt(size?.price) * item.quantity;
-        });
-      });
-    }
-
-    setItemPrice(sum);
-  };
   async function apartmentSubmitHandler(e) {
     e.preventDefault();
     setDisableBtn(true);
@@ -614,10 +582,7 @@ function CheckoutDetails(props) {
             apartment: apartmentInputs.apartment,
             instructions: apartmentInputs.instructions,
             scheduled: muiDate,
-            totalPrice:
-              muiDate === "2023-04-20" && itemPrice <= 550
-                ? (itemPrice * 50) / 100 + calculateTotalPriceDb() - itemPrice
-                : calculateTotalPriceDb(),
+            totalPrice: calculateTotalPriceDb(),
           };
           if (payMethod === "visa") {
             firstStep(orderData);
@@ -631,8 +596,8 @@ function CheckoutDetails(props) {
             });
             const data = await response.json();
             if (data.message === "Checked out!") {
-              // sendMail();
-              // sendClientMail(apartmentInputs);
+              sendMail();
+              sendClientMail(apartmentInputs);
               router.push("/thankyou");
             }
           }
@@ -666,10 +631,7 @@ function CheckoutDetails(props) {
             apartment: apartmentInputs.apartment,
             instructions: apartmentInputs.instructions,
             scheduled: muiDate,
-            totalPrice:
-              muiDate === "2023-04-20" && itemPrice <= 550
-                ? (itemPrice * 50) / 100 + anonymousTotalDue() - itemPrice
-                : anonymousTotalDue(),
+            totalPrice: anonymousTotalDue(),
           };
 
           // const data = await response.json();
@@ -729,10 +691,7 @@ function CheckoutDetails(props) {
             villa: villaInputs.villa,
             instructions: villaInputs.instructions,
             scheduled: muiDate,
-            totalPrice:
-              muiDate === "2023-04-20" && itemPrice <= 550
-                ? (itemPrice * 50) / 100 + calculateTotalPriceDb() - itemPrice
-                : calculateTotalPriceDb(),
+            totalPrice: calculateTotalPriceDb(),
           };
 
           if (payMethod === "visa") {
@@ -782,10 +741,7 @@ function CheckoutDetails(props) {
             villa: villaInputs.villa,
             instructions: villaInputs.instructions,
             scheduled: muiDate,
-            totalPrice:
-              muiDate === "2023-04-20" && itemPrice <= 550
-                ? (itemPrice * 50) / 100 + anonymousTotalDue() - itemPrice
-                : anonymousTotalDue(),
+            totalPrice: anonymousTotalDue(),
           };
 
           if (payMethod === "visa") {
@@ -846,10 +802,7 @@ function CheckoutDetails(props) {
             company: companyInputs.company,
             instructions: companyInputs.instructions,
             scheduled: muiDate,
-            totalPrice:
-              muiDate === "2023-04-20" && itemPrice <= 550
-                ? (itemPrice * 50) / 100 + calculateTotalPriceDb() - itemPrice
-                : calculateTotalPriceDb(),
+            totalPrice: calculateTotalPriceDb(),
           };
           if (payMethod === "visa") {
             firstStep(orderData);
@@ -900,10 +853,7 @@ function CheckoutDetails(props) {
             company: companyInputs.company,
             instructions: companyInputs.instructions,
             scheduled: muiDate,
-            totalPrice:
-              muiDate === "2023-04-20" && itemPrice <= 550
-                ? (itemPrice * 50) / 100 + anonymousTotalDue() - itemPrice
-                : anonymousTotalDue(),
+            totalPrice: anonymousTotalDue(),
           };
           if (payMethod === "visa") {
             firstStep(orderData);
@@ -949,6 +899,23 @@ function CheckoutDetails(props) {
     }
   };
 
+  function totalDue() {
+    let sum = 0;
+
+    props.addedItems?.map((item) => {
+      item.sizePrice.map((size) => {
+        sum += parseInt(size?.price) * item.quantity;
+      });
+      item.extraPrice.map((extra) => {
+        sum += parseInt(extra?.price) * item.quantity;
+      });
+      item.giftPrice.map((gift) => {
+        sum += parseInt(gift?.price) * item.quantity;
+      });
+    });
+
+    return sum + 45;
+  }
   function anonymousTotalDue() {
     let sum = 0;
 
@@ -1595,7 +1562,7 @@ function CheckoutDetails(props) {
           </div>
         </div>
         <div className={classes.invoiceContainer}>
-          <h1>Invoice</h1>
+          <h1 onClick={totalDue}>Invoice</h1>
           <hr />
           {renderCart()}
           {renderDeliveryTab()}
