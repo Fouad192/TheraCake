@@ -639,7 +639,7 @@ function SelectionPanel(props) {
                   }
                 }}
               />
-              <label>Fine Leather Men's Wallet</label>
+              <label>Fine Leather Mens Wallet</label>
               <p>210EGP</p>
             </div>
 
