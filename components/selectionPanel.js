@@ -565,7 +565,7 @@ function SelectionPanel(props) {
             <div>
               <input
                 type="checkbox"
-                value="Bouqet6"
+                value="Bouqet"
                 onClick={(e) => {
                   if (e.target.checked) {
                     setSelectedGift([
@@ -574,73 +574,13 @@ function SelectionPanel(props) {
                     ]);
                   } else if (!e.target.checked) {
                     setSelectedGift(
-                      selectedGift.filter((gift) => gift.gift != "Bouqet6")
+                      selectedGift.filter((gift) => gift.gift != "Bouqet")
                     );
                   }
                 }}
               />
               <label>Bouqet (6 flowers)</label>
               <p>160EGP</p>
-            </div>
-            <div>
-              <input
-                type="checkbox"
-                value="Bouqet15"
-                onClick={(e) => {
-                  if (e.target.checked) {
-                    setSelectedGift([
-                      ...selectedGift,
-                      { gift: e.target.value, price: 390 },
-                    ]);
-                  } else if (!e.target.checked) {
-                    setSelectedGift(
-                      selectedGift.filter((gift) => gift.gift != "Bouqet15")
-                    );
-                  }
-                }}
-              />
-              <label>Bouqet (15 flowers)</label>
-              <p>390EGP</p>
-            </div>
-            <div>
-              <input
-                type="checkbox"
-                value="necklace"
-                onClick={(e) => {
-                  if (e.target.checked) {
-                    setSelectedGift([
-                      ...selectedGift,
-                      { gift: e.target.value, price: 170 },
-                    ]);
-                  } else if (!e.target.checked) {
-                    setSelectedGift(
-                      selectedGift.filter((gift) => gift.gift != "necklace")
-                    );
-                  }
-                }}
-              />
-              <label>Crystal Silver Necklace</label>
-              <p>170EGP</p>
-            </div>
-            <div>
-              <input
-                type="checkbox"
-                value="wallet"
-                onClick={(e) => {
-                  if (e.target.checked) {
-                    setSelectedGift([
-                      ...selectedGift,
-                      { gift: e.target.value, price: 210 },
-                    ]);
-                  } else if (!e.target.checked) {
-                    setSelectedGift(
-                      selectedGift.filter((gift) => gift.gift != "wallet")
-                    );
-                  }
-                }}
-              />
-              <label>Fine Leather Men's Wallet</label>
-              <p>210EGP</p>
             </div>
 
             <hr />
