@@ -527,12 +527,12 @@ function CheckoutDetails(props) {
     let date = dayjs().add(7, "day").format("YYYY-MM-DD");
 
     setMaxDate(date);
-    if (currentTime >= 18) {
+    if (currentTime >= 21) {
       setMinDate(afterTomorrowDate);
     } else {
       setMinDate(tomorrowDate);
     }
-    setMuiDate('2023-04-23');
+    setMuiDate('2023-04-24');
   }, [minDate]);
   // useEffect(() => {
   //   if (minDate === "2023-03-15") {
