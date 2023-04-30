@@ -979,7 +979,7 @@ function CheckoutDetails(props) {
               <div className={classes.apartmentDetails}>
                 <div className={classes.personalDetailsForm}>
                   <h1>Personal Details</h1>
-                  <form>
+                  <form onSubmit={apartmentSubmitHandler}>
                     <div>
                       <input
                         type="text"
@@ -1194,7 +1194,7 @@ function CheckoutDetails(props) {
               <div className={classes.villaDetails}>
                 <div className={classes.personalDetailsForm}>
                   <h1>Personal Details</h1>
-                  <form >
+                  <form onSubmit={villaSubmitHandler}>
                     <div>
                       <input
                         type="text"
@@ -1379,7 +1379,7 @@ function CheckoutDetails(props) {
               <div className={classes.workplaceDetails}>
                 <div className={classes.personalDetailsForm}>
                   <h1>Personal Details</h1>
-                  <form>
+                  <form onSubmit={companySubmitHandler}>
                     <div>
                       <input
                         type="text"
