@@ -171,7 +171,7 @@ function Menu(props) {
                   </div>
 
                   <div className={classes.priceBtnDiv}>
-                    {item.name === "Joy bites cheesecake " ? null : (
+                    
                       <button
                         onClick={() => {
                           // setIdx(index);
@@ -181,18 +181,18 @@ function Menu(props) {
                       >
                         Select Your Options
                       </button>
-                    )}
+                 
 
-                    {item.name === "Joy bites cheesecake " ? (
-                      <p style={{ fontWeight: "bold", fontSize: "1.3rem" }}>
+                  
+                      {/* <p style={{ fontWeight: "bold", fontSize: "1.3rem" }}>
                         Out Of Stock
                       </p>
-                    ) : (
+                   */}
                       <p>
                         {item.sizePrice[0].price} -{" "}
                         {item.sizePrice[item.sizePrice.length - 1].price} EGP
                       </p>
-                    )}
+                 
                   </div>
                 </div>
                 <div className={classes.menuItemImage}>

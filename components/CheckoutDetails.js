@@ -1363,7 +1363,7 @@ function CheckoutDetails(props) {
                       </div>
                     </LocalizationProvider>
                     <p className={classes.dateNote}>
-                      Orders placed after 9PM will be delievered after tomorrow
+                      Orders placed after 6PM will be delievered after tomorrow
                     </p>
                     <button id={classes.villaSubmitBtn} disabled={disableBtn}>
                       Place Order
