@@ -24,6 +24,9 @@ let cart = new Schema({
   toppings: {
     type: [],
   },
+  specialBites: {
+    type: []
+  },
   extraPrice: {
     type: [],
   },

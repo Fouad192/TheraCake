@@ -32,6 +32,9 @@ let menuItem = new Schema({
   extraPrice: {
     type: [],
   },
+  specialBites: {
+    type: [],
+  }
   // giftPrice: {
   //   type: []
   // }

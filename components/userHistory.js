@@ -8,17 +8,16 @@ import uuid from "react-uuid";
 function UserHistory({order}) {
   let [sum, setSum] = useState();
   let [details, showDetails] = useState(false);
-
-
-  function convertTimestampToDate() {
+  const [time, setTime] = useState('')
+  const [date, setDate] = useState('')
+  useEffect(() => {
     let date = new Date(order.dateSubmitted).toLocaleDateString("en-US");
-    return date;
-  }
-  function convertTimestampToTime() {
     let time = new Date(order.dateSubmitted).toLocaleTimeString("en-US");
+    setDate(date);
+    setTime(time);
+  }, [order.dateSubmitted]);
 
-    return time;
-  }
+
 
   function calculateTotal() {
     let sumPrice = 0;
@@ -32,6 +31,9 @@ function UserHistory({order}) {
     order.orderItems.map((item) =>
       item.extraPrice.map((extra) => (sumPrice += parseInt(extra.price) * item.quantity))
     );
+       order.orderItems.map((item) =>
+         item.specialBites?.map((bite) => (sumPrice += parseInt(bite.price)))
+       );
     setSum(sumPrice);
   }
   useEffect(() => {
@@ -46,7 +48,6 @@ function UserHistory({order}) {
         onClick={() => showDetails(!details)}
       >
         <div className={classes.orderHistoryBriefContainer}>
-         
           <div>
             <p>{order.orderNumber}</p>
             <p>{`${order.firstName} ${order.lastName}`}</p>
@@ -62,7 +63,7 @@ function UserHistory({order}) {
           </div>
           <div>
             <p>{order.scheduled}</p>
-            <p>{`${convertTimestampToTime()} - ${convertTimestampToDate()}`}</p>
+            <p>{`${time} - ${date}`}</p>
           </div>
           {order.paymentMethod === "visa" ? (
             <div>
@@ -127,6 +128,18 @@ function UserHistory({order}) {
                         return Object.values(toppingObj).map((qt) => (
                           <p key={qt}>{`${qt}x`}</p>
                         ));
+                      })}
+                    </div>
+                  </div>
+                  <div className={classes.toppingsDiv}>
+                    <div>
+                      {item.specialBites.map((specialObj) => {
+                        return <p>{specialObj.name}</p>;
+                      })}
+                    </div>
+                    <div>
+                      {item.specialBites.map((specialObj) => {
+                        return <p>{specialObj.price}</p>;
                       })}
                     </div>
                   </div>

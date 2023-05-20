@@ -239,6 +239,16 @@ function CheckoutDetails(props) {
               ))}
             </div>
           )}
+          {addedItem.specialBites.length === 0 ? null : (
+            <div>
+              {addedItem.specialBites?.map((special, index) => (
+                <div className={classes.gift} key={uuid()}>
+                  <p>{special?.name}</p>
+                  <p className={classes.price}>{`${special?.price}`}</p>
+                </div>
+              ))}
+            </div>
+          )}
           {addedItem.giftPrice.length === 0 ? null : (
             <div>
               {addedItem.giftPrice?.map((gift, index) => (
@@ -332,6 +342,18 @@ function CheckoutDetails(props) {
                   <p>{extra.extra}</p>
                   <p className={classes.price}>
                     {extra?.price * addedItem.quantity}
+                  </p>
+                </div>
+              ))}
+            </div>
+          )}
+          {addedItem.specialBites.length === 0 ? null : (
+            <div>
+              {addedItem.specialBites?.map((special, index) => (
+                <div className={classes.gift} key={uuid()}>
+                  <p>{special?.name}</p>
+                  <p className={classes.price}>
+                    {`${special?.price}`}
                   </p>
                 </div>
               ))}
@@ -554,6 +576,8 @@ function CheckoutDetails(props) {
       item.giftPrice.map((gift) => {
         sum += parseInt(gift?.price) * item.quantity;
       });
+      item.specialBites.map((bite) => (sum += parseInt(bite.price)));
+
     });
 
     return sum + 45;
@@ -921,6 +945,8 @@ function CheckoutDetails(props) {
       item.giftPrice.map((gift) => {
         sum += parseInt(gift?.price) * item.quantity;
       });
+      item.specialBites.map((bite) => (sum += parseInt(bite.price)));
+
     });
 
     return sum + 45;
@@ -938,6 +964,7 @@ function CheckoutDetails(props) {
       item.giftPrice.map((gift) => {
         sum += parseInt(gift.price) * item.quantity;
       });
+      item.specialBites.map(bite => sum+= parseInt(bite.price))
     });
 
     return sum + 45;

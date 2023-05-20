@@ -21,6 +21,7 @@ function SelectionPanel(props) {
   const [mouseClickedTopping, handleMouseClick] = useState();
   const [isFlavorChanged, setIsFlavorChanged] = useState(false);
   const [isSizeChanged, setIsSizeChanged] = useState(false);
+  const [selectedSpecial, setSelectedSpecial] = useState({});
   // let [selectedFreeExtra, setSelectedFreeExtra] = useState(
   //   "No Free Extra Pistachio"
   // );
@@ -81,6 +82,28 @@ function SelectionPanel(props) {
   }
   async function submitHandler(e) {
     e.preventDefault();
+      let specialArray = [];
+
+    if (props.selectionData.name === "Joy bites cheesecake ") {
+
+      if (Object.keys(selectedSpecial).length !== 0) {
+
+        Object.keys(selectedSpecial).map((special) => {
+          const foundBite = props.selectionData.specialBites.find(
+            (bite) => bite.name === special
+          );
+          if (selectedSpecial[special] !== 0) {
+
+            specialArray.push({
+              name: special,
+              price:
+                parseInt(selectedSpecial[special]) * parseInt(foundBite.price),
+            });
+          }
+        });
+      }
+    }
+
     if (session) {
       try {
         const orderData = {
@@ -90,6 +113,7 @@ function SelectionPanel(props) {
           sizePrice: selectedSize,
           extraPrice: selectedExtra,
           flavors: selectedFlavor,
+          specialBites: specialArray,
           toppings: selectedToppings,
           notes,
           giftPrice: selectedGift,
@@ -103,7 +127,6 @@ function SelectionPanel(props) {
           },
         });
         const data = await response.json();
-        console.log(data);
         setTimeout(() => {
           router.reload(window.location.pathname);
         }, 1000);
@@ -120,6 +143,8 @@ function SelectionPanel(props) {
             extraPrice: selectedExtra,
             flavors: [selectedFlavor],
             toppings: [selectedToppings],
+            specialBites: specialArray,
+
             notes,
             giftPrice: selectedGift,
             // freePistachio: selectedFreeExtra,
@@ -135,15 +160,15 @@ function SelectionPanel(props) {
             extraPrice: selectedExtra,
             flavors: [selectedFlavor],
             toppings: [selectedToppings],
+            specialBites: specialArray,
+
             notes,
             giftPrice: selectedGift,
             // freePistachio: selectedFreeExtra,
           });
           localStorage.setItem("items", JSON.stringify(pushArray));
-          console.log("secondItem");
         } else {
           localStorage.setItem("items", JSON.stringify(cartArr));
-          console.log("firstItem");
         }
         setTimeout(() => {
           router.reload(window.location.pathname);
@@ -161,20 +186,23 @@ function SelectionPanel(props) {
     });
   });
   const decideBrownieFlavor = (item) => {
-    if(props.selectionData.name === 'Blondie brownies ') {
-      if(selectedFlavor === "White Chocolate" && item.size === "12 pieces ") {
-        return <p>{item.price}</p>
-      } else if(selectedFlavor === "White Chocolate" && item.size === "20 pieces ") {
-        return <p>{item.price}</p>
-      } else if(selectedFlavor === "Lotus" && item.size === "12 pieces ") {
-        return <p>350</p>
-      } else if(selectedFlavor === "Lotus" && item.size === "20 pieces ") {
-        return <p>420</p>
+    if (props.selectionData.name === "Blondie brownies ") {
+      if (selectedFlavor === "White Chocolate" && item.size === "12 pieces ") {
+        return <p>{item.price}</p>;
+      } else if (
+        selectedFlavor === "White Chocolate" &&
+        item.size === "20 pieces "
+      ) {
+        return <p>{item.price}</p>;
+      } else if (selectedFlavor === "Lotus" && item.size === "12 pieces ") {
+        return <p>350</p>;
+      } else if (selectedFlavor === "Lotus" && item.size === "20 pieces ") {
+        return <p>420</p>;
       }
     } else {
-      return <p>{item.price}</p>
+      return <p>{item.price}</p>;
     }
-  }
+  };
   return (
     <div className={classes.selectionPanel} ref={selectionPanelRef}>
       <div className={classes.selectionImage}>
@@ -248,10 +276,13 @@ function SelectionPanel(props) {
                           type="radio"
                           name="flavor"
                           onClick={() => {
-                            if(item === 'White Chocolate') {
-                              if(selectedSize.size === '12 pieces ') {
-                                setSelectedSize({...selectedSize, price: '290'})
-                              } else if(selectedSize.size === '20 pieces ') {
+                            if (item === "White Chocolate") {
+                              if (selectedSize.size === "12 pieces ") {
+                                setSelectedSize({
+                                  ...selectedSize,
+                                  price: "290",
+                                });
+                              } else if (selectedSize.size === "20 pieces ") {
                                 setSelectedSize({
                                   ...selectedSize,
                                   price: "350",
@@ -259,7 +290,7 @@ function SelectionPanel(props) {
                               }
                             }
                             setSelectedFlavor(item);
-                            setIsFlavorChanged(!isFlavorChanged)
+                            setIsFlavorChanged(!isFlavorChanged);
                           }}
                         />
                         <label>{item}</label>
@@ -278,13 +309,11 @@ function SelectionPanel(props) {
                     type="radio"
                     required
                     name="size"
-                    
                     value={item.size}
                     onClick={(e) => {
                       if (e.target.checked) {
                         setCheckedSize(e.target.value);
-                      setIsSizeChanged(!isSizeChanged);
-
+                        setIsSizeChanged(!isSizeChanged);
                       }
 
                       setSelectedSize({ size: item.size, price: item.price });
@@ -293,20 +322,131 @@ function SelectionPanel(props) {
 
                   <label>{item.size}</label>
                   {decideBrownieFlavor(item)}
-                  
                 </div>
               );
             })}
             <hr />
           </div>
 
+          {props.selectionData.name === "Joy bites cheesecake " && (
+            <div>
+              <div className={classes.toppings}>
+                <h1>Special Bites</h1>
+                {typeof maxToppings !== "undefined" ? (
+                  <p>Select up to {`${maxToppings}`} toppings</p>
+                ) : null}
+
+                {props.selectionData.specialBites.map((item, index) => {
+                  return (
+                    <div key={index}>
+                      <button
+                        name={item.name}
+                        value={0}
+                        // onChange={(e) => setSelectedToppings(e.target.value) }
+                        onClick={(e) => {
+                          setSelectedSpecial((prevState) => {
+                            let sumToppings =
+                              Object.values(selectedToppings).reduce(
+                                (accumlator, currentValue) =>
+                                  accumlator + currentValue,
+                                0
+                              ) +
+                              Object.values(selectedSpecial).reduce(
+                                (accumlator, currentValue) =>
+                                  accumlator + currentValue,
+                                0
+                              );
+
+                            if (
+                              parseInt(sumToppings) !== parseInt(maxToppings)
+                            ) {
+                              if (Object.keys(prevState).length === 0) {
+                                return {
+                                  [e.target.name]: 1,
+                                };
+                              } else {
+                                console.log("hi");
+
+                                return {
+                                  ...prevState,
+                                  [e.target.name]: isNaN(
+                                    prevState[e.target.name]
+                                  )
+                                    ? 1
+                                    : prevState[e.target.name] + 1,
+                                };
+                              }
+                            } else {
+                              console.log("hi from return same num");
+                              if (
+                                prevState.hasOwnProperty(
+                                  [e.target.name].toString()
+                                )
+                              ) {
+                                return {
+                                  ...prevState,
+                                  [e.target.name]: prevState[e.target.name],
+                                };
+                              } else {
+                                return { ...prevState };
+                              }
+                            }
+                          });
+                        }}
+                        type="button"
+                      >
+                        +
+                      </button>
+                      <input
+                        value={
+                          typeof selectedSpecial[item.name] === "undefined"
+                            ? 0
+                            : selectedSpecial[item.name]
+                        }
+                        required
+                        readOnly
+                      />
+                      <button
+                        type="button"
+                        name={item.name}
+                        onClick={(e) =>
+                          setSelectedSpecial((prevState) => {
+                            return {
+                              ...prevState,
+                              [e.target.name]: prevState[e.target.name] - 1,
+                            };
+                          })
+                        }
+                      >
+                        -
+                      </button>
+                      <p style={{ marginLeft: "0.5rem" }}> {item.name}</p>
+                      <label style={{ color: "#ff5689", fontWeight: "500" }}>
+                        {`${
+                          selectedSpecial[item.name]
+                            ? selectedSpecial[item.name] * item.price
+                            : item.price
+                        } EGP`}
+                      </label>
+                    </div>
+                  );
+                })}
+
+                <hr />
+              </div>
+            </div>
+          )}
           {props.selectionData.toppings.length === 0 ? null : (
             <div className={classes.toppings}>
               <h1>Toppings</h1>
               {typeof maxToppings !== "undefined" ? (
                 <p>Select up to {`${maxToppings}`} toppings</p>
               ) : null}
-
+              {props.selectionData.name === "Joy bites cheesecake " && (
+                <p style={{ marginTop: "0.5rem" }}>
+                  You can select a maximum of 2 free pecan topping
+                </p>
+              )}
               {props.selectionData.name === "Mountain Of Heaven" ? (
                 <p>Select from 1 to 3 toppings</p>
               ) : null}
@@ -319,13 +459,18 @@ function SelectionPanel(props) {
                       // onChange={(e) => setSelectedToppings(e.target.value) }
                       onClick={(e) => {
                         setSelectedToppings((prevState) => {
-                          let sumToppings = Object.values(
-                            selectedToppings
-                          ).reduce(
-                            (accumlator, currentValue) =>
-                              accumlator + currentValue,
-                            0
-                          );
+                          let sumToppings =
+                            Object.values(selectedToppings).reduce(
+                              (accumlator, currentValue) =>
+                                accumlator + currentValue,
+                              0
+                            ) +
+                            Object.values(selectedSpecial).reduce(
+                              (accumlator, currentValue) =>
+                                accumlator + currentValue,
+                              0
+                            );
+
                           if (parseInt(sumToppings) !== parseInt(maxToppings)) {
                             if (Object.keys(prevState).length === 0) {
                               return {
@@ -333,7 +478,16 @@ function SelectionPanel(props) {
                               };
                             } else {
                               console.log("hi");
-
+                              console.log(prevState.Pecan);
+                              if (
+                                e.target.name === "Pecan" &&
+                                prevState[e.target.name] === 2
+                              ) {
+                                return {
+                                  ...prevState,
+                                  [e.target.name]: prevState[e.target.name],
+                                };
+                              }
                               return {
                                 ...prevState,
                                 [e.target.name]: isNaN(prevState[e.target.name])

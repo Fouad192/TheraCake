@@ -7,59 +7,60 @@ import Link from "next/link";
 import uuid from "react-uuid";
 
 function OrderItem({ order }) {
-  const router = useRouter()
+  const router = useRouter();
   let [statusPopup, openStatusPopup] = useState(false);
-  let [sum, setSum] = useState()
-  let [encodedText, setEncodedText] = useState('')
-  let [details, showDetails] = useState(false)
+  let [sum, setSum] = useState();
+  let [encodedText, setEncodedText] = useState("");
+  let [details, showDetails] = useState(false);
+  const [time, setTime] = useState("");
+  const [date, setDate] = useState("");
   function encodeData() {
-    if(order.addressType === 'apartment') {
-    let apartmentText = `Order Number: ${order.orderNumber} \n Client Name: ${
-      order.firstName
-    } ${order.lastName} \n Mobile Number: ${order.mobile} \n Total: ${
-       order.totalPrice
-    } \n Address: ${order.governorate} - ${order.city} \n ${order.area} - Street: ${order.street} \n Building Number: ${order.building} - Floor: ${order.floor} - Apartment Number: ${order.apartment} \n Payment Method: ${order.paymentMethod || 'Cash'}`;
-   let encoded = encodeURI(apartmentText)
-  //  let redirectLink = `https://wa.me/?text=${encoded}`;
-   setEncodedText(encoded)
-  } else if(order.addressType === 'villa') {
-     let apartmentText = `Order Number: ${order.orderNumber} \n Client Name: ${
-       order.firstName
-     } ${order.lastName} \n Mobile Number: ${order.mobile} \n Total: ${
-       order.totalPrice
-     } \n Address: ${order.governorate} - ${order.city} \n ${order.area} - Street: ${
-       order.street
-     } \n Villa Number: ${order.villa}
-      \n Payment Method: Cash`;
-     let encoded = encodeURI(apartmentText);
-     //  let redirectLink = `https://wa.me/?text=${encoded}`;
-     setEncodedText(encoded);
-  } else if(order.addressType === 'company') {
-     let apartmentText = `Order Number: ${order.orderNumber} \n Client Name: ${
-       order.firstName
-     } ${order.lastName} \n Mobile Number: ${order.mobile} \n Total: ${
+    if (order.addressType === "apartment") {
+      let apartmentText = `Order Number: ${order.orderNumber} \n Client Name: ${
+        order.firstName
+      } ${order.lastName} \n Mobile Number: ${order.mobile} \n Total: ${
         order.totalPrice
-     } \n Address: ${order.governorate} - ${order.city} \n ${order.area} - Street: ${
-       order.street
-     } \n Company Name: ${order.company}
+      } \n Address: ${order.governorate} - ${order.city} \n ${
+        order.area
+      } - Street: ${order.street} \n Building Number: ${
+        order.building
+      } - Floor: ${order.floor} - Apartment Number: ${
+        order.apartment
+      } \n Payment Method: ${order.paymentMethod || "Cash"}`;
+      let encoded = encodeURI(apartmentText);
+      //  let redirectLink = `https://wa.me/?text=${encoded}`;
+      setEncodedText(encoded);
+    } else if (order.addressType === "villa") {
+      let apartmentText = `Order Number: ${order.orderNumber} \n Client Name: ${order.firstName} ${order.lastName} \n Mobile Number: ${order.mobile} \n Total: ${order.totalPrice} \n Address: ${order.governorate} - ${order.city} \n ${order.area} - Street: ${order.street} \n Villa Number: ${order.villa}
       \n Payment Method: Cash`;
-     let encoded = encodeURI(apartmentText);
-     //  let redirectLink = `https://wa.me/?text=${encoded}`;
-     setEncodedText(encoded);
-  }
+      let encoded = encodeURI(apartmentText);
+      //  let redirectLink = `https://wa.me/?text=${encoded}`;
+      setEncodedText(encoded);
+    } else if (order.addressType === "company") {
+      let apartmentText = `Order Number: ${order.orderNumber} \n Client Name: ${order.firstName} ${order.lastName} \n Mobile Number: ${order.mobile} \n Total: ${order.totalPrice} \n Address: ${order.governorate} - ${order.city} \n ${order.area} - Street: ${order.street} \n Company Name: ${order.company}
+      \n Payment Method: Cash`;
+      let encoded = encodeURI(apartmentText);
+      //  let redirectLink = `https://wa.me/?text=${encoded}`;
+      setEncodedText(encoded);
+    }
   }
   useEffect(() => {
-encodeData()
-  }, [])
-  function convertTimestampToDate() {
+    encodeData();
+  }, []);
+  useEffect(() => {
     let date = new Date(order.dateSubmitted).toLocaleDateString("en-US");
-    return date;
-  }
-  function convertTimestampToTime() {
     let time = new Date(order.dateSubmitted).toLocaleTimeString("en-US");
+    setDate(date);
+    setTime(time);
+  }, [order.dateSubmitted]);
+  // function convertTimestampToDate() {
+  //   let date = new Date(order.dateSubmitted).toLocaleDateString("en-US");
+  //   return date;
+  // }
+  // function convertTimestampToTime() {
 
-    return time;
-  }
+  //   return time;
+  // }
   let toggleStatusPopup = () => {
     if (!statusPopup) {
       openStatusPopup(true);
@@ -70,40 +71,50 @@ encodeData()
   function calculateTotal() {
     let sumPrice = 0;
     order.orderItems.map(
-      (item) => item.sizePrice.map((size) => (sumPrice += parseInt(size.price) * item.quantity))
+      (item) =>
+        item.sizePrice.map(
+          (size) => (sumPrice += parseInt(size.price) * item.quantity)
+        )
       //   priceArr.push(parseInt(item.sizePrice.price))
     );
     order.orderItems.map((item) =>
-      item.giftPrice.map((gift) => (sumPrice += parseInt(gift.price) * item.quantity))
+      item.giftPrice.map(
+        (gift) => (sumPrice += parseInt(gift.price) * item.quantity)
+      )
     );
     order.orderItems.map((item) =>
-      item.extraPrice.map((extra) => (sumPrice += parseInt(extra.price) * item.quantity))
+      item.extraPrice.map(
+        (extra) => (sumPrice += parseInt(extra.price) * item.quantity)
+      )
     );
-   setSum(sumPrice)
+    order.orderItems.map((item) =>
+      item.specialBites?.map((bite) => (sumPrice += parseInt(bite.price)))
+    );
+    setSum(sumPrice);
   }
   useEffect(() => {
-    calculateTotal()
-  })
+    calculateTotal();
+  });
   async function setStatus(e) {
-    let status = [e.target.value, order._id]
-    const response = await fetch('/api/checkout', {
+    let status = [e.target.value, order._id];
+    const response = await fetch("/api/checkout", {
       method: "PUT",
-      body: JSON.stringify(status)
-    })
-    const data = await response.json()
-     setTimeout(() => {
-       router.reload(window.location.pathname);
-     }, 500);
+      body: JSON.stringify(status),
+    });
+    const data = await response.json();
+    setTimeout(() => {
+      router.reload(window.location.pathname);
+    }, 500);
   }
   async function deleteOrder() {
-    const response = await fetch('/api/checkout', {
-      method: 'DELETE',
-       body: order._id
-    })
-    const data = await response.json()
+    const response = await fetch("/api/checkout", {
+      method: "DELETE",
+      body: order._id,
+    });
+    const data = await response.json();
 
     setTimeout(() => {
-       router.reload(window.location.pathname);
+      router.reload(window.location.pathname);
     }, 500);
   }
   return (
@@ -129,7 +140,7 @@ encodeData()
         </div>
         <div>
           <p>{order.scheduled}</p>
-          <p>{`${convertTimestampToTime()} - ${convertTimestampToDate()}`}</p>
+          <p>{`${time} - ${date}`}</p>
         </div>
         {order.paymentMethod === "visa" ? (
           <div>
@@ -157,6 +168,7 @@ encodeData()
                   <h1>{`${item.quantity}x ${item.name}`}</h1>
                   <p>{item.sizePrice[0]?.price * item.quantity}</p>
                 </div>
+
                 <div className={classes.itemSubDetails}>
                   <p>{item.sizePrice[0]?.size}</p>
                 </div>
@@ -189,7 +201,7 @@ encodeData()
                     <div>
                       <p>{extra.extra}</p>
                       <p>{`${extra.price} ${extra.quantity}x`}</p>
-                    </div> 
+                    </div>
                   </div>
                 ))}
                 <div className={classes.toppingsDiv}>
@@ -205,6 +217,18 @@ encodeData()
                       return Object.values(toppingObj).map((qt) => (
                         <p key={qt}>{`${qt}x`}</p>
                       ));
+                    })}
+                  </div>
+                </div>
+                <div className={classes.toppingsDiv}>
+                  <div>
+                    {item.specialBites.map((specialObj) => {
+                      return <p>{specialObj.name}</p>;
+                    })}
+                  </div>
+                  <div>
+                    {item.specialBites.map((specialObj) => {
+                      return <p>{specialObj.price}</p>;
                     })}
                   </div>
                 </div>
