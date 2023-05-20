@@ -133,13 +133,13 @@ function UserHistory({order}) {
                   </div>
                   <div className={classes.toppingsDiv}>
                     <div>
-                      {item.specialBites.map((specialObj) => {
-                        return <p>{specialObj.name}</p>;
+                      {item.specialBites.map((specialObj, index) => {
+                        return <p key={index}>{specialObj.name}</p>;
                       })}
                     </div>
                     <div>
-                      {item.specialBites.map((specialObj) => {
-                        return <p>{specialObj.price}</p>;
+                      {item.specialBites.map((specialObj, index) => {
+                        return <p key={index}>{specialObj.price}</p>;
                       })}
                     </div>
                   </div>

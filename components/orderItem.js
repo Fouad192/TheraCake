@@ -223,12 +223,12 @@ function OrderItem({ order }) {
                 <div className={classes.toppingsDiv}>
                   <div>
                     {item.specialBites.map((specialObj) => {
-                      return <p>{specialObj.name}</p>;
+                      return <p key={specialObj.name}>{specialObj.name}</p>;
                     })}
                   </div>
                   <div>
                     {item.specialBites.map((specialObj) => {
-                      return <p>{specialObj.price}</p>;
+                      return <p key={specialObj.name}>{specialObj.price}</p>;
                     })}
                   </div>
                 </div>
