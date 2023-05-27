@@ -12,6 +12,7 @@ import { TextField } from "@mui/material";
 import Link from "next/link";
 import uuid from "react-uuid";
 import emailjs from "@emailjs/browser";
+import { toast } from "react-hot-toast";
 // import handleCardPayment from "../pages/api/cardPayment";
 const orderid = require("order-id")("key");
 
@@ -19,8 +20,7 @@ function CheckoutDetails(props) {
   const router = useRouter();
   const { data: session } = useSession();
   const apartmentLastIndex = props.apartmentAddressData.length - 1;
-  const villaLastIndex = props.villaAddressData.length - 1;
-  const companyLastIndex = props.companyAddressData.length - 1;
+
   const [localCart, setLocalCart] = useState([]);
   let [maxDate, setMaxDate] = useState();
   let [minDate, setMinDate] = useState();
@@ -29,13 +29,11 @@ function CheckoutDetails(props) {
   const [disableBtn, setDisableBtn] = useState();
   const [visaData, setVisaData] = useState();
   let [totalPrice, setTotalPrice] = useState(calculateTotalPriceDb());
-  let [apartmentDetails, showApartmentDetails] = useState(false);
-  let [villaDetails, showVillaDetails] = useState(false);
-  let [workplaceDetails, showWorkplaceDetails] = useState(false);
+  let [apartmentDetails, showApartmentDetails] = useState(true);
+
   let [giftPrices, setGiftPrices] = useState([]);
   let [apartmentInputs, setApartmentInputs] = useState({});
-  let [villaInputs, setVillaInputs] = useState({});
-  let [companyInputs, setCompanyInputs] = useState({});
+
   const [payMethod, setPayMethod] = useState("cash");
   // const disableDates = (date) => {
   //   return (
@@ -46,7 +44,7 @@ function CheckoutDetails(props) {
   //      dayjs(date).format("DD") == 27 ||
   //      dayjs(date).format("DD") == 28 ||
   //      dayjs(date).format("DD") == 29 ||
-  //      dayjs(date).format("DD") == 30 
+  //      dayjs(date).format("DD") == 30
   //   );
   // };
   useEffect(() => {
@@ -86,42 +84,6 @@ function CheckoutDetails(props) {
           scheduled: "",
         };
         setApartmentInputs(initialApartmentAddressDetails);
-      }
-      if (props.villaAddressData[villaLastIndex]) {
-        let initialVillaAddressDetails = {
-          firstName: props.villaAddressData[villaLastIndex].firstName,
-          lastName: props.villaAddressData[villaLastIndex].lastName,
-          mobile: props.villaAddressData[villaLastIndex].mobile,
-          backupMobile:
-            props.villaAddressData[villaLastIndex].backupMobile || "",
-          email: props.villaAddressData[villaLastIndex].email,
-          governorate: props.villaAddressData[villaLastIndex].governorate,
-          city: props.villaAddressData[villaLastIndex].city,
-          area: props.villaAddressData[villaLastIndex].area,
-          street: props.villaAddressData[villaLastIndex].street,
-          villa: props.villaAddressData[villaLastIndex].villa,
-          instructions: "",
-          scheduled: "",
-        };
-        setVillaInputs(initialVillaAddressDetails);
-      }
-      if (props.companyAddressData[companyLastIndex]) {
-        let initialCompanyAddressDetails = {
-          firstName: props.companyAddressData[companyLastIndex].firstName,
-          lastName: props.companyAddressData[companyLastIndex].lastName,
-          mobile: props.companyAddressData[companyLastIndex].mobile,
-          backupMobile:
-            props.companyAddressData[companyLastIndex].backupMobile || "",
-          email: props.companyAddressData[companyLastIndex].email,
-          governorate: props.companyAddressData[companyLastIndex].governorate,
-          city: props.companyAddressData[companyLastIndex].city,
-          area: props.companyAddressData[companyLastIndex].area,
-          street: props.companyAddressData[companyLastIndex].street,
-          company: props.companyAddressData[companyLastIndex].company,
-          instructions: "",
-          scheduled: "",
-        };
-        setCompanyInputs(initialCompanyAddressDetails);
       }
     }
   }, [session]);
@@ -352,9 +314,7 @@ function CheckoutDetails(props) {
               {addedItem.specialBites?.map((special, index) => (
                 <div className={classes.gift} key={uuid()}>
                   <p>{special?.name}</p>
-                  <p className={classes.price}>
-                    {`${special?.price}`}
-                  </p>
+                  <p className={classes.price}>{`${special?.price}`}</p>
                 </div>
               ))}
             </div>
@@ -381,7 +341,6 @@ function CheckoutDetails(props) {
       ));
     }
   }
-
 
   const API =
     "ZXlKaGJHY2lPaUpJVXpVeE1pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SnVZVzFsSWpvaU1UWTJOekU1TXpRNE1pNDBOREUwTmpJaUxDSndjbTltYVd4bFgzQnJJam8xT0RnNU9EY3NJbU5zWVhOeklqb2lUV1Z5WTJoaGJuUWlmUS5xMmdCYmpIQ0NWZ0JTRndMTVV2QkdsX2x6SFkxM3pEZ2hmV1pSQnVYWXowMS1PTmwxekxVN0s2Nl92MkQwS2lFTGJZM2h0bjZHNjl3U1U4bDlJSjdUQQ=="; // your api here
@@ -494,25 +453,18 @@ function CheckoutDetails(props) {
       order_id: id,
       billing_data: {
         apartment: "N/A",
-        email:
-          apartmentInputs.email || companyInputs.email || villaInputs.email,
+        email: apartmentInputs.email,
         floor: "N/A",
-        first_name:
-          apartmentInputs.firstName ||
-          companyInputs.firstName ||
-          villaInputs.firstName,
+        first_name: apartmentInputs.firstName,
+
         street: "N/A",
         building: "N/A",
-        phone_number:
-          apartmentInputs.mobile || companyInputs.mobile || villaInputs.mobile,
+        phone_number: apartmentInputs.mobile,
         shipping_method: "N/A",
         postal_code: "N/A",
         city: "N/A",
         country: "EG",
-        last_name:
-          apartmentInputs.lastName ||
-          companyInputs.lastName ||
-          villaInputs.lastName,
+        last_name: apartmentInputs.lastName,
         state: "N/A",
       },
       currency: "EGP",
@@ -577,7 +529,6 @@ function CheckoutDetails(props) {
         sum += parseInt(gift?.price) * item.quantity;
       });
       item.specialBites.map((bite) => (sum += parseInt(bite.price)));
-
     });
 
     return sum + 45;
@@ -591,7 +542,7 @@ function CheckoutDetails(props) {
     if (session) {
       try {
         if (props.addedItems.length === 0) {
-          console.log("Please Add Items To Your Cart");
+          toast.error("Please Add Items To Your Cart");
         } else {
           let thisOrderId = orderid.generate();
           let currentTime = orderid.getTime(thisOrderId);
@@ -620,19 +571,22 @@ function CheckoutDetails(props) {
           if (payMethod === "visa") {
             firstStep(orderData);
           } else if (payMethod === "cash") {
-            const response = await fetch("/api/checkout", {
+            fetch("/api/checkout", {
               method: "POST",
               body: JSON.stringify(orderData),
               headers: {
                 "Content-Type": "application/json",
               },
-            });
-            const data = await response.json();
-            if (data.message === "Checked out!") {
-              sendMail();
-              sendClientMail(apartmentInputs);
-              router.push("/thankyou");
-            }
+            })
+              .then((res) => {
+                toast.success("Checked out!");
+                setTimeout(() => {
+                  router.push("/thankyou");
+                }, 2000);
+                sendMail();
+                sendClientMail(apartmentInputs);
+              })
+              .catch((err) => toast.error(err));
           }
         }
       } catch (e) {
@@ -641,7 +595,7 @@ function CheckoutDetails(props) {
     } else if (!session) {
       try {
         if (localCart.length === 0) {
-          console.log("Please Add Items To Your Cart");
+          toast.error("Please Add Items To Your Cart");
         } else {
           let thisOrderId = orderid.generate();
           let currentTime = orderid.getTime(thisOrderId);
@@ -672,20 +626,22 @@ function CheckoutDetails(props) {
           if (payMethod === "visa") {
             firstStep(orderData);
           } else if (payMethod === "cash") {
-            const response = await fetch("/api/checkout", {
+            fetch("/api/checkout", {
               method: "POST",
               body: JSON.stringify(orderData),
               headers: {
                 "Content-Type": "application/json",
               },
-            });
-            const data = await response.json();
-            if (data.message === "Checked out!") {
-              sendMail();
-              sendClientMail(apartmentInputs);
-
-              router.push("/thankyou");
-            }
+            })
+              .then((res) => {
+                toast.success("Checked out!");
+                setTimeout(() => {
+                  router.push("/thankyou");
+                }, 2000);
+                sendMail();
+                sendClientMail(apartmentInputs);
+              })
+              .catch((err) => toast.error(err));
           }
         }
       } catch (e) {
@@ -693,244 +649,11 @@ function CheckoutDetails(props) {
       }
     }
   }
-  async function villaSubmitHandler(e) {
-    e.preventDefault();
-    setDisableBtn(true);
-    setTimeout(() => {
-      setDisableBtn(false);
-    }, 4000);
-    if (session) {
-      try {
-        if (props.addedItems.length === 0) {
-          console.log("Please Add Items To Your Cart");
-        } else {
-          let thisOrderId = orderid.generate();
-          let currentTime = orderid.getTime(thisOrderId);
-          const orderData = {
-            addressType: "villa",
-            userId: session.user._id,
-            orderItems: props.addedItems,
-            orderNumber: thisOrderId,
-            dateSubmitted: currentTime,
-            firstName: villaInputs.firstName,
-            lastName: villaInputs.lastName,
-            mobile: villaInputs.mobile,
-            backupMobile: villaInputs.backupMobile,
-            email: villaInputs.email,
-            governorate: villaInputs.governorate,
-            city: villaInputs.city,
-            area: villaInputs.area,
-            street: villaInputs.street,
-            villa: villaInputs.villa,
-            instructions: villaInputs.instructions,
-            scheduled: muiDate,
-            totalPrice: calculateTotalPriceDb(),
-          };
 
-          if (payMethod === "visa") {
-            firstStep(orderData);
-          } else if (payMethod === "cash") {
-            const response = await fetch("/api/checkout", {
-              method: "POST",
-              body: JSON.stringify(orderData),
-              headers: {
-                "Content-Type": "application/json",
-              },
-            });
-            const data = await response.json();
-            if (data.message === "Checked out!") {
-              sendMail();
-              sendClientMail(villaInputs);
-
-              router.push("/thankyou");
-            }
-          }
-        }
-      } catch (e) {
-        console.log(e.message);
-      }
-    } else if (!session) {
-      try {
-        if (localCart.length === 0) {
-          console.log("Please Add Items To Your Cart");
-        } else {
-          let thisOrderId = orderid.generate();
-          let currentTime = orderid.getTime(thisOrderId);
-          const orderData = {
-            addressType: "villa",
-            orderItems: localCart,
-            orderNumber: thisOrderId,
-            dateSubmitted: currentTime,
-            firstName: villaInputs.firstName,
-            lastName: villaInputs.lastName,
-            mobile: villaInputs.mobile,
-            backupMobile: villaInputs.backupMobile,
-            email: villaInputs.email,
-            governorate: villaInputs.governorate,
-            city: villaInputs.city,
-            area: villaInputs.area,
-            street: villaInputs.street,
-
-            villa: villaInputs.villa,
-            instructions: villaInputs.instructions,
-            scheduled: muiDate,
-            totalPrice: anonymousTotalDue(),
-          };
-
-          if (payMethod === "visa") {
-            firstStep(orderData);
-          } else if (payMethod === "cash") {
-            const response = await fetch("/api/checkout", {
-              method: "POST",
-              body: JSON.stringify(orderData),
-              headers: {
-                "Content-Type": "application/json",
-              },
-            });
-            const data = await response.json();
-            if (data.message === "Checked out!") {
-              sendMail();
-              sendClientMail(villaInputs);
-
-              router.push("/thankyou");
-            }
-
-            // const data = await response.json();
-          }
-        }
-      } catch (e) {
-        console.log(e.message);
-      }
-    }
-  }
-  async function companySubmitHandler(e) {
-    e.preventDefault();
-    setDisableBtn(true);
-    setTimeout(() => {
-      setDisableBtn(false);
-    }, 4000);
-    if (session) {
-      try {
-        if (props.addedItems.length === 0) {
-          console.log("Please Add Items To Your Cart");
-        } else {
-          let thisOrderId = orderid.generate();
-          let currentTime = orderid.getTime(thisOrderId);
-          const orderData = {
-            addressType: "company",
-            userId: session.user._id,
-            orderItems: props.addedItems,
-            orderNumber: thisOrderId,
-            dateSubmitted: currentTime,
-            firstName: companyInputs.firstName,
-            lastName: companyInputs.lastName,
-            mobile: companyInputs.mobile,
-            backupMobile: companyInputs.backupMobile,
-            email: companyInputs.email,
-            governorate: companyInputs.governorate,
-            city: companyInputs.city,
-            area: companyInputs.area,
-            street: companyInputs.street,
-
-            company: companyInputs.company,
-            instructions: companyInputs.instructions,
-            scheduled: muiDate,
-            totalPrice: calculateTotalPriceDb(),
-          };
-          if (payMethod === "visa") {
-            firstStep(orderData);
-          } else if (payMethod === "cash") {
-            const response = await fetch("/api/checkout", {
-              method: "POST",
-              body: JSON.stringify(orderData),
-              headers: {
-                "Content-Type": "application/json",
-              },
-            });
-            const data = await response.json();
-            if (data.message === "Checked out!") {
-              sendMail();
-              sendClientMail(companyInputs);
-
-              router.push("/thankyou");
-            }
-
-            // const data = await response.json();
-          }
-        }
-      } catch (e) {
-        console.log(e.message);
-      }
-    } else if (!session) {
-      try {
-        if (localCart.length === 0) {
-          console.log("Please Add Items To Your Cart");
-        } else {
-          let thisOrderId = orderid.generate();
-          let currentTime = orderid.getTime(thisOrderId);
-          const orderData = {
-            addressType: "company",
-            orderItems: localCart,
-            orderNumber: thisOrderId,
-            dateSubmitted: currentTime,
-            firstName: companyInputs.firstName,
-            lastName: companyInputs.lastName,
-            mobile: companyInputs.mobile,
-            backupMobile: companyInputs.backupMobile,
-            email: companyInputs.email,
-            governorate: companyInputs.governorate,
-            city: companyInputs.city,
-            area: companyInputs.area,
-            street: companyInputs.street,
-
-            company: companyInputs.company,
-            instructions: companyInputs.instructions,
-            scheduled: muiDate,
-            totalPrice: anonymousTotalDue(),
-          };
-          if (payMethod === "visa") {
-            firstStep(orderData);
-          } else if (payMethod === "cash") {
-            const response = await fetch("/api/checkout", {
-              method: "POST",
-              body: JSON.stringify(orderData),
-              headers: {
-                "Content-Type": "application/json",
-              },
-            });
-            const data = await response.json();
-            if (data.message === "Checked out!") {
-              sendMail();
-              sendClientMail(companyInputs);
-
-              router.push("/thankyou");
-            }
-          }
-        }
-      } catch (e) {
-        console.log(e.message);
-      }
-    }
-  }
   function handleApartmentInputChange(e) {
     const { name, value } = e.target;
     setApartmentInputs({ ...apartmentInputs, [name]: value });
   }
-  function handleVillaInputChange(e) {
-    const { name, value } = e.target;
-    setVillaInputs({ ...villaInputs, [name]: value });
-  }
-  function handleCompanyInputChange(e) {
-    const { name, value } = e.target;
-    setCompanyInputs({ ...companyInputs, [name]: value });
-  }
-  let apartmentDetailsHandler = () => {
-    if (apartmentDetails) {
-      showApartmentDetails(false);
-    } else {
-      showApartmentDetails(true);
-    }
-  };
 
   function totalDue() {
     let sum = 0;
@@ -946,7 +669,6 @@ function CheckoutDetails(props) {
         sum += parseInt(gift?.price) * item.quantity;
       });
       item.specialBites.map((bite) => (sum += parseInt(bite.price)));
-
     });
 
     return sum + 45;
@@ -964,25 +686,12 @@ function CheckoutDetails(props) {
       item.giftPrice.map((gift) => {
         sum += parseInt(gift.price) * item.quantity;
       });
-      item.specialBites.map(bite => sum+= parseInt(bite.price))
+      item.specialBites.map((bite) => (sum += parseInt(bite.price)));
     });
 
     return sum + 45;
   }
-  let workplaceDetailsHandler = () => {
-    if (workplaceDetails) {
-      showWorkplaceDetails(false);
-    } else {
-      showWorkplaceDetails(true);
-    }
-  };
-  let villaDetailsHandler = () => {
-    if (villaDetails) {
-      showVillaDetails(false);
-    } else {
-      showVillaDetails(true);
-    }
-  };
+
   async function deleteItemHandler(item) {
     const response = await fetch("/api/addToCart", {
       method: "DELETE",
@@ -999,13 +708,9 @@ function CheckoutDetails(props) {
         <div className={classes.informationContainer}>
           <h1>Delivery Details</h1>
           <div className={classes.apartmentContainer}>
-            <button onClick={apartmentDetailsHandler}>
-              Building/Apartment Details
-            </button>
             {apartmentDetails && (
               <div className={classes.apartmentDetails}>
                 <div className={classes.personalDetailsForm}>
-                  <h1>Personal Details</h1>
                   <form onSubmit={apartmentSubmitHandler}>
                     <div>
                       <input
@@ -1206,387 +911,6 @@ function CheckoutDetails(props) {
 
                     <button
                       id={classes.apartmentSubmitBtn}
-                      disabled={disableBtn}
-                    >
-                      Place Order
-                    </button>
-                  </form>
-                </div>
-              </div>
-            )}
-          </div>
-          <div className={classes.villaContainer}>
-            <button onClick={villaDetailsHandler}>Villa/House Details</button>
-            {villaDetails && (
-              <div className={classes.villaDetails}>
-                <div className={classes.personalDetailsForm}>
-                  <h1>Personal Details</h1>
-                  <form onSubmit={villaSubmitHandler}>
-                    <div>
-                      <input
-                        type="text"
-                        className={classes.styledInput}
-                        name="firstName"
-                        placeholder="First Name"
-                        value={villaInputs.firstName}
-                        onChange={handleVillaInputChange}
-                        required
-                      />
-                      <input
-                        type="text"
-                        className={classes.styledInput}
-                        placeholder="Last Name"
-                        name="lastName"
-                        value={villaInputs.lastName}
-                        onChange={handleVillaInputChange}
-                        required
-                      />
-                    </div>
-                    <div>
-                      <input
-                        type="text"
-                        className={classes.styledInput}
-                        name="mobile"
-                        minLength={11}
-                        maxLength={20}
-                        placeholder="Mobile Number"
-                        value={villaInputs.mobile}
-                        onChange={handleVillaInputChange}
-                        required
-                      />
-                      <input
-                        type="text"
-                        className={classes.styledInput}
-                        name="backupMobile"
-                        minLength={11}
-                        maxLength={20}
-                        placeholder="Whatsapp Number"
-                        onChange={handleVillaInputChange}
-                        value={villaInputs.backupMobile}
-                      />
-                    </div>
-                    <div>
-                      <input
-                        type="email"
-                        className={classes.styledInput}
-                        name="email"
-                        placeholder="Email"
-                        onChange={handleVillaInputChange}
-                        value={villaInputs.email}
-                        required
-                      />
-                    </div>
-                    <h1>Address Information</h1>
-                    <div>
-                      <select
-                        id={classes.selectGov}
-                        className={classes.styledInput}
-                        name="governorate"
-                        onChange={handleVillaInputChange}
-                      >
-                        <option value="Cairo">Cairo</option>
-                        <option value="Giza">Giza</option>
-                      </select>
-
-                      <input
-                        type="text"
-                        name="city"
-                        className={classes.styledInput}
-                        placeholder="City"
-                        onChange={handleVillaInputChange}
-                        value={villaInputs.city}
-                        required
-                      />
-                    </div>
-                    <div>
-                      <input
-                        type="text"
-                        className={classes.styledInput}
-                        name="area"
-                        placeholder="Area"
-                        onChange={handleVillaInputChange}
-                        value={villaInputs.area}
-                        required
-                      />
-                      <input
-                        type="text"
-                        className={classes.styledInput}
-                        name="street"
-                        placeholder="Street Name"
-                        onChange={handleVillaInputChange}
-                        value={villaInputs.street}
-                        required
-                      />
-                    </div>
-
-                    <div>
-                      <input
-                        type="text"
-                        className={classes.styledInput}
-                        name="villa"
-                        placeholder="Villa Number"
-                        onChange={handleVillaInputChange}
-                        value={villaInputs.villa}
-                        required
-                      />
-                    </div>
-                    <div>
-                      <textarea
-                        placeholder="Instructions For Delivery"
-                        className={classes.styledInput}
-                        rows="5"
-                        name="instructions"
-                        value={villaInputs.instructions}
-                        onChange={handleVillaInputChange}
-                      />
-                    </div>
-                    <div>
-                      <h1>Payment Method</h1>
-                      <select
-                        id={classes.payMethodSelect}
-                        className={classes.styledInput}
-                        defaultValue=""
-                        value={payMethod}
-                        onChange={(e) => setPayMethod(e.target.value)}
-                      >
-                        <option value="cash">Cash</option>
-                        <option value="visa">Visa</option>
-                      </select>
-                    </div>
-                    {payMethod === "visa" ? (
-                      <p className={classes.dateNote}>
-                        There is a fee of 2.5% + 2.5EGP on the total order price
-                        on visa payments
-                      </p>
-                    ) : null}
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <div className={classes.scheduleInputs}>
-                        <div>
-                          <h1>Select delivery date</h1>
-                          <DatePicker
-                            // onChange={handleApartmentInputChange}
-                            // value={apartmentInputs.scheduled}
-                            value={muiDate}
-                            onChange={onDateChange}
-                            inputFormat="YYYY-MM-DD"
-                            minDate={minDate}
-                            maxDate={maxDate}
-                            // shouldDisableDate={disableDates}
-                            className={classes.muiInput}
-                            renderInput={(params) => (
-                              <TextField
-                                {...params}
-                                sx={{
-                                  ".MuiSvgIcon-root": { fill: "#ff5689" },
-                                  ".MuiOutlinedInput-notchedOutline": {
-                                    borderColor: "#ff5689",
-                                    borderRadius: "10px",
-                                  },
-                                }}
-                              />
-                            )}
-                          />
-                        </div>
-                      </div>
-                    </LocalizationProvider>
-                    <p className={classes.dateNote}>
-                      Orders placed after 9PM will be delievered after tomorrow
-                    </p>
-                    <button id={classes.villaSubmitBtn} disabled={disableBtn}>
-                      Place Order
-                    </button>
-                  </form>
-                </div>
-              </div>
-            )}
-          </div>
-          <div className={classes.workplaceContainer}>
-            <button onClick={workplaceDetailsHandler}>Workplace details</button>
-            {workplaceDetails && (
-              <div className={classes.workplaceDetails}>
-                <div className={classes.personalDetailsForm}>
-                  <h1>Personal Details</h1>
-                  <form onSubmit={companySubmitHandler}>
-                    <div>
-                      <input
-                        type="text"
-                        className={classes.styledInput}
-                        name="firstName"
-                        required
-                        placeholder="First Name"
-                        value={companyInputs.firstName}
-                        onChange={handleCompanyInputChange}
-                      />
-                      <input
-                        type="text"
-                        className={classes.styledInput}
-                        placeholder="Last Name"
-                        required
-                        name="lastName"
-                        value={companyInputs.lastName}
-                        onChange={handleCompanyInputChange}
-                      />
-                    </div>
-                    <div>
-                      <input
-                        type="text"
-                        className={classes.styledInput}
-                        name="mobile"
-                        minLength={11}
-                        maxLength={20}
-                        placeholder="Mobile Number"
-                        required
-                        value={companyInputs.mobile}
-                        onChange={handleCompanyInputChange}
-                      />
-                      <input
-                        type="text"
-                        className={classes.styledInput}
-                        name="backupMobile"
-                        minLength={11}
-                        maxLength={20}
-                        placeholder="Whatsapp Number"
-                        onChange={handleCompanyInputChange}
-                        value={companyInputs.backupMobile}
-                      />
-                    </div>
-                    <div>
-                      <input
-                        type="email"
-                        className={classes.styledInput}
-                        name="email"
-                        required
-                        placeholder="Email"
-                        onChange={handleCompanyInputChange}
-                        value={companyInputs.email}
-                      />
-                    </div>
-                    <h1>Address Information</h1>
-                    <div>
-                      <select
-                        id={classes.selectGov}
-                        className={classes.styledInput}
-                        name="governorate"
-                        onChange={handleCompanyInputChange}
-                      >
-                        <option value="Cairo">Cairo</option>
-                        <option value="Giza">Giza</option>
-                      </select>
-                      {/* <input
-                        type="text"
-                        name="governorate"
-                        placeholder="Governorate"
-                        onChange={handleCompanyInputChange}
-                        value={companyInputs.governorate}
-                      /> */}
-                      <input
-                        type="text"
-                        className={classes.styledInput}
-                        name="city"
-                        required
-                        placeholder="City"
-                        onChange={handleCompanyInputChange}
-                        value={companyInputs.city}
-                      />
-                    </div>
-                    <div>
-                      <input
-                        type="text"
-                        className={classes.styledInput}
-                        name="area"
-                        required
-                        placeholder="Area"
-                        onChange={handleCompanyInputChange}
-                        value={companyInputs.area}
-                      />
-                      <input
-                        type="text"
-                        className={classes.styledInput}
-                        name="street"
-                        required
-                        placeholder="Street Name"
-                        onChange={handleCompanyInputChange}
-                        value={companyInputs.street}
-                      />
-                    </div>
-
-                    <div>
-                      <input
-                        type="text"
-                        className={classes.styledInput}
-                        name="company"
-                        required
-                        placeholder="Company Name"
-                        onChange={handleCompanyInputChange}
-                        value={companyInputs.company}
-                      />
-                    </div>
-
-                    <div>
-                      <textarea
-                        placeholder="Instructions For Delivery"
-                        className={classes.styledInput}
-                        rows="5"
-                        name="instructions"
-                        value={companyInputs.instructions}
-                        onChange={handleCompanyInputChange}
-                      />
-                    </div>
-                    <div>
-                      <h1>Payment Method</h1>
-                      <select
-                        id={classes.payMethodSelect}
-                        className={classes.styledInput}
-                        defaultValue=""
-                        value={payMethod}
-                        onChange={(e) => setPayMethod(e.target.value)}
-                      >
-                        <option value="cash">Cash</option>
-                        <option value="visa">Visa</option>
-                      </select>
-                    </div>
-                    {payMethod === "visa" ? (
-                      <p className={classes.dateNote}>
-                        There is a fee of 2.5% + 2.5EGP on the total order price
-                        on visa payments
-                      </p>
-                    ) : null}
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <div className={classes.scheduleInputs}>
-                        <div>
-                          <h1>Select delivery date</h1>
-                          <DatePicker
-                            // onChange={handleApartmentInputChange}
-                            // value={apartmentInputs.scheduled}
-                            value={muiDate}
-                            onChange={onDateChange}
-                            inputFormat="YYYY-MM-DD"
-                            minDate={minDate}
-                            maxDate={maxDate}
-                            // shouldDisableDate={disableDates}
-                            className={classes.muiInput}
-                            renderInput={(params) => (
-                              <TextField
-                                {...params}
-                                sx={{
-                                  ".MuiSvgIcon-root": { fill: "#ff5689" },
-                                  ".MuiOutlinedInput-notchedOutline": {
-                                    borderColor: "#ff5689",
-                                    borderRadius: "10px",
-                                  },
-                                }}
-                              />
-                            )}
-                          />
-                        </div>
-                      </div>
-                    </LocalizationProvider>
-                    <p className={classes.dateNote}>
-                      Orders placed after 9PM will be delievered after tomorrow
-                    </p>
-
-                    <button
-                      id={classes.workplaceSubmitBtn}
                       disabled={disableBtn}
                     >
                       Place Order

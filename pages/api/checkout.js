@@ -5,11 +5,40 @@ export default async function handler(req, res) {
     await dbConnect();
     try {
       const orderCheckoutDetails = req.body;
+
       const checkoutdetails = new OrderCheckout(orderCheckoutDetails);
       await checkoutdetails.save();
       res.status(201).json({ message: "Checked out!" });
-    } catch (err) {
-      console.log(err.message);
+    } catch ({ errors }) {
+      const errorsArr = [];
+      if (errors.totalPrice) {
+        errorsArr.push(errors.totalPrice.message);
+      }
+      if (errors.scheduled) {
+        errorsArr.push(errors.scheduled.message);
+      }
+      if (errors.dateScheduled) {
+        errorsArr.push(errors.dateScheduled.message);
+      }
+      if (errors.area) {
+        errorsArr.push(errors.area.message);
+      }
+      if (errors.city) {
+        errorsArr.push(errors.city.message);
+      }
+      if (errors.email) {
+        errorsArr.push(errors.email.message);
+      }
+      if (errors.mobile) {
+        errorsArr.push(errors.mobile.message);
+      }
+      if (errors.firstName) {
+        errorsArr.push(errors.firstName.message);
+      }
+      if (errors.lastName) {
+        errorsArr.push(errors.lastName.message);
+      }
+      res.status(400).send({ errorMessages: errorsArr });
     }
   } else if (req.method === "PUT") {
     await dbConnect();

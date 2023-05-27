@@ -13,7 +13,7 @@ let orderDetails = new Schema({
     type: String,
   },
   transactionId: {
-    type: Number
+    type: Number,
   },
   paid: {
     type: Boolean,
@@ -28,37 +28,46 @@ let orderDetails = new Schema({
 
   orderItems: {
     type: [],
+    required: true,
   },
   dateSubmitted: {
     type: Number,
   },
   firstName: {
     type: String,
+    required: true,
   },
   lastName: {
     type: String,
+    required: true,
   },
   mobile: {
     type: Number,
+    required: true,
   },
   backupMobile: {
     type: Number,
   },
   email: {
     type: String,
+    required: true,
   },
   governorate: {
     type: String,
     default: "Cairo",
+    required: true,
   },
   city: {
     type: String,
+    required: true,
   },
   area: {
     type: String,
+    required: true,
   },
   street: {
     type: String,
+    required: true,
   },
   building: {
     type: String,
@@ -69,9 +78,7 @@ let orderDetails = new Schema({
   apartment: {
     type: String,
   },
-  dateScheduled: {
-    type: String,
-  },
+
   villa: {
     type: String,
   },
@@ -83,6 +90,7 @@ let orderDetails = new Schema({
   },
   scheduled: {
     type: String,
+    required: true,
   },
   status: {
     type: String,
@@ -90,6 +98,7 @@ let orderDetails = new Schema({
   },
   totalPrice: {
     type: Number,
+    required: true,
   },
 });
 
