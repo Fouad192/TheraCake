@@ -19,7 +19,7 @@ const orderid = require("order-id")("key");
 function CheckoutDetails(props) {
   const router = useRouter();
   const { data: session } = useSession();
-  const apartmentLastIndex = props.apartmentAddressData.length - 1;
+  const apartmentLastIndex = props.apartmentAddressData?.length - 1;
 
   const [localCart, setLocalCart] = useState([]);
   let [maxDate, setMaxDate] = useState();
@@ -88,7 +88,7 @@ function CheckoutDetails(props) {
     }
   }, [session]);
   function renderDeliveryTab() {
-    if (props.addedItems.length != 0) {
+    if (props.addedItems?.length != 0) {
       return (
         <>
           <div className={classes.deliveryFee}>
@@ -125,8 +125,8 @@ function CheckoutDetails(props) {
     }
   }
   function renderCart() {
-    if (props.addedItems.length > 0) {
-      return props.addedItems.map((addedItem) => (
+    if (props.addedItems?.length > 0) {
+      return props.addedItems?.map((addedItem) => (
         <div className={classes.item} key={uuid()}>
           <div className={classes.deleteDiv}>
             <h1>{`${addedItem.quantity}x ${addedItem.name}`}</h1>
@@ -154,7 +154,7 @@ function CheckoutDetails(props) {
             </div>
           )} */}
           {addedItem.toppings.map((toppingObj) => {
-            if (Object.keys(toppingObj).length >= 1) {
+            if (Object.keys(toppingObj)?.length >= 1) {
               return (
                 <p key={uuid()} id={classes.toppingsP}>
                   Toppings
@@ -179,7 +179,7 @@ function CheckoutDetails(props) {
             </div>
           </div>
           <div className={classes.flavor}>
-            {addedItem.flavors.length > 1 ? (
+            {addedItem.flavors?.length > 1 ? (
               addedItem.flavors.map((flavor, index) => (
                 <p key={index}>
                   <span>{flavor}</span>
@@ -189,7 +189,7 @@ function CheckoutDetails(props) {
               <p>{addedItem.flavors[0]}</p>
             )}
           </div>
-          {addedItem.extraPrice.length === 0 ? null : (
+          {addedItem.extraPrice?.length === 0 ? null : (
             <div>
               {addedItem.extraPrice?.map((extra, index) => (
                 <div className={classes.gift} key={uuid()}>
@@ -201,7 +201,7 @@ function CheckoutDetails(props) {
               ))}
             </div>
           )}
-          {addedItem.specialBites.length === 0 ? null : (
+          {addedItem.specialBites?.length === 0 ? null : (
             <div>
               {addedItem.specialBites?.map((special, index) => (
                 <div className={classes.gift} key={uuid()}>
@@ -211,7 +211,7 @@ function CheckoutDetails(props) {
               ))}
             </div>
           )}
-          {addedItem.giftPrice.length === 0 ? null : (
+          {addedItem.giftPrice?.length === 0 ? null : (
             <div>
               {addedItem.giftPrice?.map((gift, index) => (
                 <div className={classes.gift} key={uuid()}>
@@ -231,7 +231,7 @@ function CheckoutDetails(props) {
           <hr />
         </div>
       ));
-    } else if (props.addedItems.length === 0 && !session) {
+    } else if (props.addedItems?.length === 0 && !session) {
       return localCart?.map((addedItem, index) => (
         <div className={classes.item} key={uuid()}>
           <div className={classes.deleteDiv}>
@@ -262,7 +262,7 @@ function CheckoutDetails(props) {
             </div>
           )} */}
           {addedItem.toppings.map((toppingObj) => {
-            if (Object.keys(toppingObj).length >= 1) {
+            if (Object.keys(toppingObj)?.length >= 1) {
               return (
                 <p key={uuid()} id={classes.toppingsP}>
                   Toppings
@@ -287,7 +287,7 @@ function CheckoutDetails(props) {
             </div>
           </div>
           <div className={classes.flavor}>
-            {addedItem.flavors.length > 1 ? (
+            {addedItem.flavors?.length > 1 ? (
               addedItem.flavors.map((flavor, index) => (
                 <p key={index}>
                   <span>{flavor}</span>
@@ -297,7 +297,7 @@ function CheckoutDetails(props) {
               <p>{addedItem.flavors[0]}</p>
             )}
           </div>
-          {addedItem.extraPrice.length === 0 ? null : (
+          {addedItem.extraPrice?.length === 0 ? null : (
             <div>
               {addedItem.extraPrice?.map((extra, index) => (
                 <div className={classes.gift} key={uuid()}>
@@ -309,7 +309,7 @@ function CheckoutDetails(props) {
               ))}
             </div>
           )}
-          {addedItem.specialBites.length === 0 ? null : (
+          {addedItem.specialBites?.length === 0 ? null : (
             <div>
               {addedItem.specialBites?.map((special, index) => (
                 <div className={classes.gift} key={uuid()}>
@@ -319,7 +319,7 @@ function CheckoutDetails(props) {
               ))}
             </div>
           )}
-          {addedItem.giftPrice.length === 0 ? null : (
+          {addedItem.giftPrice?.length === 0 ? null : (
             <div>
               {addedItem.giftPrice?.map((gift, index) => (
                 <div className={classes.gift} key={uuid()}>
@@ -518,17 +518,17 @@ function CheckoutDetails(props) {
   // }, [minDate]);
   function calculateTotalPriceDb() {
     let sum = 0;
-    props.addedItems.map((item) => {
+    props.addedItems?.map((item) => {
       item.sizePrice.map((size) => {
         sum += parseInt(size?.price) * item.quantity;
       });
-      item.extraPrice.map((extra) => {
+      item.extraPrice?.map((extra) => {
         sum += parseInt(extra?.price) * item.quantity;
       });
-      item.giftPrice.map((gift) => {
+      item.giftPrice?.map((gift) => {
         sum += parseInt(gift?.price) * item.quantity;
       });
-      item.specialBites.map((bite) => (sum += parseInt(bite.price)));
+      item.specialBites?.map((bite) => (sum += parseInt(bite.price)));
     });
 
     return sum + 45;
@@ -541,7 +541,7 @@ function CheckoutDetails(props) {
     }, 4000);
     if (session) {
       try {
-        if (props.addedItems.length === 0) {
+        if (props.addedItems?.length === 0) {
           toast.error("Please Add Items To Your Cart");
         } else {
           let thisOrderId = orderid.generate();
@@ -594,7 +594,7 @@ function CheckoutDetails(props) {
       }
     } else if (!session) {
       try {
-        if (localCart.length === 0) {
+        if (localCart?.length === 0) {
           toast.error("Please Add Items To Your Cart");
         } else {
           let thisOrderId = orderid.generate();
