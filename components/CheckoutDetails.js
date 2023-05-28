@@ -153,7 +153,7 @@ function CheckoutDetails(props) {
               <p>Free Extra Pistachio</p>
             </div>
           )} */}
-          {addedItem.toppings.map((toppingObj) => {
+          {addedItem.toppings?.map((toppingObj) => {
             if (Object.keys(toppingObj)?.length >= 1) {
               return (
                 <p key={uuid()} id={classes.toppingsP}>
@@ -164,14 +164,14 @@ function CheckoutDetails(props) {
           })}
           <div className={classes.toppingDiv}>
             <div>
-              {addedItem.toppings.map((toppingObj) => {
+              {addedItem.toppings?.map((toppingObj) => {
                 return Object.keys(toppingObj).map((topping) => (
                   <p key={topping}>{`${topping}`}</p>
                 ));
               })}
             </div>
             <div>
-              {addedItem.toppings.map((toppingObj) => {
+              {addedItem.toppings?.map((toppingObj) => {
                 return Object.values(toppingObj).map((qt) => (
                   <p key={qt}>{`${qt}x`}</p>
                 ));
@@ -180,7 +180,7 @@ function CheckoutDetails(props) {
           </div>
           <div className={classes.flavor}>
             {addedItem.flavors?.length > 1 ? (
-              addedItem.flavors.map((flavor, index) => (
+              addedItem.flavors?.map((flavor, index) => (
                 <p key={index}>
                   <span>{flavor}</span>
                 </p>
@@ -261,7 +261,7 @@ function CheckoutDetails(props) {
               <p>Free Extra Pistachio</p>
             </div>
           )} */}
-          {addedItem.toppings.map((toppingObj) => {
+          {addedItem.toppings?.map((toppingObj) => {
             if (Object.keys(toppingObj)?.length >= 1) {
               return (
                 <p key={uuid()} id={classes.toppingsP}>
@@ -272,14 +272,14 @@ function CheckoutDetails(props) {
           })}
           <div className={classes.toppingDiv}>
             <div>
-              {addedItem.toppings.map((toppingObj) => {
+              {addedItem.toppings?.map((toppingObj) => {
                 return Object.keys(toppingObj).map((topping) => (
                   <p key={topping}>{`${topping}`}</p>
                 ));
               })}
             </div>
             <div>
-              {addedItem.toppings.map((toppingObj) => {
+              {addedItem.toppings?.map((toppingObj) => {
                 return Object.values(toppingObj).map((qt) => (
                   <p key={qt}>{`${qt}x`}</p>
                 ));
@@ -288,7 +288,7 @@ function CheckoutDetails(props) {
           </div>
           <div className={classes.flavor}>
             {addedItem.flavors?.length > 1 ? (
-              addedItem.flavors.map((flavor, index) => (
+              addedItem.flavors?.map((flavor, index) => (
                 <p key={index}>
                   <span>{flavor}</span>
                 </p>
@@ -659,16 +659,16 @@ function CheckoutDetails(props) {
     let sum = 0;
 
     props.addedItems?.map((item) => {
-      item.sizePrice.map((size) => {
+      item.sizePrice?.map((size) => {
         sum += parseInt(size?.price) * item.quantity;
       });
-      item.extraPrice.map((extra) => {
+      item.extraPrice?.map((extra) => {
         sum += parseInt(extra?.price) * item.quantity;
       });
-      item.giftPrice.map((gift) => {
+      item.giftPrice?.map((gift) => {
         sum += parseInt(gift?.price) * item.quantity;
       });
-      item.specialBites.map((bite) => (sum += parseInt(bite.price)));
+      item.specialBites?.map((bite) => (sum += parseInt(bite.price)));
     });
 
     return sum + 45;
@@ -677,16 +677,16 @@ function CheckoutDetails(props) {
     let sum = 0;
 
     localCart?.map((item) => {
-      item.sizePrice.map((size) => {
+      item.sizePrice?.map((size) => {
         sum += parseInt(size.price) * item.quantity;
       });
-      item.extraPrice.map((extra) => {
+      item.extraPrice?.map((extra) => {
         sum += parseInt(extra.price) * item.quantity;
       });
-      item.giftPrice.map((gift) => {
+      item.giftPrice?.map((gift) => {
         sum += parseInt(gift.price) * item.quantity;
       });
-      item.specialBites.map((bite) => (sum += parseInt(bite.price)));
+      item.specialBites?.map((bite) => (sum += parseInt(bite.price)));
     });
 
     return sum + 45;
