@@ -552,8 +552,8 @@ function CheckoutDetails(props) {
             dateSubmitted: currentTime,
             firstName: apartmentInputs.firstName,
             lastName: apartmentInputs.lastName,
-            mobile: apartmentInputs.mobile,
-            backupMobile: apartmentInputs.backupMobile,
+            mobile: parseInt(apartmentInputs.mobile),
+            backupMobile: parseInt(apartmentInputs.backupMobile),
             email: apartmentInputs.email,
             governorate: apartmentInputs.governorate,
             city: apartmentInputs.city,
@@ -578,6 +578,7 @@ function CheckoutDetails(props) {
             })
               .then((res) => {
                 toast.success("Checked out!");
+                console.log(res)
                 setTimeout(() => {
                   router.push("/thankyou");
                 }, 2000);
@@ -604,8 +605,8 @@ function CheckoutDetails(props) {
             dateSubmitted: currentTime,
             firstName: apartmentInputs.firstName,
             lastName: apartmentInputs.lastName,
-            mobile: apartmentInputs.mobile,
-            backupMobile: apartmentInputs.backupMobile,
+            mobile: parseInt(apartmentInputs.mobile),
+            backupMobile: parseInt(apartmentInputs.backupMobile),
             email: apartmentInputs.email,
             governorate: apartmentInputs.governorate,
             city: apartmentInputs.city,
@@ -633,6 +634,7 @@ function CheckoutDetails(props) {
             })
               .then((res) => {
                 toast.success("Checked out!");
+                console.log(res)
                 setTimeout(() => {
                   router.push("/thankyou");
                 }, 2000);

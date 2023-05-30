@@ -25,7 +25,7 @@ function Menu(props) {
   let browniesMenu = useRef();
   let [itemProps, setItemProps] = useState()
   useEffect(() => {
-    if (props.session) {
+    if (props?.session) {
       if (props.session.user.email === "anwarcitcm@gmail.com") {
         setAuthorized(true);
       } else if (props.session.user.email === "as6993507@gmail.com") {
@@ -34,7 +34,7 @@ function Menu(props) {
         setAuthorized(true);
       } else if (session.user.email === "esraa.mostafa6.em@gmail.com") {
         setAuthorized(true);
-      } else if (props.session.user.email === "theracakecairo@gmail.com") {
+      } else if (props?.session?.user.email === "theracakecairo@gmail.com") {
         setAuthorized(true);
       } else {
         setAuthorized(false);
@@ -123,7 +123,7 @@ function Menu(props) {
             </button>
           ) : null}
           <div className={classes.checkoutDiv}>
-            <Badge badgeContent={props.count} color="primary">
+            <Badge badgeContent={props?.count} color="primary">
               <Link href="/checkout">Checkout</Link>
             </Badge>
           </div>
@@ -131,7 +131,7 @@ function Menu(props) {
             className={classes.cheesecakeMenuItemContainer}
             ref={cheesecakeMenu}
           >
-            {cheesecakes.map((item, index) => (
+            {cheesecakes?.map((item, index) => (
               <div className={classes.menuItem} key={uuid()}>
                 <div className={classes.menuItemDetails}>
                   {isAuthorized && (
@@ -207,7 +207,7 @@ function Menu(props) {
             ))}
           </div>
           <div className={classes.browniesMenuItemContainer} ref={browniesMenu}>
-            {browniesData.map((item, index) => (
+            {browniesData?.map((item, index) => (
               <div className={classes.menuItem} key={uuid()}>
                 <div className={classes.menuItemDetails}>
                   {isAuthorized && (

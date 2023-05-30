@@ -78,13 +78,6 @@ let orderDetails = new Schema({
   apartment: {
     type: String,
   },
-
-  villa: {
-    type: String,
-  },
-  company: {
-    type: String,
-  },
   instructions: {
     type: String,
   },
