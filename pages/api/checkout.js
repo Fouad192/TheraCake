@@ -17,9 +17,7 @@ export default async function handler(req, res) {
       if (errors.scheduled) {
         errorsArr.push(errors.scheduled.message);
       }
-      if (errors.dateScheduled) {
-        errorsArr.push(errors.dateScheduled.message);
-      }
+
       if (errors.area) {
         errorsArr.push(errors.area.message);
       }

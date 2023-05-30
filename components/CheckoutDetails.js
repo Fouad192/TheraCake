@@ -47,6 +47,7 @@ function CheckoutDetails(props) {
   //      dayjs(date).format("DD") == 30
   //   );
   // };
+
   useEffect(() => {
     if (session) {
       setTotalPrice(calculateTotalPriceDb());
@@ -490,9 +491,6 @@ function CheckoutDetails(props) {
     let iframeURL = `https://accept.paymob.com/api/acceptance/iframes/690689?payment_token=${token}`;
     router.replace(iframeURL);
   }
-  const onDateChange = (newDate) => {
-    setMuiDate(newDate.format("YYYY-MM-DD"));
-  };
 
   useEffect(() => {
     let currentTime = new Date().getHours();
@@ -583,8 +581,8 @@ function CheckoutDetails(props) {
                 setTimeout(() => {
                   router.push("/thankyou");
                 }, 2000);
-                sendMail();
-                sendClientMail(apartmentInputs);
+                // sendMail();
+                // sendClientMail(apartmentInputs);
               })
               .catch((err) => toast.error(err));
           }
@@ -638,8 +636,8 @@ function CheckoutDetails(props) {
                 setTimeout(() => {
                   router.push("/thankyou");
                 }, 2000);
-                sendMail();
-                sendClientMail(apartmentInputs);
+                // sendMail();
+                // sendClientMail(apartmentInputs);
               })
               .catch((err) => toast.error(err));
           }
@@ -882,7 +880,7 @@ function CheckoutDetails(props) {
                             // onChange={handleApartmentInputChange}
                             // value={apartmentInputs.scheduled}
                             value={muiDate}
-                            onChange={onDateChange}
+                            onChange={(e) => setMuiDate(e.format("YYYY-MM-DD"))}
                             inputFormat="YYYY-MM-DD"
                             minDate={minDate}
                             maxDate={maxDate}
