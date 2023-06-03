@@ -498,7 +498,7 @@ function CheckoutDetails(props) {
     } else {
       setMinDate(tomorrowDate);
     }
-    setMuiDate("2023-06-04");
+    setMuiDate(minDate);
   }, [minDate]);
   // useEffect(() => {
   //   if (minDate === "2023-03-15") {
