@@ -493,7 +493,7 @@ function CheckoutDetails(props) {
     let date = dayjs().add(7, "day").format("YYYY-MM-DD");
 
     setMaxDate(date);
-    if (currentTime >= 18) {
+    if (currentTime >= 21) {
       setMinDate(afterTomorrowDate);
     } else {
       setMinDate(tomorrowDate);
@@ -900,7 +900,7 @@ function CheckoutDetails(props) {
                     </LocalizationProvider>
 
                     <p className={classes.dateNote}>
-                      Orders placed after 6PM will be delievered after tomorrow
+                      Orders placed after 9PM will be delievered after tomorrow
                     </p>
 
                     <button
