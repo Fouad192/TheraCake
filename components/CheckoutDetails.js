@@ -493,7 +493,7 @@ function CheckoutDetails(props) {
     let date = dayjs().add(7, "day").format("YYYY-MM-DD");
 
     setMaxDate(date);
-    if (currentTime >= 21) {
+    if (currentTime >= 18) {
       setMinDate(afterTomorrowDate);
     } else {
       setMinDate(tomorrowDate);
