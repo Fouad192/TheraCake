@@ -84,16 +84,17 @@ function SelectionPanel(props) {
     e.preventDefault();
       let specialArray = [];
 
-    if (props.selectionData.name === "Joy bites cheesecake ") {
-
+    if (
+      props.selectionData.name === "Joy bites cheesecake " ||
+      props.selectionData.name === "Original Thera Cake Brownies" ||
+      props.selectionData.name === "Chocolate's Lovers Brownies"
+    ) {
       if (Object.keys(selectedSpecial).length !== 0) {
-
         Object.keys(selectedSpecial).map((special) => {
           const foundBite = props.selectionData.specialBites.find(
             (bite) => bite.name === special
           );
           if (selectedSpecial[special] !== 0) {
-
             specialArray.push({
               name: special,
               price:
@@ -436,6 +437,119 @@ function SelectionPanel(props) {
               </div>
             </div>
           )}
+          {props.selectionData.name === "Original Thera Cake Brownies" ||
+            props.selectionData.name ===
+              "Chocolate's Lovers Brownies" ?(
+                <div>
+                  <div className={classes.toppings}>
+                    <h1>Special Bites</h1>
+                    {typeof maxToppings !== "undefined" ? (
+                      <p>Select up to {`${maxToppings}`} toppings</p>
+                    ) : null}
+
+                    {props.selectionData.specialBites.map((item, index) => {
+                      return (
+                        <div key={index}>
+                          <button
+                            name={item.name}
+                            value={0}
+                            // onChange={(e) => setSelectedToppings(e.target.value) }
+                            onClick={(e) => {
+                              setSelectedSpecial((prevState) => {
+                                let sumToppings =
+                                  Object.values(selectedToppings).reduce(
+                                    (accumlator, currentValue) =>
+                                      accumlator + currentValue,
+                                    0
+                                  ) +
+                                  Object.values(selectedSpecial).reduce(
+                                    (accumlator, currentValue) =>
+                                      accumlator + currentValue,
+                                    0
+                                  );
+
+                                if (
+                                  parseInt(sumToppings) !==
+                                  parseInt(maxToppings)
+                                ) {
+                                  if (Object.keys(prevState).length === 0) {
+                                    return {
+                                      [e.target.name]: 1,
+                                    };
+                                  } else {
+                                    console.log("hi");
+
+                                    return {
+                                      ...prevState,
+                                      [e.target.name]: isNaN(
+                                        prevState[e.target.name]
+                                      )
+                                        ? 1
+                                        : prevState[e.target.name] + 1,
+                                    };
+                                  }
+                                } else {
+                                  console.log("hi from return same num");
+                                  if (
+                                    prevState.hasOwnProperty(
+                                      [e.target.name].toString()
+                                    )
+                                  ) {
+                                    return {
+                                      ...prevState,
+                                      [e.target.name]: prevState[e.target.name],
+                                    };
+                                  } else {
+                                    return { ...prevState };
+                                  }
+                                }
+                              });
+                            }}
+                            type="button"
+                          >
+                            +
+                          </button>
+                          <input
+                            value={
+                              typeof selectedSpecial[item.name] === "undefined"
+                                ? 0
+                                : selectedSpecial[item.name]
+                            }
+                            required
+                            readOnly
+                          />
+                          <button
+                            type="button"
+                            name={item.name}
+                            onClick={(e) =>
+                              setSelectedSpecial((prevState) => {
+                                return {
+                                  ...prevState,
+                                  [e.target.name]: prevState[e.target.name] - 1,
+                                };
+                              })
+                            }
+                          >
+                            -
+                          </button>
+                          <p style={{ marginLeft: "0.5rem" }}> {item.name}</p>
+                          <label
+                            style={{ color: "#ff5689", fontWeight: "500" }}
+                          >
+                            {`${
+                              selectedSpecial[item.name]
+                                ? selectedSpecial[item.name] * item.price
+                                : item.price
+                            } EGP`}
+                          </label>
+                        </div>
+                      );
+                    })}
+
+                    <hr />
+                  </div>
+                </div>
+              ) : null}
           {props.selectionData.toppings.length === 0 ? null : (
             <div className={classes.toppings}>
               <h1>Toppings</h1>

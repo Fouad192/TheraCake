@@ -36,10 +36,7 @@ function CheckoutDetails(props) {
 
   const [payMethod, setPayMethod] = useState("cash");
   const disableDates = (date) => {
-    return (
-      dayjs(date).format("DD") == 3
-      
-    );
+    return dayjs(date).format("DD") == 3;
   };
 
   useEffect(() => {
@@ -572,7 +569,7 @@ function CheckoutDetails(props) {
             })
               .then((res) => {
                 toast.success("Checked out!");
-                console.log(res)
+                console.log(res);
                 setTimeout(() => {
                   router.push("/thankyou");
                 }, 2000);
@@ -627,13 +624,17 @@ function CheckoutDetails(props) {
               },
             })
               .then((res) => {
-                toast.success("Checked out!");
-                console.log(res)
-                setTimeout(() => {
-                  router.push("/thankyou");
-                }, 2000);
-                // sendMail();
-                // sendClientMail(apartmentInputs);
+                if (res.statusText === "Created" && res.status !== 400) {
+                  toast.success("Checked out!");
+                  console.log(res);
+                  sendMail();
+                  sendClientMail(apartmentInputs);
+                  setTimeout(() => {
+                    router.push("/thankyou");
+                  }, 2000);
+                } else {
+                  toast.error("Something went wrong, try again");
+                }
               })
               .catch((err) => toast.error(err));
           }
