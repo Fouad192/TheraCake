@@ -626,7 +626,7 @@ function CheckoutDetails(props) {
               .then((res) => {
                 if (
                   res.statusText === "Created" ||
-                  res.message === "Checked out!"
+                  res.status === 201
                 ) {
                   toast.success("Checked out!");
                   console.log(res);
