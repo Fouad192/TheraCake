@@ -626,12 +626,12 @@ function CheckoutDetails(props) {
               .then((res) => {
                 if (
                   res.statusText === "Created" ||
-                  res.data.message === "Checked out!"
+                  res.message === "Checked out!"
                 ) {
                   toast.success("Checked out!");
                   console.log(res);
-                  sendMail();
-                  sendClientMail(apartmentInputs);
+                  // sendMail();
+                  // sendClientMail(apartmentInputs);
                   setTimeout(() => {
                     router.push("/thankyou");
                   }, 2000);
