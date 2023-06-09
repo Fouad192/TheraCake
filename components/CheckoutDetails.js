@@ -636,6 +636,7 @@ function CheckoutDetails(props) {
                     router.push("/thankyou");
                   }, 2000);
                 } else {
+                  console.log(res)
                   toast.error("Something went wrong, try again");
                 }
               })
