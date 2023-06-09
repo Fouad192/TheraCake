@@ -630,8 +630,8 @@ function CheckoutDetails(props) {
                 ) {
                   toast.success("Checked out!");
                   console.log(res);
-                  // sendMail();
-                  // sendClientMail(apartmentInputs);
+                  sendMail();
+                  sendClientMail(apartmentInputs);
                   setTimeout(() => {
                     router.push("/thankyou");
                   }, 2000);
