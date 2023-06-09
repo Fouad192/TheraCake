@@ -624,7 +624,10 @@ function CheckoutDetails(props) {
               },
             })
               .then((res) => {
-                if (res.statusText === "Created" && res.status !== 400) {
+                if (
+                  res.statusText === "Created" ||
+                  res.data.message === "Checked out!"
+                ) {
                   toast.success("Checked out!");
                   console.log(res);
                   sendMail();
