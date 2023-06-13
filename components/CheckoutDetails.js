@@ -36,7 +36,7 @@ function CheckoutDetails(props) {
 
   const [payMethod, setPayMethod] = useState("cash");
   const disableDates = (date) => {
-    return dayjs(date).format("DD") == 3;
+    return dayjs(date).format("DD") == 15;
   };
 
   useEffect(() => {
@@ -495,7 +495,11 @@ function CheckoutDetails(props) {
     } else {
       setMinDate(tomorrowDate);
     }
-    setMuiDate(minDate);
+    if (minDate === "2023-06-15") {
+      setMuiDate("2023-06-16");
+    } else {
+      setMuiDate(minDate);
+    }
   }, [minDate]);
   // useEffect(() => {
   //   if (minDate === "2023-03-15") {
@@ -624,10 +628,7 @@ function CheckoutDetails(props) {
               },
             })
               .then((res) => {
-                if (
-                  res.statusText === "Created" ||
-                  res.status === 201
-                ) {
+                if (res.statusText === "Created" || res.status === 201) {
                   toast.success("Checked out!");
                   console.log(res);
                   sendMail();
@@ -636,7 +637,7 @@ function CheckoutDetails(props) {
                     router.push("/thankyou");
                   }, 2000);
                 } else {
-                  console.log(res)
+                  console.log(res);
                   toast.error("Something went wrong, try again");
                 }
               })
