@@ -131,6 +131,70 @@ function Menu(props) {
             className={classes.cheesecakeMenuItemContainer}
             ref={cheesecakeMenu}
           >
+            <div className={classes.menuItem} key={uuid()}>
+              <div className={classes.menuItemDetails}>
+                <div className={classes.nameFlavor}>
+                  <h1>The Blooming Cheesecake Box</h1>
+
+                  <p>
+                    Celebration box it combines 5 flowers blooming with
+                    delicious cheesecake (mini or small) inside the box!
+                  </p>
+                </div>
+
+                <div className={classes.priceBtnDiv}>
+                  <p style={{ fontWeight: "600" }}>
+                    Order via whatsapp <br />
+                    <a
+                      href="https://wa.me/201029283671"
+                      style={{ color: "#ff5689" }}
+                    >
+                      01029283671
+                    </a>
+                  </p>
+                </div>
+              </div>
+              <div className={classes.menuItemImage}>
+                <Image
+                  src="https://res.cloudinary.com/dswtzq3ze/image/upload/v1686155730/Menu/stoozrkqd6j2fjtyszx9.jpg"
+                  alt="basicCake"
+                  width={150}
+                  height={150}
+                />
+              </div>
+            </div>
+            <div className={classes.menuItem} key={uuid()}>
+              <div className={classes.menuItemDetails}>
+                <div className={classes.nameFlavor}>
+                  <h1>Bloom & Bite Box</h1>
+
+                  <p>
+                    Celebration box it combines 6 flowers blooming with the
+                    delicious bites cheesecake and brownies inside the box!
+                  </p>
+                </div>
+
+                <div className={classes.priceBtnDiv}>
+                  <p style={{ fontWeight: "600" }}>
+                    Order via whatsapp <br />
+                    <a
+                      href="https://wa.me/201029283671"
+                      style={{ color: "#ff5689" }}
+                    >
+                      01029283671
+                    </a>
+                  </p>
+                </div>
+              </div>
+              <div className={classes.menuItemImage}>
+                <Image
+                  src="https://res.cloudinary.com/dswtzq3ze/image/upload/v1686922860/newcsake_nssmdr.jpg"
+                  alt="basicCake"
+                  width={150}
+                  height={150}
+                />
+              </div>
+            </div>
             {cheesecakes?.map((item, index) => (
               <div className={classes.menuItem} key={uuid()}>
                 <div className={classes.menuItemDetails}>
@@ -171,28 +235,24 @@ function Menu(props) {
                   </div>
 
                   <div className={classes.priceBtnDiv}>
-                    
-                      <button
-                        onClick={() => {
-                          // setIdx(index);
-                          // setCategoryDetect("cheesecake");
-                          setItemProps(item);
-                        }}
-                      >
-                        Select Your Options
-                      </button>
-                 
+                    <button
+                      onClick={() => {
+                        // setIdx(index);
+                        // setCategoryDetect("cheesecake");
+                        setItemProps(item);
+                      }}
+                    >
+                      Select Your Options
+                    </button>
 
-                  
-                      {/* <p style={{ fontWeight: "bold", fontSize: "1.3rem" }}>
+                    {/* <p style={{ fontWeight: "bold", fontSize: "1.3rem" }}>
                         Out Of Stock
                       </p>
                    */}
-                      <p>
-                        {item.sizePrice[0].price} -{" "}
-                        {item.sizePrice[item.sizePrice.length - 1].price} EGP
-                      </p>
-                 
+                    <p>
+                      {item.sizePrice[0].price} -{" "}
+                      {item.sizePrice[item.sizePrice.length - 1].price} EGP
+                    </p>
                   </div>
                 </div>
                 <div className={classes.menuItemImage}>
