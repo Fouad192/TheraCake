@@ -42,11 +42,11 @@ let orderDetails = new Schema({
     required: true,
   },
   mobile: {
-    type: Number,
+    type: String,
     required: true,
   },
   backupMobile: {
-    type: Number,
+    type: String,
   },
   email: {
     type: String,
