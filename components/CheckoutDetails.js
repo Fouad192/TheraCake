@@ -495,8 +495,8 @@ function CheckoutDetails(props) {
     } else {
       setMinDate(tomorrowDate);
     }
-    if (minDate === "2023-07-14") {
-      setMuiDate("2023-07-15");
+    if (minDate === "2023-08-1") {
+      setMuiDate("2023-08-2");
     } else {
       setMuiDate(minDate);
     }
