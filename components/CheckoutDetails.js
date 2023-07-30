@@ -36,7 +36,7 @@ function CheckoutDetails(props) {
 
   const [payMethod, setPayMethod] = useState("cash");
   const disableDates = (date) => {
-    return dayjs(date).format("DD") == 14;
+    return dayjs(date).format("DD") == 1;
   };
 
   useEffect(() => {
