@@ -36,7 +36,7 @@ function CheckoutDetails(props) {
 
   const [payMethod, setPayMethod] = useState("cash");
   const disableDates = (date) => {
-    return dayjs(date).format("DD") == 1;
+    return dayjs(date).format("DD") == 10;
   };
 
   useEffect(() => {
@@ -495,20 +495,15 @@ function CheckoutDetails(props) {
     } else {
       setMinDate(tomorrowDate);
     }
-    if (minDate === "2023-08-1") {
-      setMuiDate("2023-08-2");
+    
+  }, []);
+  useEffect(() => {
+  if (minDate === "2023-08-10") {
+      setMuiDate("2023-08-11");
     } else {
       setMuiDate(minDate);
     }
   }, [minDate]);
-  // useEffect(() => {
-  //   if (minDate === "2023-03-15") {
-  //     setMinDate("2023-03-16");
-  //     setMuiDate(minDate)
-  //   } else {
-  //     setMuiDate(minDate);
-  //   }
-  // }, [minDate]);
   function calculateTotalPriceDb() {
     let sum = 0;
     props.addedItems?.map((item) => {
