@@ -36,7 +36,7 @@ function CheckoutDetails(props) {
 
   const [payMethod, setPayMethod] = useState("cash");
   const disableDates = (date) => {
-    return dayjs(date).format("DD") == 10;
+    return dayjs(date).format("DD") == 12;
   };
 
   useEffect(() => {
@@ -498,8 +498,8 @@ function CheckoutDetails(props) {
     
   }, []);
   useEffect(() => {
-  if (minDate === "2023-08-10") {
-      setMuiDate("2023-08-11");
+  if (minDate === "2023-08-12") {
+      setMuiDate("2023-08-13");
     } else {
       setMuiDate(minDate);
     }
