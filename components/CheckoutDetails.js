@@ -36,7 +36,13 @@ function CheckoutDetails(props) {
 
   const [payMethod, setPayMethod] = useState("cash");
   const disableDates = (date) => {
-    return dayjs(date).format("DD") == 12;
+    return (
+      dayjs(date).format("DD") == 13 ||
+      dayjs(date).format("DD") == 14 ||
+      dayjs(date).format("DD") == 15 ||
+      dayjs(date).format("DD") == 16 ||
+      dayjs(date).format("DD") == 17 |
+    );
   };
 
   useEffect(() => {
@@ -498,8 +504,10 @@ function CheckoutDetails(props) {
     
   }, []);
   useEffect(() => {
-  if (minDate === "2023-08-12") {
-      setMuiDate("2023-08-13");
+  if (minDate === "2023-09-13") {
+      setMuiDate("2023-09-14");
+    } else if (minDate === '2023-09-17') {
+      setMuiDate("2023-09-18");
     } else {
       setMuiDate(minDate);
     }
