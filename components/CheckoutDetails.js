@@ -41,7 +41,7 @@ function CheckoutDetails(props) {
       dayjs(date).format("DD") == 14 ||
       dayjs(date).format("DD") == 15 ||
       dayjs(date).format("DD") == 16 ||
-      dayjs(date).format("DD") == 17 |
+      dayjs(date).format("DD") == 17 
     );
   };
 
