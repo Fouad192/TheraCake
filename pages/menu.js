@@ -43,6 +43,7 @@ export async function getServerSideProps(ctx) {
   // const cartItems = await Cart.find({ userId: session.user._id });
   // let cartItemCount = cartItems.length;
   let session = await getSession(ctx);
+  console.log(session, 'session')
   if (session) {
     const cartItems = await Cart.find({ userId: session.user._id });
     let cartItemCount = cartItems.length;

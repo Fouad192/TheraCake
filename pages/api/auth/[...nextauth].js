@@ -13,7 +13,7 @@ export default NextAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       authorization: {
         params: {
-          redirect_uri: "https://theracakecairo.com/api/auth/callback/google",
+          redirect_uri: "https://theraacake.onrender.com/api/auth/callback/google",
           prompt: "consent",
           scope: "email",
         },
@@ -24,7 +24,7 @@ export default NextAuth({
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
       authorization: {
         params: {
-          redirect_uri: "https://theracakecairo.com/api/auth/callback/facebook",
+          redirect_uri: "https://theracakee.onrender.com/api/auth/callback/facebook",
           prompt: "consent",
           // access_type: "offline",
           scope: "email",

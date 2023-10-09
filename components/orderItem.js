@@ -53,14 +53,7 @@ function OrderItem({ order }) {
     setDate(date);
     setTime(time);
   }, [order.dateSubmitted]);
-  // function convertTimestampToDate() {
-  //   let date = new Date(order.dateSubmitted).toLocaleDateString("en-US");
-  //   return date;
-  // }
-  // function convertTimestampToTime() {
 
-  //   return time;
-  // }
   let toggleStatusPopup = () => {
     if (!statusPopup) {
       openStatusPopup(true);
